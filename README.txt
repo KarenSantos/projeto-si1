@@ -4,4 +4,4 @@ Alunos:
 - 
 - Karen Santos
 - Lucas Medeiros Cavalcante
--
+- Rodrigo Farias de Macêdo
