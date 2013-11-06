@@ -1,7 +1,7 @@
-Repositório do projeto da disciplina Sistemas de Informação I
+Repositï¿½rio do projeto da disciplina Sistemas de Informaï¿½ï¿½o I
 
 Alunos:
-- 
+- AcÃ¡cio Leal
 - Karen Santos
 -
 -
