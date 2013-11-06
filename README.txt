@@ -1,4 +1,4 @@
-Repositório do projeto da disciplina Sistemas de Informação I
+Repositório para projeto da disciplina Sistemas de Informação I
 
 Alunos:
 - 
