@@ -1,4 +1,4 @@
-Reposit�rio para projeto da disciplina Sistemas de Informa��o I
+Repositorio para projeto da disciplina Sistemas de Informacao I
 
 Alunos:
 - Acacio Fernandes Leal
