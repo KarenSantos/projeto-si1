@@ -4,4 +4,4 @@ Alunos:
 - Acacio Fernandes Leal
 - Karen Santos
 - Lucas Medeiros Cavalcante
-- Rodrigo Farias de Mac�do
+- Rodrigo Farias de Macedo
