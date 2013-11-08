@@ -1,7 +1,7 @@
-Repositório para projeto da disciplina Sistemas de Informação I
+Repositï¿½rio para projeto da disciplina Sistemas de Informaï¿½ï¿½o I
 
 Alunos:
-- 
+- Acacio Fernandes Leal
 - Karen Santos
 - Lucas Medeiros Cavalcante
-- Rodrigo Farias de Macêdo
+- Rodrigo Farias de Macï¿½do
