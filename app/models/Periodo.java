@@ -12,7 +12,6 @@ import java.util.List;
  */
 public class Periodo {
 
-	private final int MAXIMO_DE_CREDITOS = 28;
 	private final int MENOR_NUM_PERIODO = 1;
 	private final int MAIOR_NUM_PERIODO = 14;
 
@@ -74,12 +73,7 @@ public class Periodo {
 	 *             Se o numero total de creditos ficaria acima do maximo de
 	 *             creditos por periodo.
 	 */
-	public void addDisciplina(Disciplina disciplina)
-			throws TotalDeCreditosInvalidoException {
-		if ((totalDeCreditos + disciplina.getCreditos()) > MAXIMO_DE_CREDITOS) {
-			throw new TotalDeCreditosInvalidoException(
-					"O número máximo de créditos por período é 28.");
-		}
+	public void addDisciplina(Disciplina disciplina) {
 		disciplinas.add(disciplina);
 		this.totalDeCreditos += disciplina.getCreditos();
 		this.totalDeDificuldade += disciplina.getDificuldade();

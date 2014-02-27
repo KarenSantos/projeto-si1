@@ -1,0 +1,69 @@
+2014-02-27 13:54:30,954 - [INFO] - from play in pool-4-thread-2 
+Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+
+2014-02-27 13:54:39,010 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:h2:mem:play
+
+2014-02-27 13:54:40,559 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2014-02-27 14:30:30,789 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:h2:mem:play
+
+2014-02-27 14:30:31,090 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2014-02-27 14:43:37,377 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:h2:mem:play
+
+2014-02-27 14:43:37,650 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2014-02-27 15:08:30,480 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:h2:mem:play
+
+2014-02-27 15:08:30,757 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2014-02-27 15:21:11,089 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:h2:mem:play
+
+2014-02-27 15:21:11,335 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2014-02-27 15:23:58,119 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:h2:mem:play
+
+2014-02-27 15:23:58,386 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2014-02-27 15:25:53,284 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:h2:mem:play
+
+2014-02-27 15:25:53,539 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2014-02-27 15:34:55,561 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:h2:mem:play
+
+2014-02-27 15:34:55,821 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2014-02-27 15:40:39,404 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:h2:mem:play
+
+2014-02-27 15:40:39,666 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2014-02-27 15:43:28,358 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:h2:mem:play
+
+2014-02-27 15:43:28,624 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2014-02-27 15:46:53,540 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:h2:mem:play
+
+2014-02-27 15:46:53,794 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+

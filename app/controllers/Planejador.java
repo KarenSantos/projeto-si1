@@ -154,4 +154,11 @@ public class Planejador {
 		return plano.temPreRequisito(disc);
 	}
 
+	/**
+	 * Retorna o total de períodos criados.
+	 * @return O total de períodos.
+	 */
+	public int getTotalDePeriodos() {
+		return plano.getTotalDePeriodos();
+	}
 }

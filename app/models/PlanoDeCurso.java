@@ -14,9 +14,9 @@ import java.util.Map;
  */
 public class PlanoDeCurso {
 
-	final private int MINIMO_DE_CREDITOS = 14;
-	final private int PRIM_PERIODO = 1;
 	final private int PERIODO_MAXIMO = 14;
+	private final int MAXIMO_DE_CREDITOS = 28;
+
 
 	private List<Periodo> periodos;
 	private Curriculo curriculo;
@@ -24,19 +24,18 @@ public class PlanoDeCurso {
 
 	/**
 	 * Inicia um plano de curso com um lista de periodos, um curriculo e uma
-	 * lista de disciplinas não alocadas. Configura o primeiro periodo com as
+	 * lista de disciplinas não alocadas. Configura os periodos com as
 	 * disciplinas obrigatorias.
 	 */
 	public PlanoDeCurso() {
 		// CREATOR, o plano de curso inicializa os objetos abaixo
 		periodos = new ArrayList<Periodo>();
 		curriculo = new Curriculo();
+
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
-
-		configuraPrimeiroPeriodo();
-
 		disciplinasNaoAlocadas.addAll(curriculo.getDisciplinas());
-		removeDiscPrimPeriodo();
+
+		alocaDisciplinas();
 	}
 
 	/**
@@ -64,29 +63,31 @@ public class PlanoDeCurso {
 	 * 
 	 * @return O número de períodos criados.
 	 */
-	public int getTotalPeriodos() {
+	public int getTotalDePeriodos() {
 		return getPeriodos().size();
 	}
 
 	/**
+	 * Retorna a disciplina com o id indicado.
+	 * 
+	 * @param id
+	 *            O id da disciplina.
+	 * @return A disciplina com o id indicado.
+	 */
+	public Disciplina getDisciplina(String id) {
+		return curriculo.getDisciplina(id);
+	}
+	
+	/**
 	 * Cria um novo periodo vazio.
 	 * 
-	 * @throws TotalDeCreditosInvalidoException
-	 *             Se o numero minimo de creditos do periodo anterior nao foi
-	 *             alcancado.
 	 * @throws AlocacaoInvalidaException
 	 *             Se o numero maximo de periodos já foi alcançado.
 	 */
-	public void createPeriodo() throws TotalDeCreditosInvalidoException,
-			AlocacaoInvalidaException {
+	public void createPeriodo() throws AlocacaoInvalidaException {
 
-		int ultimoPeriodo = getTotalPeriodos();
-		if (ultimoPeriodo > PRIM_PERIODO) {
-			if (getPeriodo(ultimoPeriodo).getTotalDeCreditos() < MINIMO_DE_CREDITOS) {
-				throw new TotalDeCreditosInvalidoException(
-						"O último período precisa de no mínimo 14 créditos.");
-			}
-		}
+		int ultimoPeriodo = getTotalDePeriodos();
+
 		if (ultimoPeriodo == PERIODO_MAXIMO) {
 			throw new AlocacaoInvalidaException(
 					"Você já alcançou o número máximo de períodos");
@@ -119,6 +120,13 @@ public class PlanoDeCurso {
 		 * então ele faz a verificação.
 		 */
 		Disciplina aDisciplina = getDisciplina(id);
+		if (periodo != getTotalDePeriodos()) {      // se for o ultimo periodo pode ter mais de 28 creditos
+			if ((getPeriodo(periodo).getTotalDeCreditos() + aDisciplina.getCreditos()) > MAXIMO_DE_CREDITOS) {
+				throw new TotalDeCreditosInvalidoException(
+						"O número máximo de créditos por período é 28.");
+			}
+		}
+		
 		if (!aDisciplina.getPreRequisitos().isEmpty()) {
 			for (Disciplina preRequisito : aDisciplina.getPreRequisitos()) {
 				Boolean result = false;
@@ -136,19 +144,8 @@ public class PlanoDeCurso {
 			}
 		}
 
-		periodos.get(periodo - 1).addDisciplina(curriculo.getDisciplina(id));
+		getPeriodo(periodo).addDisciplina(curriculo.getDisciplina(id));
 		disciplinasNaoAlocadas.remove(curriculo.getDisciplina(id));
-	}
-
-	/**
-	 * Retorna a disciplina com o id indicado.
-	 * 
-	 * @param id
-	 *            O id da disciplina.
-	 * @return A disciplina com o id indicado.
-	 */
-	public Disciplina getDisciplina(String id) {
-		return curriculo.getDisciplina(id);
 	}
 
 	/**
@@ -287,11 +284,11 @@ public class PlanoDeCurso {
 	 *            O periodo que vai ser renumerado.
 	 */
 	private void renumeraPeriodos(int periodo) {
-		if (periodo < getTotalPeriodos() + 1) {
+		if (periodo < getTotalDePeriodos() + 1) {
 			try {
 				getPeriodo(periodo).setNumero(periodo - 1);
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 			}
 			renumeraPeriodos(periodo + 1);
 		}
@@ -331,32 +328,27 @@ public class PlanoDeCurso {
 	/**
 	 * Cria o primeiro periodo e aloca suas disciplinas que sao imutaveis.
 	 */
-	private void configuraPrimeiroPeriodo() {
+	private void alocaDisciplinas() {
 
-		try {
-			createPeriodo();
-		} catch (Exception e) {
-		}
-
-		try {
-			addDisciplinaPeriodo("01", 1);
-			addDisciplinaPeriodo("02", 1);
-			addDisciplinaPeriodo("03", 1);
-			addDisciplinaPeriodo("04", 1);
-			addDisciplinaPeriodo("05", 1);
-			addDisciplinaPeriodo("06", 1);
-		} catch (Exception e) {
+		for (Disciplina disc : curriculo.getDisciplinas()) {
+			int periodo = disc.getPeriodoSugerido();
+			if (periodo > 0){
+				if (getTotalDePeriodos() < periodo) {
+					try {
+						createPeriodo();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				try {
+					addDisciplinaPeriodo(disc.getId(), periodo);
+					disciplinasNaoAlocadas.remove(disc);
+				} catch (AlocacaoInvalidaException e) {
+					e.printStackTrace();
+				} catch (TotalDeCreditosInvalidoException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
-
-	private void removeDiscPrimPeriodo() {
-
-		disciplinasNaoAlocadas.remove(getDisciplina("01"));
-		disciplinasNaoAlocadas.remove(getDisciplina("02"));
-		disciplinasNaoAlocadas.remove(getDisciplina("03"));
-		disciplinasNaoAlocadas.remove(getDisciplina("04"));
-		disciplinasNaoAlocadas.remove(getDisciplina("05"));
-		disciplinasNaoAlocadas.remove(getDisciplina("06"));
-	}
-
 }

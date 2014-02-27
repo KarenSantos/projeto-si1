@@ -6,29 +6,30 @@
 
 <div id="col1"><h2 style="border-bottom: none">Períodos</h2><!-- coluna de periodos -->
 
-	<div class="disciplinasPeriodo"><!-- Começo de um periodo -->
-	
-		@for(periodo <- periodos){
-		<div class="numPriodo">@periodo.getNumero()º Período</div><!-- Numero do periodo -->
-			<div id="headerDescription" style="display:;">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
-			<div class="disc"><!-- Disciplinas do periodo -->
-			    @for(disciplinaPeriodo <- periodo.getDisciplinas()) {
-			    	<a class="cada1" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome() </a>  <span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
-			    	<br>
-			    }
-			</div>
-			<div class="totalC"><!-- Total de créditos do periodo -->
-			@if(periodo.getTotalDeCreditos() < 14){
-				<div class="totalCNota">Número mínimo de 14 créditos não alcançado</div>
-			}
-				<b>Total: </b>@periodo.getTotalDeCreditos()  /   @periodo.getTotalDeDificuldade()
-			</div>
-			@form(routes.Application.editar(periodo.getNumero())) {
-				<input class="addDisc" type="submit" value="Editar período">
-			}
-			
-	    }
-	   
+	<div id="periodoBox">
+		<div class="disciplinasPeriodo"><!-- Começo de um periodo -->
+		
+			@for(periodo <- periodos){
+			<div class="numPriodo">@periodo.getNumero()º Período</div><!-- Numero do periodo -->
+				<div id="headerDescription" style="display:;">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
+				<div class="disc"><!-- Disciplinas do periodo -->
+				    @for(disciplinaPeriodo <- periodo.getDisciplinas()) {
+				    	<a class="cada1" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome() </a>  <span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
+				    	<br>
+				    }
+				</div>
+				<div class="totalC"><!-- Total de créditos do periodo -->
+				@if(periodo.getTotalDeCreditos() < 14){
+					<div class="totalCNota">Número mínimo de 14 créditos não alcançado</div>
+				}
+					<b>Total: </b>@periodo.getTotalDeCreditos()  /   @periodo.getTotalDeDificuldade()
+				</div>
+				@form(routes.Application.editar(periodo.getNumero())) {
+					<input class="addDisc" type="submit" value="Editar período">
+				}
+				
+		    }
+		</div>
 	</div><!-- Fim de um periodo -->
 	
 	<div id="addPeriodo">
@@ -38,11 +39,13 @@
 	</div><!-- div para criar novo periodo -->
 </div>
 
+<div id="col3"><h2>Disciplinas</h2><!-- coluna de disciplinas -->
 
-<div id="col2"><h2>Disciplinas Obrigatórias</h2><!-- coluna de disciplinas -->
-	
+	<div id="header">Obrigatórias</div>
 	<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
+	
 	<div class="disc2">
+		
 		@for(disciplina <- naoAlocadas) {
 			@if(disciplina.getPeriodoSugerido() == 2){
 				<a class="cada2" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
@@ -92,29 +95,29 @@
 			}
 		}
 	</div>
-</div>
-<div id="col3"><h2>Disciplinas Optativas</h2><!-- coluna de disciplinas optativas -->
-	<div id="header">Outros cursos</div>
+
+	<div id="header">Optativas de Outros Cursos</div>
 	<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
-		<div class="disc2">
-			@for(disciplina <- naoAlocadas) {
-					@if(disciplina.getPeriodoSugerido() == -1){
-						<a class="cada3" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
-						<br>
-					}
-			}
-		</div>
-			
-	<div id="header">TECC</div>
-	<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
-			
-		<div class="disc2">
-			@for(disciplina <- naoAlocadas) {
-				@if(disciplina.getPeriodoSugerido() == -2){
+	
+	<div class="disc2">
+		@for(disciplina <- naoAlocadas) {
+				@if(disciplina.getPeriodoSugerido() == -1){
 					<a class="cada3" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 					<br>
 				}
+		}
+	</div>
+			
+	<div id="header">Optativas TECC</div>
+	<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
+			
+	<div class="disc2">
+		@for(disciplina <- naoAlocadas) {
+			@if(disciplina.getPeriodoSugerido() == -2){
+				<a class="cada3" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
+				<br>
 			}
+		}
 	</div>
 </div>
 }
