@@ -1,6 +1,6 @@
 [0m[[0mdebug[0m] [0mCopy play resource mappings: [0m
-[0m[[0mdebug[0m] [0m	(/home/karen/workspace/projeto-si1/public/stylesheets/main.css,/home/karen/workspace/projeto-si1/target/scala-2.10/classes/public/stylesheets/main.css)[0m
-[0m[[0mdebug[0m] [0m	(/home/karen/workspace/projeto-si1/public/javascripts/main.js,/home/karen/workspace/projeto-si1/target/scala-2.10/classes/public/javascripts/main.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/karen/workspace/projeto-si1/public/javascripts/jquery-1.9.0.min.js,/home/karen/workspace/projeto-si1/target/scala-2.10/classes/public/javascripts/jquery-1.9.0.min.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/karen/workspace/projeto-si1/public/images/favicon.png,/home/karen/workspace/projeto-si1/target/scala-2.10/classes/public/images/favicon.png)[0m
-[0m[[0mdebug[0m] [0m	(/home/karen/workspace/projeto-si1/public/images/ufcg.jpg,/home/karen/workspace/projeto-si1/target/scala-2.10/classes/public/images/ufcg.jpg)[0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\images\favicon.png,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\images\favicon.png)[0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\images\ufcg.jpg,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\images\ufcg.jpg)[0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\javascripts\jquery-1.9.0.min.js,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\javascripts\jquery-1.9.0.min.js)[0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\javascripts\main.js,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\javascripts\main.js)[0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\stylesheets\main.css,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\stylesheets\main.css)[0m
