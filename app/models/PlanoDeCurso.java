@@ -6,18 +6,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import play.db.ebean.Model;
+
 /**
  * Classe do plano de curso.
  * 
  * @author
  * 
  */
-public class PlanoDeCurso {
+@Entity
+public class PlanoDeCurso extends Model {
 
+	private static final long serialVersionUID = 1L;
 	final private int PERIODO_MAXIMO = 14;
 	private final int MAXIMO_DE_CREDITOS = 28;
 
-
+	@Id
+	private String id;
 	private List<Periodo> periodos;
 	private Curriculo curriculo;
 	private List<Disciplina> disciplinasNaoAlocadas;
@@ -29,6 +37,22 @@ public class PlanoDeCurso {
 	 */
 	public PlanoDeCurso() {
 		// CREATOR, o plano de curso inicializa os objetos abaixo
+		periodos = new ArrayList<Periodo>();
+		curriculo = new Curriculo();
+
+		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
+		disciplinasNaoAlocadas.addAll(curriculo.getDisciplinas());
+
+		alocaDisciplinas();
+	}
+	
+	/**
+	 * Inicia um plano de curso com um lista de periodos, um curriculo e uma
+	 * lista de disciplinas não alocadas. Configura os periodos com as
+	 * disciplinas obrigatorias.
+	 */
+	public PlanoDeCurso(String id) {
+		this.id = id;
 		periodos = new ArrayList<Periodo>();
 		curriculo = new Curriculo();
 

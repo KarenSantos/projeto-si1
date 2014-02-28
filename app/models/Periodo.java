@@ -4,22 +4,36 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import play.db.ebean.Model;
+
 /**
  * Classe de periodos academicos.
  * 
  * @author
  * 
  */
-public class Periodo {
+@Entity
+public class Periodo extends Model {
 
+	private static final long serialVersionUID = 1L;
 	private final int MENOR_NUM_PERIODO = 1;
 	private final int MAIOR_NUM_PERIODO = 14;
 
+	@Id
+	private String id;
 	private List<Disciplina> disciplinas;
 	private int totalDeCreditos;
 	private int totalDeDificuldade;
 	private int numero;
 
+	/**
+	 * Cria um periodo sem numero.
+	 */
+	public Periodo() {}
+	
 	/**
 	 * Um periodo contem uma lista de disciplinas e o total de creditos do
 	 * periodo.

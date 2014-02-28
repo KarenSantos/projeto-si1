@@ -3,19 +3,36 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import play.db.ebean.Model;
+
 /**
  * Classe de disciplinas.
  * 
  * @author
  * 
  */
-public class Disciplina {
+@Entity
+public class Disciplina extends Model {
 
-	private String id, nome;
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	private String id;
+	private String nome;
 	private int creditos;
 	private List<Disciplina> preRequisitos;
 	private int periodoSugerido;
 	private int dificuldade;
+	private boolean alocadaCorretamente;
+
+	/**
+	 * Cria uma disciplina com tudo null.
+	 */
+	public Disciplina() {
+	};
 
 	/**
 	 * Cria uma disciplina com um id, um nome, a quantidade de creditos, uma
@@ -43,7 +60,16 @@ public class Disciplina {
 		this.creditos = creditos;
 		this.preRequisitos = preRequisitos;
 		this.periodoSugerido = periodoSugerido;
-		this.dificuldade = dificuldade;
+
+		if (dificuldade < 0) {
+			this.dificuldade = 0;
+		} else if (dificuldade > 5) {
+			this.dificuldade = 5;
+		} else {
+			this.dificuldade = dificuldade;
+		}
+
+		this.alocadaCorretamente = true;
 	}
 
 	/**
@@ -70,7 +96,16 @@ public class Disciplina {
 		this.creditos = creditos;
 		this.preRequisitos = new ArrayList<Disciplina>();
 		this.periodoSugerido = periodoSugerido;
-		this.dificuldade = dificuldade;
+
+		if (dificuldade < 0) {
+			this.dificuldade = 0;
+		} else if (dificuldade > 5) {
+			this.dificuldade = 5;
+		} else {
+			this.dificuldade = dificuldade;
+		}
+
+		this.alocadaCorretamente = true;
 	}
 
 	/**
@@ -83,12 +118,32 @@ public class Disciplina {
 	}
 
 	/**
+	 * Altera o id da disciplina.
+	 * 
+	 * @param id
+	 *            O novo id.
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	/**
 	 * Retorna o nome da disciplina.
 	 * 
 	 * @return O nome da disciplina.
 	 */
 	public String getNome() {
 		return nome;
+	}
+
+	/**
+	 * Altera o nome da disciplina.
+	 * 
+	 * @param nome
+	 *            O novo nome da disciplina.
+	 */
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	/**
@@ -101,12 +156,32 @@ public class Disciplina {
 	}
 
 	/**
+	 * Altera o numero de creditos da disciplina.
+	 * 
+	 * @param cred
+	 *            O novo numero de creditos da disciplina.
+	 */
+	public void setCreditos(int cred) {
+		this.creditos = cred;
+	}
+
+	/**
 	 * Retorna a lista de pre requisitos da disciplina.
 	 * 
 	 * @return A lista de pre requisitos da disciplina.
 	 */
 	public List<Disciplina> getPreRequisitos() {
 		return preRequisitos;
+	}
+
+	/**
+	 * Altera a lista de pre-requisitos da disciplina.
+	 * 
+	 * @param preRequisitos
+	 *            A nova lista de pre-requisitos da disciplina.
+	 */
+	public void setPreRequisitos(List<Disciplina> preRequisitos) {
+		this.preRequisitos = preRequisitos;
 	}
 
 	/**
@@ -119,12 +194,72 @@ public class Disciplina {
 	}
 
 	/**
+	 * Altera o periodo sugerido da disciplina.
+	 * 
+	 * @param periodo
+	 *            O novo periodo sugerido da disciplina.
+	 */
+	public void setPeriodoSugerido(int periodo) {
+		this.periodoSugerido = periodo;
+	}
+
+	/**
 	 * Retorna a dificuldade indicada para a disciplina.
 	 * 
 	 * @return A dificuldade da disciplina.
 	 */
 	public int getDificuldade() {
 		return dificuldade;
+	}
+
+	/**
+	 * Altera a dificuldade da disciplina.
+	 * 
+	 * @param dif
+	 *            A nova dificuldade da disciplina.
+	 */
+	public void setDificuldade(int dif) {
+		if (dif < 0) {
+			this.dificuldade = 0;
+		} else if (dif > 5) {
+			this.dificuldade = 5;
+		} else {
+			this.dificuldade = dif;
+		}
+	}
+
+	/**
+	 * Retorna se a disciplina está ou não alocada corretamente.
+	 * 
+	 * @return True se a disciplina esta alocada corretamente, e false caso
+	 *         contrario.
+	 */
+	public boolean isAlocadaCorretamente() {
+		return alocadaCorretamente;
+	}
+
+	/**
+	 * Altera o status da disciplina se esta alocada corretamente ou nao.
+	 * 
+	 * @param alocada
+	 *            O novo status da disciplina.
+	 */
+	public void setAlocadaCorretamente(boolean alocada) {
+		this.alocadaCorretamente = alocada;
+	}
+
+	/**
+	 * Altera o status da disciplina para esta alocada corretamente.
+	 */
+	public void setIsAlocadaCorretamente() {
+		this.alocadaCorretamente = true;
+	}
+
+	/**
+	 * Altera o status da disciplina para não alocada corretamente.
+	 */
+	public void setNotAlocadaCorretamente() {
+		this.alocadaCorretamente = false;
 	}
 
 	/**
@@ -142,7 +277,8 @@ public class Disciplina {
 	}
 
 	/**
-	 * 
+	 * Retorna uma string contendo o nome e quantidade de créditos da
+	 * disciplina.
 	 */
 	@Override
 	public String toString() {
