@@ -54,9 +54,13 @@ public class Application extends Controller {
 		try {
 			planejador.removeDisciplinaPeriodo(disciplinaId, periodo);
 		} catch (AlocacaoInvalidaException e) {
-			e.printStackTrace();
 		}
 		return redirect((routes.Application).editar(periodo));
+	}
+	
+	public static Result mover(String disciplinaId, int periodoFuturo, int periodoAtual) {
+		planejador.moveDisciplina(disciplinaId, periodoFuturo, periodoAtual);
+		return redirect((routes.Application).editar(periodoFuturo));
 	}
 	
 	public static Result deletarPeriodo(int periodo){

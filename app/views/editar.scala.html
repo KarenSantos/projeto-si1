@@ -17,10 +17,10 @@
 				<div class="disc"><!-- Disciplinas do periodo -->
 				    @for(disciplinaPeriodo <- periodo.getDisciplinas()) {
 				    	@if(disciplinaPeriodo.isAlocadaCorretamente()) {
-				    	   	<a onclick="removerDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo')" class="cada1" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a><span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
+				    	   	<a onclick="rDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo')" class="cada1" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a><span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
 				    		<br>
 				    	} else {
-				    		<a onclick="removerDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo')" class="cada1 discRed" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a><span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
+				    		<a onclick="rDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo')" class="cada1 discRed" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a><span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
 				    		<br>
 				    	}
 				    }

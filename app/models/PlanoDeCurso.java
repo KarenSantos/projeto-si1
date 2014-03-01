@@ -49,7 +49,7 @@ public class PlanoDeCurso extends Model {
 
 		if (findCurriculo.ref("SC") == null) {
 			curriculo = new Curriculo("SC");
-//			curriculo.save();
+			// curriculo.save();
 		}
 
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
@@ -69,7 +69,7 @@ public class PlanoDeCurso extends Model {
 
 		if (findCurriculo.ref("SC") == null) {
 			curriculo = new Curriculo("SC");
-//			curriculo.save();
+			// curriculo.save();
 		}
 
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
@@ -138,6 +138,15 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
+	 * Retorna a lista das Disciplinas nao alocadas.
+	 * 
+	 * @return Uma lista com as Disciplinas nao alocadas.
+	 */
+	public List<Disciplina> getDisciplinasNaoAlocadas() {
+		return Collections.unmodifiableList(disciplinasNaoAlocadas);
+	}
+
+	/**
 	 * Cria um novo periodo vazio.
 	 * 
 	 * @throws AlocacaoInvalidaException
@@ -155,7 +164,7 @@ public class PlanoDeCurso extends Model {
 		// CONTROLLER - nova operação de sistema
 		// CREATOR - o planejamento de curso eh composto por periodos
 		Periodo novoPeriodo = new Periodo(id, ultimoPeriodo + 1);
-//		novoPeriodo.save();
+		// novoPeriodo.save();
 		periodos.add(novoPeriodo);
 	}
 
@@ -250,12 +259,37 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
-	 * Retorna a lista das Disciplinas nao alocadas.
+	 * Move uma disciplina de um periodo para outro.
 	 * 
-	 * @return Uma lista com as Disciplinas nao alocadas.
+	 * @param disciplinaId
+	 *            A disciplina que vai ser movida.
+	 * @param periodoFuturu
+	 *            O periodo para onde vai ser movida a disciplina.
+	 * @param periodoAtual
+	 *            O periodo onde está a disciplina que vai ser movida.
 	 */
-	public List<Disciplina> getDisciplinasNaoAlocadas() {
-		return Collections.unmodifiableList(disciplinasNaoAlocadas);
+	public void moveDisciplina(String disciplinaId, int periodoFuturo,
+			int periodoAtual) {
+		Disciplina aDisciplina = getDisciplina(disciplinaId);
+
+		if (periodoFuturo > periodoAtual) {
+			
+			getPeriodo(periodoAtual).removeDisciplina(aDisciplina);
+			getPeriodo(periodoFuturo).addDisciplina(aDisciplina);
+			
+			List<Disciplina> ehPreRequisitoDessas = temComoPreRequisito(aDisciplina);
+			
+			for (int i = 1; i < periodoFuturo + 1; i++) {  // vai checar ate o periodo que ela esta
+				for (Disciplina disc : getPeriodo(i).getDisciplinas()) {
+					if (ehPreRequisitoDessas.contains(disc)) {
+						aDisciplina.setNotAlocadaCorretamente();
+					}						
+				}
+			}
+		} else if (periodoFuturo < periodoAtual){
+			
+		}
+		
 	}
 
 	/**
@@ -270,26 +304,6 @@ public class PlanoDeCurso extends Model {
 				periodos.remove(i);
 			}
 		}
-	}
-
-	/**
-	 * Diz se uma disciplina é pre-requisito de outra disciplina já alocada.
-	 * 
-	 * @param discId
-	 *            A disciplina que pode ser pre-requisito ou nao de outra já
-	 *            alocada.
-	 * @return True se a disciplina é pre-requisito e false se não é.
-	 */
-	public boolean ehPreRequisito(Disciplina disc, int periodo) {
-		boolean resp = false;
-
-		Map<Disciplina, Integer> dependentes = new HashMap<Disciplina, Integer>();
-		identificaDependentes(disc, periodo, dependentes);
-
-		if (!dependentes.isEmpty()) {
-			resp = true;
-		}
-		return resp;
 	}
 
 	/**
@@ -363,29 +377,54 @@ public class PlanoDeCurso extends Model {
 	 * 
 	 * @param disciplina
 	 *            A disciplina que é pre-requisito.
-	 * @param periodoAcima
-	 *            O periodo acima do periodo da disciplina.
+	 * @param periodo
+	 *            O periodo da disciplina.
 	 * @param dependentes
-	 *            A lista de disciplinas tem esta disciplina como pre-requisito.
+	 *            A lista de disciplinas que tem esta disciplina como
+	 *            pre-requisito.
 	 */
-	private void identificaDependentes(Disciplina disciplina, int periodoAcima,
+	private void identificaDependentes(Disciplina disciplina, int periodo,
 			Map<Disciplina, Integer> dependentes) {
-		periodoAcima++;
-		if (getPeriodos().size() >= periodoAcima) {
+		periodo++;
+		if (getPeriodos().size() >= periodo) {
 
-			for (Disciplina disciplinaAcima : getPeriodo(periodoAcima)
+			for (Disciplina disciplinaAcima : getPeriodo(periodo)
 					.getDisciplinas()) {
 
 				for (Disciplina preRequito : disciplinaAcima.getPreRequisitos()) {
 
 					if (disciplina.equals(preRequito)) {
-						dependentes.put(disciplinaAcima, periodoAcima);
-						identificaDependentes(disciplinaAcima, periodoAcima,
+						dependentes.put(disciplinaAcima, periodo);
+						identificaDependentes(disciplinaAcima, periodo,
 								dependentes);
 					}
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Retorna uma lista de disciplinas da qual esta é pre-requisito.
+	 * 
+	 * @param discId
+	 *            A disciplina que pode ser pre-requisito ou nao de outras.
+	 * @return A lista de disciplinas da qual esta é pre-requisito.
+	 */
+	private List<Disciplina> temComoPreRequisito(Disciplina aDisciplina) {
+		
+		List<Disciplina> resp = new ArrayList<Disciplina>();
+
+		for (Disciplina disc : curriculo.getDisciplinas()) {
+			if (disc.getPeriodoSugerido() > aDisciplina.getPeriodoSugerido()) {
+				for (Disciplina preRequisito : disc.getPreRequisitos()) {
+					if (aDisciplina == preRequisito) {
+						resp.add(disc);
+					}
+				}
+			}
+		}
+		
+		return resp;
 	}
 
 	/**

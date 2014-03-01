@@ -39,22 +39,27 @@ Seq[Any](format.raw/*1.78*/("""
 <div id="col1">
 	"""),_display_(Seq[Any](/*12.3*/for(periodo <- periodos) yield /*12.27*/{_display_(Seq[Any](format.raw/*12.28*/("""
 		<div id="periodoBox">
-			<a onclick="editaPeriodo()" title="Clique aqui para editar"><div id="numPeriodo"><b>"""),_display_(Seq[Any](/*14.89*/periodo/*14.96*/.getNumero())),format.raw/*14.108*/("""º</b> Período</div></a><!-- Numero do periodo -->
+			<a onclick="editaPeriodo('"""),_display_(Seq[Any](/*14.31*/periodo/*14.38*/.getNumero())),format.raw/*14.50*/("""')" title="Clique aqui para editar"><div id="numPeriodo"><b>"""),_display_(Seq[Any](/*14.111*/periodo/*14.118*/.getNumero())),format.raw/*14.130*/("""º</b> Período</div></a><!-- Numero do periodo -->
 			<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
 			<div class="disc"><!-- Disciplinas do periodo -->
 			    """),_display_(Seq[Any](/*17.9*/for(disciplinaPeriodo <- periodo.getDisciplinas()) yield /*17.59*/ {_display_(Seq[Any](format.raw/*17.61*/("""
-			    	<a class="cada1" title="Pré-requisitos: """),_display_(Seq[Any](/*18.50*/disciplinaPeriodo/*18.67*/.getPreRequisitos)),format.raw/*18.84*/("""">"""),_display_(Seq[Any](/*18.87*/disciplinaPeriodo/*18.104*/.getNome())),format.raw/*18.114*/(""" </a>  <span>"""),_display_(Seq[Any](/*18.128*/disciplinaPeriodo/*18.145*/.getCreditos())),format.raw/*18.159*/(""" / """),_display_(Seq[Any](/*18.163*/disciplinaPeriodo/*18.180*/.getDificuldade())),format.raw/*18.197*/("""</span>
-			    	<br>
-			    """)))})),format.raw/*20.9*/("""
+			    	"""),_display_(Seq[Any](/*18.10*/if(disciplinaPeriodo.isAlocadaCorretamente())/*18.55*/ {_display_(Seq[Any](format.raw/*18.57*/("""
+			    	   	<a title="Pré-requisitos: """),_display_(Seq[Any](/*19.40*/disciplinaPeriodo/*19.57*/.getPreRequisitos)),format.raw/*19.74*/("""">"""),_display_(Seq[Any](/*19.77*/disciplinaPeriodo/*19.94*/.getNome())),format.raw/*19.104*/(""" </a>  <span>"""),_display_(Seq[Any](/*19.118*/disciplinaPeriodo/*19.135*/.getCreditos())),format.raw/*19.149*/(""" / """),_display_(Seq[Any](/*19.153*/disciplinaPeriodo/*19.170*/.getDificuldade())),format.raw/*19.187*/("""</span>
+			    		<br>
+			    	""")))}/*21.11*/else/*21.16*/{_display_(Seq[Any](format.raw/*21.17*/("""
+			    		<a class="discRed" title="Pré-requisitos: """),_display_(Seq[Any](/*22.53*/disciplinaPeriodo/*22.70*/.getPreRequisitos)),format.raw/*22.87*/("""">"""),_display_(Seq[Any](/*22.90*/disciplinaPeriodo/*22.107*/.getNome())),format.raw/*22.117*/(""" </a>  <span>"""),_display_(Seq[Any](/*22.131*/disciplinaPeriodo/*22.148*/.getCreditos())),format.raw/*22.162*/(""" / """),_display_(Seq[Any](/*22.166*/disciplinaPeriodo/*22.183*/.getDificuldade())),format.raw/*22.200*/("""</span>
+			    		<br>
+			    	""")))})),format.raw/*24.10*/("""
+			    """)))})),format.raw/*25.9*/("""
 			</div>
 			<div class="totalC"><!-- Total de créditos do periodo -->
-			"""),_display_(Seq[Any](/*23.5*/if(periodo.getTotalDeCreditos() < 14)/*23.42*/{_display_(Seq[Any](format.raw/*23.43*/("""
+			"""),_display_(Seq[Any](/*28.5*/if(periodo.getTotalDeCreditos() < 14)/*28.42*/{_display_(Seq[Any](format.raw/*28.43*/("""
 				<div class="totalCNota">Número mínimo de 14 créditos não alcançado</div>
-			""")))})),format.raw/*25.5*/("""
-				<b>Total: </b>"""),_display_(Seq[Any](/*26.20*/periodo/*26.27*/.getTotalDeCreditos())),format.raw/*26.48*/("""  /   """),_display_(Seq[Any](/*26.55*/periodo/*26.62*/.getTotalDeDificuldade())),format.raw/*26.86*/("""
+			""")))})),format.raw/*30.5*/("""
+				<b>Total: </b>"""),_display_(Seq[Any](/*31.20*/periodo/*31.27*/.getTotalDeCreditos())),format.raw/*31.48*/("""  /   """),_display_(Seq[Any](/*31.55*/periodo/*31.62*/.getTotalDeDificuldade())),format.raw/*31.86*/("""
 			</div>
 		</div><!-- Fim de um periodo -->
-	""")))})),format.raw/*29.3*/("""
+	""")))})),format.raw/*34.3*/("""
 	
 </div>
 
@@ -65,81 +70,81 @@ Seq[Any](format.raw/*1.78*/("""
 	
 	<div class="disc2">
 		
-		"""),_display_(Seq[Any](/*40.4*/for(disciplina <- naoAlocadas) yield /*40.34*/ {_display_(Seq[Any](format.raw/*40.36*/("""
-			"""),_display_(Seq[Any](/*41.5*/if(disciplina.getPeriodoSugerido() == 2)/*41.45*/{_display_(Seq[Any](format.raw/*41.46*/("""
-				<a class="cada2" title="Pré-requisitos: """),_display_(Seq[Any](/*42.46*/disciplina/*42.56*/.getPreRequisitos())),format.raw/*42.75*/("""">"""),_display_(Seq[Any](/*42.78*/disciplina/*42.88*/.getNome())),format.raw/*42.98*/("""</a>   <span>"""),_display_(Seq[Any](/*42.112*/disciplina/*42.122*/.getCreditos())),format.raw/*42.136*/("""  /  """),_display_(Seq[Any](/*42.142*/disciplina/*42.152*/.getDificuldade())),format.raw/*42.169*/("""</span>
+		"""),_display_(Seq[Any](/*45.4*/for(disciplina <- naoAlocadas) yield /*45.34*/ {_display_(Seq[Any](format.raw/*45.36*/("""
+			"""),_display_(Seq[Any](/*46.5*/if(disciplina.getPeriodoSugerido() == 2)/*46.45*/{_display_(Seq[Any](format.raw/*46.46*/("""
+				<a title="Pré-requisitos: """),_display_(Seq[Any](/*47.32*/disciplina/*47.42*/.getPreRequisitos())),format.raw/*47.61*/("""">"""),_display_(Seq[Any](/*47.64*/disciplina/*47.74*/.getNome())),format.raw/*47.84*/("""</a>   <span>"""),_display_(Seq[Any](/*47.98*/disciplina/*47.108*/.getCreditos())),format.raw/*47.122*/("""  /  """),_display_(Seq[Any](/*47.128*/disciplina/*47.138*/.getDificuldade())),format.raw/*47.155*/("""</span>
 				<br>
-			""")))})),format.raw/*44.5*/("""
-		""")))})),format.raw/*45.4*/("""
+			""")))})),format.raw/*49.5*/("""
+		""")))})),format.raw/*50.4*/("""
 		<br>
-		"""),_display_(Seq[Any](/*47.4*/for(disciplina <- naoAlocadas) yield /*47.34*/ {_display_(Seq[Any](format.raw/*47.36*/("""
-			"""),_display_(Seq[Any](/*48.5*/if(disciplina.getPeriodoSugerido() == 3)/*48.45*/{_display_(Seq[Any](format.raw/*48.46*/("""
-				<a class="cada2" title="Pré-requisitos: """),_display_(Seq[Any](/*49.46*/disciplina/*49.56*/.getPreRequisitos())),format.raw/*49.75*/("""">"""),_display_(Seq[Any](/*49.78*/disciplina/*49.88*/.getNome())),format.raw/*49.98*/("""</a>   <span>"""),_display_(Seq[Any](/*49.112*/disciplina/*49.122*/.getCreditos())),format.raw/*49.136*/("""  /  """),_display_(Seq[Any](/*49.142*/disciplina/*49.152*/.getDificuldade())),format.raw/*49.169*/("""</span>
+		"""),_display_(Seq[Any](/*52.4*/for(disciplina <- naoAlocadas) yield /*52.34*/ {_display_(Seq[Any](format.raw/*52.36*/("""
+			"""),_display_(Seq[Any](/*53.5*/if(disciplina.getPeriodoSugerido() == 3)/*53.45*/{_display_(Seq[Any](format.raw/*53.46*/("""
+				<a title="Pré-requisitos: """),_display_(Seq[Any](/*54.32*/disciplina/*54.42*/.getPreRequisitos())),format.raw/*54.61*/("""">"""),_display_(Seq[Any](/*54.64*/disciplina/*54.74*/.getNome())),format.raw/*54.84*/("""</a>   <span>"""),_display_(Seq[Any](/*54.98*/disciplina/*54.108*/.getCreditos())),format.raw/*54.122*/("""  /  """),_display_(Seq[Any](/*54.128*/disciplina/*54.138*/.getDificuldade())),format.raw/*54.155*/("""</span>
 				<br>
-			""")))})),format.raw/*51.5*/("""
-		""")))})),format.raw/*52.4*/("""
+			""")))})),format.raw/*56.5*/("""
+		""")))})),format.raw/*57.4*/("""
 		<br>
-		"""),_display_(Seq[Any](/*54.4*/for(disciplina <- naoAlocadas) yield /*54.34*/ {_display_(Seq[Any](format.raw/*54.36*/("""
-			"""),_display_(Seq[Any](/*55.5*/if(disciplina.getPeriodoSugerido() == 4)/*55.45*/{_display_(Seq[Any](format.raw/*55.46*/("""
-				<a class="cada2" title="Pré-requisitos: """),_display_(Seq[Any](/*56.46*/disciplina/*56.56*/.getPreRequisitos())),format.raw/*56.75*/("""">"""),_display_(Seq[Any](/*56.78*/disciplina/*56.88*/.getNome())),format.raw/*56.98*/("""</a>   <span>"""),_display_(Seq[Any](/*56.112*/disciplina/*56.122*/.getCreditos())),format.raw/*56.136*/("""  /  """),_display_(Seq[Any](/*56.142*/disciplina/*56.152*/.getDificuldade())),format.raw/*56.169*/("""</span>
+		"""),_display_(Seq[Any](/*59.4*/for(disciplina <- naoAlocadas) yield /*59.34*/ {_display_(Seq[Any](format.raw/*59.36*/("""
+			"""),_display_(Seq[Any](/*60.5*/if(disciplina.getPeriodoSugerido() == 4)/*60.45*/{_display_(Seq[Any](format.raw/*60.46*/("""
+				<a title="Pré-requisitos: """),_display_(Seq[Any](/*61.32*/disciplina/*61.42*/.getPreRequisitos())),format.raw/*61.61*/("""">"""),_display_(Seq[Any](/*61.64*/disciplina/*61.74*/.getNome())),format.raw/*61.84*/("""</a>   <span>"""),_display_(Seq[Any](/*61.98*/disciplina/*61.108*/.getCreditos())),format.raw/*61.122*/("""  /  """),_display_(Seq[Any](/*61.128*/disciplina/*61.138*/.getDificuldade())),format.raw/*61.155*/("""</span>
 				<br>
-			""")))})),format.raw/*58.5*/("""
-		""")))})),format.raw/*59.4*/("""
+			""")))})),format.raw/*63.5*/("""
+		""")))})),format.raw/*64.4*/("""
 		<br>
-		"""),_display_(Seq[Any](/*61.4*/for(disciplina <- naoAlocadas) yield /*61.34*/ {_display_(Seq[Any](format.raw/*61.36*/("""
-			"""),_display_(Seq[Any](/*62.5*/if(disciplina.getPeriodoSugerido() == 5)/*62.45*/{_display_(Seq[Any](format.raw/*62.46*/("""
-				<a class="cada2" title="Pré-requisitos: """),_display_(Seq[Any](/*63.46*/disciplina/*63.56*/.getPreRequisitos())),format.raw/*63.75*/("""">"""),_display_(Seq[Any](/*63.78*/disciplina/*63.88*/.getNome())),format.raw/*63.98*/("""</a>   <span>"""),_display_(Seq[Any](/*63.112*/disciplina/*63.122*/.getCreditos())),format.raw/*63.136*/("""  /  """),_display_(Seq[Any](/*63.142*/disciplina/*63.152*/.getDificuldade())),format.raw/*63.169*/("""</span>
+		"""),_display_(Seq[Any](/*66.4*/for(disciplina <- naoAlocadas) yield /*66.34*/ {_display_(Seq[Any](format.raw/*66.36*/("""
+			"""),_display_(Seq[Any](/*67.5*/if(disciplina.getPeriodoSugerido() == 5)/*67.45*/{_display_(Seq[Any](format.raw/*67.46*/("""
+				<a title="Pré-requisitos: """),_display_(Seq[Any](/*68.32*/disciplina/*68.42*/.getPreRequisitos())),format.raw/*68.61*/("""">"""),_display_(Seq[Any](/*68.64*/disciplina/*68.74*/.getNome())),format.raw/*68.84*/("""</a>   <span>"""),_display_(Seq[Any](/*68.98*/disciplina/*68.108*/.getCreditos())),format.raw/*68.122*/("""  /  """),_display_(Seq[Any](/*68.128*/disciplina/*68.138*/.getDificuldade())),format.raw/*68.155*/("""</span>
 				<br>
-			""")))})),format.raw/*65.5*/("""
-		""")))})),format.raw/*66.4*/("""
+			""")))})),format.raw/*70.5*/("""
+		""")))})),format.raw/*71.4*/("""
 		<br>
-		"""),_display_(Seq[Any](/*68.4*/for(disciplina <- naoAlocadas) yield /*68.34*/ {_display_(Seq[Any](format.raw/*68.36*/("""
-			"""),_display_(Seq[Any](/*69.5*/if(disciplina.getPeriodoSugerido() == 6)/*69.45*/{_display_(Seq[Any](format.raw/*69.46*/("""
-				<a class="cada2" title="Pré-requisitos: """),_display_(Seq[Any](/*70.46*/disciplina/*70.56*/.getPreRequisitos())),format.raw/*70.75*/("""">"""),_display_(Seq[Any](/*70.78*/disciplina/*70.88*/.getNome())),format.raw/*70.98*/("""</a>   <span>"""),_display_(Seq[Any](/*70.112*/disciplina/*70.122*/.getCreditos())),format.raw/*70.136*/("""  /  """),_display_(Seq[Any](/*70.142*/disciplina/*70.152*/.getDificuldade())),format.raw/*70.169*/("""</span>
+		"""),_display_(Seq[Any](/*73.4*/for(disciplina <- naoAlocadas) yield /*73.34*/ {_display_(Seq[Any](format.raw/*73.36*/("""
+			"""),_display_(Seq[Any](/*74.5*/if(disciplina.getPeriodoSugerido() == 6)/*74.45*/{_display_(Seq[Any](format.raw/*74.46*/("""
+				<a title="Pré-requisitos: """),_display_(Seq[Any](/*75.32*/disciplina/*75.42*/.getPreRequisitos())),format.raw/*75.61*/("""">"""),_display_(Seq[Any](/*75.64*/disciplina/*75.74*/.getNome())),format.raw/*75.84*/("""</a>   <span>"""),_display_(Seq[Any](/*75.98*/disciplina/*75.108*/.getCreditos())),format.raw/*75.122*/("""  /  """),_display_(Seq[Any](/*75.128*/disciplina/*75.138*/.getDificuldade())),format.raw/*75.155*/("""</span>
 				<br>
-			""")))})),format.raw/*72.5*/("""
-		""")))})),format.raw/*73.4*/("""
+			""")))})),format.raw/*77.5*/("""
+		""")))})),format.raw/*78.4*/("""
 		<br>
-		"""),_display_(Seq[Any](/*75.4*/for(disciplina <- naoAlocadas) yield /*75.34*/ {_display_(Seq[Any](format.raw/*75.36*/("""
-			"""),_display_(Seq[Any](/*76.5*/if(disciplina.getPeriodoSugerido() == 7)/*76.45*/{_display_(Seq[Any](format.raw/*76.46*/("""
-				<a class="cada2" title="Pré-requisitos: """),_display_(Seq[Any](/*77.46*/disciplina/*77.56*/.getPreRequisitos())),format.raw/*77.75*/("""">"""),_display_(Seq[Any](/*77.78*/disciplina/*77.88*/.getNome())),format.raw/*77.98*/("""</a>   <span>"""),_display_(Seq[Any](/*77.112*/disciplina/*77.122*/.getCreditos())),format.raw/*77.136*/("""  /  """),_display_(Seq[Any](/*77.142*/disciplina/*77.152*/.getDificuldade())),format.raw/*77.169*/("""</span>
+		"""),_display_(Seq[Any](/*80.4*/for(disciplina <- naoAlocadas) yield /*80.34*/ {_display_(Seq[Any](format.raw/*80.36*/("""
+			"""),_display_(Seq[Any](/*81.5*/if(disciplina.getPeriodoSugerido() == 7)/*81.45*/{_display_(Seq[Any](format.raw/*81.46*/("""
+				<a title="Pré-requisitos: """),_display_(Seq[Any](/*82.32*/disciplina/*82.42*/.getPreRequisitos())),format.raw/*82.61*/("""">"""),_display_(Seq[Any](/*82.64*/disciplina/*82.74*/.getNome())),format.raw/*82.84*/("""</a>   <span>"""),_display_(Seq[Any](/*82.98*/disciplina/*82.108*/.getCreditos())),format.raw/*82.122*/("""  /  """),_display_(Seq[Any](/*82.128*/disciplina/*82.138*/.getDificuldade())),format.raw/*82.155*/("""</span>
 				<br>
-			""")))})),format.raw/*79.5*/("""
-		""")))})),format.raw/*80.4*/("""
+			""")))})),format.raw/*84.5*/("""
+		""")))})),format.raw/*85.4*/("""
 		<br>
-		"""),_display_(Seq[Any](/*82.4*/for(disciplina <- naoAlocadas) yield /*82.34*/ {_display_(Seq[Any](format.raw/*82.36*/("""
-			"""),_display_(Seq[Any](/*83.5*/if(disciplina.getPeriodoSugerido() == 8)/*83.45*/{_display_(Seq[Any](format.raw/*83.46*/("""
-				<a class="cada2" title="Pré-requisitos: """),_display_(Seq[Any](/*84.46*/disciplina/*84.56*/.getPreRequisitos())),format.raw/*84.75*/("""">"""),_display_(Seq[Any](/*84.78*/disciplina/*84.88*/.getNome())),format.raw/*84.98*/("""</a>   <span>"""),_display_(Seq[Any](/*84.112*/disciplina/*84.122*/.getCreditos())),format.raw/*84.136*/("""  /  """),_display_(Seq[Any](/*84.142*/disciplina/*84.152*/.getDificuldade())),format.raw/*84.169*/("""</span>
+		"""),_display_(Seq[Any](/*87.4*/for(disciplina <- naoAlocadas) yield /*87.34*/ {_display_(Seq[Any](format.raw/*87.36*/("""
+			"""),_display_(Seq[Any](/*88.5*/if(disciplina.getPeriodoSugerido() == 8)/*88.45*/{_display_(Seq[Any](format.raw/*88.46*/("""
+				<a title="Pré-requisitos: """),_display_(Seq[Any](/*89.32*/disciplina/*89.42*/.getPreRequisitos())),format.raw/*89.61*/("""">"""),_display_(Seq[Any](/*89.64*/disciplina/*89.74*/.getNome())),format.raw/*89.84*/("""</a>   <span>"""),_display_(Seq[Any](/*89.98*/disciplina/*89.108*/.getCreditos())),format.raw/*89.122*/("""  /  """),_display_(Seq[Any](/*89.128*/disciplina/*89.138*/.getDificuldade())),format.raw/*89.155*/("""</span>
 				<br>
-			""")))})),format.raw/*86.5*/("""
-		""")))})),format.raw/*87.4*/("""
+			""")))})),format.raw/*91.5*/("""
+		""")))})),format.raw/*92.4*/("""
 	</div>
 
 	<div id="header">Optativas de Outros Cursos</div>
 	<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
 	
 	<div class="disc2">
-		"""),_display_(Seq[Any](/*94.4*/for(disciplina <- naoAlocadas) yield /*94.34*/ {_display_(Seq[Any](format.raw/*94.36*/("""
-				"""),_display_(Seq[Any](/*95.6*/if(disciplina.getPeriodoSugerido() == -1)/*95.47*/{_display_(Seq[Any](format.raw/*95.48*/("""
-					<a class="cada2" title="Pré-requisitos: """),_display_(Seq[Any](/*96.47*/disciplina/*96.57*/.getPreRequisitos())),format.raw/*96.76*/("""">"""),_display_(Seq[Any](/*96.79*/disciplina/*96.89*/.getNome())),format.raw/*96.99*/("""</a>   <span>"""),_display_(Seq[Any](/*96.113*/disciplina/*96.123*/.getCreditos())),format.raw/*96.137*/("""  /  """),_display_(Seq[Any](/*96.143*/disciplina/*96.153*/.getDificuldade())),format.raw/*96.170*/("""</span>
+		"""),_display_(Seq[Any](/*99.4*/for(disciplina <- naoAlocadas) yield /*99.34*/ {_display_(Seq[Any](format.raw/*99.36*/("""
+				"""),_display_(Seq[Any](/*100.6*/if(disciplina.getPeriodoSugerido() == -1)/*100.47*/{_display_(Seq[Any](format.raw/*100.48*/("""
+					<a title="Pré-requisitos: """),_display_(Seq[Any](/*101.33*/disciplina/*101.43*/.getPreRequisitos())),format.raw/*101.62*/("""">"""),_display_(Seq[Any](/*101.65*/disciplina/*101.75*/.getNome())),format.raw/*101.85*/("""</a>   <span>"""),_display_(Seq[Any](/*101.99*/disciplina/*101.109*/.getCreditos())),format.raw/*101.123*/("""  /  """),_display_(Seq[Any](/*101.129*/disciplina/*101.139*/.getDificuldade())),format.raw/*101.156*/("""</span>
 					<br>
-				""")))})),format.raw/*98.6*/("""
-		""")))})),format.raw/*99.4*/("""
+				""")))})),format.raw/*103.6*/("""
+		""")))})),format.raw/*104.4*/("""
 	</div>
 			
 	<div id="header">Optativas TECC</div>
 	<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
 			
 	<div class="disc2">
-		"""),_display_(Seq[Any](/*106.4*/for(disciplina <- naoAlocadas) yield /*106.34*/ {_display_(Seq[Any](format.raw/*106.36*/("""
-			"""),_display_(Seq[Any](/*107.5*/if(disciplina.getPeriodoSugerido() == -2)/*107.46*/{_display_(Seq[Any](format.raw/*107.47*/("""
-				<a class="cada2" title="Pré-requisitos: """),_display_(Seq[Any](/*108.46*/disciplina/*108.56*/.getPreRequisitos())),format.raw/*108.75*/("""">"""),_display_(Seq[Any](/*108.78*/disciplina/*108.88*/.getNome())),format.raw/*108.98*/("""</a>   <span>"""),_display_(Seq[Any](/*108.112*/disciplina/*108.122*/.getCreditos())),format.raw/*108.136*/("""  /  """),_display_(Seq[Any](/*108.142*/disciplina/*108.152*/.getDificuldade())),format.raw/*108.169*/("""</span>
+		"""),_display_(Seq[Any](/*111.4*/for(disciplina <- naoAlocadas) yield /*111.34*/ {_display_(Seq[Any](format.raw/*111.36*/("""
+			"""),_display_(Seq[Any](/*112.5*/if(disciplina.getPeriodoSugerido() == -2)/*112.46*/{_display_(Seq[Any](format.raw/*112.47*/("""
+				<a title="Pré-requisitos: """),_display_(Seq[Any](/*113.32*/disciplina/*113.42*/.getPreRequisitos())),format.raw/*113.61*/("""">"""),_display_(Seq[Any](/*113.64*/disciplina/*113.74*/.getNome())),format.raw/*113.84*/("""</a>   <span>"""),_display_(Seq[Any](/*113.98*/disciplina/*113.108*/.getCreditos())),format.raw/*113.122*/("""  /  """),_display_(Seq[Any](/*113.128*/disciplina/*113.138*/.getDificuldade())),format.raw/*113.155*/("""</span>
 				<br>
-			""")))})),format.raw/*110.5*/("""
-		""")))})),format.raw/*111.4*/("""
+			""")))})),format.raw/*115.5*/("""
+		""")))})),format.raw/*116.4*/("""
 	</div>
 </div>
-""")))})),format.raw/*114.2*/("""
+""")))})),format.raw/*119.2*/("""
 """))}
     }
     
@@ -152,11 +157,11 @@ Seq[Any](format.raw/*1.78*/("""
 }
                 /*
                     -- GENERATED --
-                    DATE: Sat Mar 01 11:50:32 GMT-03:00 2014
+                    DATE: Sat Mar 01 15:07:43 GMT-03:00 2014
                     SOURCE: E:/Workspace/projeto-si1/app/views/index.scala.html
-                    HASH: cabac04d03fbbd6b1dcbcfd9c9a770fbc6cd4ac1
-                    MATRIX: 805->1|992->77|1022->99|1059->102|1096->131|1135->133|1367->330|1407->354|1446->355|1597->470|1613->477|1648->489|1930->736|1996->786|2036->788|2123->839|2149->856|2188->873|2227->876|2254->893|2287->903|2338->917|2365->934|2402->948|2443->952|2470->969|2510->986|2572->1017|2686->1096|2732->1133|2771->1134|2886->1218|2943->1239|2959->1246|3002->1267|3045->1274|3061->1281|3107->1305|3189->1356|3531->1663|3577->1693|3617->1695|3658->1701|3707->1741|3746->1742|3829->1789|3848->1799|3889->1818|3928->1821|3947->1831|3979->1841|4030->1855|4050->1865|4087->1879|4130->1885|4150->1895|4190->1912|4244->1935|4280->1940|4328->1953|4374->1983|4414->1985|4455->1991|4504->2031|4543->2032|4626->2079|4645->2089|4686->2108|4725->2111|4744->2121|4776->2131|4827->2145|4847->2155|4884->2169|4927->2175|4947->2185|4987->2202|5041->2225|5077->2230|5125->2243|5171->2273|5211->2275|5252->2281|5301->2321|5340->2322|5423->2369|5442->2379|5483->2398|5522->2401|5541->2411|5573->2421|5624->2435|5644->2445|5681->2459|5724->2465|5744->2475|5784->2492|5838->2515|5874->2520|5922->2533|5968->2563|6008->2565|6049->2571|6098->2611|6137->2612|6220->2659|6239->2669|6280->2688|6319->2691|6338->2701|6370->2711|6421->2725|6441->2735|6478->2749|6521->2755|6541->2765|6581->2782|6635->2805|6671->2810|6719->2823|6765->2853|6805->2855|6846->2861|6895->2901|6934->2902|7017->2949|7036->2959|7077->2978|7116->2981|7135->2991|7167->3001|7218->3015|7238->3025|7275->3039|7318->3045|7338->3055|7378->3072|7432->3095|7468->3100|7516->3113|7562->3143|7602->3145|7643->3151|7692->3191|7731->3192|7814->3239|7833->3249|7874->3268|7913->3271|7932->3281|7964->3291|8015->3305|8035->3315|8072->3329|8115->3335|8135->3345|8175->3362|8229->3385|8265->3390|8313->3403|8359->3433|8399->3435|8440->3441|8489->3481|8528->3482|8611->3529|8630->3539|8671->3558|8710->3561|8729->3571|8761->3581|8812->3595|8832->3605|8869->3619|8912->3625|8932->3635|8972->3652|9026->3675|9062->3680|9322->3905|9368->3935|9408->3937|9450->3944|9500->3985|9539->3986|9623->4034|9642->4044|9683->4063|9722->4066|9741->4076|9773->4086|9824->4100|9844->4110|9881->4124|9924->4130|9944->4140|9984->4157|10040->4182|10076->4187|10330->4405|10377->4435|10418->4437|10460->4443|10511->4484|10551->4485|10635->4532|10655->4542|10697->4561|10737->4564|10757->4574|10790->4584|10842->4598|10863->4608|10901->4622|10945->4628|10966->4638|11007->4655|11062->4678|11099->4683|11151->4703
-                    LINES: 26->1|30->1|32->4|33->5|33->5|33->5|40->12|40->12|40->12|42->14|42->14|42->14|45->17|45->17|45->17|46->18|46->18|46->18|46->18|46->18|46->18|46->18|46->18|46->18|46->18|46->18|46->18|48->20|51->23|51->23|51->23|53->25|54->26|54->26|54->26|54->26|54->26|54->26|57->29|68->40|68->40|68->40|69->41|69->41|69->41|70->42|70->42|70->42|70->42|70->42|70->42|70->42|70->42|70->42|70->42|70->42|70->42|72->44|73->45|75->47|75->47|75->47|76->48|76->48|76->48|77->49|77->49|77->49|77->49|77->49|77->49|77->49|77->49|77->49|77->49|77->49|77->49|79->51|80->52|82->54|82->54|82->54|83->55|83->55|83->55|84->56|84->56|84->56|84->56|84->56|84->56|84->56|84->56|84->56|84->56|84->56|84->56|86->58|87->59|89->61|89->61|89->61|90->62|90->62|90->62|91->63|91->63|91->63|91->63|91->63|91->63|91->63|91->63|91->63|91->63|91->63|91->63|93->65|94->66|96->68|96->68|96->68|97->69|97->69|97->69|98->70|98->70|98->70|98->70|98->70|98->70|98->70|98->70|98->70|98->70|98->70|98->70|100->72|101->73|103->75|103->75|103->75|104->76|104->76|104->76|105->77|105->77|105->77|105->77|105->77|105->77|105->77|105->77|105->77|105->77|105->77|105->77|107->79|108->80|110->82|110->82|110->82|111->83|111->83|111->83|112->84|112->84|112->84|112->84|112->84|112->84|112->84|112->84|112->84|112->84|112->84|112->84|114->86|115->87|122->94|122->94|122->94|123->95|123->95|123->95|124->96|124->96|124->96|124->96|124->96|124->96|124->96|124->96|124->96|124->96|124->96|124->96|126->98|127->99|134->106|134->106|134->106|135->107|135->107|135->107|136->108|136->108|136->108|136->108|136->108|136->108|136->108|136->108|136->108|136->108|136->108|136->108|138->110|139->111|142->114
+                    HASH: 7eff108247984f81b2f2d16940b7a1bd47ea108f
+                    MATRIX: 805->1|992->77|1022->99|1059->102|1096->131|1135->133|1367->330|1407->354|1446->355|1539->412|1555->419|1589->431|1687->492|1704->499|1739->511|2021->758|2087->808|2127->810|2174->821|2228->866|2268->868|2345->909|2371->926|2410->943|2449->946|2475->963|2508->973|2559->987|2586->1004|2623->1018|2664->1022|2691->1039|2731->1056|2783->1090|2796->1095|2835->1096|2925->1150|2951->1167|2990->1184|3029->1187|3056->1204|3089->1214|3140->1228|3167->1245|3204->1259|3245->1263|3272->1280|3312->1297|3377->1330|3418->1340|3532->1419|3578->1456|3617->1457|3732->1541|3789->1562|3805->1569|3848->1590|3891->1597|3907->1604|3953->1628|4035->1679|4377->1986|4423->2016|4463->2018|4504->2024|4553->2064|4592->2065|4661->2098|4680->2108|4721->2127|4760->2130|4779->2140|4811->2150|4861->2164|4881->2174|4918->2188|4961->2194|4981->2204|5021->2221|5075->2244|5111->2249|5159->2262|5205->2292|5245->2294|5286->2300|5335->2340|5374->2341|5443->2374|5462->2384|5503->2403|5542->2406|5561->2416|5593->2426|5643->2440|5663->2450|5700->2464|5743->2470|5763->2480|5803->2497|5857->2520|5893->2525|5941->2538|5987->2568|6027->2570|6068->2576|6117->2616|6156->2617|6225->2650|6244->2660|6285->2679|6324->2682|6343->2692|6375->2702|6425->2716|6445->2726|6482->2740|6525->2746|6545->2756|6585->2773|6639->2796|6675->2801|6723->2814|6769->2844|6809->2846|6850->2852|6899->2892|6938->2893|7007->2926|7026->2936|7067->2955|7106->2958|7125->2968|7157->2978|7207->2992|7227->3002|7264->3016|7307->3022|7327->3032|7367->3049|7421->3072|7457->3077|7505->3090|7551->3120|7591->3122|7632->3128|7681->3168|7720->3169|7789->3202|7808->3212|7849->3231|7888->3234|7907->3244|7939->3254|7989->3268|8009->3278|8046->3292|8089->3298|8109->3308|8149->3325|8203->3348|8239->3353|8287->3366|8333->3396|8373->3398|8414->3404|8463->3444|8502->3445|8571->3478|8590->3488|8631->3507|8670->3510|8689->3520|8721->3530|8771->3544|8791->3554|8828->3568|8871->3574|8891->3584|8931->3601|8985->3624|9021->3629|9069->3642|9115->3672|9155->3674|9196->3680|9245->3720|9284->3721|9353->3754|9372->3764|9413->3783|9452->3786|9471->3796|9503->3806|9553->3820|9573->3830|9610->3844|9653->3850|9673->3860|9713->3877|9767->3900|9803->3905|10063->4130|10109->4160|10149->4162|10192->4169|10243->4210|10283->4211|10354->4245|10374->4255|10416->4274|10456->4277|10476->4287|10509->4297|10560->4311|10581->4321|10619->4335|10663->4341|10684->4351|10725->4368|10782->4393|10819->4398|11073->4616|11120->4646|11161->4648|11203->4654|11254->4695|11294->4696|11364->4729|11384->4739|11426->4758|11466->4761|11486->4771|11519->4781|11570->4795|11591->4805|11629->4819|11673->4825|11694->4835|11735->4852|11790->4875|11827->4880|11879->4900
+                    LINES: 26->1|30->1|32->4|33->5|33->5|33->5|40->12|40->12|40->12|42->14|42->14|42->14|42->14|42->14|42->14|45->17|45->17|45->17|46->18|46->18|46->18|47->19|47->19|47->19|47->19|47->19|47->19|47->19|47->19|47->19|47->19|47->19|47->19|49->21|49->21|49->21|50->22|50->22|50->22|50->22|50->22|50->22|50->22|50->22|50->22|50->22|50->22|50->22|52->24|53->25|56->28|56->28|56->28|58->30|59->31|59->31|59->31|59->31|59->31|59->31|62->34|73->45|73->45|73->45|74->46|74->46|74->46|75->47|75->47|75->47|75->47|75->47|75->47|75->47|75->47|75->47|75->47|75->47|75->47|77->49|78->50|80->52|80->52|80->52|81->53|81->53|81->53|82->54|82->54|82->54|82->54|82->54|82->54|82->54|82->54|82->54|82->54|82->54|82->54|84->56|85->57|87->59|87->59|87->59|88->60|88->60|88->60|89->61|89->61|89->61|89->61|89->61|89->61|89->61|89->61|89->61|89->61|89->61|89->61|91->63|92->64|94->66|94->66|94->66|95->67|95->67|95->67|96->68|96->68|96->68|96->68|96->68|96->68|96->68|96->68|96->68|96->68|96->68|96->68|98->70|99->71|101->73|101->73|101->73|102->74|102->74|102->74|103->75|103->75|103->75|103->75|103->75|103->75|103->75|103->75|103->75|103->75|103->75|103->75|105->77|106->78|108->80|108->80|108->80|109->81|109->81|109->81|110->82|110->82|110->82|110->82|110->82|110->82|110->82|110->82|110->82|110->82|110->82|110->82|112->84|113->85|115->87|115->87|115->87|116->88|116->88|116->88|117->89|117->89|117->89|117->89|117->89|117->89|117->89|117->89|117->89|117->89|117->89|117->89|119->91|120->92|127->99|127->99|127->99|128->100|128->100|128->100|129->101|129->101|129->101|129->101|129->101|129->101|129->101|129->101|129->101|129->101|129->101|129->101|131->103|132->104|139->111|139->111|139->111|140->112|140->112|140->112|141->113|141->113|141->113|141->113|141->113|141->113|141->113|141->113|141->113|141->113|141->113|141->113|143->115|144->116|147->119
                     -- GENERATED --
                 */
             

@@ -19,13 +19,14 @@ public class Planejador {
 
 	private PlanoDeCurso plano;
 
-	public static Finder<String, PlanoDeCurso> find = new Finder(String.class, PlanoDeCurso.class);
-	
+	public static Finder<String, PlanoDeCurso> find = new Finder(String.class,
+			PlanoDeCurso.class);
+
 	public Planejador(String id) {
-		
+
 		if (find.ref("Usuario") == null) {
 			plano = new PlanoDeCurso("Usuario");
-//			plano.save();
+			// plano.save();
 		}
 	}
 
@@ -58,8 +59,8 @@ public class Planejador {
 	 * @throws AlocacaoInvalidaException
 	 *             Se o número máximo de períodos já foi alcançado.
 	 */
-	public void createPeriodo(String id) throws TotalDeCreditosInvalidoException,
-			AlocacaoInvalidaException {
+	public void createPeriodo(String id)
+			throws TotalDeCreditosInvalidoException, AlocacaoInvalidaException {
 		plano.createPeriodo(id);
 	}
 
@@ -136,18 +137,6 @@ public class Planejador {
 	}
 
 	/**
-	 * Diz se uma disciplina é pre-requisito de outra disciplina já alocada.
-	 * 
-	 * @param disc
-	 *            A disciplina que pode ser pre-requisito ou nao de outra já
-	 *            alocada.
-	 * @return True se a disciplina é pre-requisito e false se não é.
-	 */
-	public boolean ehPreRequisito(Disciplina disc, int periodo) {
-		return plano.ehPreRequisito(disc, periodo);
-	}
-	
-	/**
 	 * Diz se uma disciplina tem um pre-requisito que ainda não foi alocado.
 	 * 
 	 * @param disc
@@ -163,9 +152,25 @@ public class Planejador {
 
 	/**
 	 * Retorna o total de períodos criados.
+	 * 
 	 * @return O total de períodos.
 	 */
 	public int getTotalDePeriodos() {
 		return plano.getTotalDePeriodos();
+	}
+
+	/**
+	 * Move uma disciplina de um periodo para outro.
+	 * 
+	 * @param disciplinaId
+	 *            A disciplina que vai ser movida.
+	 * @param periodoFuturu
+	 *            O periodo para onde vai ser movida a disciplina.
+	 * @param periodoAtual
+	 *            O periodo onde está a disciplina que vai ser movida.
+	 */
+	public void moveDisciplina(String disciplinaId, int periodoFuturo,
+			int periodoAtual) {
+		plano.moveDisciplina(disciplinaId, periodoFuturo, periodoAtual);
 	}
 }

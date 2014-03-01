@@ -1,10 +1,121 @@
-2014-03-01 11:50:26,909 - [INFO] - from play in pool-44-thread-3 
+2014-03-01 15:07:31,418 - [INFO] - from play in pool-4-thread-1 
 Listening for HTTP on /0:0:0:0:0:0:0:0:9000
 
-2014-03-01 11:50:49,106 - [INFO] - from play in play-internal-execution-context-1 
+2014-03-01 15:07:43,754 - [ERROR] - from application in New I/O worker #1 
+
+
+! @6hdepobo1 - Internal server error, for (GET) [/] ->
+
+play.PlayExceptions$RoutesCompilationException: Compilation error[Missing parameter in call definition: perFurutu]
+	at play.PlaySourceGenerators$$anonfun$2.apply(PlaySourceGenerators.scala:21) ~[na:na]
+	at play.PlaySourceGenerators$$anonfun$2.apply(PlaySourceGenerators.scala:9) ~[na:na]
+	at play.Settings$$anonfun$defaultSettings$18.apply(PlaySettings.scala:105) ~[na:na]
+	at play.Settings$$anonfun$defaultSettings$18.apply(PlaySettings.scala:104) ~[na:na]
+	at scala.Function6$$anonfun$tupled$1.apply(Function6.scala:35) ~[scala-library.jar:na]
+	at scala.Function6$$anonfun$tupled$1.apply(Function6.scala:34) ~[scala-library.jar:na]
+	at scala.Function1$$anonfun$compose$1.apply(Function1.scala:47) ~[scala-library.jar:na]
+	at sbt.$tilde$greater$$anonfun$$u2219$1.apply(TypeFunctions.scala:42) ~[na:na]
+	at sbt.std.Transform$$anon$4.work(System.scala:64) ~[na:na]
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:237) ~[na:na]
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:237) ~[na:na]
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:18) ~[na:na]
+	at sbt.Execute.work(Execute.scala:244) ~[na:na]
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:237) ~[na:na]
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:237) ~[na:na]
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:160) ~[na:na]
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:30) ~[na:na]
+	at java.util.concurrent.FutureTask.run(Unknown Source) ~[na:1.7.0_45]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source) ~[na:1.7.0_45]
+	at java.util.concurrent.FutureTask.run(Unknown Source) ~[na:1.7.0_45]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source) [na:1.7.0_45]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source) [na:1.7.0_45]
+	at java.lang.Thread.run(Unknown Source) [na:1.7.0_45]
+
+2014-03-01 15:07:43,881 - [WARN] - from play in New I/O worker #1 
+No application found at invoker init
+
+2014-03-01 15:09:59,347 - [ERROR] - from application in New I/O worker #1 
+
+
+! @6hdf06bac - Internal server error, for (GET) [/] ->
+
+play.PlayExceptions$CompilationException: Compilation error[Cannot use a method returning Unit as an Handler]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2$$anonfun$apply$14$$anonfun$apply$16.apply(PlayReloader.scala:304) ~[na:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2$$anonfun$apply$14$$anonfun$apply$16.apply(PlayReloader.scala:304) ~[na:na]
+	at scala.Option.map(Option.scala:145) ~[scala-library.jar:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2$$anonfun$apply$14.apply(PlayReloader.scala:304) ~[na:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2$$anonfun$apply$14.apply(PlayReloader.scala:298) ~[na:na]
+	at scala.Option.map(Option.scala:145) ~[scala-library.jar:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:298) ~[na:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:296) ~[na:na]
+	at scala.util.Either$LeftProjection.map(Either.scala:377) ~[scala-library.jar:na]
+	at play.PlayReloader$$anon$1.reload(PlayReloader.scala:296) ~[na:na]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:104) ~[play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:102) ~[play_2.10.jar:2.2.1]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) ~[scala-library.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1361) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library.jar:na]
+
+2014-03-01 15:12:07,881 - [ERROR] - from application in New I/O worker #1 
+
+
+! @6hdf0dje7 - Internal server error, for (GET) [/] ->
+
+play.PlayExceptions$CompilationException: Compilation error[Cannot use a method returning Unit as an Handler]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2$$anonfun$apply$14$$anonfun$apply$16.apply(PlayReloader.scala:304) ~[na:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2$$anonfun$apply$14$$anonfun$apply$16.apply(PlayReloader.scala:304) ~[na:na]
+	at scala.Option.map(Option.scala:145) ~[scala-library.jar:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2$$anonfun$apply$14.apply(PlayReloader.scala:304) ~[na:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2$$anonfun$apply$14.apply(PlayReloader.scala:298) ~[na:na]
+	at scala.Option.map(Option.scala:145) ~[scala-library.jar:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:298) ~[na:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:296) ~[na:na]
+	at scala.util.Either$LeftProjection.map(Either.scala:377) ~[scala-library.jar:na]
+	at play.PlayReloader$$anon$1.reload(PlayReloader.scala:296) ~[na:na]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:104) ~[play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:102) ~[play_2.10.jar:2.2.1]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) ~[scala-library.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1361) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library.jar:na]
+
+2014-03-01 15:12:53,973 - [ERROR] - from application in New I/O worker #1 
+
+
+! @6hdf0g9j2 - Internal server error, for (GET) [/] ->
+
+play.PlayExceptions$CompilationException: Compilation error[Cannot use a method returning Unit as an Handler]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2$$anonfun$apply$14$$anonfun$apply$16.apply(PlayReloader.scala:304) ~[na:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2$$anonfun$apply$14$$anonfun$apply$16.apply(PlayReloader.scala:304) ~[na:na]
+	at scala.Option.map(Option.scala:145) ~[scala-library.jar:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2$$anonfun$apply$14.apply(PlayReloader.scala:304) ~[na:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2$$anonfun$apply$14.apply(PlayReloader.scala:298) ~[na:na]
+	at scala.Option.map(Option.scala:145) ~[scala-library.jar:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:298) ~[na:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:296) ~[na:na]
+	at scala.util.Either$LeftProjection.map(Either.scala:377) ~[scala-library.jar:na]
+	at play.PlayReloader$$anon$1.reload(PlayReloader.scala:296) ~[na:na]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:104) ~[play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:102) ~[play_2.10.jar:2.2.1]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) ~[scala-library.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1361) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library.jar:na]
+
+2014-03-01 15:13:41,170 - [INFO] - from play in play-internal-execution-context-1 
 database [default] connected at jdbc:h2:mem:play
 
-2014-03-01 11:50:49,511 - [ERROR] - from com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager in play-internal-execution-context-1 
+2014-03-01 15:13:41,683 - [ERROR] - from com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager in play-internal-execution-context-1 
 Error in deployment
 javax.persistence.PersistenceException: java.lang.RuntimeException: DataSource user is null?
 	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.setEntityBeanClass(BeanDescriptorManager.java:1458) ~[avaje-ebeanorm.jar:na]
@@ -54,7 +165,7 @@ Caused by: java.lang.RuntimeException: DataSource user is null?
 	at com.avaje.ebean.Ebean.getServer(Ebean.java:257) ~[avaje-ebeanorm.jar:na]
 	at play.db.ebean.Model$Finder.server(Model.java:240) ~[play-java-ebean_2.10.jar:2.2.1]
 	at play.db.ebean.Model$Finder.ref(Model.java:268) ~[play-java-ebean_2.10.jar:2.2.1]
-	at models.PlanoDeCurso.<init>(PlanoDeCurso.java:48) ~[classes/:na]
+	at models.PlanoDeCurso.<init>(PlanoDeCurso.java:50) ~[classes/:na]
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
 	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
@@ -63,10 +174,10 @@ Caused by: java.lang.RuntimeException: DataSource user is null?
 	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.setEntityBeanClass(BeanDescriptorManager.java:1424) ~[avaje-ebeanorm.jar:na]
 	... 32 common frames omitted
 
-2014-03-01 11:50:49,523 - [ERROR] - from application in New I/O worker #1 
+2014-03-01 15:13:41,714 - [ERROR] - from application in New I/O worker #1 
 
 
-! @6hde02e3o - Internal server error, for (GET) [/] ->
+! @6hdf0j289 - Internal server error, for (GET) [/] ->
 
 play.api.UnexpectedException: Unexpected exception[PersistenceException: java.lang.RuntimeException: DataSource user is null?]
 	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1$$anonfun$1.apply(ApplicationProvider.scala:148) ~[play_2.10.jar:2.2.1]
@@ -119,7 +230,7 @@ Caused by: java.lang.RuntimeException: DataSource user is null?
 	at com.avaje.ebean.Ebean.getServer(Ebean.java:257) ~[avaje-ebeanorm.jar:na]
 	at play.db.ebean.Model$Finder.server(Model.java:240) ~[play-java-ebean_2.10.jar:2.2.1]
 	at play.db.ebean.Model$Finder.ref(Model.java:268) ~[play-java-ebean_2.10.jar:2.2.1]
-	at models.PlanoDeCurso.<init>(PlanoDeCurso.java:48) ~[na:na]
+	at models.PlanoDeCurso.<init>(PlanoDeCurso.java:50) ~[na:na]
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
 	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
@@ -128,13 +239,13 @@ Caused by: java.lang.RuntimeException: DataSource user is null?
 	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.setEntityBeanClass(BeanDescriptorManager.java:1424) ~[avaje-ebeanorm.jar:na]
 	... 32 common frames omitted
 
-2014-03-01 11:51:05,810 - [ERROR] - from com.jolbox.bonecp.hooks.AbstractConnectionHook in play-internal-execution-context-1 
+2014-03-01 15:15:35,660 - [ERROR] - from com.jolbox.bonecp.hooks.AbstractConnectionHook in play-internal-execution-context-1 
 Failed to obtain initial connection Sleeping for 0ms and trying again. Attempts left: 0. Exception: null.Message:Wrong user name or password [28000-172]
 
-2014-03-01 11:51:05,816 - [ERROR] - from application in New I/O worker #1 
+2014-03-01 15:15:35,668 - [ERROR] - from application in New I/O worker #1 
 
 
-! @6hde03c6j - Internal server error, for (GET) [/] ->
+! @6hdf0peo3 - Internal server error, for (GET) [/] ->
 
 play.api.Configuration$$anon$1: Configuration error[Cannot connect to database [default]]
 	at play.api.Configuration$.play$api$Configuration$$configError(Configuration.scala:92) ~[play_2.10.jar:2.2.1]

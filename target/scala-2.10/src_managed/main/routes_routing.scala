@@ -1,6 +1,6 @@
 // @SOURCE:E:/Workspace/projeto-si1/conf/routes
-// @HASH:b73db92a2ecf8ec181fd384ae4f83916380471cf
-// @DATE:Sat Mar 01 11:50:31 GMT-03:00 2014
+// @HASH:1692dd10ae847967517185b0eaf84613081d6e47
+// @DATE:Sat Mar 01 15:12:50 GMT-03:00 2014
 
 
 import play.core._
@@ -37,29 +37,33 @@ private[this] lazy val controllers_Application_periodos1 = Route("GET", PathPatt
         
 
 // @LINE:10
-private[this] lazy val controllers_Application_novoPeriodo2 = Route("POST", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("novoPeriodo/"),DynamicPart("periodo", """[^/]+""",true))))
-        
-
-// @LINE:12
-private[this] lazy val controllers_Application_editar3 = Route("GET", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("editar/"),DynamicPart("periodo", """[^/]+""",true))))
+private[this] lazy val controllers_Application_novoPeriodo2 = Route("GET", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("novoPeriodo/"),DynamicPart("periodo", """[^/]+""",true))))
         
 
 // @LINE:13
-private[this] lazy val controllers_Application_adicionar4 = Route("GET", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("adicionar/"),DynamicPart("periodo", """[^/]+""",true),StaticPart("/"),DynamicPart("disciplinaId", """[^/]+""",true))))
+private[this] lazy val controllers_Application_editar3 = Route("GET", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("editar/"),DynamicPart("periodo", """[^/]+""",true))))
         
 
 // @LINE:14
-private[this] lazy val controllers_Application_remover5 = Route("POST", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("remover/"),DynamicPart("periodo", """[^/]+""",true),StaticPart("/"),DynamicPart("disciplinaId", """[^/]+""",true))))
+private[this] lazy val controllers_Application_adicionar4 = Route("GET", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("adicionar/"),DynamicPart("disciplinaId", """[^/]+""",true),StaticPart("/"),DynamicPart("periodo", """[^/]+""",true))))
         
 
 // @LINE:15
-private[this] lazy val controllers_Application_deletarPeriodo6 = Route("POST", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("deletar/"),DynamicPart("periodo", """[^/]+""",true))))
+private[this] lazy val controllers_Application_remover5 = Route("GET", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("remover/"),DynamicPart("disciplinaId", """[^/]+""",true),StaticPart("/"),DynamicPart("periodo", """[^/]+""",true))))
         
 
-// @LINE:18
-private[this] lazy val controllers_Assets_at7 = Route("GET", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("assets/"),DynamicPart("file", """.+""",false))))
+// @LINE:16
+private[this] lazy val controllers_Application_deletarPeriodo6 = Route("GET", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("deletar/"),DynamicPart("periodo", """[^/]+""",true))))
         
-def documentation = List(("""GET""", prefix,"""controllers.Application.index()"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """periodos""","""controllers.Application.periodos()"""),("""POST""", prefix + (if(prefix.endsWith("/")) "" else "/") + """novoPeriodo/$periodo<[^/]+>""","""controllers.Application.novoPeriodo(periodo:Int)"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """editar/$periodo<[^/]+>""","""controllers.Application.editar(periodo:Int)"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """adicionar/$periodo<[^/]+>/$disciplinaId<[^/]+>""","""controllers.Application.adicionar(disciplinaId:String, periodo:Int)"""),("""POST""", prefix + (if(prefix.endsWith("/")) "" else "/") + """remover/$periodo<[^/]+>/$disciplinaId<[^/]+>""","""controllers.Application.remover(disciplinaId:String, periodo:Int)"""),("""POST""", prefix + (if(prefix.endsWith("/")) "" else "/") + """deletar/$periodo<[^/]+>""","""controllers.Application.deletarPeriodo(periodo:Int)"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """assets/$file<.+>""","""controllers.Assets.at(path:String = "/public", file:String)""")).foldLeft(List.empty[(String,String,String)]) { (s,e) => e.asInstanceOf[Any] match {
+
+// @LINE:17
+private[this] lazy val controllers_Application_mover7 = Route("GET", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("mover/"),DynamicPart("disciplinaId", """[^/]+""",true),StaticPart("/"),DynamicPart("futuro", """[^/]+""",true),StaticPart("/"),DynamicPart("atual", """[^/]+""",true))))
+        
+
+// @LINE:20
+private[this] lazy val controllers_Assets_at8 = Route("GET", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("assets/"),DynamicPart("file", """.+""",false))))
+        
+def documentation = List(("""GET""", prefix,"""controllers.Application.index()"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """periodos""","""controllers.Application.periodos()"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """novoPeriodo/$periodo<[^/]+>""","""controllers.Application.novoPeriodo(periodo:Int)"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """editar/$periodo<[^/]+>""","""controllers.Application.editar(periodo:Int)"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """adicionar/$disciplinaId<[^/]+>/$periodo<[^/]+>""","""controllers.Application.adicionar(disciplinaId:String, periodo:Int)"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """remover/$disciplinaId<[^/]+>/$periodo<[^/]+>""","""controllers.Application.remover(disciplinaId:String, periodo:Int)"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """deletar/$periodo<[^/]+>""","""controllers.Application.deletarPeriodo(periodo:Int)"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """mover/$disciplinaId<[^/]+>/$futuro<[^/]+>/$atual<[^/]+>""","""controllers.Application.mover(disciplinaId:String, futuro:Int, atual:Int)"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """assets/$file<.+>""","""controllers.Assets.at(path:String = "/public", file:String)""")).foldLeft(List.empty[(String,String,String)]) { (s,e) => e.asInstanceOf[Any] match {
   case r @ (_,_,_) => s :+ r.asInstanceOf[(String,String,String)]
   case l => s ++ l.asInstanceOf[List[(String,String,String)]] 
 }}
@@ -78,7 +82,7 @@ case controllers_Application_index0(params) => {
 // @LINE:9
 case controllers_Application_periodos1(params) => {
    call { 
-        invokeHandler(controllers.Application.periodos(), HandlerDef(this, "controllers.Application", "periodos", Nil,"GET", """ Periodos""", Routes.prefix + """periodos"""))
+        invokeHandler(controllers.Application.periodos(), HandlerDef(this, "controllers.Application", "periodos", Nil,"GET", """ Periodos	""", Routes.prefix + """periodos"""))
    }
 }
         
@@ -86,45 +90,53 @@ case controllers_Application_periodos1(params) => {
 // @LINE:10
 case controllers_Application_novoPeriodo2(params) => {
    call(params.fromPath[Int]("periodo", None)) { (periodo) =>
-        invokeHandler(controllers.Application.novoPeriodo(periodo), HandlerDef(this, "controllers.Application", "novoPeriodo", Seq(classOf[Int]),"POST", """""", Routes.prefix + """novoPeriodo/$periodo<[^/]+>"""))
-   }
-}
-        
-
-// @LINE:12
-case controllers_Application_editar3(params) => {
-   call(params.fromPath[Int]("periodo", None)) { (periodo) =>
-        invokeHandler(controllers.Application.editar(periodo), HandlerDef(this, "controllers.Application", "editar", Seq(classOf[Int]),"GET", """""", Routes.prefix + """editar/$periodo<[^/]+>"""))
+        invokeHandler(controllers.Application.novoPeriodo(periodo), HandlerDef(this, "controllers.Application", "novoPeriodo", Seq(classOf[Int]),"GET", """""", Routes.prefix + """novoPeriodo/$periodo<[^/]+>"""))
    }
 }
         
 
 // @LINE:13
-case controllers_Application_adicionar4(params) => {
-   call(params.fromPath[String]("disciplinaId", None), params.fromPath[Int]("periodo", None)) { (disciplinaId, periodo) =>
-        invokeHandler(controllers.Application.adicionar(disciplinaId, periodo), HandlerDef(this, "controllers.Application", "adicionar", Seq(classOf[String], classOf[Int]),"GET", """""", Routes.prefix + """adicionar/$periodo<[^/]+>/$disciplinaId<[^/]+>"""))
+case controllers_Application_editar3(params) => {
+   call(params.fromPath[Int]("periodo", None)) { (periodo) =>
+        invokeHandler(controllers.Application.editar(periodo), HandlerDef(this, "controllers.Application", "editar", Seq(classOf[Int]),"GET", """ Edicoes""", Routes.prefix + """editar/$periodo<[^/]+>"""))
    }
 }
         
 
 // @LINE:14
-case controllers_Application_remover5(params) => {
+case controllers_Application_adicionar4(params) => {
    call(params.fromPath[String]("disciplinaId", None), params.fromPath[Int]("periodo", None)) { (disciplinaId, periodo) =>
-        invokeHandler(controllers.Application.remover(disciplinaId, periodo), HandlerDef(this, "controllers.Application", "remover", Seq(classOf[String], classOf[Int]),"POST", """""", Routes.prefix + """remover/$periodo<[^/]+>/$disciplinaId<[^/]+>"""))
+        invokeHandler(controllers.Application.adicionar(disciplinaId, periodo), HandlerDef(this, "controllers.Application", "adicionar", Seq(classOf[String], classOf[Int]),"GET", """""", Routes.prefix + """adicionar/$disciplinaId<[^/]+>/$periodo<[^/]+>"""))
    }
 }
         
 
 // @LINE:15
-case controllers_Application_deletarPeriodo6(params) => {
-   call(params.fromPath[Int]("periodo", None)) { (periodo) =>
-        invokeHandler(controllers.Application.deletarPeriodo(periodo), HandlerDef(this, "controllers.Application", "deletarPeriodo", Seq(classOf[Int]),"POST", """""", Routes.prefix + """deletar/$periodo<[^/]+>"""))
+case controllers_Application_remover5(params) => {
+   call(params.fromPath[String]("disciplinaId", None), params.fromPath[Int]("periodo", None)) { (disciplinaId, periodo) =>
+        invokeHandler(controllers.Application.remover(disciplinaId, periodo), HandlerDef(this, "controllers.Application", "remover", Seq(classOf[String], classOf[Int]),"GET", """""", Routes.prefix + """remover/$disciplinaId<[^/]+>/$periodo<[^/]+>"""))
    }
 }
         
 
-// @LINE:18
-case controllers_Assets_at7(params) => {
+// @LINE:16
+case controllers_Application_deletarPeriodo6(params) => {
+   call(params.fromPath[Int]("periodo", None)) { (periodo) =>
+        invokeHandler(controllers.Application.deletarPeriodo(periodo), HandlerDef(this, "controllers.Application", "deletarPeriodo", Seq(classOf[Int]),"GET", """""", Routes.prefix + """deletar/$periodo<[^/]+>"""))
+   }
+}
+        
+
+// @LINE:17
+case controllers_Application_mover7(params) => {
+   call(params.fromPath[String]("disciplinaId", None), params.fromPath[Int]("futuro", None), params.fromPath[Int]("atual", None)) { (disciplinaId, futuro, atual) =>
+        invokeHandler(controllers.Application.mover(disciplinaId, futuro, atual), HandlerDef(this, "controllers.Application", "mover", Seq(classOf[String], classOf[Int], classOf[Int]),"GET", """""", Routes.prefix + """mover/$disciplinaId<[^/]+>/$futuro<[^/]+>/$atual<[^/]+>"""))
+   }
+}
+        
+
+// @LINE:20
+case controllers_Assets_at8(params) => {
    call(Param[String]("path", Right("/public")), params.fromPath[String]("file", None)) { (path, file) =>
         invokeHandler(controllers.Assets.at(path, file), HandlerDef(this, "controllers.Assets", "at", Seq(classOf[String], classOf[String]),"GET", """ Map static resources from the /public folder to the /assets URL path""", Routes.prefix + """assets/$file<.+>"""))
    }
