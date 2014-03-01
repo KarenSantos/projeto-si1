@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.List;
 
+import play.db.ebean.Model.Finder;
 import models.AlocacaoInvalidaException;
 import models.Disciplina;
 import models.Periodo;
@@ -18,8 +19,14 @@ public class Planejador {
 
 	private PlanoDeCurso plano;
 
+	public static Finder<String, PlanoDeCurso> find = new Finder(String.class, PlanoDeCurso.class);
+	
 	public Planejador() {
-		plano = new PlanoDeCurso();
+		plano = new PlanoDeCurso("Usuario");
+		
+		if (find.ref("Usuario") == null) {
+			plano.save();
+		}
 	}
 
 	/**
@@ -51,9 +58,9 @@ public class Planejador {
 	 * @throws AlocacaoInvalidaException
 	 *             Se o número máximo de períodos já foi alcançado.
 	 */
-	public void createPeriodo() throws TotalDeCreditosInvalidoException,
+	public void createPeriodo(String id) throws TotalDeCreditosInvalidoException,
 			AlocacaoInvalidaException {
-		plano.createPeriodo();
+		plano.createPeriodo(id);
 	}
 
 	/**

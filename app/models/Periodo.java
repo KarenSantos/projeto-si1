@@ -30,7 +30,7 @@ public class Periodo extends Model {
 	private int numero;
 
 	/**
-	 * Cria um periodo sem numero.
+	 * Cria um periodo sem id e sem numero.
 	 */
 	public Periodo() {}
 	
@@ -38,10 +38,11 @@ public class Periodo extends Model {
 	 * Um periodo contem uma lista de disciplinas e o total de creditos do
 	 * periodo.
 	 */
-	public Periodo(int numero) {
+	public Periodo(String id, int numero) {
+		this.id = id;
+		this.numero = numero;
 		disciplinas = new ArrayList<Disciplina>();
 		totalDeCreditos = 0;
-		this.numero = numero;
 	}
 
 	/**

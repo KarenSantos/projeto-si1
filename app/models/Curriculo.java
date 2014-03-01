@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-import play.db.ebean.Model;
+import play.db.ebean.*;
+import javax.persistence.*;
 
 /**
  * Classe do curriculo do curso de ciencia da computacao.
@@ -24,6 +22,8 @@ public class Curriculo extends Model {
 	private String id;
 	private List<Disciplina> disciplinas;
 
+	public static Finder<String, Disciplina> find = new Finder(String.class, Disciplina.class);
+	
 	/**
 	 * Inicia um curriculo com uma lista para as disciplinas do curso.
 	 */
@@ -135,7 +135,7 @@ public class Curriculo extends Model {
 	 */
 	private void criaDisciplinas() {
 
-		if (true) {
+		if (find.findRowCount() == 0) {
 			
 			// Disciplinas obrigatórias
 			createDisciplina("01", "Cálculo Diferencial e Integral 1", 4, 1, 4);
@@ -258,6 +258,18 @@ public class Curriculo extends Model {
 			createDisciplina("69", "Economia de TI", 4, -2, 3);
 			createDisciplina("70", "Empreendedorismo em Software 1", 4, -2, 3);
 			createDisciplina("71", "Estágio 2", 4, -2, 3);
+			
+			createDisciplina("80", "Optativa 1", 4, 6, 3);
+			createDisciplina("81", "Optativa 2", 4, 6, 3);
+			createDisciplina("82", "Optativa 3", 4, 7, 3);
+			createDisciplina("83", "Optativa 4", 4, 7, 3);
+			createDisciplina("84", "Optativa 5", 4, 7, 3);
+			createDisciplina("85", "Optativa 6", 4, 7, 3);
+			createDisciplina("86", "Optativa 7", 4, 8, 3);
+			createDisciplina("87", "Optativa 8", 4, 8, 3);
+			createDisciplina("88", "Optativa 9", 4, 8, 3);
+			createDisciplina("89", "Optativa 10", 4, 8, 3);
+			createDisciplina("90", "Optativa 11", 2, 8, 3);
 			
 			salvarDiscNoBD();
 

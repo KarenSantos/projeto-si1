@@ -1,129 +1,110 @@
-2014-02-27 19:14:15,381 - [INFO] - from play in pool-4-thread-2 
+2014-02-28 22:17:29,410 - [INFO] - from play in pool-10-thread-3 
 Listening for HTTP on /0:0:0:0:0:0:0:0:9000
 
-2014-02-27 19:15:03,635 - [INFO] - from play in play-internal-execution-context-1 
+2014-02-28 22:17:36,356 - [INFO] - from play in play-internal-execution-context-1 
 database [default] connected at jdbc:h2:mem:play
 
-2014-02-27 19:15:04,871 - [INFO] - from play in play-internal-execution-context-1 
-Application started (Dev)
+2014-02-28 22:17:36,907 - [ERROR] - from com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager in play-internal-execution-context-1 
+Error in deployment
+javax.persistence.PersistenceException: The default EbeanServer has not been defined? This is normally set via the ebean.datasource.default property. Otherwise it should be registered programatically via registerServer()
+	at com.avaje.ebean.Ebean$ServerManager.getPrimaryServer(Ebean.java:178) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebean.Ebean$ServerManager.access$300(Ebean.java:128) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebean.Ebean.save(Ebean.java:453) ~[avaje-ebeanorm.jar:na]
+	at play.db.ebean.Model.save(Model.java:91) ~[play-java-ebean_2.10.jar:2.2.1]
+	at models.Curriculo.salvarDiscNoBD(Curriculo.java:269) ~[classes/:na]
+	at models.Curriculo.criaDisciplinas(Curriculo.java:262) ~[classes/:na]
+	at models.Curriculo.<init>(Curriculo.java:34) ~[classes/:na]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.Class.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.setEntityBeanClass(BeanDescriptorManager.java:1424) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.createByteCode(BeanDescriptorManager.java:1150) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.readDeployAssociations(BeanDescriptorManager.java:1070) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.readEntityDeploymentAssociations(BeanDescriptorManager.java:547) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.deploy(BeanDescriptorManager.java:237) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.core.InternalConfiguration.<init>(InternalConfiguration.java:114) [avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.core.DefaultServerFactory.createServer(DefaultServerFactory.java:204) [avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.core.DefaultServerFactory.createServer(DefaultServerFactory.java:65) [avaje-ebeanorm.jar:na]
+	at com.avaje.ebean.EbeanServerFactory.create(EbeanServerFactory.java:58) [avaje-ebeanorm.jar:na]
+	at play.db.ebean.EbeanPlugin.onStart(EbeanPlugin.java:79) [play-java-ebean_2.10.jar:2.2.1]
+	at play.api.Play$$anonfun$start$1$$anonfun$apply$mcV$sp$1.apply(Play.scala:88) [play_2.10.jar:2.2.1]
+	at play.api.Play$$anonfun$start$1$$anonfun$apply$mcV$sp$1.apply(Play.scala:88) [play_2.10.jar:2.2.1]
+	at scala.collection.immutable.List.foreach(List.scala:318) [scala-library.jar:na]
+	at play.api.Play$$anonfun$start$1.apply$mcV$sp(Play.scala:88) [play_2.10.jar:2.2.1]
+	at play.api.Play$$anonfun$start$1.apply(Play.scala:88) [play_2.10.jar:2.2.1]
+	at play.api.Play$$anonfun$start$1.apply(Play.scala:88) [play_2.10.jar:2.2.1]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:18) [play_2.10.jar:2.2.1]
+	at play.api.Play$.start(Play.scala:87) [play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1$$anonfun$1.apply(ApplicationProvider.scala:139) [play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1$$anonfun$1.apply(ApplicationProvider.scala:112) [play_2.10.jar:2.2.1]
+	at scala.Option.map(Option.scala:145) [scala-library.jar:na]
+	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1.apply(ApplicationProvider.scala:112) [play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1.apply(ApplicationProvider.scala:110) [play_2.10.jar:2.2.1]
+	at scala.util.Success.flatMap(Try.scala:200) [scala-library.jar:na]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:110) [play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:102) [play_2.10.jar:2.2.1]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1361) [scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library.jar:na]
 
-2014-02-27 19:30:45,399 - [INFO] - from play in play-internal-execution-context-1 
-database [default] connected at jdbc:h2:mem:play
+2014-02-28 22:17:36,923 - [ERROR] - from application in New I/O worker #1 
 
-2014-02-27 19:30:45,456 - [INFO] - from play in play-internal-execution-context-1 
-Application started (Dev)
 
-2014-02-27 19:36:45,621 - [INFO] - from play in play-internal-execution-context-2 
-database [default] connected at jdbc:h2:mem:play
+! @6hd9n8bjb - Internal server error, for (GET) [/] ->
 
-2014-02-27 19:36:45,712 - [INFO] - from play in play-internal-execution-context-2 
-Application started (Dev)
-
-2014-02-27 19:37:02,079 - [INFO] - from play in play-internal-execution-context-2 
-database [default] connected at jdbc:h2:mem:play
-
-2014-02-27 19:37:02,198 - [INFO] - from play in play-internal-execution-context-2 
-Application started (Dev)
-
-2014-02-27 20:33:00,859 - [INFO] - from play in play-internal-execution-context-11 
-database [default] connected at jdbc:h2:mem:play
-
-2014-02-27 20:33:01,102 - [INFO] - from play in play-internal-execution-context-11 
-Application started (Dev)
-
-2014-02-27 20:34:45,825 - [INFO] - from play in play-internal-execution-context-11 
-database [default] connected at jdbc:h2:mem:play
-
-2014-02-27 20:34:45,883 - [INFO] - from play in play-internal-execution-context-11 
-Application started (Dev)
-
-2014-02-27 20:41:44,861 - [INFO] - from play in play-internal-execution-context-23 
-database [default] connected at jdbc:h2:mem:play
-
-2014-02-27 20:41:44,902 - [INFO] - from play in play-internal-execution-context-23 
-Application started (Dev)
-
-2014-02-27 20:45:47,336 - [INFO] - from play in play-internal-execution-context-25 
-database [default] connected at jdbc:h2:mem:play
-
-2014-02-27 20:45:47,431 - [INFO] - from play in play-internal-execution-context-25 
-Application started (Dev)
-
-2014-02-27 20:50:03,935 - [INFO] - from play in play-internal-execution-context-25 
-database [default] connected at jdbc:h2:mem:play
-
-2014-02-27 20:50:03,975 - [INFO] - from play in play-internal-execution-context-25 
-Application started (Dev)
-
-2014-02-27 20:57:57,292 - [INFO] - from play in play-internal-execution-context-25 
-database [default] connected at jdbc:h2:mem:play
-
-2014-02-27 20:57:57,368 - [INFO] - from play in play-internal-execution-context-25 
-Application started (Dev)
-
-2014-02-27 21:03:15,255 - [INFO] - from play in play-internal-execution-context-25 
-database [default] connected at jdbc:h2:mem:play
-
-2014-02-27 21:03:15,301 - [INFO] - from play in play-internal-execution-context-25 
-Application started (Dev)
-
-2014-02-27 21:03:52,920 - [INFO] - from play in play-internal-execution-context-25 
-database [default] connected at jdbc:h2:mem:play
-
-2014-02-27 21:03:52,971 - [INFO] - from play in play-internal-execution-context-25 
-Application started (Dev)
-
-2014-02-27 21:04:20,362 - [INFO] - from play in play-internal-execution-context-25 
-database [default] connected at jdbc:h2:mem:play
-
-2014-02-27 21:04:20,403 - [INFO] - from play in play-internal-execution-context-25 
-Application started (Dev)
-
-2014-02-27 21:05:03,124 - [INFO] - from play in play-internal-execution-context-25 
-database [default] connected at jdbc:h2:mem:play
-
-2014-02-27 21:05:03,167 - [INFO] - from play in play-internal-execution-context-25 
-Application started (Dev)
-
-2014-02-27 21:05:54,969 - [INFO] - from play in play-internal-execution-context-25 
-database [default] connected at jdbc:h2:mem:play
-
-2014-02-27 21:05:55,013 - [INFO] - from play in play-internal-execution-context-25 
-Application started (Dev)
-
-2014-02-27 21:08:04,211 - [INFO] - from play in play-internal-execution-context-25 
-database [default] connected at jdbc:h2:mem:play
-
-2014-02-27 21:08:04,266 - [INFO] - from play in play-internal-execution-context-25 
-Application started (Dev)
-
-2014-02-27 21:17:39,095 - [INFO] - from play in play-internal-execution-context-25 
-database [default] connected at jdbc:h2:mem:play
-
-2014-02-27 21:17:39,147 - [INFO] - from play in play-internal-execution-context-25 
-Application started (Dev)
-
-2014-02-27 21:22:33,512 - [INFO] - from play in play-internal-execution-context-25 
-database [default] connected at jdbc:h2:mem:play
-
-2014-02-27 21:22:33,580 - [INFO] - from play in play-internal-execution-context-25 
-Application started (Dev)
-
-2014-02-27 21:24:44,764 - [INFO] - from play in play-internal-execution-context-25 
-database [default] connected at jdbc:h2:mem:play
-
-2014-02-27 21:24:44,818 - [INFO] - from play in play-internal-execution-context-25 
-Application started (Dev)
-
-2014-02-27 21:25:54,282 - [INFO] - from play in play-internal-execution-context-25 
-database [default] connected at jdbc:h2:mem:play
-
-2014-02-27 21:25:54,325 - [INFO] - from play in play-internal-execution-context-25 
-Application started (Dev)
-
-2014-02-28 11:29:56,566 - [INFO] - from play in play-internal-execution-context-1 
-database [default] connected at jdbc:h2:mem:play
-
-2014-02-28 11:29:57,066 - [INFO] - from play in play-internal-execution-context-1 
-Application started (Dev)
+play.api.UnexpectedException: Unexpected exception[PersistenceException: The default EbeanServer has not been defined? This is normally set via the ebean.datasource.default property. Otherwise it should be registered programatically via registerServer()]
+	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1$$anonfun$1.apply(ApplicationProvider.scala:148) ~[play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1$$anonfun$1.apply(ApplicationProvider.scala:112) ~[play_2.10.jar:2.2.1]
+	at scala.Option.map(Option.scala:145) ~[scala-library.jar:na]
+	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1.apply(ApplicationProvider.scala:112) ~[play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1.apply(ApplicationProvider.scala:110) ~[play_2.10.jar:2.2.1]
+	at scala.util.Success.flatMap(Try.scala:200) ~[scala-library.jar:na]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:110) ~[play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:102) ~[play_2.10.jar:2.2.1]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) ~[scala-library.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1361) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library.jar:na]
+Caused by: javax.persistence.PersistenceException: The default EbeanServer has not been defined? This is normally set via the ebean.datasource.default property. Otherwise it should be registered programatically via registerServer()
+	at com.avaje.ebean.Ebean$ServerManager.getPrimaryServer(Ebean.java:178) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebean.Ebean$ServerManager.access$300(Ebean.java:128) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebean.Ebean.save(Ebean.java:453) ~[avaje-ebeanorm.jar:na]
+	at play.db.ebean.Model.save(Model.java:91) ~[play-java-ebean_2.10.jar:2.2.1]
+	at models.Curriculo.salvarDiscNoBD(Curriculo.java:269) ~[na:na]
+	at models.Curriculo.criaDisciplinas(Curriculo.java:262) ~[na:na]
+	at models.Curriculo.<init>(Curriculo.java:34) ~[na:na]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.Class.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.setEntityBeanClass(BeanDescriptorManager.java:1424) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.createByteCode(BeanDescriptorManager.java:1150) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.readDeployAssociations(BeanDescriptorManager.java:1070) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.readEntityDeploymentAssociations(BeanDescriptorManager.java:547) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.deploy(BeanDescriptorManager.java:237) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.core.InternalConfiguration.<init>(InternalConfiguration.java:114) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.core.DefaultServerFactory.createServer(DefaultServerFactory.java:204) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.core.DefaultServerFactory.createServer(DefaultServerFactory.java:65) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebean.EbeanServerFactory.create(EbeanServerFactory.java:58) ~[avaje-ebeanorm.jar:na]
+	at play.db.ebean.EbeanPlugin.onStart(EbeanPlugin.java:79) ~[play-java-ebean_2.10.jar:2.2.1]
+	at play.api.Play$$anonfun$start$1$$anonfun$apply$mcV$sp$1.apply(Play.scala:88) ~[play_2.10.jar:2.2.1]
+	at play.api.Play$$anonfun$start$1$$anonfun$apply$mcV$sp$1.apply(Play.scala:88) ~[play_2.10.jar:2.2.1]
+	at scala.collection.immutable.List.foreach(List.scala:318) ~[scala-library.jar:na]
+	at play.api.Play$$anonfun$start$1.apply$mcV$sp(Play.scala:88) ~[play_2.10.jar:2.2.1]
+	at play.api.Play$$anonfun$start$1.apply(Play.scala:88) ~[play_2.10.jar:2.2.1]
+	at play.api.Play$$anonfun$start$1.apply(Play.scala:88) ~[play_2.10.jar:2.2.1]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:18) ~[play_2.10.jar:2.2.1]
+	at play.api.Play$.start(Play.scala:87) ~[play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1$$anonfun$1.apply(ApplicationProvider.scala:139) ~[play_2.10.jar:2.2.1]
+	... 14 common frames omitted
 

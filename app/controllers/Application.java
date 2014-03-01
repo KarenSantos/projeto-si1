@@ -24,9 +24,9 @@ public class Application extends Controller {
 				planejador.getDisciplinasNaoAlocadas(), planejador));
 	}
 	
-	public static Result novoPeriodo() {
+	public static Result novoPeriodo(String id) {
 		try {
-			planejador.createPeriodo();
+			planejador.createPeriodo(id);
 		} catch (TotalDeCreditosInvalidoException e) {
 			
 		} catch (AlocacaoInvalidaException e) {

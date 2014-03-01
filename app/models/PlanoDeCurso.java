@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import play.db.ebean.Model;
+import play.db.ebean.Model.Finder;
 
 /**
  * Classe do plano de curso.
@@ -29,6 +30,9 @@ public class PlanoDeCurso extends Model {
 	private List<Periodo> periodos;
 	private Curriculo curriculo;
 	private List<Disciplina> disciplinasNaoAlocadas;
+	
+	public static Finder<String, Periodo> findPeriodo = new Finder(String.class, Periodo.class);
+	public static Finder<String, Curriculo> findCurriculo = new Finder(String.class, Curriculo.class);
 
 	/**
 	 * Inicia um plano de curso com um lista de periodos, um curriculo e uma
@@ -38,7 +42,11 @@ public class PlanoDeCurso extends Model {
 	public PlanoDeCurso() {
 		// CREATOR, o plano de curso inicializa os objetos abaixo
 		periodos = new ArrayList<Periodo>();
-		curriculo = new Curriculo();
+		
+		if (findCurriculo.ref("SC") == null) {
+			curriculo = new Curriculo("SC");
+			curriculo.save();
+		}
 
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		disciplinasNaoAlocadas.addAll(curriculo.getDisciplinas());
@@ -108,7 +116,7 @@ public class PlanoDeCurso extends Model {
 	 * @throws AlocacaoInvalidaException
 	 *             Se o numero maximo de periodos já foi alcançado.
 	 */
-	public void createPeriodo() throws AlocacaoInvalidaException {
+	public void createPeriodo(String id) throws AlocacaoInvalidaException {
 
 		int ultimoPeriodo = getTotalDePeriodos();
 
@@ -119,7 +127,9 @@ public class PlanoDeCurso extends Model {
 
 		// CONTROLLER - nova operação de sistema
 		// CREATOR - o planejamento de curso eh composto por periodos
-		periodos.add(new Periodo(ultimoPeriodo + 1));
+		Periodo novoPeriodo = new Periodo(id, ultimoPeriodo + 1);
+		novoPeriodo.save();
+		periodos.add(novoPeriodo);
 	}
 
 	/**
@@ -353,24 +363,27 @@ public class PlanoDeCurso extends Model {
 	 * Cria o primeiro periodo e aloca suas disciplinas que sao imutaveis.
 	 */
 	private void alocaDisciplinas() {
+		
+		if (findPeriodo.findRowCount() == 0) {
 
-		for (Disciplina disc : curriculo.getDisciplinas()) {
-			int periodo = disc.getPeriodoSugerido();
-			if (periodo > 0){
-				if (getTotalDePeriodos() < periodo) {
+			for (Disciplina disc : curriculo.getDisciplinas()) {
+				int periodo = disc.getPeriodoSugerido();
+				if (periodo > 0){
+					if (getTotalDePeriodos() < periodo) {
+						try {
+							createPeriodo("Usuario" + periodo);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
 					try {
-						createPeriodo();
-					} catch (Exception e) {
+						addDisciplinaPeriodo(disc.getId(), periodo);
+						disciplinasNaoAlocadas.remove(disc);
+					} catch (AlocacaoInvalidaException e) {
+						e.printStackTrace();
+					} catch (TotalDeCreditosInvalidoException e) {
 						e.printStackTrace();
 					}
-				}
-				try {
-					addDisciplinaPeriodo(disc.getId(), periodo);
-					disciplinasNaoAlocadas.remove(disc);
-				} catch (AlocacaoInvalidaException e) {
-					e.printStackTrace();
-				} catch (TotalDeCreditosInvalidoException e) {
-					e.printStackTrace();
 				}
 			}
 		}

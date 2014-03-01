@@ -4,7 +4,7 @@
 		module="lab3-si1_2.10"
 		revision="1.0-SNAPSHOT"
 		status="integration"
-		publication="20140228112933"
+		publication="20140228221322"
 	>
 		<description>
 		lab3-si1
@@ -37,6 +37,7 @@
 		<dependency org="com.typesafe.play" name="play-java-jdbc_2.10" rev="2.2.1" conf="compile->default(compile)"/>
 		<dependency org="com.typesafe.play" name="play-java-ebean_2.10" rev="2.2.1" conf="compile->default(compile)"/>
 		<dependency org="com.typesafe.play" name="play-cache_2.10" rev="2.2.1" conf="compile->default(compile)"/>
+		<dependency org="postgresql" name="postgresql" rev="9.1-901-1.jdbc4" conf="compile->default(compile)"/>
 		<dependency org="com.typesafe.play" name="play_2.10" rev="2.2.1" conf="compile->default(compile)"/>
 		<dependency org="com.typesafe.play" name="play-test_2.10" rev="2.2.1" conf="test->default(compile)"/>
 		<dependency org="com.typesafe.play" name="play-docs_2.10" rev="2.2.1" conf="docs->default(compile)"/>
