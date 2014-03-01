@@ -47,7 +47,7 @@
 	</div><!-- Fim de um periodo -->
 	
 	<div id="addPeriodo">
-		 @form(routes.Application.novoPeriodo()) {
+		 @form(routes.Application.novoPeriodo(planejador.getTotalDePeriodos()+1)) {
               <input class="bAdd" type="submit" value="+ Novo Periodo">
          } 
 	</div><!-- div para criar novo periodo -->

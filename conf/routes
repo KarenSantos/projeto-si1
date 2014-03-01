@@ -7,7 +7,7 @@ GET     /                           controllers.Application.index()
 
 # Periodos
 GET     /periodos						controllers.Application.periodos()
-POST    /novoPeriodo/:periodo  			controllers.Application.novoPeriodo(periodo: int)
+POST    /novoPeriodo/:periodo  			controllers.Application.novoPeriodo(periodo: Int)
 
 GET    	/editar/:periodo					controllers.Application.editar(periodo: Int)
 GET     /adicionar/:periodo/:disciplinaId	controllers.Application.adicionar(disciplinaId: String, periodo: Int)

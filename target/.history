@@ -3,3 +3,9 @@ h2-browser
 run
 eclipse
 run
+clean
+compile
+tun
+run
+clean
+run
