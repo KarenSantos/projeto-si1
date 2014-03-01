@@ -121,6 +121,14 @@ h2{
 	background: #8D4BC2;
 }
 
+#numPeriodo .editando{
+	background: #8D4BC2;
+}
+
+#numPeriodo .editando:hover{
+	background: darkslateblue;
+}
+
 span{
 	float: right;
 	margin-right: 15px;
@@ -133,6 +141,10 @@ span{
 	padding-right: 40px;
 	padding-top: 10px;
 	padding-bottom: 10px;
+}
+
+.discRed{
+	background: red;
 }
 
 .disc2{
@@ -233,23 +245,13 @@ span{
 	margin-top: 6px;
 }
 
-#closeEdit{
-	float: right;
-	padding-right: 10px;
-	text-decoration: initial;
-	font-size: 12px;
-	font-weight: 700;
-	font-family: cursive;
-	cursor: pointer;
-	padding-top: 1px;
-	color: inherit;
-}
-
 .cada1:hover{
 	background: #ababab;
+	cursor: pointer;
 }
 
 .cada2:hover{
 	background: #027561;
+	cursor: pointer;
 }
 

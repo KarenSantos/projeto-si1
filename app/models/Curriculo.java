@@ -278,7 +278,7 @@ public class Curriculo extends Model {
 
 	private void salvarDiscNoBD() {
 		for (Disciplina disc : getDisciplinas()){
-			disc.save();
+//			disc.save();
 		}
 	}
 }

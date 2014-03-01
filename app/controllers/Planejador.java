@@ -2,12 +2,12 @@ package controllers;
 
 import java.util.List;
 
+import exceptions.AlocacaoInvalidaException;
+import exceptions.TotalDeCreditosInvalidoException;
 import play.db.ebean.Model.Finder;
-import models.AlocacaoInvalidaException;
 import models.Disciplina;
 import models.Periodo;
 import models.PlanoDeCurso;
-import models.TotalDeCreditosInvalidoException;
 
 /**
  * Controlador do Plano de Curso.
@@ -25,7 +25,7 @@ public class Planejador {
 		
 		if (find.ref("Usuario") == null) {
 			plano = new PlanoDeCurso("Usuario");
-			plano.save();
+//			plano.save();
 		}
 	}
 

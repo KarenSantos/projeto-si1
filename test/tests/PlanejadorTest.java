@@ -1,13 +1,12 @@
 package tests;
 
-import models.AlocacaoInvalidaException;
-import models.TotalDeCreditosInvalidoException;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import controllers.Planejador;
+import exceptions.AlocacaoInvalidaException;
+import exceptions.TotalDeCreditosInvalidoException;
 
 public class PlanejadorTest {
 

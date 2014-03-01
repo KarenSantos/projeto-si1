@@ -1,7 +1,7 @@
 package controllers;
 
-import models.AlocacaoInvalidaException;
-import models.TotalDeCreditosInvalidoException;
+import exceptions.AlocacaoInvalidaException;
+import exceptions.TotalDeCreditosInvalidoException;
 import play.mvc.Controller;
 import play.mvc.Result;
 

@@ -4,140 +4,129 @@
 
 @main("Planejamento de Curso") {
 
-<div id="col1"><h2 style="border-bottom: none">Períodos</h2><!-- coluna de periodos -->
-
-	<div class="disciplinasPeriodo"><!-- Começo de um periodo -->
-	
-		@for(periodo <- periodos){
-			@if(periodo.getNumero() == numPeriodo && periodo.getNumero != 1){
-				<div class="numPriodo">@periodo.getNumero()º Período<span><a class="addDiscPeriodo" onclick="deletaPeriodo('@numPeriodo', '@periodo.getTotalDeDisciplinas()')">Deletar</a></span></div><!-- Numero do periodo -->
-			} else {
-				<div class="numPriodo">@periodo.getNumero()º Período</div><!-- Numero do periodo -->
-			}
-			<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
+<div id="top1"><!-- coluna de periodos -->
+	<a onclick="novoPeriodo()"><div id="novoPeriodo">Novo Período</div></a>
+	<h2 style="border-bottom: none">Períodos</h2>
+</div>
+<div id="col1">
+	@for(periodo <- periodos){
+		<div id="periodoBox">
+			@if(periodo.getNumero() == numPeriodo){
+				<a onclick="sairEdicao()" title="Clique aqui para fechar edição"><div id="numPeriodo" class="editando"><b>@periodo.getNumero()º</b> Período</div></a>
+				<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
 				<div class="disc"><!-- Disciplinas do periodo -->
 				    @for(disciplinaPeriodo <- periodo.getDisciplinas()) {
-				    	@if(disciplinaPeriodo.getPeriodoSugerido() != 1 && periodo.getNumero() == numPeriodo){
-						    <a class="cada1" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome() </a>  <span>@disciplinaPeriodo.getCreditos()  /  @disciplinaPeriodo.getDificuldade()
-						    <a class="addDiscPeriodo" onclick="rmDisc('@planejador.ehPreRequisito(disciplinaPeriodo, numPeriodo)', '@disciplinaPeriodo.getId()', '@numPeriodo')">Rm</a></span>
-						    <br>
+				    	@if(disciplinaPeriodo.isAlocadaCorretamente()) {
+				    	   	<a onclick="removerDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo')" class="cada1" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a><span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
+				    		<br>
 				    	} else {
-						    <a class="cada1" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome() </a>  <span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span><br>
+				    		<a onclick="removerDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo')" class="cada1 discRed" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a><span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
+				    		<br>
 				    	}
-					}
+				    }
 				</div>
+			} else {
+				<a onclick="editaPeriodo('@periodo.getNumero()')" title="Clique aqui para editar"><div id="numPeriodo"><b>@periodo.getNumero()º</b> Período</div></a><!-- Numero do periodo -->
+				<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
+				<div class="disc"><!-- Disciplinas do periodo -->
+				    @for(disciplinaPeriodo <- periodo.getDisciplinas()) {
+				    	@if(disciplinaPeriodo.isAlocadaCorretamente()) {
+				    	   	<a onclick="moverDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo', '@periodo.getNumero()')" class="cada1" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a><span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
+				    		<br>
+				    	} else {
+				    		<a onclick="moverDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo', '@periodo.getNumero()')" class="cada1 discRed" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a><span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
+				    		<br>
+				    	}
+				    }
+			}			
+			</div>
 			<div class="totalC"><!-- Total de créditos do periodo -->
 			@if(periodo.getTotalDeCreditos() < 14){
 				<div class="totalCNota">Número mínimo de 14 créditos não alcançado</div>
 			}
 				<b>Total: </b>@periodo.getTotalDeCreditos()  /   @periodo.getTotalDeDificuldade()
 			</div>
-			@if(periodo.getNumero() == numPeriodo) {
-				<center id="edd">Clique em Add para adicionar e Rm para remover<a id="closeEdit"href="../../periodos">X</a></center>
-			}
-			
-			@if(periodo.getNumero() != numPeriodo) {
-				@form(routes.Application.editar(periodo.getNumero())) {
-					<input class="addDisc" type="submit" value="Editar período">
-				}
-			}
-			
-	    }
-	   
-	</div><!-- Fim de um periodo -->
+		</div><!-- Fim de um periodo -->
+	}
 	
-	<div id="addPeriodo">
-		 @form(routes.Application.novoPeriodo(planejador.getTotalDePeriodos()+1)) {
-              <input class="bAdd" type="submit" value="+ Novo Periodo">
-         } 
-	</div><!-- div para criar novo periodo -->
 </div>
 
-
-<div id="col2"><h2>Disciplinas Obrigatórias</h2><!-- coluna de disciplinas -->
-	
+<div id="top2"><h2>Disciplinas</h2></div><!-- coluna de disciplinas -->
+<div id="col2">
+	<div id="header">Obrigatórias</div>
 	<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
+	
 	<div class="disc2">
+		
 		@for(disciplina <- naoAlocadas) {
 			@if(disciplina.getPeriodoSugerido() == 2){
-				<a class="cada2" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   
-				<span>@disciplina.getCreditos()  /  @disciplina.getDificuldade() <a class="addDiscPeriodo" onclick="addDisc('@disciplina.getId()', '@numPeriodo', '@planejador.temPreRequisito(disciplina)')">Add</a></span> 
+				<a onclick="adicionarDisciplina('@disciplina.getId()', '@numPeriodo')" class="cada2" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
 			}
 		}
 		<br>
 		@for(disciplina <- naoAlocadas) {
 			@if(disciplina.getPeriodoSugerido() == 3){
-				<a class="cada2" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>
-				<span>@disciplina.getCreditos()  /  @disciplina.getDificuldade() <a class="addDiscPeriodo" onclick="addDisc('@disciplina.getId()', '@numPeriodo', '@planejador.temPreRequisito(disciplina)')">Add</a></span> 
+				<a onclick="adicionarDisciplina('@disciplina.getId()', '@numPeriodo')" class="cada2" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
 			}
 		}
 		<br>
 		@for(disciplina <- naoAlocadas) {
 			@if(disciplina.getPeriodoSugerido() == 4){
-				<a class="cada2" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>
-				<span>@disciplina.getCreditos()  /  @disciplina.getDificuldade() <a class="addDiscPeriodo" onclick="addDisc('@disciplina.getId()', '@numPeriodo', '@planejador.temPreRequisito(disciplina)')">Add</a></span>
+				<a onclick="adicionarDisciplina('@disciplina.getId()', '@numPeriodo')" class="cada2" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
 			}
 		}
 		<br>
 		@for(disciplina <- naoAlocadas) {
 			@if(disciplina.getPeriodoSugerido() == 5){
-				<a class="cada2" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>
-				<span>@disciplina.getCreditos()  /  @disciplina.getDificuldade() <a class="addDiscPeriodo" onclick="addDisc('@disciplina.getId()', '@numPeriodo', '@planejador.temPreRequisito(disciplina)')">Add</a></span>
+				<a onclick="adicionarDisciplina('@disciplina.getId()', '@numPeriodo')" class="cada2" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
 			}
 		}
 		<br>
 		@for(disciplina <- naoAlocadas) {
 			@if(disciplina.getPeriodoSugerido() == 6){
-				<a class="cada2" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>
-				<span>@disciplina.getCreditos()  /  @disciplina.getDificuldade() <a class="addDiscPeriodo" onclick="addDisc('@disciplina.getId()', '@numPeriodo', '@planejador.temPreRequisito(disciplina)')">Add</a></span>
+				<a onclick="adicionarDisciplina('@disciplina.getId()', '@numPeriodo')" class="cada2" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
 			}
 		}
 		<br>
 		@for(disciplina <- naoAlocadas) {
 			@if(disciplina.getPeriodoSugerido() == 7){
-				<a class="cada2" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>
-				<span>@disciplina.getCreditos()  /  @disciplina.getDificuldade() <a class="addDiscPeriodo" onclick="addDisc('@disciplina.getId()', '@numPeriodo', '@planejador.temPreRequisito(disciplina)')">Add</a></span>
+				<a onclick="adicionarDisciplina('@disciplina.getId()', '@numPeriodo')" class="cada2" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
 			}
 		}
 		<br>
 		@for(disciplina <- naoAlocadas) {
 			@if(disciplina.getPeriodoSugerido() == 8){
-				<a class="cada2" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>
-				<span>@disciplina.getCreditos()  /  @disciplina.getDificuldade() <a class="addDiscPeriodo" onclick="addDisc('@disciplina.getId()', '@numPeriodo', '@planejador.temPreRequisito(disciplina)')">Add</a></span>
+				<a onclick="adicionarDisciplina('@disciplina.getId()', '@numPeriodo')" class="cada2" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
 			}
 		}
-		<br>
-
 	</div>
-</div>
-<div id="col3"><h2>Disciplinas Optativas</h2><!-- coluna de disciplinas optativas -->
-	<div id="header">Outros cursos</div>
+
+	<div id="header">Optativas de Outros Cursos</div>
 	<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
+	
 	<div class="disc2">
 		@for(disciplina <- naoAlocadas) {
-			@if(disciplina.getPeriodoSugerido() == -1){
-				<a class="cada3" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>
-				<span>@disciplina.getCreditos()  /  @disciplina.getDificuldade() <a class="addDiscPeriodo" onclick="addDisc('@disciplina.getId()', '@numPeriodo', '@planejador.temPreRequisito(disciplina)')">Add</a></span> 
-				<br>
-			}
+				@if(disciplina.getPeriodoSugerido() == -1){
+					<a onclick="adicionarDisciplina('@disciplina.getId()', '@numPeriodo')" class="cada2" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
+					<br>
+				}
 		}
 	</div>
 			
-	<div id="header">TECC</div>
+	<div id="header">Optativas TECC</div>
 	<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
 			
 	<div class="disc2">
 		@for(disciplina <- naoAlocadas) {
 			@if(disciplina.getPeriodoSugerido() == -2){
-				<a class="cada3" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>
-				<span>@disciplina.getCreditos()  /  @disciplina.getDificuldade() <a class="addDiscPeriodo" onclick="addDisc('@disciplina.getId()', '@numPeriodo', '@planejador.temPreRequisito(disciplina)')">Add</a></span> 
+				<a onclick="adicionarDisciplina('@disciplina.getId()', '@numPeriodo')" class="cada2" title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
 			}
 		}

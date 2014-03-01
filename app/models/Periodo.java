@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import exceptions.NumeroInvalidoException;
+import exceptions.TotalDeCreditosInvalidoException;
 import play.db.ebean.Model;
 
 /**

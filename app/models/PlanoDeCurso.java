@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import exceptions.AlocacaoInvalidaException;
+import exceptions.TotalDeCreditosInvalidoException;
 import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;
 
@@ -47,7 +49,7 @@ public class PlanoDeCurso extends Model {
 
 		if (findCurriculo.ref("SC") == null) {
 			curriculo = new Curriculo("SC");
-			curriculo.save();
+//			curriculo.save();
 		}
 
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
@@ -67,7 +69,7 @@ public class PlanoDeCurso extends Model {
 
 		if (findCurriculo.ref("SC") == null) {
 			curriculo = new Curriculo("SC");
-			curriculo.save();
+//			curriculo.save();
 		}
 
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
@@ -153,7 +155,7 @@ public class PlanoDeCurso extends Model {
 		// CONTROLLER - nova operação de sistema
 		// CREATOR - o planejamento de curso eh composto por periodos
 		Periodo novoPeriodo = new Periodo(id, ultimoPeriodo + 1);
-		novoPeriodo.save();
+//		novoPeriodo.save();
 		periodos.add(novoPeriodo);
 	}
 
