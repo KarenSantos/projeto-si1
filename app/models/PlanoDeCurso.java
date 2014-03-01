@@ -30,9 +30,11 @@ public class PlanoDeCurso extends Model {
 	private List<Periodo> periodos;
 	private Curriculo curriculo;
 	private List<Disciplina> disciplinasNaoAlocadas;
-	
-	public static Finder<String, Periodo> findPeriodo = new Finder(String.class, Periodo.class);
-	public static Finder<String, Curriculo> findCurriculo = new Finder(String.class, Curriculo.class);
+
+	public static Finder<String, Periodo> findPeriodo = new Finder(
+			String.class, Periodo.class);
+	public static Finder<String, Curriculo> findCurriculo = new Finder(
+			String.class, Curriculo.class);
 
 	/**
 	 * Inicia um plano de curso com um lista de periodos, um curriculo e uma
@@ -42,7 +44,7 @@ public class PlanoDeCurso extends Model {
 	public PlanoDeCurso() {
 		// CREATOR, o plano de curso inicializa os objetos abaixo
 		periodos = new ArrayList<Periodo>();
-		
+
 		if (findCurriculo.ref("SC") == null) {
 			curriculo = new Curriculo("SC");
 			curriculo.save();
@@ -53,7 +55,7 @@ public class PlanoDeCurso extends Model {
 
 		alocaDisciplinas();
 	}
-	
+
 	/**
 	 * Inicia um plano de curso com um lista de periodos, um curriculo e uma
 	 * lista de disciplinas não alocadas. Configura os periodos com as
@@ -62,12 +64,35 @@ public class PlanoDeCurso extends Model {
 	public PlanoDeCurso(String id) {
 		this.id = id;
 		periodos = new ArrayList<Periodo>();
-		curriculo = new Curriculo();
+
+		if (findCurriculo.ref("SC") == null) {
+			curriculo = new Curriculo("SC");
+			curriculo.save();
+		}
 
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		disciplinasNaoAlocadas.addAll(curriculo.getDisciplinas());
 
 		alocaDisciplinas();
+	}
+
+	/**
+	 * Retorna o id do plano de curso.
+	 * 
+	 * @return O id do plano de curso.
+	 */
+	public String getId() {
+		return this.id;
+	}
+
+	/**
+	 * Altera o id do plano de curso.
+	 * 
+	 * @param id
+	 *            O novo id do plano de curso.
+	 */
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	/**
@@ -109,7 +134,7 @@ public class PlanoDeCurso extends Model {
 	public Disciplina getDisciplina(String id) {
 		return curriculo.getDisciplina(id);
 	}
-	
+
 	/**
 	 * Cria um novo periodo vazio.
 	 * 
@@ -154,13 +179,15 @@ public class PlanoDeCurso extends Model {
 		 * então ele faz a verificação.
 		 */
 		Disciplina aDisciplina = getDisciplina(id);
-		if (periodo != getTotalDePeriodos()) {      // se for o ultimo periodo pode ter mais de 28 creditos
-			if ((getPeriodo(periodo).getTotalDeCreditos() + aDisciplina.getCreditos()) > MAXIMO_DE_CREDITOS) {
+		if (periodo != getTotalDePeriodos()) { // se for o ultimo periodo pode
+												// ter mais de 28 creditos
+			if ((getPeriodo(periodo).getTotalDeCreditos() + aDisciplina
+					.getCreditos()) > MAXIMO_DE_CREDITOS) {
 				throw new TotalDeCreditosInvalidoException(
 						"O número máximo de créditos por período é 28.");
 			}
 		}
-		
+
 		if (!aDisciplina.getPreRequisitos().isEmpty()) {
 			for (Disciplina preRequisito : aDisciplina.getPreRequisitos()) {
 				Boolean result = false;
@@ -275,9 +302,9 @@ public class PlanoDeCurso extends Model {
 	 */
 	public boolean temPreRequisito(Disciplina disc) {
 		boolean resp = false;
-		if (!disc.getPreRequisitos().isEmpty()){
-			for (Disciplina pre : disc.getPreRequisitos()){
-				for (Disciplina discNaoAlocada : disciplinasNaoAlocadas){
+		if (!disc.getPreRequisitos().isEmpty()) {
+			for (Disciplina pre : disc.getPreRequisitos()) {
+				for (Disciplina discNaoAlocada : disciplinasNaoAlocadas) {
 					if (pre.equals(discNaoAlocada)) {
 						resp = true;
 						break;
@@ -363,12 +390,12 @@ public class PlanoDeCurso extends Model {
 	 * Cria o primeiro periodo e aloca suas disciplinas que sao imutaveis.
 	 */
 	private void alocaDisciplinas() {
-		
+
 		if (findPeriodo.findRowCount() == 0) {
 
 			for (Disciplina disc : curriculo.getDisciplinas()) {
 				int periodo = disc.getPeriodoSugerido();
-				if (periodo > 0){
+				if (periodo > 0) {
 					if (getTotalDePeriodos() < periodo) {
 						try {
 							createPeriodo("Usuario" + periodo);

@@ -12,7 +12,7 @@ import play.mvc.Result;
  */
 public class Application extends Controller {
 
-	private static Planejador planejador = new Planejador();
+	private static Planejador planejador = new Planejador("Usuario");
 	
 	public static Result index() {
 		return redirect((routes.Application).periodos());
@@ -24,9 +24,9 @@ public class Application extends Controller {
 				planejador.getDisciplinasNaoAlocadas(), planejador));
 	}
 	
-	public static Result novoPeriodo(String id) {
+	public static Result novoPeriodo(int id) {
 		try {
-			planejador.createPeriodo(id);
+			planejador.createPeriodo("Usuario" + id);
 		} catch (TotalDeCreditosInvalidoException e) {
 			
 		} catch (AlocacaoInvalidaException e) {

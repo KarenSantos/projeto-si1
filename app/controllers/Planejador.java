@@ -21,10 +21,10 @@ public class Planejador {
 
 	public static Finder<String, PlanoDeCurso> find = new Finder(String.class, PlanoDeCurso.class);
 	
-	public Planejador() {
-		plano = new PlanoDeCurso("Usuario");
+	public Planejador(String id) {
 		
 		if (find.ref("Usuario") == null) {
+			plano = new PlanoDeCurso("Usuario");
 			plano.save();
 		}
 	}

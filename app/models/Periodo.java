@@ -55,6 +55,25 @@ public class Periodo extends Model {
 	}
 
 	/**
+	 * Retorna o id do periodo.
+	 * 
+	 * @return O id do periodo.
+	 */
+	public String getId() {
+		return this.id;
+	}
+
+	/**
+	 * Altera o id do periodo.
+	 * 
+	 * @param id
+	 *            O novo id do periodo.
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	/**
 	 * Retorna o numero do periodo.
 	 * 
 	 * @return O numero do periodo.
@@ -78,7 +97,7 @@ public class Periodo extends Model {
 		}
 		this.numero = numero;
 	}
-
+	
 	/**
 	 * Adiciona uma disciplina a lista de disciplinas do periodo.
 	 * 
