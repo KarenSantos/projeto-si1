@@ -3,12 +3,10 @@ function novoPeriodo() {
 }
 
 function editarPeriodo(periodo){
+	
 	$.ajax({
-		  type: "GET",
-		  url: "/editar/" + periodo,
-		  data: "",
 		  success: function(){
-//		        window.location = "/editar/" + periodo;
+		        window.location = "/editar/" + periodo;
 		  },
 		  error: function(XMLHttpRequest, textStatus, errorThrown) {
 			  //parser pra achar a Excecao lancada
@@ -44,11 +42,8 @@ function removerDisciplina(discId, periodo) {
 function moverDisciplina(discId, periodoFuturo, periodoAtual) {
 	
 	$.ajax({
-		  type: "GET",
-		  url: "/mover/" + discId + "/" + periodoFuturo + "/" + periodoAtual,
-		  data: "",
 		  success: function(){
-		        window.location = "/editar/" + periodo;
+		        window.location = "/mover/" + discId + "/" + periodoFuturo + "/" + periodoAtual;
 		  },
 		  error: function(XMLHttpRequest, textStatus, errorThrown) {
 			  //parser pra achar a Excecao lancada

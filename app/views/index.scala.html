@@ -11,7 +11,7 @@
 <div id="col1">
 	@for(periodo <- periodos){
 		<div id="periodoBox">
-			<a onclick="editaPeriodo('@periodo.getNumero()')" title="Clique aqui para editar"><div id="numPeriodo"><b>@periodo.getNumero()º</b> Período</div></a><!-- Numero do periodo -->
+			<a onclick="editarPeriodo('@periodo.getNumero()')" title="Clique aqui para editar"><div id="numPeriodo"><b>@periodo.getNumero()º</b> Período</div></a><!-- Numero do periodo -->
 			<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
 			<div class="disc"><!-- Disciplinas do periodo -->
 			    @for(disciplinaPeriodo <- periodo.getDisciplinas()) {

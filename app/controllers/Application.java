@@ -12,7 +12,7 @@ import play.mvc.Result;
  */
 public class Application extends Controller {
 
-	private static Planejador planejador = new Planejador("Usuario");
+	private static Planejador planejador = new Planejador();
 	
 	public static Result index() {
 		return redirect((routes.Application).periodos());

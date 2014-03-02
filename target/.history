@@ -11,3 +11,6 @@ clean
 run
 clean
 run
+play clean
+clean
+run

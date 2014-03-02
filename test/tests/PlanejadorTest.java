@@ -42,6 +42,28 @@ public class PlanejadorTest {
 	}
 	
 	@Test
+	public void aoMoverDisciplinaDeveAtualizarSeuStatusDeAlocacao() {
+		planejador.moveDisciplina("01", 2, 1);
+		Assert.assertFalse(planejador.getDisciplina("01").isAlocadaCorretamente());
+		planejador.moveDisciplina("01", 1, 2);
+		Assert.assertTrue(planejador.getDisciplina("01").isAlocadaCorretamente());
+		
+		planejador.moveDisciplina("17", 1, 3);
+		Assert.assertFalse(planejador.getDisciplina("10").isAlocadaCorretamente());
+		Assert.assertFalse(planejador.getDisciplina("11").isAlocadaCorretamente());
+		Assert.assertFalse(planejador.getDisciplina("12").isAlocadaCorretamente());
+		
+		planejador.moveDisciplina("17", 5, 1);
+		Assert.assertFalse(planejador.getDisciplina("17").isAlocadaCorretamente());
+		Assert.assertTrue(planejador.getDisciplina("10").isAlocadaCorretamente());
+		Assert.assertTrue(planejador.getDisciplina("11").isAlocadaCorretamente());
+		Assert.assertTrue(planejador.getDisciplina("12").isAlocadaCorretamente());
+		
+		planejador.moveDisciplina("17", 3, 5);
+		Assert.assertTrue(planejador.getDisciplina("17").isAlocadaCorretamente());
+	}
+	
+	@Test
 	public void devePoderRemoverDisciplinas() throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
 		
 	}

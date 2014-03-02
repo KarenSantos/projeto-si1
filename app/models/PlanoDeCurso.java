@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import exceptions.AlocacaoInvalidaException;
@@ -28,15 +30,14 @@ public class PlanoDeCurso extends Model {
 	private final int MAXIMO_DE_CREDITOS = 28;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
 	private List<Periodo> periodos;
 	private Curriculo curriculo;
 	private List<Disciplina> disciplinasNaoAlocadas;
 
-	public static Finder<String, Periodo> findPeriodo = new Finder(
-			String.class, Periodo.class);
-	public static Finder<String, Curriculo> findCurriculo = new Finder(
-			String.class, Curriculo.class);
+//	public static Finder<String, Periodo> findPeriodo = new Finder<String, Periodo>(String.class, Periodo.class);
+//	public static Finder<String, Curriculo> findCurriculo = new Finder<String, Curriculo>(String.class, Curriculo.class);
 
 	/**
 	 * Inicia um plano de curso com um lista de periodos, um curriculo e uma
@@ -47,10 +48,10 @@ public class PlanoDeCurso extends Model {
 		// CREATOR, o plano de curso inicializa os objetos abaixo
 		periodos = new ArrayList<Periodo>();
 
-		if (findCurriculo.ref("SC") == null) {
+//		if (findCurriculo.ref("SC") == null) {
 			curriculo = new Curriculo("SC");
 			// curriculo.save();
-		}
+//		}
 
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		disciplinasNaoAlocadas.addAll(curriculo.getDisciplinas());
@@ -67,10 +68,10 @@ public class PlanoDeCurso extends Model {
 		this.id = id;
 		periodos = new ArrayList<Periodo>();
 
-		if (findCurriculo.ref("SC") == null) {
+//		if (findCurriculo.ref("SC") == null) {
 			curriculo = new Curriculo("SC");
 			// curriculo.save();
-		}
+//		}
 
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		disciplinasNaoAlocadas.addAll(curriculo.getDisciplinas());
@@ -272,24 +273,30 @@ public class PlanoDeCurso extends Model {
 			int periodoAtual) {
 		Disciplina aDisciplina = getDisciplina(disciplinaId);
 
-		if (periodoFuturo > periodoAtual) {
-			
-			getPeriodo(periodoAtual).removeDisciplina(aDisciplina);
-			getPeriodo(periodoFuturo).addDisciplina(aDisciplina);
-			
-			List<Disciplina> ehPreRequisitoDessas = temComoPreRequisito(aDisciplina);
-			
-			for (int i = 1; i < periodoFuturo + 1; i++) {  // vai checar ate o periodo que ela esta
-				for (Disciplina disc : getPeriodo(i).getDisciplinas()) {
-					if (ehPreRequisitoDessas.contains(disc)) {
-						aDisciplina.setNotAlocadaCorretamente();
-					}						
-				}
+		getPeriodo(periodoAtual).removeDisciplina(aDisciplina);
+		getPeriodo(periodoFuturo).addDisciplina(aDisciplina);
+		
+		List<Disciplina> temComoPreRequisito = temComoPreRequisito(aDisciplina);
+		List<Disciplina> saoPreRequisitos = aDisciplina.getPreRequisitos();
+
+		for (Disciplina temComo : temComoPreRequisito) {
+			if (getPeriodoDaDisciplina(aDisciplina) >= getPeriodoDaDisciplina(temComo)) {
+				aDisciplina.setNotAlocadaCorretamente();
+				break;
+			} else {
+				aDisciplina.setIsAlocadaCorretamente();
 			}
-		} else if (periodoFuturo < periodoAtual){
-			
 		}
 		
+		for (Disciplina ehPreRequisito : saoPreRequisitos){
+			if (getPeriodoDaDisciplina(ehPreRequisito) >= getPeriodoDaDisciplina(aDisciplina)) {
+				ehPreRequisito.setNotAlocadaCorretamente();
+			} else {
+				ehPreRequisito.setIsAlocadaCorretamente();
+			}
+		}
+		
+
 	}
 
 	/**
@@ -329,6 +336,25 @@ public class PlanoDeCurso extends Model {
 			}
 		}
 		return resp;
+	}
+
+	/**
+	 * Retorna em qual periodo está a disciplina.
+	 * 
+	 * @param disc
+	 *            A disciplina que se quer saber em que periodo está.
+	 * @return O número do periodo em que está a disciplina ou zero se não está
+	 *         em nenhum periodo.
+	 */
+	public int getPeriodoDaDisciplina(Disciplina disc) {
+		int periodo = 0;
+		for (Periodo per : getPeriodos()) {
+			if (per.getDisciplinas().contains(disc)) {
+				periodo = per.getNumero();
+				break;
+			}
+		}
+		return periodo;
 	}
 
 	/**
@@ -402,7 +428,7 @@ public class PlanoDeCurso extends Model {
 			}
 		}
 	}
-	
+
 	/**
 	 * Retorna uma lista de disciplinas da qual esta é pre-requisito.
 	 * 
@@ -411,7 +437,7 @@ public class PlanoDeCurso extends Model {
 	 * @return A lista de disciplinas da qual esta é pre-requisito.
 	 */
 	private List<Disciplina> temComoPreRequisito(Disciplina aDisciplina) {
-		
+
 		List<Disciplina> resp = new ArrayList<Disciplina>();
 
 		for (Disciplina disc : curriculo.getDisciplinas()) {
@@ -423,7 +449,7 @@ public class PlanoDeCurso extends Model {
 				}
 			}
 		}
-		
+
 		return resp;
 	}
 
@@ -432,7 +458,7 @@ public class PlanoDeCurso extends Model {
 	 */
 	private void alocaDisciplinas() {
 
-		if (findPeriodo.findRowCount() == 0) {
+//		if (findPeriodo.findRowCount() == 0) {
 
 			for (Disciplina disc : curriculo.getDisciplinas()) {
 				int periodo = disc.getPeriodoSugerido();
@@ -454,6 +480,6 @@ public class PlanoDeCurso extends Model {
 					}
 				}
 			}
-		}
+//		}
 	}
 }

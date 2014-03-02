@@ -10,9 +10,9 @@
 </div>
 <div id="col1">
 	@for(periodo <- periodos){
-		<div id="periodoBox">
-			@if(periodo.getNumero() == numPeriodo){
-				<a onclick="sairEdicao()" title="Clique aqui para fechar edição"><div id="numPeriodo" class="editando"><b>@periodo.getNumero()º</b> Período</div></a>
+		@if(periodo.getNumero() == numPeriodo){
+			<div id="periodoBox">
+				<a onclick="sairEdicao()" title="Clique aqui para fechar edição"><div id="numPeriodoEditando"><b>@periodo.getNumero()º</b> Período</div></a>
 				<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
 				<div class="disc"><!-- Disciplinas do periodo -->
 				    @for(disciplinaPeriodo <- periodo.getDisciplinas()) {
@@ -25,8 +25,17 @@
 				    	}
 				    }
 				</div>
-			} else {
-				<a onclick="editaPeriodo('@periodo.getNumero()')" title="Clique aqui para editar"><div id="numPeriodo"><b>@periodo.getNumero()º</b> Período</div></a><!-- Numero do periodo -->
+				<div class="totalC"><!-- Total de créditos do periodo -->
+				@if(periodo.getTotalDeCreditos() < 14){
+					<div class="totalCNota">Número mínimo de 14 créditos não alcançado</div>
+				}
+					<b>Total: </b>@periodo.getTotalDeCreditos()  /   @periodo.getTotalDeDificuldade()
+				</div>
+				<div id="editandoNote">Clique na disciplina para adicionar aqui ou mover de outro período para este.</div>
+			</div><!-- Fim de um periodo -->
+		} else {
+			<div id="periodoBox">
+				<a onclick="editarPeriodo('@periodo.getNumero()')" title="Clique aqui para editar"><div id="numPeriodo"><b>@periodo.getNumero()º</b> Período</div></a><!-- Numero do periodo -->
 				<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
 				<div class="disc"><!-- Disciplinas do periodo -->
 				    @for(disciplinaPeriodo <- periodo.getDisciplinas()) {
@@ -38,17 +47,16 @@
 				    		<br>
 				    	}
 				    }
-			}			
-			</div>
-			<div class="totalC"><!-- Total de créditos do periodo -->
-			@if(periodo.getTotalDeCreditos() < 14){
-				<div class="totalCNota">Número mínimo de 14 créditos não alcançado</div>
-			}
-				<b>Total: </b>@periodo.getTotalDeCreditos()  /   @periodo.getTotalDeDificuldade()
-			</div>
-		</div><!-- Fim de um periodo -->
+			   	</div>
+				<div class="totalC"><!-- Total de créditos do periodo -->
+				@if(periodo.getTotalDeCreditos() < 14){
+					<div class="totalCNota">Número mínimo de 14 créditos não alcançado</div>
+				}
+					<b>Total: </b>@periodo.getTotalDeCreditos()  /   @periodo.getTotalDeDificuldade()
+				</div>
+			</div><!-- Fim de um periodo -->
+		}			
 	}
-	
 </div>
 
 <div id="top2"><h2>Disciplinas</h2></div><!-- coluna de disciplinas -->

@@ -22,7 +22,7 @@ public class Curriculo extends Model {
 	private String id;
 	private List<Disciplina> disciplinas;
 
-	public static Finder<String, Disciplina> find = new Finder(String.class, Disciplina.class);
+//	public static Finder<String, Disciplina> find = new Finder(String.class, Disciplina.class);
 	
 	/**
 	 * Inicia um curriculo com uma lista para as disciplinas do curso.
@@ -135,12 +135,11 @@ public class Curriculo extends Model {
 	 */
 	private void criaDisciplinas() {
 
-		if (find.findRowCount() == 0) {
+//		if (find.findRowCount() == 0) {
 			
 			// Disciplinas obrigatórias
 			createDisciplina("01", "Cálculo Diferencial e Integral 1", 4, 1, 4);
-			createDisciplina("02", "Álgebra Vetorial e Geometria Analítica", 4, 1,
-					3);
+			createDisciplina("02", "Álgebra Vetorial e Geometria Analítica", 4, 1, 3);
 			createDisciplina("03", "Leitura e Produção de Texto", 4, 1, 2);
 			createDisciplina("04", "Programação 1", 4, 1, 3);
 			createDisciplina("05", "Laboratório de Programação 1", 4, 1, 3);
@@ -273,7 +272,7 @@ public class Curriculo extends Model {
 			
 			salvarDiscNoBD();
 
-		}
+//		}
 	}
 
 	private void salvarDiscNoBD() {

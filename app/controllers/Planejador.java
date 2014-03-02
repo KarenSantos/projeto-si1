@@ -4,7 +4,7 @@ import java.util.List;
 
 import exceptions.AlocacaoInvalidaException;
 import exceptions.TotalDeCreditosInvalidoException;
-import play.db.ebean.Model.Finder;
+import play.db.ebean.*;
 import models.Disciplina;
 import models.Periodo;
 import models.PlanoDeCurso;
@@ -19,15 +19,11 @@ public class Planejador {
 
 	private PlanoDeCurso plano;
 
-	public static Finder<String, PlanoDeCurso> find = new Finder(String.class,
-			PlanoDeCurso.class);
+//	public static Finder<String, PlanoDeCurso> find = new Finder(String.class, PlanoDeCurso.class);
 
-	public Planejador(String id) {
+	public Planejador() {
 
-		if (find.ref("Usuario") == null) {
-			plano = new PlanoDeCurso("Usuario");
-			// plano.save();
-		}
+		plano = new PlanoDeCurso();
 	}
 
 	/**
