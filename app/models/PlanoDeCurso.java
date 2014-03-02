@@ -164,7 +164,7 @@ public class PlanoDeCurso extends Model {
 
 		// CONTROLLER - nova operação de sistema
 		// CREATOR - o planejamento de curso eh composto por periodos
-		Periodo novoPeriodo = new Periodo(id, ultimoPeriodo + 1);
+		Periodo novoPeriodo = new Periodo(id + ultimoPeriodo + 1, ultimoPeriodo + 1);
 		// novoPeriodo.save();
 		periodos.add(novoPeriodo);
 	}

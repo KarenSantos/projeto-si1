@@ -1,4 +1,15 @@
-function novoPeriodo() {
+function novoPeriodo(periodo) {
+	$.ajax({
+		  type: "GET",
+		  url: "/novoPeriodo",
+		  data: "",
+		  success: function(){
+		        window.location = "/editar/" + periodo;
+		  },
+		  error: function(XMLHttpRequest, textStatus, errorThrown) {
+			  alert("Você já alcançou o número máximo de períodos permitido pelo curso.");
+		  }
+	});
 	
 }
 
@@ -9,12 +20,8 @@ function editarPeriodo(periodo){
 		        window.location = "/editar/" + periodo;
 		  },
 		  error: function(XMLHttpRequest, textStatus, errorThrown) {
-			  //parser pra achar a Excecao lancada
-			  var ind = XMLHttpRequest.responseText.indexOf("Exception:");
-			  var res = XMLHttpRequest.responseText.substring(ind +11 , ind + 500);
-			  var ind2 = res.indexOf("]");
-			  var res2 = res.substring(0, ind2);
-		      alert(res2);
+			  alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
+			  window.location = "/";
 		  }
 	});
 }
@@ -29,12 +36,8 @@ function removerDisciplina(discId, periodo) {
 		        window.location = "/editar/" + periodo;
 		  },
 		  error: function(XMLHttpRequest, textStatus, errorThrown) {
-			  //parser pra achar a Excecao lancada
-			  var ind = XMLHttpRequest.responseText.indexOf("Exception:");
-			  var res = XMLHttpRequest.responseText.substring(ind +11 , ind + 500);
-			  var ind2 = res.indexOf("]");
-			  var res2 = res.substring(0, ind2);
-		      alert(res2);
+			  alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
+			  window.location = "/";
 		  }
 	});
 }
@@ -46,18 +49,13 @@ function moverDisciplina(discId, periodoFuturo, periodoAtual) {
 		        window.location = "/mover/" + discId + "/" + periodoFuturo + "/" + periodoAtual;
 		  },
 		  error: function(XMLHttpRequest, textStatus, errorThrown) {
-			  //parser pra achar a Excecao lancada
-			  var ind = XMLHttpRequest.responseText.indexOf("Exception:");
-			  var res = XMLHttpRequest.responseText.substring(ind +11 , ind + 500);
-			  var ind2 = res.indexOf("]");
-			  var res2 = res.substring(0, ind2);
-		      alert(res2);
+			  alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
+			  window.location = "/";
 		  }
 	});
 }
 
 function adicionarDisciplina(discId, periodo){
-
 	$.ajax({
 		  type: "GET",
 		  url: "/adicionar/"  + discId + "/" + periodo,
@@ -66,12 +64,23 @@ function adicionarDisciplina(discId, periodo){
 		        window.location = "/editar/" + periodo;
 		  },
 		  error: function(XMLHttpRequest, textStatus, errorThrown) {
-			  //parser pra achar a Excecao lancada
-			  var ind = XMLHttpRequest.responseText.indexOf("Exception:");
-			  var res = XMLHttpRequest.responseText.substring(ind +11 , ind + 500);
-			  var ind2 = res.indexOf("]");
-			  var res2 = res.substring(0, ind2);
-		      alert(res2);
+			  if (errorThrown == "Bad Request") {
+				  alert("Com esta disciplina o máximo de créditos seria ultrapassado.");
+			  } else {
+				  alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
+			  }
+		  }
+	});
+}
+
+function sairEdicao(){
+	$.ajax({
+		  success: function(){
+		        window.location = "/";
+		  },
+		  error: function(XMLHttpRequest, textStatus, errorThrown) {
+			  alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
+			  window.location = "/";
 		  }
 	});
 }

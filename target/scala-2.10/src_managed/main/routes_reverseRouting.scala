@@ -1,6 +1,6 @@
 // @SOURCE:E:/Workspace/projeto-si1/conf/routes
-// @HASH:1692dd10ae847967517185b0eaf84613081d6e47
-// @DATE:Sun Mar 02 14:47:56 GMT-03:00 2014
+// @HASH:293c311bac8a8ece28f02f48d8857b2c1b75803a
+// @DATE:Sun Mar 02 15:29:10 GMT-03:00 2014
 
 import Routes.{prefix => _prefix, defaultPrefix => _defaultPrefix}
 import play.core._
@@ -54,15 +54,15 @@ def deletarPeriodo(periodo:Int): Call = {
 }
                                                 
 
-// @LINE:9
-def periodos(): Call = {
-   Call("GET", _prefix + { _defaultPrefix } + "periodos")
+// @LINE:10
+def novoPeriodo(): Call = {
+   Call("GET", _prefix + { _defaultPrefix } + "novoPeriodo")
 }
                                                 
 
-// @LINE:10
-def novoPeriodo(periodo:Int): Call = {
-   Call("GET", _prefix + { _defaultPrefix } + "novoPeriodo/" + implicitly[PathBindable[Int]].unbind("periodo", periodo))
+// @LINE:9
+def periodos(): Call = {
+   Call("GET", _prefix + { _defaultPrefix } + "periodos")
 }
                                                 
 
@@ -153,23 +153,23 @@ def deletarPeriodo : JavascriptReverseRoute = JavascriptReverseRoute(
 )
                         
 
+// @LINE:10
+def novoPeriodo : JavascriptReverseRoute = JavascriptReverseRoute(
+   "controllers.Application.novoPeriodo",
+   """
+      function() {
+      return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "novoPeriodo"})
+      }
+   """
+)
+                        
+
 // @LINE:9
 def periodos : JavascriptReverseRoute = JavascriptReverseRoute(
    "controllers.Application.periodos",
    """
       function() {
       return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "periodos"})
-      }
-   """
-)
-                        
-
-// @LINE:10
-def novoPeriodo : JavascriptReverseRoute = JavascriptReverseRoute(
-   "controllers.Application.novoPeriodo",
-   """
-      function(periodo) {
-      return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "novoPeriodo/" + (""" + implicitly[PathBindable[Int]].javascriptUnbind + """)("periodo", periodo)})
       }
    """
 )
@@ -278,15 +278,15 @@ def deletarPeriodo(periodo:Int): play.api.mvc.HandlerRef[_] = new play.api.mvc.H
 )
                       
 
-// @LINE:9
-def periodos(): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
-   controllers.Application.periodos(), HandlerDef(this, "controllers.Application", "periodos", Seq(), "GET", """ Periodos	""", _prefix + """periodos""")
+// @LINE:10
+def novoPeriodo(): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
+   controllers.Application.novoPeriodo(), HandlerDef(this, "controllers.Application", "novoPeriodo", Seq(), "GET", """""", _prefix + """novoPeriodo""")
 )
                       
 
-// @LINE:10
-def novoPeriodo(periodo:Int): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
-   controllers.Application.novoPeriodo(periodo), HandlerDef(this, "controllers.Application", "novoPeriodo", Seq(classOf[Int]), "GET", """""", _prefix + """novoPeriodo/$periodo<[^/]+>""")
+// @LINE:9
+def periodos(): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
+   controllers.Application.periodos(), HandlerDef(this, "controllers.Application", "periodos", Seq(), "GET", """ Periodos	""", _prefix + """periodos""")
 )
                       
 

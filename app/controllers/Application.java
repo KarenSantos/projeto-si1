@@ -24,13 +24,11 @@ public class Application extends Controller {
 				planejador.getDisciplinasNaoAlocadas(), planejador));
 	}
 	
-	public static Result novoPeriodo(int periodo) {
+	public static Result novoPeriodo() {
 		try {
-			planejador.createPeriodo("Usuario" + periodo);
-		} catch (TotalDeCreditosInvalidoException e) {
-			
+			planejador.createPeriodo("Usuario");
 		} catch (AlocacaoInvalidaException e) {
-			
+			return badRequest();
 		}
 		int ultimoPeriodo = planejador.getPeriodos().size();
 		return redirect((routes.Application).editar(ultimoPeriodo));
@@ -45,6 +43,7 @@ public class Application extends Controller {
 		try {
 			planejador.addDisciplinaPeriodo(disciplinaId, periodo);
 		} catch (TotalDeCreditosInvalidoException e) {
+			return badRequest();
 		} catch (AlocacaoInvalidaException e) {
 		}
 		return redirect((routes.Application).editar(periodo));

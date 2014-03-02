@@ -1,6 +1,6 @@
 // @SOURCE:E:/Workspace/projeto-si1/conf/routes
-// @HASH:1692dd10ae847967517185b0eaf84613081d6e47
-// @DATE:Sun Mar 02 14:47:56 GMT-03:00 2014
+// @HASH:293c311bac8a8ece28f02f48d8857b2c1b75803a
+// @DATE:Sun Mar 02 15:29:10 GMT-03:00 2014
 
 package controllers;
 

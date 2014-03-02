@@ -55,8 +55,7 @@ public class Planejador {
 	 * @throws AlocacaoInvalidaException
 	 *             Se o número máximo de períodos já foi alcançado.
 	 */
-	public void createPeriodo(String id)
-			throws TotalDeCreditosInvalidoException, AlocacaoInvalidaException {
+	public void createPeriodo(String id) throws AlocacaoInvalidaException {
 		plano.createPeriodo(id);
 	}
 

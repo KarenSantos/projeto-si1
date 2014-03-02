@@ -5,7 +5,7 @@
 @main("Planejamento de Curso") {
 
 <div id="top1"><!-- coluna de periodos -->
-	<a onclick="novoPeriodo()"><div id="novoPeriodo">Novo Período</div></a>
+	<a onclick="novoPeriodo('@planejador.getTotalDePeriodos()+1')"><div id="novoPeriodo">Novo Período</div></a>
 	<h2 style="border-bottom: none">Períodos</h2>
 </div>
 <div id="col1">

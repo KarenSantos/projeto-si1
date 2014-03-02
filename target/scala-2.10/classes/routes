@@ -7,7 +7,7 @@ GET     /                           		controllers.Application.index()
 
 # Periodos	
 GET     /periodos							controllers.Application.periodos()
-GET    	/novoPeriodo/:periodo  				controllers.Application.novoPeriodo(periodo: Int)
+GET    	/novoPeriodo	  					controllers.Application.novoPeriodo()
 
 # Edicoes
 GET    	/editar/:periodo						controllers.Application.editar(periodo: Int)

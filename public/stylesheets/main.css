@@ -73,6 +73,7 @@ body{
 	border-radius:5px;
 	float: left;
 	margin: 5px 10px 5px 10px;
+	overflow:auto;
 }
 
 #header{
@@ -144,8 +145,8 @@ h2{
 #editandoNote {
 	width:100%;
 	height: 15px;
-	bottom: -15px;
-	background: white;
+	background: #8D4BC2;
+	color: white;
 	font-size: 10px;
 	font-weight:bold;
 	text-align:center;
