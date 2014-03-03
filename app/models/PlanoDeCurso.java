@@ -32,12 +32,13 @@ public class PlanoDeCurso extends Model {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
-	private List<Periodo> periodos;
-	private Curriculo curriculo;
+	private List<Disciplina> disciplinas;
 	private List<Disciplina> disciplinasNaoAlocadas;
+	private List<Periodo> periodos;
 
-//	public static Finder<String, Periodo> findPeriodo = new Finder<String, Periodo>(String.class, Periodo.class);
-//	public static Finder<String, Curriculo> findCurriculo = new Finder<String, Curriculo>(String.class, Curriculo.class);
+	public static Finder<String, Disciplina> findDisciplina = new Finder<String, Disciplina>(String.class, Disciplina.class);
+	// public static Finder<String, Periodo> findPeriodo = new Finder<String,
+	// Periodo>(String.class, Periodo.class);
 
 	/**
 	 * Inicia um plano de curso com um lista de periodos, um curriculo e uma
@@ -45,16 +46,13 @@ public class PlanoDeCurso extends Model {
 	 * disciplinas obrigatorias.
 	 */
 	public PlanoDeCurso() {
-		// CREATOR, o plano de curso inicializa os objetos abaixo
+		disciplinas = new ArrayList<Disciplina>();
 		periodos = new ArrayList<Periodo>();
 
-//		if (findCurriculo.ref("SC") == null) {
-			curriculo = new Curriculo("SC");
-			// curriculo.save();
-//		}
+		criaDisciplinas();
 
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
-		disciplinasNaoAlocadas.addAll(curriculo.getDisciplinas());
+		disciplinasNaoAlocadas.addAll(getDisciplinas());
 
 		alocaDisciplinas();
 	}
@@ -66,15 +64,13 @@ public class PlanoDeCurso extends Model {
 	 */
 	public PlanoDeCurso(String id) {
 		this.id = id;
+		disciplinas = new ArrayList<Disciplina>();
 		periodos = new ArrayList<Periodo>();
 
-//		if (findCurriculo.ref("SC") == null) {
-			curriculo = new Curriculo("SC");
-			// curriculo.save();
-//		}
+		criaDisciplinas();
 
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
-		disciplinasNaoAlocadas.addAll(curriculo.getDisciplinas());
+		disciplinasNaoAlocadas.addAll(getDisciplinas());
 
 		alocaDisciplinas();
 	}
@@ -96,6 +92,98 @@ public class PlanoDeCurso extends Model {
 	 */
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	/**
+	 * Retorna uma disciplina pelo seu id.
+	 * 
+	 * @param id
+	 *            O id da disciplina.
+	 * @return A disciplina que tem o id.
+	 */
+	public Disciplina getDisciplina(String id) {
+
+		for (Disciplina disc : disciplinas) {
+			if (disc.getId().equals(id)) {
+				return disc;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Retorna todas as disciplinas do plano de curso.
+	 * 
+	 * @return a lista de disciplinas do plano de curso.
+	 */
+	public List<Disciplina> getDisciplinas() {
+		return Collections.unmodifiableList(disciplinas);
+	}
+
+	/**
+	 * Retorna a lista das Disciplinas nao alocadas.
+	 * 
+	 * @return Uma lista com as Disciplinas nao alocadas.
+	 */
+	public List<Disciplina> getDisciplinasNaoAlocadas() {
+		return Collections.unmodifiableList(disciplinasNaoAlocadas);
+	}
+
+	/**
+	 * Cria uma disciplina com um id, um nome, o total de creditos, uma lista de
+	 * disciplinas que sao pre requisitos, o periodo sugerido para cursar a
+	 * disciplina e a dificuldade indicada da disciplina.
+	 * 
+	 * @param id
+	 *            O id da disciplina.
+	 * @param nome
+	 *            O nome da disciplina.
+	 * @param creditos
+	 *            O total de creditos da disciplina.
+	 * @param preRequisitosIds
+	 *            A lista de disciplinas que sao pre requisitos desta.
+	 * @param periodoSugerido
+	 *            O periodo sugerido para cursar esta disciplina.
+	 * @param dificuldade
+	 *            A dificuldade indicada para a disciplina
+	 * 
+	 */
+	public void createDisciplina(String id, String nome, int creditos,
+			String[] preRequisitosIds, int periodoSugerido, int dificuldade) {
+
+		List<Disciplina> preRequisitos = new ArrayList<Disciplina>();
+
+		for (String preRequisitoId : preRequisitosIds) {
+			preRequisitos.add(getDisciplina(preRequisitoId));
+		}
+
+		Disciplina aDisciplina = new Disciplina(id, nome, creditos,
+				preRequisitos, periodoSugerido, dificuldade);
+		disciplinas.add(aDisciplina);
+	}
+
+	/**
+	 * Cria uma disciplina com um id, um nome, o total de creditos, o periodo
+	 * sugerido para cursar a disciplina e a dificuldade indicada da disciplina.
+	 * 
+	 * @param id
+	 *            O id da disciplina.
+	 * @param nome
+	 *            O nome da disciplina.
+	 * @param creditos
+	 *            O total de creditos da disciplina.
+	 * @param periodoSugerido
+	 *            O periodo sugerido para cursar esta disciplina.
+	 * @param dificuldade
+	 *            A dificuldade indicada para a disciplina
+	 * 
+	 */
+	public void createDisciplina(String id, String nome, int creditos,
+			int periodoSugerido, int dificuldade) {
+
+		Disciplina aDisciplina = new Disciplina(id, nome, creditos,
+				periodoSugerido, dificuldade);
+		disciplinas.add(aDisciplina);
 	}
 
 	/**
@@ -128,26 +216,6 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
-	 * Retorna a disciplina com o id indicado.
-	 * 
-	 * @param id
-	 *            O id da disciplina.
-	 * @return A disciplina com o id indicado.
-	 */
-	public Disciplina getDisciplina(String id) {
-		return curriculo.getDisciplina(id);
-	}
-
-	/**
-	 * Retorna a lista das Disciplinas nao alocadas.
-	 * 
-	 * @return Uma lista com as Disciplinas nao alocadas.
-	 */
-	public List<Disciplina> getDisciplinasNaoAlocadas() {
-		return Collections.unmodifiableList(disciplinasNaoAlocadas);
-	}
-
-	/**
 	 * Cria um novo periodo vazio.
 	 * 
 	 * @throws AlocacaoInvalidaException
@@ -162,9 +230,8 @@ public class PlanoDeCurso extends Model {
 					"Você já alcançou o número máximo de períodos");
 		}
 
-		// CONTROLLER - nova operação de sistema
-		// CREATOR - o planejamento de curso eh composto por periodos
-		Periodo novoPeriodo = new Periodo(id + ultimoPeriodo + 1, ultimoPeriodo + 1);
+		Periodo novoPeriodo = new Periodo(id + ultimoPeriodo + 1,
+				ultimoPeriodo + 1);
 		// novoPeriodo.save();
 		periodos.add(novoPeriodo);
 	}
@@ -185,27 +252,25 @@ public class PlanoDeCurso extends Model {
 	public void addDisciplinaPeriodo(String id, int periodo)
 			throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
 
-		/*
-		 * INFORMATION EXPERT quem tem os periodos e o curriculo, que tem as
-		 * informacoes das disciplinas e seus pre requisitos, é o Plano de curso
-		 * então ele faz a verificação.
-		 */
 		Disciplina aDisciplina = getDisciplina(id);
-		if (periodo != getTotalDePeriodos()) { // se for o ultimo periodo pode
-												// ter mais de 28 creditos
+
+		removeDisciplinaOptativaGenerica(periodo); // caso tenha
+
+		if (periodo != getTotalDePeriodos()) { // se nao for o ultimo periodo
 			if ((getPeriodo(periodo).getTotalDeCreditos() + aDisciplina
 					.getCreditos()) > MAXIMO_DE_CREDITOS) {
-				throw new TotalDeCreditosInvalidoException(
-						"O número máximo de créditos por período é 28.");
+					adicionaDisciplinaOptativaGenerica(periodo); // caso ela tenha sido removida
+					throw new TotalDeCreditosInvalidoException(
+							"O número máximo de créditos por período é 28.");
 			}
 		}
 
-		if (!aDisciplina.getPreRequisitos().isEmpty()) {
+		if (!aDisciplina.getPreRequisitos().isEmpty()) { // checando se tem pre-requisitos nao alocados nos periodos anteriores
 			for (Disciplina preRequisito : aDisciplina.getPreRequisitos()) {
 				Boolean result = false;
 
-				for (int i = 0; i < getPeriodos().size() - 1; i++) {
-					if (periodos.get(i).getDisciplinas().contains(preRequisito)) {
+				for (int i = 0; i < periodo + 1; i++) {
+					if (getPeriodo(i).getDisciplinas().contains(preRequisito)) {
 						result = true;
 						break;
 					}
@@ -217,8 +282,8 @@ public class PlanoDeCurso extends Model {
 			}
 		}
 
-		getPeriodo(periodo).addDisciplina(curriculo.getDisciplina(id));
-		disciplinasNaoAlocadas.remove(curriculo.getDisciplina(id));
+		getPeriodo(periodo).addDisciplina(aDisciplina);
+		disciplinasNaoAlocadas.remove(aDisciplina);
 	}
 
 	/**
@@ -228,24 +293,11 @@ public class PlanoDeCurso extends Model {
 	 *            O id da disciplina a ser removida.
 	 * @param periodo
 	 *            O periodo de onde vai ser removida a disciplina.
-	 * @throws AlocacaoInvalidaException
-	 *             Se a disciplina a ser removida for do primeiro periodo.
 	 */
-	public void removeDisciplinaPeriodo(String id, int periodo)
-			throws AlocacaoInvalidaException {
+	public void removeDisciplinaPeriodo(String id, int periodo) {
 
-		/*
-		 * INFORMATION EXPERT quem tem os periodos e as disciplinas em cada
-		 * período pode remover alguma disciplina verificando corretamente as
-		 * disciplinas que vao ser afetadas pelos pre-requisitos.
-		 */
-		if (getDisciplina(id).getPeriodoSugerido() == 1) {
-			throw new AlocacaoInvalidaException(
-					"Disciplinas do primeiro período são obrigatórias.");
-		}
-
-		Disciplina aDisciplina = curriculo.getDisciplina(id);
-
+		Disciplina aDisciplina = getDisciplina(id);
+		
 		Map<Disciplina, Integer> aRemover = new HashMap<Disciplina, Integer>();
 		identificaDependentes(aDisciplina, periodo, aRemover);
 
@@ -255,7 +307,11 @@ public class PlanoDeCurso extends Model {
 		}
 
 		getPeriodo(periodo).removeDisciplina(aDisciplina);
-		disciplinasNaoAlocadas.add(aDisciplina);
+		
+		if (!getDisciplinasOptativasGenericas().contains(aDisciplina)) {
+			disciplinasNaoAlocadas.add(aDisciplina);
+		}
+
 
 	}
 
@@ -275,7 +331,7 @@ public class PlanoDeCurso extends Model {
 
 		getPeriodo(periodoAtual).removeDisciplina(aDisciplina);
 		getPeriodo(periodoFuturo).addDisciplina(aDisciplina);
-		
+
 		List<Disciplina> temComoPreRequisito = temComoPreRequisito(aDisciplina);
 		List<Disciplina> saoPreRequisitos = aDisciplina.getPreRequisitos();
 
@@ -287,55 +343,15 @@ public class PlanoDeCurso extends Model {
 				aDisciplina.setIsAlocadaCorretamente();
 			}
 		}
-		
-		for (Disciplina ehPreRequisito : saoPreRequisitos){
+
+		for (Disciplina ehPreRequisito : saoPreRequisitos) {
 			if (getPeriodoDaDisciplina(ehPreRequisito) >= getPeriodoDaDisciplina(aDisciplina)) {
 				ehPreRequisito.setNotAlocadaCorretamente();
 			} else {
 				ehPreRequisito.setIsAlocadaCorretamente();
 			}
 		}
-		
 
-	}
-
-	/**
-	 * Verifica se há algum período sem disciplinas e remove-o da lista de
-	 * períodos.
-	 */
-	public void removePeriodosVazios() {
-		for (int i = 0; i < periodos.size(); i++) {
-			int periodo = i + 1;
-			if (getPeriodo(periodo).getTotalDeDisciplinas() == 0) {
-				renumeraPeriodos(periodo + 1);
-				periodos.remove(i);
-			}
-		}
-	}
-
-	/**
-	 * Diz se uma disciplina tem um pre-requisito que ainda não foi alocado.
-	 * 
-	 * @param disc
-	 *            A disciplina que pode ter um pre-requisito não alocado.
-	 * @param periodo
-	 *            O periodo da disciplina.
-	 * @return True se a disciplina tem pre-requisito não alocado e false se não
-	 *         tem.
-	 */
-	public boolean temPreRequisito(Disciplina disc) {
-		boolean resp = false;
-		if (!disc.getPreRequisitos().isEmpty()) {
-			for (Disciplina pre : disc.getPreRequisitos()) {
-				for (Disciplina discNaoAlocada : disciplinasNaoAlocadas) {
-					if (pre.equals(discNaoAlocada)) {
-						resp = true;
-						break;
-					}
-				}
-			}
-		}
-		return resp;
 	}
 
 	/**
@@ -358,43 +374,68 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
-	 * Deleta um periodo da lista de periodos com todas as suas disciplinas.
+	 * Deleta o ultimo periodo da lista se ele for vazio e for maior que o oitavo periodo.
 	 * 
 	 * @param periodo
 	 *            O periodo que vai ser deletado.
 	 * @throws AlocacaoInvalidaException
-	 *             Se o período a ser deletado for o primeiro período.
+	 *             Se o período a ser deletado for do 1 ao 8 ou se tiver disciplinas.
 	 */
 	public void deletarPeriodo(int periodo) throws AlocacaoInvalidaException {
 
-		if (periodo == 1) {
-			throw new AlocacaoInvalidaException(
-					"Disciplinas do primeiro período são obrigatórias.");
+		if (periodo > 8) {
+			if (getPeriodo(periodo).getTotalDeDisciplinas() != 0) {
+				throw new AlocacaoInvalidaException(
+						"Não é possível deletar este período.");
+			}
 		}
 
-		while (getPeriodo(periodo).getTotalDeDisciplinas() != 0) {
-			Disciplina disc = getPeriodo(periodo).getDisciplinas().get(0);
-			removeDisciplinaPeriodo(disc.getId(), periodo);
-		}
-		renumeraPeriodos(periodo + 1);
 		periodos.remove(getPeriodo(periodo));
 	}
-
+	
 	/**
-	 * Renumera os periodos acima do periodo que vai ser deletado.
+	 * Diz se uma disciplina é pre-requisito de outra disciplina já alocada.
 	 * 
-	 * @param periodo
-	 *            O periodo que vai ser renumerado.
+	 * @param discId
+	 *            A disciplina que pode ser pre-requisito ou nao de outra já
+	 *            alocada.
+	 * @return True se a disciplina é pre-requisito e false se não é.
 	 */
-	private void renumeraPeriodos(int periodo) {
-		if (periodo < getTotalDePeriodos() + 1) {
-			try {
-				getPeriodo(periodo).setNumero(periodo - 1);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			renumeraPeriodos(periodo + 1);
+	public boolean ehPreRequisito(Disciplina disc, int periodo) {
+		boolean resp = false;
+
+		Map<Disciplina, Integer> dependentes = new HashMap<Disciplina, Integer>();
+		identificaDependentes(disc, periodo, dependentes);
+
+		if (!dependentes.isEmpty()) {
+			resp = true;
 		}
+		return resp;
+	}
+	
+	/**
+	 * Diz se uma disciplina tem um pre-requisito que ainda não foi alocado.
+	 * 
+	 * @param disc
+	 *            A disciplina que pode ter um pre-requisito não alocado.
+	 * @param periodo
+	 *            O periodo da disciplina.
+	 * @return True se a disciplina tem pre-requisito não alocado e false se não
+	 *         tem.
+	 */
+	public boolean temPreRequisitoNaoAlocado(Disciplina disc) {
+		boolean resp = false;
+		if (!disc.getPreRequisitos().isEmpty()){
+			for (Disciplina pre : disc.getPreRequisitos()){
+				for (Disciplina discNaoAlocada : disciplinasNaoAlocadas){
+					if (pre.equals(discNaoAlocada)) {
+						resp = true;
+						break;
+					}
+				}
+			}
+		}
+		return resp;
 	}
 
 	/**
@@ -440,7 +481,7 @@ public class PlanoDeCurso extends Model {
 
 		List<Disciplina> resp = new ArrayList<Disciplina>();
 
-		for (Disciplina disc : curriculo.getDisciplinas()) {
+		for (Disciplina disc : getDisciplinas()) {
 			if (disc.getPeriodoSugerido() > aDisciplina.getPeriodoSugerido()) {
 				for (Disciplina preRequisito : disc.getPreRequisitos()) {
 					if (aDisciplina == preRequisito) {
@@ -454,32 +495,196 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
-	 * Cria o primeiro periodo e aloca suas disciplinas que sao imutaveis.
+	 * Cria todos os periodos do plano de curso e aloca suas disciplinas.
 	 */
 	private void alocaDisciplinas() {
 
-//		if (findPeriodo.findRowCount() == 0) {
+		// if (findPeriodo.findRowCount() == 0) {
 
-			for (Disciplina disc : curriculo.getDisciplinas()) {
-				int periodo = disc.getPeriodoSugerido();
-				if (periodo > 0) {
-					if (getTotalDePeriodos() < periodo) {
-						try {
-							createPeriodo("Usuario" + periodo);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
+		for (Disciplina disc : getDisciplinas()) {
+			int periodo = disc.getPeriodoSugerido();
+			if (periodo > 0) {
+				if (getTotalDePeriodos() < periodo) {
 					try {
-						addDisciplinaPeriodo(disc.getId(), periodo);
-						disciplinasNaoAlocadas.remove(disc);
-					} catch (AlocacaoInvalidaException e) {
-						e.printStackTrace();
-					} catch (TotalDeCreditosInvalidoException e) {
-						e.printStackTrace();
+						createPeriodo("Usuario" + periodo);
+					} catch (Exception e) {
+					}
+				}
+				getPeriodo(periodo).addDisciplina(disc);
+				;
+				disciplinasNaoAlocadas.remove(disc);
+			}
+		}
+		// }
+	}
+	
+	/**
+	 * Remove uma unica disciplina optativa generica se o periodo a contem.
+	 * 
+	 * @param periodo
+	 *            O periodo de onde pode ser removida a disciplina generica.
+	 */
+	private void removeDisciplinaOptativaGenerica(int periodo) {
+
+		List<Disciplina> genericas = getDisciplinasOptativasGenericas();
+
+		for (Disciplina disc : getPeriodo(periodo).getDisciplinas()) {
+			if (genericas.contains(disc)) {
+				getPeriodo(periodo).removeDisciplina(disc);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Adiciona uma unica disciplina optativa generica se o periodo nao a
+	 * contem e se o maximo de creditos nao for ultrapassado.
+	 * 
+	 * @param periodo
+	 *            O periodo onde pode ser adicionada a disciplina generica.
+	 */
+	private void adicionaDisciplinaOptativaGenerica(int periodo) {
+
+		List<Disciplina> genericas = getDisciplinasOptativasGenericas();
+
+		for (Disciplina disc : genericas) {
+			if (disc.getPeriodoSugerido() == periodo) {
+				if (!getPeriodo(periodo).getDisciplinas().contains(disc)) {
+					if ((getPeriodo(periodo).getTotalDeCreditos() + disc.getCreditos()) <= MAXIMO_DE_CREDITOS) {
+						getPeriodo(periodo).addDisciplina(disc);
+						break;
 					}
 				}
 			}
+		}
+	}
+
+	/**
+	 * Retorna a lista das disciplinas optativas genericas.
+	 * 
+	 * @return A lista das disciplinas optativas genericas.
+	 */
+	private List<Disciplina> getDisciplinasOptativasGenericas() {
+		List<Disciplina> disciplinas = new ArrayList<Disciplina>();
+		for (Disciplina disc : getDisciplinas()) {
+			if (disc.getNome().contains("Optativa")) {
+				disciplinas.add(disc);
+			}
+		}
+		return disciplinas;
+	}
+
+	/**
+	 * Cria todas as disciplinas do curso.
+	 */
+	private void criaDisciplinas() {
+
+//		 if (findDisciplina.findRowCount() == 0) {
+
+		// Disciplinas obrigatórias
+		createDisciplina("01", "Cálculo Diferencial e Integral 1", 4, 1, 4);
+		createDisciplina("02", "Álgebra Vetorial e Geometria Analítica", 4, 1,3);
+		createDisciplina("03", "Leitura e Produção de Texto", 4, 1, 2);
+		createDisciplina("04", "Programação 1", 4, 1, 3);
+		createDisciplina("05", "Laboratório de Programação 1", 4, 1, 3);
+		createDisciplina("06", "Introdução a Computação", 4, 1, 3);
+
+		createDisciplina("07", "Cálculo Diferencial e Integral 2", 4,new String[] { "01" }, 2, 5);
+		createDisciplina("08", "Matematica Discreta", 4, 2, 4);
+		createDisciplina("09", "Metodologia Científica", 4, 2, 3);
+		createDisciplina("10", "Programação 2", 4, new String[] { "04", "05","06" }, 2, 3);
+		createDisciplina("11", "Laboratório de Programação 2", 4, new String[] {"04", "05", "06" }, 2, 3);
+		createDisciplina("12", "Teoria dos Grafos", 2, new String[] { "04","05" }, 2, 3);
+		createDisciplina("13", "Fundamentos de Física Clássica", 4,new String[] { "01", "02" }, 2, 4);
+
+		createDisciplina("14", "Álgebra Linear", 4, new String[] { "02" }, 3, 4);
+		createDisciplina("15", "Probabilidade e Estatística", 4,new String[] { "07" }, 3, 4);
+		createDisciplina("16", "Teoria da Computação", 4, new String[] { "06","08", "12" }, 3, 3);
+		createDisciplina("17", "Estruturas de Dados e Algoritmos", 4,new String[] { "10", "11", "12" }, 3, 4);
+		createDisciplina("18", "Lab de Estruturas de Dados e Algoritmos", 4,new String[] { "10", "11", "12" }, 3, 4);
+		createDisciplina("19", "Fundamentos de Física Moderna", 4,new String[] { "07", "13" }, 3, 4);
+		createDisciplina("20", "Gerência da Informação", 4, 3, 2);
+
+		createDisciplina("21", "Métodos Estatísticos", 4, new String[] { "14","15" }, 4, 3);
+		createDisciplina("22", "Paradigmas de Linguagens de Prog", 2,new String[] { "16", "17", "18" }, 4, 3);
+		createDisciplina("23", "Lógica Matemática", 4, new String[] { "16" },4, 3);
+		createDisciplina("24", "Org. e Arquitetura de Computadores", 4,new String[] { "17", "18", "19" }, 4, 3);
+		createDisciplina("25", "Lab de Org. e Arquitetura de Computadores", 4,new String[] { "17", "18", "19" }, 4, 3);
+		createDisciplina("26", "Engenharia de Software 1", 4, new String[] {"10", "11", "15" }, 4, 3);
+		createDisciplina("27", "Sistemas de Informação 1", 4,new String[] { "20" }, 4, 3);
+
+		createDisciplina("28", "Informática e Sociedade", 2, 5, 3);
+		createDisciplina("29", "Análise e Técnicas de Algoritmos", 4,new String[] { "07", "17", "18", "23" }, 5, 3);
+		createDisciplina("30", "Compiladores", 4, new String[] { "22", "24","25" }, 5, 3);
+		createDisciplina("31", "Redes de Computadores", 4, new String[] { "24","25" }, 5, 3);
+		createDisciplina("32", "Bancos de Dados 1", 4, new String[] { "27" },5, 3);
+		createDisciplina("33", "Sistemas de Informação 2", 4,new String[] { "27" }, 5, 3);
+		createDisciplina("34", "Laboratório de Engenharia de Software", 2,new String[] { "26" }, 5, 3);
+
+		createDisciplina("35", "Direito e Cidadania", 4, 6, 3);
+		createDisciplina("36", "Sistemas Operacionais", 4, new String[] { "24","25" }, 6, 3);
+		createDisciplina("37", "Interconexão de Redes de Comp.", 2,new String[] { "31" }, 6, 3);
+		createDisciplina("38", "Lab de Interconexão de Redes de Comp.", 2,new String[] { "31" }, 6, 3);
+		createDisciplina("39", "Banco de Dados 2", 4,new String[] { "32", "33" }, 6, 3);
+		createDisciplina("40", "Inteligência Artificial 1", 4, new String[] {"21", "22", "29" }, 6, 3);
+
+		createDisciplina("41", "Métodos e Software Numéricos", 4, new String[] {"14", "29" }, 7, 3);
+		createDisciplina("42", "Av. de Desempenho de Sistemas Discretos", 4,new String[] { "15" }, 7, 3);
+		createDisciplina("43", "Projeto em Computação 1", 4, new String[] {"09", "34" }, 7, 3);
+
+		createDisciplina("44", "Projeto em Computação 2", 6,new String[] { "43" }, 8, 3);
+
+		// Optativas Outros Departamentos
+		createDisciplina("45", "Futsal", 2, -1, 3);
+		createDisciplina("46", "Sociologia Industrial 1", 4, -1, 3);
+		createDisciplina("47", "Basquete masc/fem", 2, -1, 3);
+		createDisciplina("48", "Administração", 4, -1, 3);
+		createDisciplina("49", "Economia", 4, -1, 3);
+		createDisciplina("50", "Relações Humanas", 4, -1, 3);
+		createDisciplina("51", "Cálculo Diferencial e Integral 3", 5, -1, 3);
+		createDisciplina("52", "Equações Diferenciais", 4, -1, 3);
+		createDisciplina("53", "Ética", 4, -1, 3);
+		createDisciplina("54", "Expressão Gráfica", 4, -1, 3);
+		createDisciplina("55", "Futebol de Campo", 2, -1, 3);
+		createDisciplina("56", "Gestão da Qualidade", 4, -1, 3);
+		createDisciplina("57", "Ginástica Masc/Fem", 2, -1, 3);
+		createDisciplina("58", "Inglês", 4, -1, 3);
+		createDisciplina("59", "Introdução à Filosofia", 2, -1, 3);
+		createDisciplina("60", "Processo Decisório", 4, -1, 3);
+
+		// Optativas TECC
+		createDisciplina("61", "Administração Financeira", 4, -2, 3);
+		createDisciplina("62", "Realidade Virtual", 4, new String[] { "27" },-2, 3);
+		createDisciplina("63", "Administração de Sistemas", 4, -2, 3);
+		createDisciplina("64", "Análise de Dados 1", 4, new String[] { "15" },-2, 3);
+		createDisciplina("65", "Arquitetura de Software", 4, new String[] {"26", "27" }, -2, 3);
+		createDisciplina("66", "Desenvolvimento Dirigido a Modelos", 4,new String[] { "26" }, -2, 3);
+		createDisciplina("67", "Desenvolvimento de App Corporativas", 4,new String[] { "27", "32" }, -2, 3);
+		createDisciplina("68", "Didática em Ciência da Computação", 2, -2, 3);
+		createDisciplina("69", "Economia de TI", 4, -2, 3);
+		createDisciplina("70", "Empreendedorismo em Software 1", 4, -2, 3);
+		createDisciplina("71", "Estágio 2", 4, -2, 3);
+
+		createDisciplina("80", "Optativa 1", 4, 6, 3);
+		createDisciplina("81", "Optativa 2", 4, 6, 3);
+		createDisciplina("82", "Optativa 3", 4, 7, 3);
+		createDisciplina("83", "Optativa 4", 4, 7, 3);
+		createDisciplina("84", "Optativa 5", 4, 7, 3);
+		createDisciplina("85", "Optativa 6", 4, 7, 3);
+		createDisciplina("86", "Optativa 7", 4, 8, 3);
+		createDisciplina("87", "Optativa 8", 4, 8, 3);
+		createDisciplina("88", "Optativa 9", 4, 8, 3);
+		createDisciplina("89", "Optativa 10", 4, 8, 3);
+		createDisciplina("90", "Optativa 11", 2, 8, 3);
+
+		salvarDiscNoBD();
+
 //		}
+	}
+
+	private void salvarDiscNoBD() {
+		for (Disciplina disc : getDisciplinas()) {
+//			 disc.save();
+		}
 	}
 }

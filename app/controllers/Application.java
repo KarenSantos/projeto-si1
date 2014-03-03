@@ -19,7 +19,6 @@ public class Application extends Controller {
 	}
 
 	public static Result periodos() {
-		planejador.removePeriodosVazios();
 		return ok(views.html.index.render(planejador.getPeriodos(), 
 				planejador.getDisciplinasNaoAlocadas(), planejador));
 	}
@@ -45,6 +44,7 @@ public class Application extends Controller {
 		} catch (TotalDeCreditosInvalidoException e) {
 			return badRequest();
 		} catch (AlocacaoInvalidaException e) {
+			return forbidden();
 		}
 		return redirect((routes.Application).editar(periodo));
 	}

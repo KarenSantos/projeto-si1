@@ -87,6 +87,18 @@ public class Planejador {
 	public Disciplina getDisciplina(String id) {
 		return plano.getDisciplina(id);
 	}
+	
+	/**
+	 * Retorna em qual periodo está a disciplina.
+	 * 
+	 * @param disc
+	 *            A disciplina que se quer saber em que periodo está.
+	 * @return O número do periodo em que está a disciplina ou zero se não está
+	 *         em nenhum periodo.
+	 */
+	public int getPeriodoDaDisciplina(String discId) {
+		return plano.getPeriodoDaDisciplina(getDisciplina(discId));
+	}
 
 	/**
 	 * Remove uma disciplina de um periodo.
@@ -113,13 +125,6 @@ public class Planejador {
 	}
 
 	/**
-	 * Remove periodos da lista de periodos que não tem disciplinas.
-	 */
-	public void removePeriodosVazios() {
-		plano.removePeriodosVazios();
-	}
-
-	/**
 	 * Deleta um periodo da lista de periodos.
 	 * 
 	 * @param periodo
@@ -129,20 +134,6 @@ public class Planejador {
 	 */
 	public void deletarPeriodo(int periodo) throws AlocacaoInvalidaException {
 		plano.deletarPeriodo(periodo);
-	}
-
-	/**
-	 * Diz se uma disciplina tem um pre-requisito que ainda não foi alocado.
-	 * 
-	 * @param disc
-	 *            A disciplina que pode ter um pre-requisito não alocado.
-	 * @param periodo
-	 *            O periodo da disciplina.
-	 * @return True se a disciplina tem pre-requisito não alocado e false se não
-	 *         tem.
-	 */
-	public boolean temPreRequisito(Disciplina disc) {
-		return plano.temPreRequisito(disc);
 	}
 
 	/**
@@ -167,5 +158,31 @@ public class Planejador {
 	public void moveDisciplina(String disciplinaId, int periodoFuturo,
 			int periodoAtual) {
 		plano.moveDisciplina(disciplinaId, periodoFuturo, periodoAtual);
+	}
+	
+	/**
+	 * Diz se uma disciplina é pre-requisito de outra disciplina já alocada.
+	 * 
+	 * @param discId
+	 *            A disciplina que pode ser pre-requisito ou nao de outra já
+	 *            alocada.
+	 * @return True se a disciplina é pre-requisito e false se não é.
+	 */
+	public boolean ehPreRequisito(Disciplina disc, int periodo) {
+		return plano.ehPreRequisito(disc, periodo);
+	}
+	
+	/**
+	 * Diz se uma disciplina tem um pre-requisito que ainda não foi alocado.
+	 * 
+	 * @param disc
+	 *            A disciplina que pode ter um pre-requisito não alocado.
+	 * @param periodo
+	 *            O periodo da disciplina.
+	 * @return True se a disciplina tem pre-requisito não alocado e false se não
+	 *         tem.
+	 */
+	public boolean temPreRequisitoNaoAlocado(Disciplina disc) {
+		return plano.temPreRequisitoNaoAlocado(disc);
 	}
 }

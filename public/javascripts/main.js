@@ -1,10 +1,13 @@
 function novoPeriodo(periodo) {
+	
+	var novoPeriodo = parseInt(periodo) + 1;
+	
 	$.ajax({
 		  type: "GET",
 		  url: "/novoPeriodo",
 		  data: "",
 		  success: function(){
-		        window.location = "/editar/" + periodo;
+		        window.location = "/editar/" + novoPeriodo;
 		  },
 		  error: function(XMLHttpRequest, textStatus, errorThrown) {
 			  alert("Você já alcançou o número máximo de períodos permitido pelo curso.");
@@ -26,20 +29,40 @@ function editarPeriodo(periodo){
 	});
 }
 
-function removerDisciplina(discId, periodo) {
+function removerDisciplina(discId, periodo, ehPreRequisito) {
 	
-	$.ajax({
-		  type: "GET",
-		  url: "/remover/" + discId + "/" + periodo,
-		  data: "",
-		  success: function(){
-		        window.location = "/editar/" + periodo;
-		  },
-		  error: function(XMLHttpRequest, textStatus, errorThrown) {
-			  alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
-			  window.location = "/";
-		  }
-	});
+	if (ehPreRequisito == "true") {
+		var confirmado = confirm("Esta disciplina é pré-requisito de outras já alocadas, " +
+				"removendo-a as outras são automaticamente removidas. Você tem certeza que deseja continuar?");
+	
+		if (confirmado) {
+			$.ajax({
+				type: "GET",
+				url: "/remover/" + discId + "/" + periodo,
+				data: "",
+				success: function(){
+					window.location = "/editar/" + periodo;
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
+					window.location = "/";
+				}
+			});
+		} 
+	} else {
+		$.ajax({
+			type: "GET",
+			url: "/remover/" + discId + "/" + periodo,
+			data: "",
+			success: function(){
+				window.location = "/editar/" + periodo;
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
+				window.location = "/";
+			}
+		});
+	}
 }
 
 function moverDisciplina(discId, periodoFuturo, periodoAtual) {
@@ -55,7 +78,8 @@ function moverDisciplina(discId, periodoFuturo, periodoAtual) {
 	});
 }
 
-function adicionarDisciplina(discId, periodo){
+function adicionarDisciplina(discId, periodo, temPreRequisito){
+	
 	$.ajax({
 		  type: "GET",
 		  url: "/adicionar/"  + discId + "/" + periodo,
@@ -67,7 +91,7 @@ function adicionarDisciplina(discId, periodo){
 			  if (errorThrown == "Bad Request") {
 				  alert("Com esta disciplina o máximo de créditos seria ultrapassado.");
 			  } else {
-				  alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
+				  alert("Esta disciplina possui pré-requisitos ainda não alocados em períodos anteriores.");
 			  }
 		  }
 	});

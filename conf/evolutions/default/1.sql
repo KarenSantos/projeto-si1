@@ -3,11 +3,6 @@
 
 # --- !Ups
 
-create table curriculo (
-  id                        varchar(255) not null,
-  constraint pk_curriculo primary key (id))
-;
-
 create table disciplina (
   id                        varchar(255) not null,
   nome                      varchar(255),
@@ -35,8 +30,6 @@ create table plano_de_curso (
   constraint pk_plano_de_curso primary key (id))
 ;
 
-create sequence curriculo_seq;
-
 create sequence disciplina_seq;
 
 create sequence periodo_seq;
@@ -48,8 +41,6 @@ create sequence periodo_seq;
 
 SET REFERENTIAL_INTEGRITY FALSE;
 
-drop table if exists curriculo;
-
 drop table if exists disciplina;
 
 drop table if exists periodo;
@@ -57,8 +48,6 @@ drop table if exists periodo;
 drop table if exists plano_de_curso;
 
 SET REFERENTIAL_INTEGRITY TRUE;
-
-drop sequence if exists curriculo_seq;
 
 drop sequence if exists disciplina_seq;
 
