@@ -1,6 +1,6 @@
 [0m[[0mdebug[0m] [0mCopy resource mappings: [0m
-[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\conf\application.conf,E:\Workspace\projeto-si1\target\scala-2.10\classes\application.conf)[0m
-[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\conf\evolutions,E:\Workspace\projeto-si1\target\scala-2.10\classes\evolutions)[0m
-[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\conf\routes,E:\Workspace\projeto-si1\target\scala-2.10\classes\routes)[0m
-[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\conf\evolutions\default,E:\Workspace\projeto-si1\target\scala-2.10\classes\evolutions\default)[0m
-[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\conf\evolutions\default\1.sql,E:\Workspace\projeto-si1\target\scala-2.10\classes\evolutions\default\1.sql)[0m
+[0m[[0mdebug[0m] [0m	(D:\Karen\workspace\projeto-si1\conf\application.conf,D:\Karen\workspace\projeto-si1\target\scala-2.10\classes\application.conf)[0m
+[0m[[0mdebug[0m] [0m	(D:\Karen\workspace\projeto-si1\conf\evolutions,D:\Karen\workspace\projeto-si1\target\scala-2.10\classes\evolutions)[0m
+[0m[[0mdebug[0m] [0m	(D:\Karen\workspace\projeto-si1\conf\routes,D:\Karen\workspace\projeto-si1\target\scala-2.10\classes\routes)[0m
+[0m[[0mdebug[0m] [0m	(D:\Karen\workspace\projeto-si1\conf\evolutions\default,D:\Karen\workspace\projeto-si1\target\scala-2.10\classes\evolutions\default)[0m
+[0m[[0mdebug[0m] [0m	(D:\Karen\workspace\projeto-si1\conf\evolutions\default\1.sql,D:\Karen\workspace\projeto-si1\target\scala-2.10\classes\evolutions\default\1.sql)[0m

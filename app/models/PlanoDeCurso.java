@@ -232,7 +232,7 @@ public class PlanoDeCurso extends Model {
 		int novoNumero = ultimoPeriodo + 1;
 		Periodo novoPeriodo = new Periodo(id + novoNumero,
 				novoNumero);
-		// novoPeriodo.save();
+		novoPeriodo.salvar(novoPeriodo);
 		if (isInvertido()){
 			periodos.add(0, novoPeriodo);
 		} else {
@@ -579,23 +579,22 @@ public class PlanoDeCurso extends Model {
 	 */
 	private void alocaDisciplinas() {
 
-		// if (findPeriodo.findRowCount() == 0) {
-
-		for (Disciplina disc : getDisciplinas()) {
-			int periodo = disc.getPeriodoSugerido();
-			if (periodo > 0) {
-				if (getTotalDePeriodos() < periodo) {
-					try {
-						createPeriodo("Usuario");
-					} catch (Exception e) {
+		if (Periodo.find.all().isEmpty()) {
+			for (Disciplina disc : getDisciplinas()) {
+				int periodo = disc.getPeriodoSugerido();
+				if (periodo > 0) {
+					if (getTotalDePeriodos() < periodo) {
+						try {
+							createPeriodo("Usuario");
+						} catch (Exception e) {
+						}
 					}
+					getPeriodo(periodo).addDisciplina(disc);
+					;
+					disciplinasNaoAlocadas.remove(disc);
 				}
-				getPeriodo(periodo).addDisciplina(disc);
-				;
-				disciplinasNaoAlocadas.remove(disc);
 			}
 		}
-		// }
 	}
 	
 	/**
@@ -644,7 +643,7 @@ public class PlanoDeCurso extends Model {
 	 */
 	private void criaDisciplinas() {
 
-		if (!getDisciplina("01").find.all().isEmpty()) {
+		if (Disciplina.find.all().isEmpty()) {
 
 		// Disciplinas obrigatórias
 		createDisciplina("01", "Cálculo Diferencial e Integral 1", 4, 1, 4);
@@ -741,6 +740,8 @@ public class PlanoDeCurso extends Model {
 		createDisciplina("88", "Optativa 9", 4, 8, 3);
 		createDisciplina("89", "Optativa 10", 4, 8, 3);
 		createDisciplina("90", "Optativa 11", 2, 8, 3);
+		
+		salvarDisciplinas();
 
 		}
 	}
