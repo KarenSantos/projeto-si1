@@ -7,7 +7,12 @@
 <a onclick="novoPeriodo('@planejador.getTotalDePeriodos()')"><div id="botaoPeriodo">Novo Período</div></a>
 
 <div id="top1"><!-- coluna de periodos -->
-	<h2 style="border-bottom: none">Períodos</h2>
+	@if(planejador.isInvertido()){
+		<a onclick="inverter('0')" title="Ordenação crescente"><div id="inverter"> ^ </div></a>
+	} else {
+		<a onclick="inverter('0')" title="Ordenação decrescente"><div id="inverter"> v </div></a>
+	}
+	<h2>Períodos </h2>
 </div>
 <div id="col1">
 	@for(periodo <- periodos){
@@ -16,12 +21,20 @@
 			<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
 			<div class="disc"><!-- Disciplinas do periodo -->
 			    @for(disciplinaPeriodo <- periodo.getDisciplinas()) {
-			    	@if(disciplinaPeriodo.isAlocadaCorretamente()) {
-			    	   	<a title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome() </a>  <span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
-			    		<br>
+			    	@if(planejador.ehDisciplinaOptativaGenerica(disciplinaPeriodo)){
+			    		<a>@disciplinaPeriodo.getNome() </a>
+				    	<span>@disciplinaPeriodo.getCreditos() / _</span>
+				    	<br>
 			    	} else {
-			    		<a class="discRed" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome() </a>  <span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
-			    		<br>
+				    	@if(disciplinaPeriodo.isAlocadaCorretamente()) {
+				    	   	<a title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome() </a>
+				    	   	<span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
+				    		<br>
+				    	} else {
+				    		<a class="discRed" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome() </a>
+							<span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
+				    		<br>
+				    	}
 			    	}
 			    }
 			</div>

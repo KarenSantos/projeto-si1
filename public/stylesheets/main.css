@@ -8,6 +8,12 @@ body{
 	background: white;
 }
 
+h2{
+	color: #fafafa;
+	text-align: center;
+	line-height: 2;
+}
+
 #botaoPeriodo{
 	position: fixed;
 	top: 7px;
@@ -39,6 +45,20 @@ body{
 	top: 50px;
 	width: 70%;
 	background: rgb(90, 90, 90);
+}
+
+#inverter{
+	position: absolute;
+	font-weight: bold;
+	font-size: 25px;
+	margin:7px;
+	right: 20px;
+	color: white;
+}
+
+#inverter:hover{
+	cursor:pointer;
+	color: lightcoral;
 }
 
 #col1{
@@ -97,12 +117,6 @@ body{
 	text-transform: uppercase;
 	font-size: 11px;
 	font-weight: 900;
-}
-
-h2{
-	color: #fafafa;
-	text-align: center;
-	line-height: 2;
 }
 
 #numPeriodo{
@@ -170,7 +184,8 @@ span{
 }
 
 .discRed{
-	background: red;
+	background: #C80000;
+	color: white;
 }
 
 .disc2{
@@ -193,66 +208,6 @@ span{
 	color: red;
 	font-size: 10px;
 	font-weight:bold;
-}
-
-
-
-.bAdd{
-	width: 100%;
-	height: 100%;
-	cursor: pointer;
-	border: none;
-	background: none;
-	font-size: 17px;
-	outline: none;
-	text-transform: none;
-}
-
-.bAdd:hover{
-	color: #fff;
-}
-
-.addDisc{
-	width: 100%;
-	height: 30px;
-	background: #ababab;
-	border: none;
-	text-transform: uppercase;
-	outline: none;
-	cursor: pointer;
-	-webkit-transition: background 200ms ease-in;
-	-moz-transition: background 200ms ease-in;
-	-ms-transition: background 200ms ease-in;
-	-o-transition: background 200ms ease-in;
-	transition: background 200ms ease-in;
-	color: #fff;
-}
-
-.addDisc:hover{
-	background: #777;
-	outline: none;
-}
-
-.addDiscPeriodo{
-	background: rgb(133, 133, 133);
-	color: white;
-	border: none;
-	padding: 2px;
-	font-size: 12px;
-	outline: none;
-	cursor: pointer;
-}
-
-.addDiscPeriodo:hover{
-	background:white ;
-	color: rgb(133, 133, 133);
-}
-
-#edd{
-	color: darkcyan;
-	font-size: 15px;
-	margin-bottom: 7px;
-	margin-top: 6px;
 }
 
 .cada1:hover{

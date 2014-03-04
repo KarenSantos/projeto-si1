@@ -19,7 +19,8 @@ public class Planejador {
 
 	private PlanoDeCurso plano;
 
-//	public static Finder<String, PlanoDeCurso> find = new Finder(String.class, PlanoDeCurso.class);
+	// public static Finder<String, PlanoDeCurso> find = new
+	// Finder(String.class, PlanoDeCurso.class);
 
 	public Planejador() {
 
@@ -70,7 +71,8 @@ public class Planejador {
 	 *             Caso a disciplina que vai ser adicionada tenha pre requisitos
 	 *             que ainda nao foram alocados.
 	 * @throws TotalDeCreditosInvalidoException
-	 *             Caso o periodo ja tenha o total maximo de creditos alocado.
+	 *             Caso adicionando a disciplina o periodo ultrapasse o maximo
+	 *             de creditos.
 	 */
 	public void addDisciplinaPeriodo(String id, int periodo)
 			throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
@@ -87,7 +89,7 @@ public class Planejador {
 	public Disciplina getDisciplina(String id) {
 		return plano.getDisciplina(id);
 	}
-	
+
 	/**
 	 * Retorna em qual periodo está a disciplina.
 	 * 
@@ -107,11 +109,8 @@ public class Planejador {
 	 *            O id da disciplina a ser removida.
 	 * @param periodo
 	 *            O periodo de onde vai ser removida a disciplina.
-	 * @throws AlocacaoInvalidaException
-	 *             Se a disciplina a ser removida for do primeiro periodo.
 	 */
-	public void removeDisciplinaPeriodo(String discId, int periodo)
-			throws AlocacaoInvalidaException {
+	public void removeDisciplinaPeriodo(String discId, int periodo) {
 		plano.removeDisciplinaPeriodo(discId, periodo);
 	}
 
@@ -154,12 +153,15 @@ public class Planejador {
 	 *            O periodo para onde vai ser movida a disciplina.
 	 * @param periodoAtual
 	 *            O periodo onde está a disciplina que vai ser movida.
+	 * @throws TotalDeCreditosInvalidoException
+	 *             Se o total de créditos fosse ultrapassar 28 ao mover a
+	 *             disciplina.
 	 */
 	public void moveDisciplina(String disciplinaId, int periodoFuturo,
-			int periodoAtual) {
+			int periodoAtual) throws TotalDeCreditosInvalidoException {
 		plano.moveDisciplina(disciplinaId, periodoFuturo, periodoAtual);
 	}
-	
+
 	/**
 	 * Diz se uma disciplina é pre-requisito de outra disciplina já alocada.
 	 * 
@@ -171,7 +173,7 @@ public class Planejador {
 	public boolean ehPreRequisito(Disciplina disc, int periodo) {
 		return plano.ehPreRequisito(disc, periodo);
 	}
-	
+
 	/**
 	 * Diz se uma disciplina tem um pre-requisito que ainda não foi alocado.
 	 * 
@@ -185,4 +187,38 @@ public class Planejador {
 	public boolean temPreRequisitoNaoAlocado(Disciplina disc) {
 		return plano.temPreRequisitoNaoAlocado(disc);
 	}
+
+	/**
+	 * Inverte a ordem da lista dos periodos. Se está crescente fica
+	 * decrescente, se está decrescente fica crescente.
+	 */
+	public void inverteOrdemDosPeriodos() {
+		plano.inverteOrdemDosPeriodos();
+	}
+
+	/**
+	 * Indica se os periodos estão em ordem invertida ou nao.
+	 * 
+	 * @return True se os periodos estao invertidos e false caso contrario.
+	 */
+	public boolean isInvertido() {
+		return plano.isInvertido();
+	}
+
+	/**
+	 * Retorna se uma disciplina é uma optativa generica.
+	 * 
+	 * @param disc
+	 *            A disciplina que se quer saber se é optativa generica ou nao.
+	 * @return True se a disciplina for uma optativa generica e false caso
+	 *         contrario.
+	 */
+	public boolean ehDisciplinaOptativaGenerica(Disciplina disc) {
+		boolean resp = false;
+		if (plano.getDisciplinasOptativasGenericas().contains(disc)) {
+			resp = true;
+		}
+		return resp;
+	}
+
 }

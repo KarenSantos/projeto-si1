@@ -68,12 +68,14 @@ function removerDisciplina(discId, periodo, ehPreRequisito) {
 function moverDisciplina(discId, periodoFuturo, periodoAtual) {
 	
 	$.ajax({
-		  success: function(){
-		        window.location = "/mover/" + discId + "/" + periodoFuturo + "/" + periodoAtual;
+		type: "GET",
+		url: "/mover/" + discId + "/" + periodoFuturo + "/" + periodoAtual,
+		data: "",
+		success: function(){
+			window.location = "/editar/" + periodoFuturo;
 		  },
 		  error: function(XMLHttpRequest, textStatus, errorThrown) {
-			  alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
-			  window.location = "/";
+			  alert("Com esta disciplina o máximo de créditos seria ultrapassado.");
 		  }
 	});
 }
@@ -108,3 +110,25 @@ function sairEdicao(){
 		  }
 	});
 }
+
+function inverter(numPeriodo) {
+	
+	$.ajax({
+		  type: "GET",
+		  url: "/inverter",
+		  data: "",
+		  success: function(){
+			  if (numPeriodo == "0") {
+				  window.location = "/";
+			  } else {
+				  window.location = "/editar/" + numPeriodo;
+			  }
+		  },
+		  error: function(XMLHttpRequest, textStatus, errorThrown) {
+			  alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
+			  window.location = "/";
+		  }
+	});
+	
+}
+

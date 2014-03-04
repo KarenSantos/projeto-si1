@@ -1,6 +1,6 @@
 // @SOURCE:E:/Workspace/projeto-si1/conf/routes
-// @HASH:293c311bac8a8ece28f02f48d8857b2c1b75803a
-// @DATE:Sun Mar 02 15:29:10 GMT-03:00 2014
+// @HASH:bbb4149a67f97a84790055d6874aa1a33ff70b7f
+// @DATE:Tue Mar 04 14:10:39 GMT-03:00 2014
 
 import Routes.{prefix => _prefix, defaultPrefix => _defaultPrefix}
 import play.core._
@@ -13,7 +13,8 @@ import play.libs.F
 import Router.queryString
 
 
-// @LINE:20
+// @LINE:21
+// @LINE:18
 // @LINE:17
 // @LINE:16
 // @LINE:15
@@ -24,11 +25,11 @@ import Router.queryString
 // @LINE:6
 package controllers {
 
-// @LINE:20
+// @LINE:21
 class ReverseAssets {
     
 
-// @LINE:20
+// @LINE:21
 def at(file:String): Call = {
    Call("GET", _prefix + { _defaultPrefix } + "assets/" + implicitly[PathBindable[String]].unbind("file", file))
 }
@@ -37,6 +38,7 @@ def at(file:String): Call = {
 }
                           
 
+// @LINE:18
 // @LINE:17
 // @LINE:16
 // @LINE:15
@@ -84,6 +86,12 @@ def editar(periodo:Int): Call = {
 }
                                                 
 
+// @LINE:18
+def inverter(): Call = {
+   Call("GET", _prefix + { _defaultPrefix } + "inverter")
+}
+                                                
+
 // @LINE:14
 def adicionar(disciplinaId:String, periodo:Int): Call = {
    Call("GET", _prefix + { _defaultPrefix } + "adicionar/" + implicitly[PathBindable[String]].unbind("disciplinaId", dynamicString(disciplinaId)) + "/" + implicitly[PathBindable[Int]].unbind("periodo", periodo))
@@ -102,7 +110,8 @@ def index(): Call = {
                   
 
 
-// @LINE:20
+// @LINE:21
+// @LINE:18
 // @LINE:17
 // @LINE:16
 // @LINE:15
@@ -113,11 +122,11 @@ def index(): Call = {
 // @LINE:6
 package controllers.javascript {
 
-// @LINE:20
+// @LINE:21
 class ReverseAssets {
     
 
-// @LINE:20
+// @LINE:21
 def at : JavascriptReverseRoute = JavascriptReverseRoute(
    "controllers.Assets.at",
    """
@@ -131,6 +140,7 @@ def at : JavascriptReverseRoute = JavascriptReverseRoute(
 }
               
 
+// @LINE:18
 // @LINE:17
 // @LINE:16
 // @LINE:15
@@ -208,6 +218,17 @@ def editar : JavascriptReverseRoute = JavascriptReverseRoute(
 )
                         
 
+// @LINE:18
+def inverter : JavascriptReverseRoute = JavascriptReverseRoute(
+   "controllers.Application.inverter",
+   """
+      function() {
+      return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "inverter"})
+      }
+   """
+)
+                        
+
 // @LINE:14
 def adicionar : JavascriptReverseRoute = JavascriptReverseRoute(
    "controllers.Application.adicionar",
@@ -236,7 +257,8 @@ def index : JavascriptReverseRoute = JavascriptReverseRoute(
         
 
 
-// @LINE:20
+// @LINE:21
+// @LINE:18
 // @LINE:17
 // @LINE:16
 // @LINE:15
@@ -248,11 +270,11 @@ def index : JavascriptReverseRoute = JavascriptReverseRoute(
 package controllers.ref {
 
 
-// @LINE:20
+// @LINE:21
 class ReverseAssets {
     
 
-// @LINE:20
+// @LINE:21
 def at(path:String, file:String): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
    controllers.Assets.at(path, file), HandlerDef(this, "controllers.Assets", "at", Seq(classOf[String], classOf[String]), "GET", """ Map static resources from the /public folder to the /assets URL path""", _prefix + """assets/$file<.+>""")
 )
@@ -261,6 +283,7 @@ def at(path:String, file:String): play.api.mvc.HandlerRef[_] = new play.api.mvc.
 }
                           
 
+// @LINE:18
 // @LINE:17
 // @LINE:16
 // @LINE:15
@@ -305,6 +328,12 @@ def mover(disciplinaId:String, futuro:Int, atual:Int): play.api.mvc.HandlerRef[_
 // @LINE:13
 def editar(periodo:Int): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
    controllers.Application.editar(periodo), HandlerDef(this, "controllers.Application", "editar", Seq(classOf[Int]), "GET", """ Edicoes""", _prefix + """editar/$periodo<[^/]+>""")
+)
+                      
+
+// @LINE:18
+def inverter(): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
+   controllers.Application.inverter(), HandlerDef(this, "controllers.Application", "inverter", Seq(), "GET", """""", _prefix + """inverter""")
 )
                       
 

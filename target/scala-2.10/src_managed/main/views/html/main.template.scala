@@ -36,10 +36,11 @@ Seq[Any](format.raw/*1.32*/("""
         <link rel="stylesheet" media="screen" href=""""),_display_(Seq[Any](/*8.54*/routes/*8.60*/.Assets.at("stylesheets/main.css"))),format.raw/*8.94*/("""">
         <link rel="shortcut icon" type="image/png" href=""""),_display_(Seq[Any](/*9.59*/routes/*9.65*/.Assets.at("images/ufcg.jpg"))),format.raw/*9.94*/("""">
         <script src=""""),_display_(Seq[Any](/*10.23*/routes/*10.29*/.Assets.at("javascripts/jquery-1.9.0.min.js"))),format.raw/*10.74*/("""" type="text/javascript"></script>
+        <script src=""""),_display_(Seq[Any](/*11.23*/routes/*11.29*/.Assets.at("javascripts/main.js"))),format.raw/*11.62*/(""""></script>
+        
     </head>
     <body>
-        """),_display_(Seq[Any](/*13.10*/content)),format.raw/*13.17*/("""
-        <script src=""""),_display_(Seq[Any](/*14.23*/routes/*14.29*/.Assets.at("javascripts/main.js"))),format.raw/*14.62*/(""""></script>
+        """),_display_(Seq[Any](/*15.10*/content)),format.raw/*15.17*/("""
     </body>
 </html>
 """))}
@@ -54,11 +55,11 @@ Seq[Any](format.raw/*1.32*/("""
 }
                 /*
                     -- GENERATED --
-                    DATE: Sun Mar 02 14:55:27 GMT-03:00 2014
+                    DATE: Tue Mar 04 11:11:09 GMT-03:00 2014
                     SOURCE: E:/Workspace/projeto-si1/app/views/main.scala.html
-                    HASH: dccaed00bdfaaf64668c9d22b17bb3e8f04d9b39
-                    MATRIX: 778->1|902->31|996->90|1022->95|1120->158|1134->164|1189->198|1286->260|1300->266|1350->295|1412->321|1427->327|1494->372|1600->442|1629->449|1689->473|1704->479|1759->512
-                    LINES: 26->1|29->1|35->7|35->7|36->8|36->8|36->8|37->9|37->9|37->9|38->10|38->10|38->10|41->13|41->13|42->14|42->14|42->14
+                    HASH: bd7a2552a2360566291be3a8c5480ec6509e11a1
+                    MATRIX: 778->1|902->31|996->90|1022->95|1120->158|1134->164|1189->198|1286->260|1300->266|1350->295|1412->321|1427->327|1494->372|1588->430|1603->436|1658->469|1751->526|1780->533
+                    LINES: 26->1|29->1|35->7|35->7|36->8|36->8|36->8|37->9|37->9|37->9|38->10|38->10|38->10|39->11|39->11|39->11|43->15|43->15
                     -- GENERATED --
                 */
             

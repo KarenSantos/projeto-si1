@@ -7,7 +7,12 @@
 <a onclick="novoPeriodo('@planejador.getTotalDePeriodos()')"><div id="botaoPeriodo">Novo Período</div></a>
 
 <div id="top1"><!-- coluna de periodos -->
-	<h2 style="border-bottom: none">Períodos</h2>
+	@if(planejador.isInvertido()){
+		<a onclick="inverter('@numPeriodo')" title="Ordenação crescente"><div id="inverter"> ^ </div></a>
+	} else {
+		<a onclick="inverter('@numPeriodo')" title="Ordenação decrescente"><div id="inverter"> v </div></a>
+	}
+	<h2>Períodos</h2>
 </div>
 <div id="col1">
 	@for(periodo <- periodos){
@@ -18,10 +23,12 @@
 				<div class="disc"><!-- Disciplinas do periodo -->
 				    @for(disciplinaPeriodo <- periodo.getDisciplinas()) {
 				    	@if(disciplinaPeriodo.isAlocadaCorretamente()) {
-				    	   	<a onclick="rDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo', '@planejador.ehPreRequisito(disciplinaPeriodo, periodo.getNumero())')" class="cada1" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a><span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
+				    	   	<a onclick="rDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo', '@planejador.ehPreRequisito(disciplinaPeriodo, periodo.getNumero())')" class="cada1" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a>
+				    	   	<span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
 				    		<br>
 				    	} else {
-				    		<a onclick="rDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo', '@planejador.ehPreRequisito(disciplinaPeriodo, periodo.getNumero())')" class="cada1 discRed" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a><span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
+				    		<a onclick="rDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo', '@planejador.ehPreRequisito(disciplinaPeriodo, periodo.getNumero())')" class="cada1 discRed" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a>
+				    		<span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
 				    		<br>
 				    	}
 				    }
@@ -40,12 +47,20 @@
 				<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
 				<div class="disc"><!-- Disciplinas do periodo -->
 				    @for(disciplinaPeriodo <- periodo.getDisciplinas()) {
-				    	@if(disciplinaPeriodo.isAlocadaCorretamente()) {
-				    	   	<a onclick="moverDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo', '@periodo.getNumero()')" class="cada1" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a><span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
-				    		<br>
+				    	@if(planejador.ehDisciplinaOptativaGenerica(disciplinaPeriodo)) {
+				    		<a>@disciplinaPeriodo.getNome()</a>
+					    	<span>@disciplinaPeriodo.getCreditos() / _</span>
+					  		<br>
 				    	} else {
-				    		<a onclick="moverDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo', '@periodo.getNumero()')" class="cada1 discRed" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a><span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
-				    		<br>
+					    	@if(disciplinaPeriodo.isAlocadaCorretamente()) {
+					    	   	<a onclick="moverDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo', '@periodo.getNumero()')" class="cada1" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a>
+					    	   	<span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
+					    		<br>
+					    	} else {
+					    		<a onclick="moverDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo', '@periodo.getNumero()')" class="cada1 discRed" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a>
+					    		<span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
+					    		<br>
+					    	}
 				    	}
 				    }
 			   	</div>

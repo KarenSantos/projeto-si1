@@ -45,18 +45,85 @@ public class PlanejadorTest {
 	}
 	
 	@Test
-	public void naoDevePermitirAdicionarNoPeriodoMaisDisciplinasApos28Creditos() throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
+	public void devePoderAdicionarDisciplina() {
+		
+		Assert.assertEquals(6, planejador.getPeriodo(1).getTotalDeDisciplinas());
+		try {
+			planejador.addDisciplinaPeriodo("61", 1);
+		} catch (AlocacaoInvalidaException e) {
+			Assert.fail("Não deveria ter lançado exceção");
+		} catch (TotalDeCreditosInvalidoException e) {
+			Assert.fail("Não deveria ter lançado exceção");
+		}
+		Assert.assertEquals(7, planejador.getPeriodo(1).getTotalDeDisciplinas());
+	}
+	
+	@Test
+	public void naoDevePoderAdicionarDisciplinaSePreRequisitosNaoForamAlocadosEmPeriodosAnteriores() {
+		
+		planejador.removeDisciplinaPeriodo("03", 1); // liberando espaço para créditos
 		
 		try {
-			planejador.addDisciplinaPeriodo("20", 3); // o terceiro periodo jah tem 28 creditos
+			planejador.addDisciplinaPeriodo("51", 1);  // calculo 3 no primeiro periodo
 			Assert.fail("Deveria ter lançado exceção");
-		} catch (TotalDeCreditosInvalidoException e){
-			Assert.assertEquals(e.getMessage(), "O número máximo de créditos por período é 28.");
+		} catch (AlocacaoInvalidaException e) {
+			Assert.assertEquals("Esta disciplina tem pré-requisitos não concluídos.", e.getMessage());
+		} catch (TotalDeCreditosInvalidoException e) {
+			Assert.fail("Não deveria ter lançado esse tipo de exceção");
+		}
+		
+	}
+	
+	@Test
+	public void naoDevePermitirAdicionarNoPeriodoMaisDisciplinasApos28Creditos() throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
+		
+		Assert.assertEquals(6, planejador.getPeriodo(1).getTotalDeDisciplinas());
+		try {
+			planejador.addDisciplinaPeriodo("61", 2);  // segundo periodo já tem 26 creditos
+			Assert.fail("Deveria ter lançado exceção");
+		} catch (AlocacaoInvalidaException e) {
+			Assert.fail("Não deveria ter lançado esse tipo de exceção");
+		} catch (TotalDeCreditosInvalidoException e) {
+			Assert.assertEquals("O número máximo de créditos por período é 28.", e.getMessage());
+		}
+		Assert.assertEquals(6, planejador.getPeriodo(1).getTotalDeDisciplinas());
+	}
+	
+	@Test
+	public void devePermitirMoverDisciplinas() {
+
+		Assert.assertEquals(6, planejador.getPeriodo(1).getTotalDeDisciplinas());
+		Assert.assertEquals(7, planejador.getPeriodo(5).getTotalDeDisciplinas());
+		
+		try {
+			planejador.moveDisciplina("03", 5, 1);
+		} catch (TotalDeCreditosInvalidoException e) {
+			Assert.fail("Não deveria ter lançado exceção");
+		}
+		
+		Assert.assertEquals(5, planejador.getPeriodo(1).getTotalDeDisciplinas());
+		Assert.assertEquals(8, planejador.getPeriodo(5).getTotalDeDisciplinas());
+	}
+	
+	@Test
+	public void naoDevePermitirMoverSeMaximoDeCreditosAtingido() {
+		
+		Assert.assertEquals(6, planejador.getPeriodo(1).getTotalDeDisciplinas());
+		Assert.assertEquals(7, planejador.getPeriodo(2).getTotalDeDisciplinas());
+		
+		try {
+			planejador.moveDisciplina("03", 2, 1);
+			Assert.fail("Não deveria ter lançado exceção");
+		} catch (TotalDeCreditosInvalidoException e) {
+			Assert.assertEquals("O número máximo de créditos por período é 28.", e.getMessage());
 		}
 	}
 	
 	@Test
-	public void aoMoverDisciplinaDeveAtualizarSeuStatusDeAlocacao() {
+	public void aoMoverDisciplinaDeveAtualizarSeuStatusDeAlocacao() throws TotalDeCreditosInvalidoException, AlocacaoInvalidaException {
+		
+		planejador.removeDisciplinaPeriodo("09", 2); //liberando espaço no segundo periodo
+		
 		planejador.moveDisciplina("01", 2, 1); // movendo calculo 1 para o segundo periodo
 		Assert.assertFalse(planejador.getDisciplina("01").isAlocadaCorretamente());
 		planejador.moveDisciplina("01", 1, 2); // movendo de volta para o lugar certo
@@ -116,6 +183,35 @@ public class PlanejadorTest {
 		planejador.removeDisciplinaPeriodo("10", 2); // removendo prog 2 removemos também EDA
 				
 		Assert.assertTrue(planejador.temPreRequisitoNaoAlocado(planejador.getDisciplina("17"))); //EDA tem prog2 como pre-requisito que nao foi alocado
+		
+	}
+	
+	@Test
+	public void devePoderInverterOrdemDosPeriodos() {
+		
+		Assert.assertEquals(1, planejador.getPeriodos().get(0).getNumero()); // periodo de numero 1 é o primeiro
+		Assert.assertEquals(2, planejador.getPeriodos().get(1).getNumero()); // periodo de numero 2 é o segundo
+		Assert.assertEquals(3, planejador.getPeriodos().get(2).getNumero()); // periodo de numero 3 é o terceiro e assim por diante
+		Assert.assertEquals(4, planejador.getPeriodos().get(3).getNumero());
+		Assert.assertEquals(5, planejador.getPeriodos().get(4).getNumero());
+		Assert.assertEquals(6, planejador.getPeriodos().get(5).getNumero());
+		Assert.assertEquals(7, planejador.getPeriodos().get(6).getNumero());
+		Assert.assertEquals(8, planejador.getPeriodos().get(7).getNumero());
+		
+		planejador.inverteOrdemDosPeriodos();
+		
+		Assert.assertEquals(8, planejador.getPeriodos().get(0).getNumero()); // periodo de numero 8 é o primeiro
+		Assert.assertEquals(7, planejador.getPeriodos().get(1).getNumero()); // periodo de numero 7 é o segundo
+		Assert.assertEquals(6, planejador.getPeriodos().get(2).getNumero()); // periodo de numero 6 é o terceiro e assim por diante
+		Assert.assertEquals(5, planejador.getPeriodos().get(3).getNumero());
+		Assert.assertEquals(4, planejador.getPeriodos().get(4).getNumero());
+		Assert.assertEquals(3, planejador.getPeriodos().get(5).getNumero());
+		Assert.assertEquals(2, planejador.getPeriodos().get(6).getNumero());
+		Assert.assertEquals(1, planejador.getPeriodos().get(7).getNumero());
+	}
+	
+	@Test
+	public void test() {
 		
 	}
 

@@ -1,5 +1,19 @@
 [0m[[0mdebug[0m] [0mCopy play resource mappings: [0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\sortUp.png,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\sortUp.png)[0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\bootstrap\css\bootstrap-theme.css,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\bootstrap\css\bootstrap-theme.css)[0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\bootstrap\css\bootstrap-theme.css.map,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\bootstrap\css\bootstrap-theme.css.map)[0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\bootstrap\css\bootstrap-theme.min.css,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\bootstrap\css\bootstrap-theme.min.css)[0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\bootstrap\css\bootstrap.css,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\bootstrap\css\bootstrap.css)[0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\bootstrap\css\bootstrap.css.map,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\bootstrap\css\bootstrap.css.map)[0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\bootstrap\css\bootstrap.min.css,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\bootstrap\css\bootstrap.min.css)[0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\bootstrap\fonts\glyphicons-halflings-regular.eot,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\bootstrap\fonts\glyphicons-halflings-regular.eot)[0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\bootstrap\fonts\glyphicons-halflings-regular.svg,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\bootstrap\fonts\glyphicons-halflings-regular.svg)[0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\bootstrap\fonts\glyphicons-halflings-regular.ttf,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\bootstrap\fonts\glyphicons-halflings-regular.ttf)[0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\bootstrap\fonts\glyphicons-halflings-regular.woff,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\bootstrap\fonts\glyphicons-halflings-regular.woff)[0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\bootstrap\js\bootstrap.js,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\bootstrap\js\bootstrap.js)[0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\bootstrap\js\bootstrap.min.js,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\bootstrap\js\bootstrap.min.js)[0m
 [0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\images\favicon.png,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\images\favicon.png)[0m
+[0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\images\sortDown.png,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\images\sortDown.png)[0m
 [0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\images\ufcg.jpg,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\images\ufcg.jpg)[0m
 [0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\javascripts\jquery-1.9.0.min.js,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\javascripts\jquery-1.9.0.min.js)[0m
 [0m[[0mdebug[0m] [0m	(E:\Workspace\projeto-si1\public\javascripts\main.js,E:\Workspace\projeto-si1\target\scala-2.10\classes\public\javascripts\main.js)[0m

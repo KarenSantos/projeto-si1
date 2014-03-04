@@ -148,5 +148,11 @@ public class Periodo extends Model {
 		this.totalDeCreditos -= disciplina.getCreditos();
 		this.totalDeDificuldade -= disciplina.getDificuldade();
 	}
+	
+	@Override
+	public String toString() {
+		return "[Periodo " + getNumero() + "]";
+	}
+	
 
 }

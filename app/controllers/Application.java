@@ -50,15 +50,16 @@ public class Application extends Controller {
 	}
 	
 	public static Result remover(String disciplinaId, int periodo) {
-		try {
-			planejador.removeDisciplinaPeriodo(disciplinaId, periodo);
-		} catch (AlocacaoInvalidaException e) {
-		}
+		planejador.removeDisciplinaPeriodo(disciplinaId, periodo);
 		return redirect((routes.Application).editar(periodo));
 	}
 	
 	public static Result mover(String disciplinaId, int periodoFuturo, int periodoAtual) {
-		planejador.moveDisciplina(disciplinaId, periodoFuturo, periodoAtual);
+		try {
+			planejador.moveDisciplina(disciplinaId, periodoFuturo, periodoAtual);
+		} catch (TotalDeCreditosInvalidoException e) {
+			return badRequest();
+		}
 		return redirect((routes.Application).editar(periodoFuturo));
 	}
 	
@@ -68,6 +69,11 @@ public class Application extends Controller {
 		} catch (AlocacaoInvalidaException e) {
 			e.printStackTrace();
 		}
+		return redirect((routes.Application).periodos());
+	}
+	
+	public static Result inverter() {
+		planejador.inverteOrdemDosPeriodos();
 		return redirect((routes.Application).periodos());
 	}
 }
