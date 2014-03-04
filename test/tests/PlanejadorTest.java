@@ -92,17 +92,17 @@ public class PlanejadorTest {
 	@Test
 	public void devePermitirMoverDisciplinas() {
 
-		Assert.assertEquals(6, planejador.getPeriodo(1).getTotalDeDisciplinas());
-		Assert.assertEquals(7, planejador.getPeriodo(5).getTotalDeDisciplinas());
+		Assert.assertEquals(6, planejador.getPeriodo(1).getTotalDeDisciplinas()); //6 disc no primeiro periodo
+		Assert.assertEquals(7, planejador.getPeriodo(5).getTotalDeDisciplinas()); //7 disc no quinto periodo
 		
 		try {
-			planejador.moveDisciplina("03", 5, 1);
+			planejador.moveDisciplina("03", 5, 1); //movendo LPT para o quinto periodo
 		} catch (TotalDeCreditosInvalidoException e) {
 			Assert.fail("Não deveria ter lançado exceção");
 		}
 		
-		Assert.assertEquals(5, planejador.getPeriodo(1).getTotalDeDisciplinas());
-		Assert.assertEquals(8, planejador.getPeriodo(5).getTotalDeDisciplinas());
+		Assert.assertEquals(5, planejador.getPeriodo(1).getTotalDeDisciplinas()); //5 disc no primeiro periodo
+		Assert.assertEquals(8, planejador.getPeriodo(5).getTotalDeDisciplinas()); //8 disc no quinto periodo
 	}
 	
 	@Test
@@ -112,7 +112,7 @@ public class PlanejadorTest {
 		Assert.assertEquals(7, planejador.getPeriodo(2).getTotalDeDisciplinas());
 		
 		try {
-			planejador.moveDisciplina("03", 2, 1);
+			planejador.moveDisciplina("03", 2, 1); // movendo LPT para o segundo
 			Assert.fail("Não deveria ter lançado exceção");
 		} catch (TotalDeCreditosInvalidoException e) {
 			Assert.assertEquals("O número máximo de créditos por período é 28.", e.getMessage());
@@ -208,11 +208,6 @@ public class PlanejadorTest {
 		Assert.assertEquals(3, planejador.getPeriodos().get(5).getNumero());
 		Assert.assertEquals(2, planejador.getPeriodos().get(6).getNumero());
 		Assert.assertEquals(1, planejador.getPeriodos().get(7).getNumero());
-	}
-	
-	@Test
-	public void test() {
-		
 	}
 
 }

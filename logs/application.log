@@ -1,273 +1,112 @@
-2014-03-04 09:31:25,657 - [INFO] - from play in pool-4-thread-1 
+2014-03-04 14:45:51,446 - [INFO] - from play in pool-4-thread-1 
 Listening for HTTP on /0:0:0:0:0:0:0:0:9000
 
-2014-03-04 09:32:14,915 - [INFO] - from play in play-internal-execution-context-1 
+2014-03-04 14:46:28,257 - [INFO] - from play in play-internal-execution-context-1 
 database [default] connected at jdbc:h2:mem:play
 
-2014-03-04 09:32:15,800 - [INFO] - from play in play-internal-execution-context-1 
-Application started (Dev)
+2014-03-04 14:46:28,711 - [ERROR] - from com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager in play-internal-execution-context-1 
+Error in deployment
+javax.persistence.PersistenceException: java.lang.NullPointerException
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.setEntityBeanClass(BeanDescriptorManager.java:1458) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.createByteCode(BeanDescriptorManager.java:1150) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.readDeployAssociations(BeanDescriptorManager.java:1070) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.readEntityDeploymentAssociations(BeanDescriptorManager.java:547) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.deploy(BeanDescriptorManager.java:237) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.core.InternalConfiguration.<init>(InternalConfiguration.java:114) [avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.core.DefaultServerFactory.createServer(DefaultServerFactory.java:204) [avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.core.DefaultServerFactory.createServer(DefaultServerFactory.java:65) [avaje-ebeanorm.jar:na]
+	at com.avaje.ebean.EbeanServerFactory.create(EbeanServerFactory.java:58) [avaje-ebeanorm.jar:na]
+	at play.db.ebean.EbeanPlugin.onStart(EbeanPlugin.java:79) [play-java-ebean_2.10.jar:2.2.1]
+	at play.api.Play$$anonfun$start$1$$anonfun$apply$mcV$sp$1.apply(Play.scala:88) [play_2.10.jar:2.2.1]
+	at play.api.Play$$anonfun$start$1$$anonfun$apply$mcV$sp$1.apply(Play.scala:88) [play_2.10.jar:2.2.1]
+	at scala.collection.immutable.List.foreach(List.scala:318) [scala-library.jar:na]
+	at play.api.Play$$anonfun$start$1.apply$mcV$sp(Play.scala:88) [play_2.10.jar:2.2.1]
+	at play.api.Play$$anonfun$start$1.apply(Play.scala:88) [play_2.10.jar:2.2.1]
+	at play.api.Play$$anonfun$start$1.apply(Play.scala:88) [play_2.10.jar:2.2.1]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:18) [play_2.10.jar:2.2.1]
+	at play.api.Play$.start(Play.scala:87) [play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1$$anonfun$1.apply(ApplicationProvider.scala:139) [play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1$$anonfun$1.apply(ApplicationProvider.scala:112) [play_2.10.jar:2.2.1]
+	at scala.Option.map(Option.scala:145) [scala-library.jar:na]
+	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1.apply(ApplicationProvider.scala:112) [play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1.apply(ApplicationProvider.scala:110) [play_2.10.jar:2.2.1]
+	at scala.util.Success.flatMap(Try.scala:200) [scala-library.jar:na]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:110) [play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:102) [play_2.10.jar:2.2.1]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1361) [scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library.jar:na]
+Caused by: java.lang.NullPointerException: null
+	at models.PlanoDeCurso.alocaDisciplinas(PlanoDeCurso.java:582) ~[classes/:na]
+	at models.PlanoDeCurso.<init>(PlanoDeCurso.java:57) ~[classes/:na]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.Class.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.setEntityBeanClass(BeanDescriptorManager.java:1424) ~[avaje-ebeanorm.jar:na]
+	... 32 common frames omitted
 
-2014-03-04 09:42:54,512 - [INFO] - from play in play-internal-execution-context-1 
+2014-03-04 14:46:28,722 - [ERROR] - from application in New I/O worker #1 
+
+
+! @6heai9egd - Internal server error, for (GET) [/] ->
+
+play.api.UnexpectedException: Unexpected exception[PersistenceException: java.lang.NullPointerException]
+	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1$$anonfun$1.apply(ApplicationProvider.scala:148) ~[play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1$$anonfun$1.apply(ApplicationProvider.scala:112) ~[play_2.10.jar:2.2.1]
+	at scala.Option.map(Option.scala:145) ~[scala-library.jar:na]
+	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1.apply(ApplicationProvider.scala:112) ~[play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1.apply(ApplicationProvider.scala:110) ~[play_2.10.jar:2.2.1]
+	at scala.util.Success.flatMap(Try.scala:200) ~[scala-library.jar:na]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:110) ~[play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:102) ~[play_2.10.jar:2.2.1]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) ~[scala-library.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1361) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library.jar:na]
+Caused by: javax.persistence.PersistenceException: java.lang.NullPointerException
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.setEntityBeanClass(BeanDescriptorManager.java:1458) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.createByteCode(BeanDescriptorManager.java:1150) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.readDeployAssociations(BeanDescriptorManager.java:1070) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.readEntityDeploymentAssociations(BeanDescriptorManager.java:547) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.deploy(BeanDescriptorManager.java:237) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.core.InternalConfiguration.<init>(InternalConfiguration.java:114) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.core.DefaultServerFactory.createServer(DefaultServerFactory.java:204) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebeaninternal.server.core.DefaultServerFactory.createServer(DefaultServerFactory.java:65) ~[avaje-ebeanorm.jar:na]
+	at com.avaje.ebean.EbeanServerFactory.create(EbeanServerFactory.java:58) ~[avaje-ebeanorm.jar:na]
+	at play.db.ebean.EbeanPlugin.onStart(EbeanPlugin.java:79) ~[play-java-ebean_2.10.jar:2.2.1]
+	at play.api.Play$$anonfun$start$1$$anonfun$apply$mcV$sp$1.apply(Play.scala:88) ~[play_2.10.jar:2.2.1]
+	at play.api.Play$$anonfun$start$1$$anonfun$apply$mcV$sp$1.apply(Play.scala:88) ~[play_2.10.jar:2.2.1]
+	at scala.collection.immutable.List.foreach(List.scala:318) ~[scala-library.jar:na]
+	at play.api.Play$$anonfun$start$1.apply$mcV$sp(Play.scala:88) ~[play_2.10.jar:2.2.1]
+	at play.api.Play$$anonfun$start$1.apply(Play.scala:88) ~[play_2.10.jar:2.2.1]
+	at play.api.Play$$anonfun$start$1.apply(Play.scala:88) ~[play_2.10.jar:2.2.1]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:18) ~[play_2.10.jar:2.2.1]
+	at play.api.Play$.start(Play.scala:87) ~[play_2.10.jar:2.2.1]
+	at play.core.ReloadableApplication$$anonfun$get$1$$anonfun$apply$1$$anonfun$1.apply(ApplicationProvider.scala:139) ~[play_2.10.jar:2.2.1]
+	... 14 common frames omitted
+Caused by: java.lang.NullPointerException: null
+	at models.PlanoDeCurso.alocaDisciplinas(PlanoDeCurso.java:582) ~[na:na]
+	at models.PlanoDeCurso.<init>(PlanoDeCurso.java:57) ~[na:na]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.Class.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager.setEntityBeanClass(BeanDescriptorManager.java:1424) ~[avaje-ebeanorm.jar:na]
+	... 32 common frames omitted
+
+2014-03-04 14:58:21,144 - [INFO] - from play in play-internal-execution-context-1 
 database [default] connected at jdbc:h2:mem:play
 
-2014-03-04 09:42:54,693 - [INFO] - from play in play-internal-execution-context-1 
-Application started (Dev)
-
-2014-03-04 09:45:02,411 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 09:45:02,536 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 09:48:54,749 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 09:48:54,883 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 09:50:14,523 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 09:50:14,689 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 09:50:32,665 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 09:50:32,828 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 10:43:09,180 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 10:43:09,313 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 10:43:29,607 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 10:43:29,719 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 10:45:10,349 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 10:45:10,458 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 10:45:40,293 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 10:45:40,403 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 10:52:03,610 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 10:52:03,743 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 10:52:45,510 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 10:52:45,630 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 10:54:44,306 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 10:54:44,415 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 10:55:44,080 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 10:55:44,217 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 10:57:22,874 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 10:57:23,003 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:03:51,509 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:03:51,621 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:11:11,853 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:11:11,966 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:13:42,229 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:13:42,337 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:13:52,936 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:13:53,062 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:16:35,941 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:16:36,052 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:17:34,776 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:17:34,901 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:18:35,246 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:18:35,435 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:21:46,728 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:21:46,834 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:24:48,244 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:24:48,354 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:25:01,820 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:25:01,934 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:25:30,701 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:25:30,806 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:25:46,297 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:25:46,444 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:26:20,254 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:26:20,362 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:26:38,963 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:26:39,104 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:27:21,051 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:27:21,159 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:27:49,075 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:27:49,183 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:28:07,819 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:28:07,930 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:28:41,807 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:28:41,943 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:29:34,041 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:29:34,149 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:29:54,488 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:29:54,596 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:31:06,946 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:31:07,089 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:32:36,904 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:32:37,035 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:34:36,185 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:34:36,299 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:34:52,530 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:34:52,635 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:35:40,380 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:35:40,516 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:35:56,226 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:35:56,334 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:36:22,815 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:36:22,931 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2014-03-04 11:37:22,181 - [INFO] - from play in play-internal-execution-context-16 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 11:37:22,289 - [INFO] - from play in play-internal-execution-context-16 
-Application started (Dev)
-
-2014-03-04 14:11:23,685 - [INFO] - from play in play-internal-execution-context-16 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 14:11:23,828 - [INFO] - from play in play-internal-execution-context-16 
-Application started (Dev)
-
-2014-03-04 14:13:02,977 - [INFO] - from play in play-internal-execution-context-16 
-database [default] connected at jdbc:h2:mem:play
-
-2014-03-04 14:13:03,092 - [INFO] - from play in play-internal-execution-context-16 
+2014-03-04 14:58:21,701 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 

@@ -235,10 +235,15 @@ public class PlanoDeCurso extends Model {
 					"Você já alcançou o número máximo de períodos");
 		}
 
-		Periodo novoPeriodo = new Periodo(id + ultimoPeriodo + 1,
-				ultimoPeriodo + 1);
+		int novoNumero = ultimoPeriodo + 1;
+		Periodo novoPeriodo = new Periodo(id + novoNumero,
+				novoNumero);
 		// novoPeriodo.save();
-		periodos.add(novoPeriodo);
+		if (isInvertido()){
+			periodos.add(0, novoPeriodo);
+		} else {
+			periodos.add(novoPeriodo);
+		}
 	}
 	
 	/**
@@ -497,8 +502,10 @@ public class PlanoDeCurso extends Model {
 	 */
 	public boolean isInvertido(){
 		boolean resp = false;
-		if (periodos.get(0).getNumero() != 1){
-			resp = true;
+		if (getTotalDePeriodos() > 0) {
+			if (periodos.get(0).getNumero() != 1){
+				resp = true;
+			}
 		}
 		return resp;
 	}
@@ -571,7 +578,7 @@ public class PlanoDeCurso extends Model {
 			if (periodo > 0) {
 				if (getTotalDePeriodos() < periodo) {
 					try {
-						createPeriodo("Usuario" + periodo);
+						createPeriodo("Usuario");
 					} catch (Exception e) {
 					}
 				}
@@ -629,7 +636,7 @@ public class PlanoDeCurso extends Model {
 	 */
 	private void criaDisciplinas() {
 
-//		 if (findDisciplina.findRowCount() == 0) {
+//		if (findDisciplina.findRowCount() == 0) {
 
 		// Disciplinas obrigatórias
 		createDisciplina("01", "Cálculo Diferencial e Integral 1", 4, 1, 4);
