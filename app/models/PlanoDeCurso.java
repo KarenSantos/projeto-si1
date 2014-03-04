@@ -28,6 +28,7 @@ public class PlanoDeCurso extends Model {
 	private static final long serialVersionUID = 1L;
 	final private int PERIODO_MAXIMO = 14;
 	private final int MAXIMO_DE_CREDITOS = 28;
+	private final int PERIODOS_BASE = 8;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -427,14 +428,28 @@ public class PlanoDeCurso extends Model {
 	 */
 	public void deletarPeriodo(int periodo) throws AlocacaoInvalidaException {
 
-		if (periodo > 8) {
+		if (periodo > PERIODOS_BASE) {
 			if (getPeriodo(periodo).getTotalDeDisciplinas() != 0) {
 				throw new AlocacaoInvalidaException(
-						"Não é possível deletar este período.");
+						"Não é possível deletar períodos com disciplinas.");
 			}
 		}
 
 		periodos.remove(getPeriodo(periodo));
+	}
+	
+	/**
+	 * Deleta o ultimo periodo criado se nao for um dos 8 periodos base
+	 * e se estiver sem disciplinas.
+	 */
+	public void deletaUltimoPeriodoSeVazio(){
+		
+		if (getTotalDePeriodos() > PERIODOS_BASE) {
+			int ultimoPeriodo = getTotalDePeriodos(); 
+			if (getPeriodo(ultimoPeriodo).getTotalDeDisciplinas() == 0) {
+				periodos.remove(getPeriodo(ultimoPeriodo));
+			}
+		}
 	}
 	
 	/**

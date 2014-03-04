@@ -19,6 +19,7 @@ public class Application extends Controller {
 	}
 
 	public static Result periodos() {
+		planejador.deletaUltimoPeriodoSeVazio();
 		return ok(views.html.index.render(planejador.getPeriodos(), 
 				planejador.getDisciplinasNaoAlocadas(), planejador));
 	}
@@ -74,6 +75,6 @@ public class Application extends Controller {
 	
 	public static Result inverter() {
 		planejador.inverteOrdemDosPeriodos();
-		return redirect((routes.Application).periodos());
+		return ok("invertido");
 	}
 }

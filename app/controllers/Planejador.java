@@ -134,6 +134,14 @@ public class Planejador {
 	public void deletarPeriodo(int periodo) throws AlocacaoInvalidaException {
 		plano.deletarPeriodo(periodo);
 	}
+	
+	/**
+	 * Deleta o ultimo periodo criado se nao for um dos 8 periodos base
+	 * e se estiver sem disciplinas.
+	 */
+	public void deletaUltimoPeriodoSeVazio(){
+		plano.deletaUltimoPeriodoSeVazio();
+	}
 
 	/**
 	 * Retorna o total de períodos criados.
