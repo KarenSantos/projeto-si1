@@ -47,7 +47,7 @@ public class Application extends Controller {
 		} catch (AlocacaoInvalidaException e) {
 			return forbidden();
 		}
-		return redirect((routes.Application).editar(periodo));
+		return ok();
 	}
 	
 	public static Result remover(String disciplinaId, int periodo) {
@@ -61,7 +61,7 @@ public class Application extends Controller {
 		} catch (TotalDeCreditosInvalidoException e) {
 			return badRequest();
 		}
-		return redirect((routes.Application).editar(periodoFuturo));
+		return ok();
 	}
 	
 	public static Result deletarPeriodo(int periodo){
