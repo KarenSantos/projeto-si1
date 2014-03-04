@@ -30,6 +30,8 @@ public class Periodo extends Model {
 	private int totalDeCreditos;
 	private int totalDeDificuldade;
 	private int numero;
+	
+	 public static Finder<String, Periodo> find = new Finder<String, Periodo>(String.class, Periodo.class);
 
 	/**
 	 * Cria um periodo sem id e sem numero.
@@ -147,6 +149,26 @@ public class Periodo extends Model {
 		disciplinas.remove(disciplina);
 		this.totalDeCreditos -= disciplina.getCreditos();
 		this.totalDeDificuldade -= disciplina.getDificuldade();
+	}
+	
+	/**
+	 * Salva o periodo no banco de dados.
+	 * 
+	 * @param periodo
+	 *            O periodo a ser salvo.
+	 */
+	public void salvar(Periodo periodo) {
+		periodo.save();
+	}
+
+	/**
+	 * Atualiza o periodo no banco de dados.
+	 * 
+	 * @param periodoId
+	 *            O Id do periodo a ser atualizado.
+	 */
+	public void atualizar(String periodoId) {
+		find.ref(periodoId).update();
 	}
 	
 	@Override

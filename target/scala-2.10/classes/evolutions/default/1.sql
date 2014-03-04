@@ -23,14 +23,6 @@ create table periodo (
   constraint pk_periodo primary key (id))
 ;
 
-create table plano_de_curso (
-  id                        varchar(255) not null,
-  periodo_maximo            integer,
-  maximo_de_creditos        integer,
-  periodos_base             integer,
-  constraint pk_plano_de_curso primary key (id))
-;
-
 create sequence disciplina_seq;
 
 create sequence periodo_seq;
@@ -45,8 +37,6 @@ SET REFERENTIAL_INTEGRITY FALSE;
 drop table if exists disciplina;
 
 drop table if exists periodo;
-
-drop table if exists plano_de_curso;
 
 SET REFERENTIAL_INTEGRITY TRUE;
 

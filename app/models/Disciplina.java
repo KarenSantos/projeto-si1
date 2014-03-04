@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import play.db.ebean.Model;
+import play.db.ebean.Model.Finder;
 
 /**
  * Classe de disciplinas.
@@ -27,6 +28,9 @@ public class Disciplina extends Model {
 	private int periodoSugerido;
 	private int dificuldade;
 	private boolean alocadaCorretamente;
+
+	public static Finder<String, Disciplina> find = new Finder<String, Disciplina>(
+			String.class, Disciplina.class);
 
 	/**
 	 * Cria uma disciplina com tudo null.
@@ -260,6 +264,26 @@ public class Disciplina extends Model {
 	 */
 	public void setNotAlocadaCorretamente() {
 		this.alocadaCorretamente = false;
+	}
+
+	/**
+	 * Salva a disciplina no banco de dados.
+	 * 
+	 * @param disc
+	 *            A disciplina a ser salva.
+	 */
+	public void salvar(Disciplina disc) {
+		disc.save();
+	}
+
+	/**
+	 * Atualiza a disciplina no banco de dados.
+	 * 
+	 * @param discId
+	 *            O Id da disciplina a ser atualizada.
+	 */
+	public void atualizar(String discId) {
+		find.ref(discId).update();
 	}
 
 	/**

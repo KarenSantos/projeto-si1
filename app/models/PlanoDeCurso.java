@@ -22,7 +22,6 @@ import play.db.ebean.Model.Finder;
  * @author
  * 
  */
-@Entity
 public class PlanoDeCurso extends Model {
 
 	private static final long serialVersionUID = 1L;
@@ -30,16 +29,10 @@ public class PlanoDeCurso extends Model {
 	private final int MAXIMO_DE_CREDITOS = 28;
 	private final int PERIODOS_BASE = 8;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
 	private List<Disciplina> disciplinas;
 	private List<Disciplina> disciplinasNaoAlocadas;
 	private List<Periodo> periodos;
-
-	public static Finder<String, Disciplina> findDisciplina = new Finder<String, Disciplina>(String.class, Disciplina.class);
-	// public static Finder<String, Periodo> findPeriodo = new Finder<String,
-	// Periodo>(String.class, Periodo.class);
 
 	/**
 	 * Inicia um plano de curso com um lista de periodos, um curriculo e uma
@@ -651,7 +644,7 @@ public class PlanoDeCurso extends Model {
 	 */
 	private void criaDisciplinas() {
 
-//		if (findDisciplina.findRowCount() == 0) {
+		if (!getDisciplina("01").find.all().isEmpty()) {
 
 		// Disciplinas obrigatórias
 		createDisciplina("01", "Cálculo Diferencial e Integral 1", 4, 1, 4);
@@ -749,14 +742,12 @@ public class PlanoDeCurso extends Model {
 		createDisciplina("89", "Optativa 10", 4, 8, 3);
 		createDisciplina("90", "Optativa 11", 2, 8, 3);
 
-		salvarDiscNoBD();
-
-//		}
+		}
 	}
-
-	private void salvarDiscNoBD() {
-		for (Disciplina disc : getDisciplinas()) {
-//			 disc.save();
+	
+	private void salvarDisciplinas() {
+		for (Disciplina disc : getDisciplinas()){
+			disc.salvar(disc);
 		}
 	}
 }
