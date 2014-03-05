@@ -64,15 +64,6 @@ public class Application extends Controller {
 		return ok();
 	}
 	
-	public static Result deletarPeriodo(int periodo){
-		try {
-			planejador.deletarPeriodo(periodo);
-		} catch (AlocacaoInvalidaException e) {
-			e.printStackTrace();
-		}
-		return redirect((routes.Application).periodos());
-	}
-	
 	public static Result inverter() {
 		planejador.inverteOrdemDosPeriodos();
 		return ok("invertido");

@@ -171,6 +171,10 @@ public class Periodo extends Model {
 		find.ref(periodoId).update();
 	}
 	
+	public void deletar(String periodoId) {
+		find.ref(periodoId).delete();
+	}
+	
 	@Override
 	public String toString() {
 		return "[Periodo " + getNumero() + "]";

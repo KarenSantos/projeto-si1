@@ -1,6 +1,6 @@
-// @SOURCE:D:/Karen/workspace/projeto-si1/conf/routes
-// @HASH:bbb4149a67f97a84790055d6874aa1a33ff70b7f
-// @DATE:Tue Mar 04 20:23:38 GMT-03:00 2014
+// @SOURCE:E:/Workspace/projeto-si1/conf/routes
+// @HASH:4cde73103c4c13dbca00ba5452b0ceb0f1f3bfb5
+// @DATE:Wed Mar 05 15:24:26 GMT-03:00 2014
 
 import Routes.{prefix => _prefix, defaultPrefix => _defaultPrefix}
 import play.core._
@@ -13,8 +13,7 @@ import play.libs.F
 import Router.queryString
 
 
-// @LINE:21
-// @LINE:18
+// @LINE:20
 // @LINE:17
 // @LINE:16
 // @LINE:15
@@ -25,11 +24,11 @@ import Router.queryString
 // @LINE:6
 package controllers {
 
-// @LINE:21
+// @LINE:20
 class ReverseAssets {
     
 
-// @LINE:21
+// @LINE:20
 def at(file:String): Call = {
    Call("GET", _prefix + { _defaultPrefix } + "assets/" + implicitly[PathBindable[String]].unbind("file", file))
 }
@@ -38,7 +37,6 @@ def at(file:String): Call = {
 }
                           
 
-// @LINE:18
 // @LINE:17
 // @LINE:16
 // @LINE:15
@@ -49,12 +47,6 @@ def at(file:String): Call = {
 // @LINE:6
 class ReverseApplication {
     
-
-// @LINE:16
-def deletarPeriodo(periodo:Int): Call = {
-   Call("GET", _prefix + { _defaultPrefix } + "deletar/" + implicitly[PathBindable[Int]].unbind("periodo", periodo))
-}
-                                                
 
 // @LINE:10
 def novoPeriodo(): Call = {
@@ -74,7 +66,7 @@ def remover(disciplinaId:String, periodo:Int): Call = {
 }
                                                 
 
-// @LINE:17
+// @LINE:16
 def mover(disciplinaId:String, futuro:Int, atual:Int): Call = {
    Call("GET", _prefix + { _defaultPrefix } + "mover/" + implicitly[PathBindable[String]].unbind("disciplinaId", dynamicString(disciplinaId)) + "/" + implicitly[PathBindable[Int]].unbind("futuro", futuro) + "/" + implicitly[PathBindable[Int]].unbind("atual", atual))
 }
@@ -86,7 +78,7 @@ def editar(periodo:Int): Call = {
 }
                                                 
 
-// @LINE:18
+// @LINE:17
 def inverter(): Call = {
    Call("GET", _prefix + { _defaultPrefix } + "inverter")
 }
@@ -110,8 +102,7 @@ def index(): Call = {
                   
 
 
-// @LINE:21
-// @LINE:18
+// @LINE:20
 // @LINE:17
 // @LINE:16
 // @LINE:15
@@ -122,11 +113,11 @@ def index(): Call = {
 // @LINE:6
 package controllers.javascript {
 
-// @LINE:21
+// @LINE:20
 class ReverseAssets {
     
 
-// @LINE:21
+// @LINE:20
 def at : JavascriptReverseRoute = JavascriptReverseRoute(
    "controllers.Assets.at",
    """
@@ -140,7 +131,6 @@ def at : JavascriptReverseRoute = JavascriptReverseRoute(
 }
               
 
-// @LINE:18
 // @LINE:17
 // @LINE:16
 // @LINE:15
@@ -151,17 +141,6 @@ def at : JavascriptReverseRoute = JavascriptReverseRoute(
 // @LINE:6
 class ReverseApplication {
     
-
-// @LINE:16
-def deletarPeriodo : JavascriptReverseRoute = JavascriptReverseRoute(
-   "controllers.Application.deletarPeriodo",
-   """
-      function(periodo) {
-      return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "deletar/" + (""" + implicitly[PathBindable[Int]].javascriptUnbind + """)("periodo", periodo)})
-      }
-   """
-)
-                        
 
 // @LINE:10
 def novoPeriodo : JavascriptReverseRoute = JavascriptReverseRoute(
@@ -196,7 +175,7 @@ def remover : JavascriptReverseRoute = JavascriptReverseRoute(
 )
                         
 
-// @LINE:17
+// @LINE:16
 def mover : JavascriptReverseRoute = JavascriptReverseRoute(
    "controllers.Application.mover",
    """
@@ -218,7 +197,7 @@ def editar : JavascriptReverseRoute = JavascriptReverseRoute(
 )
                         
 
-// @LINE:18
+// @LINE:17
 def inverter : JavascriptReverseRoute = JavascriptReverseRoute(
    "controllers.Application.inverter",
    """
@@ -257,8 +236,7 @@ def index : JavascriptReverseRoute = JavascriptReverseRoute(
         
 
 
-// @LINE:21
-// @LINE:18
+// @LINE:20
 // @LINE:17
 // @LINE:16
 // @LINE:15
@@ -270,11 +248,11 @@ def index : JavascriptReverseRoute = JavascriptReverseRoute(
 package controllers.ref {
 
 
-// @LINE:21
+// @LINE:20
 class ReverseAssets {
     
 
-// @LINE:21
+// @LINE:20
 def at(path:String, file:String): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
    controllers.Assets.at(path, file), HandlerDef(this, "controllers.Assets", "at", Seq(classOf[String], classOf[String]), "GET", """ Map static resources from the /public folder to the /assets URL path""", _prefix + """assets/$file<.+>""")
 )
@@ -283,7 +261,6 @@ def at(path:String, file:String): play.api.mvc.HandlerRef[_] = new play.api.mvc.
 }
                           
 
-// @LINE:18
 // @LINE:17
 // @LINE:16
 // @LINE:15
@@ -294,12 +271,6 @@ def at(path:String, file:String): play.api.mvc.HandlerRef[_] = new play.api.mvc.
 // @LINE:6
 class ReverseApplication {
     
-
-// @LINE:16
-def deletarPeriodo(periodo:Int): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
-   controllers.Application.deletarPeriodo(periodo), HandlerDef(this, "controllers.Application", "deletarPeriodo", Seq(classOf[Int]), "GET", """""", _prefix + """deletar/$periodo<[^/]+>""")
-)
-                      
 
 // @LINE:10
 def novoPeriodo(): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
@@ -319,7 +290,7 @@ def remover(disciplinaId:String, periodo:Int): play.api.mvc.HandlerRef[_] = new 
 )
                       
 
-// @LINE:17
+// @LINE:16
 def mover(disciplinaId:String, futuro:Int, atual:Int): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
    controllers.Application.mover(disciplinaId, futuro, atual), HandlerDef(this, "controllers.Application", "mover", Seq(classOf[String], classOf[Int], classOf[Int]), "GET", """""", _prefix + """mover/$disciplinaId<[^/]+>/$futuro<[^/]+>/$atual<[^/]+>""")
 )
@@ -331,7 +302,7 @@ def editar(periodo:Int): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRe
 )
                       
 
-// @LINE:18
+// @LINE:17
 def inverter(): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
    controllers.Application.inverter(), HandlerDef(this, "controllers.Application", "inverter", Seq(), "GET", """""", _prefix + """inverter""")
 )

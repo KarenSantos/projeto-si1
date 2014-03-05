@@ -154,6 +154,7 @@ public class PlanoDeCurso extends Model {
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos,
 				preRequisitos, periodoSugerido, dificuldade);
 		disciplinas.add(aDisciplina);
+		aDisciplina.salvar(aDisciplina);
 	}
 
 	/**
@@ -178,6 +179,7 @@ public class PlanoDeCurso extends Model {
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos,
 				periodoSugerido, dificuldade);
 		disciplinas.add(aDisciplina);
+		aDisciplina.salvar(aDisciplina);
 	}
 
 	/**
@@ -230,8 +232,7 @@ public class PlanoDeCurso extends Model {
 		}
 
 		int novoNumero = ultimoPeriodo + 1;
-		Periodo novoPeriodo = new Periodo(id + novoNumero,
-				novoNumero);
+		Periodo novoPeriodo = new Periodo(id + novoNumero, novoNumero);
 		novoPeriodo.salvar(novoPeriodo);
 		if (isInvertido()){
 			periodos.add(0, novoPeriodo);
@@ -412,26 +413,6 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
-	 * Deleta o ultimo periodo da lista se ele for vazio e for maior que o oitavo periodo.
-	 * 
-	 * @param periodo
-	 *            O periodo que vai ser deletado.
-	 * @throws AlocacaoInvalidaException
-	 *             Se o período a ser deletado for do 1 ao 8 ou se tiver disciplinas.
-	 */
-	public void deletarPeriodo(int periodo) throws AlocacaoInvalidaException {
-
-		if (periodo > PERIODOS_BASE) {
-			if (getPeriodo(periodo).getTotalDeDisciplinas() != 0) {
-				throw new AlocacaoInvalidaException(
-						"Não é possível deletar períodos com disciplinas.");
-			}
-		}
-
-		periodos.remove(getPeriodo(periodo));
-	}
-	
-	/**
 	 * Deleta o ultimo periodo criado se nao for um dos 8 periodos base
 	 * e se estiver sem disciplinas.
 	 */
@@ -440,7 +421,9 @@ public class PlanoDeCurso extends Model {
 		if (getTotalDePeriodos() > PERIODOS_BASE) {
 			int ultimoPeriodo = getTotalDePeriodos(); 
 			if (getPeriodo(ultimoPeriodo).getTotalDeDisciplinas() == 0) {
-				periodos.remove(getPeriodo(ultimoPeriodo));
+				Periodo oPeriodo = getPeriodo(ultimoPeriodo);
+				periodos.remove(oPeriodo);
+				oPeriodo.deletar(oPeriodo.getId());
 			}
 		}
 	}
@@ -741,14 +724,6 @@ public class PlanoDeCurso extends Model {
 		createDisciplina("89", "Optativa 10", 4, 8, 3);
 		createDisciplina("90", "Optativa 11", 2, 8, 3);
 		
-		salvarDisciplinas();
-
-		}
-	}
-	
-	private void salvarDisciplinas() {
-		for (Disciplina disc : getDisciplinas()){
-			disc.salvar(disc);
 		}
 	}
 }

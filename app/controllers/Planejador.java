@@ -124,18 +124,6 @@ public class Planejador {
 	}
 
 	/**
-	 * Deleta um periodo da lista de periodos.
-	 * 
-	 * @param periodo
-	 *            O período que vai ser deletado.
-	 * @throws AlocacaoInvalidaException
-	 *             Se o período a ser deletado for o primeiro período.
-	 */
-	public void deletarPeriodo(int periodo) throws AlocacaoInvalidaException {
-		plano.deletarPeriodo(periodo);
-	}
-	
-	/**
 	 * Deleta o ultimo periodo criado se nao for um dos 8 periodos base
 	 * e se estiver sem disciplinas.
 	 */

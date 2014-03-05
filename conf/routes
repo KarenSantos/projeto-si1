@@ -13,7 +13,6 @@ GET    	/novoPeriodo	  					controllers.Application.novoPeriodo()
 GET    	/editar/:periodo						controllers.Application.editar(periodo: Int)
 GET     /adicionar/:disciplinaId/:periodo		controllers.Application.adicionar(disciplinaId: String, periodo: Int)
 GET 	/remover/:disciplinaId/:periodo			controllers.Application.remover(disciplinaId: String, periodo: Int)
-GET 	/deletar/:periodo						controllers.Application.deletarPeriodo(periodo: Int)
 GET		/mover/:disciplinaId/:futuro/:atual		controllers.Application.mover(disciplinaId: String, futuro: Int, atual: Int)
 GET		/inverter								controllers.Application.inverter()
 
