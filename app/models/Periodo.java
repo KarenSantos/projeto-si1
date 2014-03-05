@@ -1,7 +1,6 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.*;
@@ -26,7 +25,7 @@ public class Periodo extends Model {
 	@Id
 	private String id;
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinTable(name = "periodo_disciplina", joinColumns = {@JoinColumn (name = "fk_periodo")}, inverseJoinColumns = {@JoinColumn(name = "fk_disciplina")})
+	@JoinTable(name = "periodo_disciplina", joinColumns = {@JoinColumn (name = "periodo")}, inverseJoinColumns = {@JoinColumn(name = "disciplina")})
 	private List<Disciplina> disciplinas;
 	private int totalDeCreditos;
 	private int totalDeDificuldade;

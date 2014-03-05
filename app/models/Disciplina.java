@@ -3,11 +3,9 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
 
 /**
  * Classe de disciplinas.
@@ -24,6 +22,9 @@ public class Disciplina extends Model {
 	private String id;
 	private String nome;
 	private int creditos;
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinTable(name = "disciplina_preRequisito", 
+    joinColumns = {@JoinColumn (name = "disciplina")}, inverseJoinColumns = {@JoinColumn(name = "preRequisito")})
 	private List<Disciplina> preRequisitos;
 	private int periodoSugerido;
 	private int dificuldade;
