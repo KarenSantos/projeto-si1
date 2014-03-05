@@ -41,14 +41,12 @@ public class PlanoDeCurso extends Model {
 	 */
 	public PlanoDeCurso() {
 		disciplinas = new ArrayList<Disciplina>();
+		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		periodos = new ArrayList<Periodo>();
 
 		criaDisciplinas();
-
-		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
-		disciplinasNaoAlocadas.addAll(getDisciplinas());
-
 		alocaDisciplinas();
+		configuraDisciplinasNaoAlocadas();
 	}
 
 	/**
@@ -59,14 +57,12 @@ public class PlanoDeCurso extends Model {
 	public PlanoDeCurso(String id) {
 		this.id = id;
 		disciplinas = new ArrayList<Disciplina>();
+		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		periodos = new ArrayList<Periodo>();
 
 		criaDisciplinas();
-
-		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
-		disciplinasNaoAlocadas.addAll(getDisciplinas());
-
 		alocaDisciplinas();
+		configuraDisciplinasNaoAlocadas();
 	}
 
 	/**
@@ -573,9 +569,18 @@ public class PlanoDeCurso extends Model {
 						}
 					}
 					getPeriodo(periodo).addDisciplina(disc);
-					;
-					disciplinasNaoAlocadas.remove(disc);
 				}
+			}
+		} else {
+			periodos.addAll(Periodo.find.all());
+		}
+	}
+	
+	private void configuraDisciplinasNaoAlocadas() {
+		disciplinasNaoAlocadas.addAll(disciplinas);
+		for (Periodo periodo : getPeriodos()){
+			for (Disciplina disc : periodo.getDisciplinas()){
+				disciplinasNaoAlocadas.remove(disc);
 			}
 		}
 	}
@@ -724,6 +729,8 @@ public class PlanoDeCurso extends Model {
 		createDisciplina("89", "Optativa 10", 4, 8, 3);
 		createDisciplina("90", "Optativa 11", 2, 8, 3);
 		
+		} else {
+			disciplinas.addAll(Disciplina.find.all());
 		}
 	}
 }
