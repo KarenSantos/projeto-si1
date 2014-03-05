@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 import exceptions.NumeroInvalidoException;
 import exceptions.TotalDeCreditosInvalidoException;
@@ -30,6 +26,7 @@ public class Periodo extends Model {
 	@Id
 	private String id;
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinTable(name = "periodo_disciplina", joinColumns = {@JoinColumn (name = "fk_periodo")}, inverseJoinColumns = {@JoinColumn(name = "fk_disciplina")})
 	private List<Disciplina> disciplinas;
 	private int totalDeCreditos;
 	private int totalDeDificuldade;
