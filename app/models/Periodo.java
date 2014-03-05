@@ -55,7 +55,7 @@ public class Periodo extends Model {
 	 * @return A lista de disciplinas do periodo.
 	 */
 	public List<Disciplina> getDisciplinas() {
-		return Collections.unmodifiableList(disciplinas);
+		return disciplinas;
 	}
 
 	/**
