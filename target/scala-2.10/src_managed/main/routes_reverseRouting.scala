@@ -1,6 +1,6 @@
 // @SOURCE:E:/Workspace/projeto-si1/conf/routes
 // @HASH:4cde73103c4c13dbca00ba5452b0ceb0f1f3bfb5
-// @DATE:Wed Mar 05 15:24:26 GMT-03:00 2014
+// @DATE:Wed Mar 05 16:20:24 GMT-03:00 2014
 
 import Routes.{prefix => _prefix, defaultPrefix => _defaultPrefix}
 import play.core._

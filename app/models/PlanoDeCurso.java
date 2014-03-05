@@ -376,18 +376,18 @@ public class PlanoDeCurso extends Model {
 	
 			for (Disciplina temComo : temComoPreRequisito) { //pra cada disciplina que tem esta como pre-requisito
 				if (getPeriodoDaDisciplina(aDisciplina) >= getPeriodoDaDisciplina(temComo)) { //se a disciplina tiver a frente
-					aDisciplina.setNotAlocadaCorretamente();
+					temComo.setNotAlocadaCorretamente();
 					break;
 				} else {
-					aDisciplina.setIsAlocadaCorretamente();
+					temComo.setIsAlocadaCorretamente();
 				}
 			}
 	
 			for (Disciplina ehPreRequisito : saoPreRequisitos) { //para cada um dos seus pre-requisitos
 				if (getPeriodoDaDisciplina(ehPreRequisito) >= getPeriodoDaDisciplina(aDisciplina)) { // se eles estiverem a frente
-					ehPreRequisito.setNotAlocadaCorretamente();
+					aDisciplina.setNotAlocadaCorretamente();
 				} else {
-					ehPreRequisito.setIsAlocadaCorretamente();
+					aDisciplina.setIsAlocadaCorretamente();
 				}
 			}
 		}
