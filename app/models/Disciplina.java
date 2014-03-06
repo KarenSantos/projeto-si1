@@ -22,7 +22,7 @@ public class Disciplina extends Model {
 	private String id;
 	private String nome;
 	private int creditos;
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+//	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     @JoinTable(name = "disciplina_preRequisito", 
     joinColumns = {@JoinColumn (name = "disciplina")}, inverseJoinColumns = {@JoinColumn(name = "preRequisito")})
 	private List<Disciplina> preRequisitos;
