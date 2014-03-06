@@ -23,8 +23,8 @@ public class Disciplina extends Model {
 	private String nome;
 	private int creditos;
 //	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-    @JoinTable(name = "disciplina_preRequisito", 
-    joinColumns = {@JoinColumn (name = "disciplina")}, inverseJoinColumns = {@JoinColumn(name = "preRequisito")})
+//    @JoinTable(name = "disciplina_preRequisito", 
+//    joinColumns = {@JoinColumn (name = "disciplina")}, inverseJoinColumns = {@JoinColumn(name = "preRequisito")})
 	private List<Disciplina> preRequisitos;
 	private int periodoSugerido;
 	private int dificuldade;

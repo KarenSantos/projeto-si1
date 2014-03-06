@@ -125,23 +125,24 @@ public class PlanejadorTest {
 		planejador.removeDisciplinaPeriodo("09", 2); //liberando espaço no segundo periodo
 		
 		planejador.moveDisciplina("01", 2, 1); // movendo calculo 1 para o segundo periodo
-		Assert.assertFalse(planejador.getDisciplina("01").isAlocadaCorretamente());
+		Assert.assertFalse(planejador.getDisciplina("07").isAlocadaCorretamente()); //quem tem calculo 1 como pre-requisito fica alocado incorretamente
+		Assert.assertFalse(planejador.getDisciplina("13").isAlocadaCorretamente());
 		planejador.moveDisciplina("01", 1, 2); // movendo de volta para o lugar certo
 		Assert.assertTrue(planejador.getDisciplina("01").isAlocadaCorretamente());
 		
 		planejador.moveDisciplina("17", 1, 3); // movendo EDA para o primeiro periodo 
-		Assert.assertFalse(planejador.getDisciplina("10").isAlocadaCorretamente());  // todos que são pre requisitos ficam alocados incorretamente
-		Assert.assertFalse(planejador.getDisciplina("11").isAlocadaCorretamente());
-		Assert.assertFalse(planejador.getDisciplina("12").isAlocadaCorretamente());
-		
+		Assert.assertFalse(planejador.getDisciplina("17").isAlocadaCorretamente());  // EDA fica alocada incorretamente, seus preRequisitos nao foram satisfeitos
+			
 		planejador.moveDisciplina("17", 5, 1); //movendo EDA para o quinto periodo
-		Assert.assertFalse(planejador.getDisciplina("17").isAlocadaCorretamente()); // ela fica a frente de quem ela é pre-requisito, nao alocada corretamente
-		Assert.assertTrue(planejador.getDisciplina("10").isAlocadaCorretamente());
-		Assert.assertTrue(planejador.getDisciplina("11").isAlocadaCorretamente());
-		Assert.assertTrue(planejador.getDisciplina("12").isAlocadaCorretamente());
+		Assert.assertTrue(planejador.getDisciplina("17").isAlocadaCorretamente()); // EDA fica ok
+		Assert.assertFalse(planejador.getDisciplina("22").isAlocadaCorretamente()); //aquelas que tem EDA como pre-requisito nao estao ok
+		Assert.assertFalse(planejador.getDisciplina("24").isAlocadaCorretamente());
+		Assert.assertFalse(planejador.getDisciplina("25").isAlocadaCorretamente());
 		
 		planejador.moveDisciplina("17", 3, 5); //voltando EDA para o periodo correto
-		Assert.assertTrue(planejador.getDisciplina("17").isAlocadaCorretamente()); //está alocada corretamente
+		Assert.assertTrue(planejador.getDisciplina("22").isAlocadaCorretamente()); //aquelas que tem EDA como pre-requisito ficam ok
+		Assert.assertTrue(planejador.getDisciplina("24").isAlocadaCorretamente());
+		Assert.assertTrue(planejador.getDisciplina("25").isAlocadaCorretamente());
 	}
 	
 	@Test

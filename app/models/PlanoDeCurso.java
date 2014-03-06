@@ -150,7 +150,7 @@ public class PlanoDeCurso extends Model {
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos,
 				preRequisitos, periodoSugerido, dificuldade);
 		disciplinas.add(aDisciplina);
-		aDisciplina.salvar(aDisciplina);
+//		aDisciplina.salvar(aDisciplina);
 	}
 
 	/**
@@ -175,7 +175,7 @@ public class PlanoDeCurso extends Model {
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos,
 				periodoSugerido, dificuldade);
 		disciplinas.add(aDisciplina);
-		aDisciplina.salvar(aDisciplina);
+//		aDisciplina.salvar(aDisciplina);
 	}
 
 	/**
@@ -229,7 +229,7 @@ public class PlanoDeCurso extends Model {
 
 		int novoNumero = ultimoPeriodo + 1;
 		Periodo novoPeriodo = new Periodo(id + novoNumero, novoNumero);
-		novoPeriodo.salvar(novoPeriodo);
+//		novoPeriodo.salvar(novoPeriodo);
 		if (isInvertido()){
 			periodos.add(0, novoPeriodo);
 		} else {
@@ -373,7 +373,6 @@ public class PlanoDeCurso extends Model {
 			for (Disciplina temComo : temComoPreRequisito) { //pra cada disciplina que tem esta como pre-requisito
 				if (getPeriodoDaDisciplina(aDisciplina) >= getPeriodoDaDisciplina(temComo)) { //se a disciplina tiver a frente
 					temComo.setNotAlocadaCorretamente();
-					break;
 				} else {
 					temComo.setIsAlocadaCorretamente();
 				}
@@ -382,6 +381,7 @@ public class PlanoDeCurso extends Model {
 			for (Disciplina ehPreRequisito : saoPreRequisitos) { //para cada um dos seus pre-requisitos
 				if (getPeriodoDaDisciplina(ehPreRequisito) >= getPeriodoDaDisciplina(aDisciplina)) { // se eles estiverem a frente
 					aDisciplina.setNotAlocadaCorretamente();
+					break;
 				} else {
 					aDisciplina.setIsAlocadaCorretamente();
 				}
@@ -419,7 +419,7 @@ public class PlanoDeCurso extends Model {
 			if (getPeriodo(ultimoPeriodo).getTotalDeDisciplinas() == 0) {
 				Periodo oPeriodo = getPeriodo(ultimoPeriodo);
 				periodos.remove(oPeriodo);
-				oPeriodo.deletar(oPeriodo.getId());
+//				oPeriodo.deletar(oPeriodo.getId());
 			}
 		}
 	}
@@ -558,7 +558,7 @@ public class PlanoDeCurso extends Model {
 	 */
 	private void alocaDisciplinas() {
 
-		if (Periodo.find.all().isEmpty()) {
+//		if (Periodo.find.all().isEmpty()) {
 			for (Disciplina disc : getDisciplinas()) {
 				int periodo = disc.getPeriodoSugerido();
 				if (periodo > 0) {
@@ -571,9 +571,9 @@ public class PlanoDeCurso extends Model {
 					getPeriodo(periodo).addDisciplina(disc);
 				}
 			}
-		} else {
-			periodos.addAll(Periodo.find.all());
-		}
+//		} else {
+//			periodos.addAll(Periodo.find.all());
+//		}
 	}
 	
 	private void configuraDisciplinasNaoAlocadas() {
@@ -631,7 +631,7 @@ public class PlanoDeCurso extends Model {
 	 */
 	private void criaDisciplinas() {
 
-		if (Disciplina.find.all().isEmpty()) {
+//		if (Disciplina.find.all().isEmpty()) {
 
 		// Disciplinas obrigatórias
 		createDisciplina("01", "Cálculo Diferencial e Integral 1", 4, 1, 4);
@@ -729,8 +729,8 @@ public class PlanoDeCurso extends Model {
 		createDisciplina("89", "Optativa 10", 4, 8, 3);
 		createDisciplina("90", "Optativa 11", 2, 8, 3);
 		
-		} else {
-			disciplinas.addAll(Disciplina.find.all());
-		}
+//		} else {
+//			disciplinas.addAll(Disciplina.find.all());
+//		}
 	}
 }
