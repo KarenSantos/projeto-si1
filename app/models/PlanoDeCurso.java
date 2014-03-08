@@ -6,15 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 import exceptions.AlocacaoInvalidaException;
 import exceptions.TotalDeCreditosInvalidoException;
-import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
+import play.db.ebean.*;
+
+import javax.persistence.*;
 
 /**
  * Classe do plano de curso.
@@ -22,18 +18,27 @@ import play.db.ebean.Model.Finder;
  * @author
  * 
  */
+@Entity
 public class PlanoDeCurso extends Model {
 
 	private static final long serialVersionUID = 1L;
+	
 	final private int PERIODO_MAXIMO = 14;
 	private final int MAXIMO_DE_CREDITOS = 28;
 	private final int PERIODOS_BASE = 8;
 
+	@Id
 	private String id;
+
 	private Grade grade;
 	private List<Disciplina> disciplinasNaoAlocadas;
+
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "plano_periodo", joinColumns = { @JoinColumn(name = "p_plano") }, inverseJoinColumns = { @JoinColumn(name = "p_periodo") })
 	private List<Periodo> periodos;
 
+	public static Finder<String, PlanoDeCurso> find = new Finder<String, PlanoDeCurso>(String.class, PlanoDeCurso.class);
+	
 	/**
 	 * Inicia um plano de curso com um lista de periodos, um curriculo e uma
 	 * lista de disciplinas não alocadas. Configura os periodos com as
@@ -46,6 +51,13 @@ public class PlanoDeCurso extends Model {
 
 		alocaDisciplinas();
 		configuraDisciplinasNaoAlocadas();
+	}
+	
+	/**
+	 * Atualiza a grade curricular com as disciplinas salvas no BD.
+	 */
+	public void atualizaGrade(){
+		grade.atualizar();
 	}
 
 	/**
@@ -147,7 +159,6 @@ public class PlanoDeCurso extends Model {
 
 		int novoNumero = ultimoPeriodo + 1;
 		Periodo novoPeriodo = new Periodo(id + novoNumero, novoNumero);
-//		novoPeriodo.salvar(novoPeriodo);
 		if (isInvertido()){
 			periodos.add(0, novoPeriodo);
 		} else {

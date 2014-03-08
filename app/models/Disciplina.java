@@ -3,9 +3,10 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.*;
+import play.db.ebean.*;
+import play.data.validation.Constraints.*;
 
-import play.db.ebean.Model;
+import javax.persistence.*;
 
 /**
  * Classe de disciplinas.
@@ -14,18 +15,23 @@ import play.db.ebean.Model;
  * 
  */
 @Entity
+@Table(name="disciplina") 
 public class Disciplina extends Model {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String id;
+	
+	@Required
+	@Column(unique = true, nullable = false)
 	private String nome;
-	private int creditos;
-//	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-//    @JoinTable(name = "disciplina_preRequisito", 
-//    joinColumns = {@JoinColumn (name = "disciplina")}, inverseJoinColumns = {@JoinColumn(name = "preRequisito")})
+	
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinTable(name = "disciplina_preRequisito", joinColumns = {@JoinColumn (name = "disciplina_name")}, inverseJoinColumns = {@JoinColumn(name = "preRequisito_name")})
 	private List<Disciplina> preRequisitos;
+	
+	private int creditos;
 	private int periodoSugerido;
 	private int dificuldade;
 	private boolean alocadaCorretamente;
@@ -273,7 +279,7 @@ public class Disciplina extends Model {
 	 * @param disc
 	 *            A disciplina a ser salva.
 	 */
-	public void salvar(Disciplina disc) {
+	public static void salvar(Disciplina disc) {
 		disc.save();
 	}
 
@@ -283,7 +289,7 @@ public class Disciplina extends Model {
 	 * @param discId
 	 *            O Id da disciplina a ser atualizada.
 	 */
-	public void atualizar(String discId) {
+	public static void atualizar(String discId) {
 		find.ref(discId).update();
 	}
 

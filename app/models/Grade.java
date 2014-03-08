@@ -19,7 +19,18 @@ public class Grade {
 	 */
 	public Grade(){
 		disciplinas = new ArrayList<Disciplina>();
-		criaDisciplinas();
+		if (Disciplina.find.all().isEmpty()) {
+			criaDisciplinas();
+		} else {
+			disciplinas.addAll(Disciplina.find.all());
+		}
+	}
+	
+	/**
+	 * Atualiza a grade curricular com as disciplinas salvas no BD.
+	 */
+	public void atualizar(){
+		disciplinas.addAll(Disciplina.find.all());
 	}
 	
 	/**
@@ -88,6 +99,7 @@ public class Grade {
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos,
 				preRequisitos, periodoSugerido, dificuldade);
 		disciplinas.add(aDisciplina);
+		Disciplina.salvar(aDisciplina);
 	}
 
 	/**
@@ -110,14 +122,13 @@ public class Grade {
 
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos, periodoSugerido, dificuldade);
 		disciplinas.add(aDisciplina);
+		Disciplina.salvar(aDisciplina);
 	}
 	
 	/**
 	 * Cria todas as disciplinas do curso de computação.
 	 */
 	private void criaDisciplinas() {
-
-//		if (Disciplina.find.all().isEmpty()) {
 
 		// Disciplinas obrigatórias
 		createDisciplina("01", "Cálculo Diferencial e Integral 1", 4, 1, 4);
@@ -215,10 +226,5 @@ public class Grade {
 		createDisciplina("89", "Optativa 10", 4, 8, 3);
 		createDisciplina("90", "Optativa 11", 2, 8, 3);
 		
-//		} else {
-//			disciplinas.addAll(Disciplina.find.all());
-//		}
 	}
-	
-
 }

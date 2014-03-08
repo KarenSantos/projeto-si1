@@ -4,7 +4,6 @@ import java.util.List;
 
 import exceptions.AlocacaoInvalidaException;
 import exceptions.TotalDeCreditosInvalidoException;
-import play.db.ebean.*;
 import models.Disciplina;
 import models.Periodo;
 import models.PlanoDeCurso;
@@ -19,12 +18,22 @@ public class Planejador {
 
 	private PlanoDeCurso plano;
 
-	// public static Finder<String, PlanoDeCurso> find = new
-	// Finder(String.class, PlanoDeCurso.class);
+	/**
+	 * Cria um planejador que recebe um id como usuário.
+	 * 
+	 * @param id
+	 *            O id para identificar o usuário.
+	 */
+	public Planejador(String id) {
 
-	public Planejador() {
-
-		plano = new PlanoDeCurso();
+		if (PlanoDeCurso.find.byId(id) == null) {
+			plano = new PlanoDeCurso();
+			plano.setId(id);
+			plano.save();
+		} else {
+			plano = PlanoDeCurso.find.byId(id);
+			plano.atualizaGrade();
+		}
 	}
 
 	/**
@@ -124,10 +133,10 @@ public class Planejador {
 	}
 
 	/**
-	 * Deleta o ultimo periodo criado se nao for um dos 8 periodos base
-	 * e se estiver sem disciplinas.
+	 * Deleta o ultimo periodo criado se nao for um dos 8 periodos base e se
+	 * estiver sem disciplinas.
 	 */
-	public void deletaUltimoPeriodoSeVazio(){
+	public void deletaUltimoPeriodoSeVazio() {
 		plano.deletaUltimoPeriodoSeVazio();
 	}
 
