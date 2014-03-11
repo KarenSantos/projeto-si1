@@ -33,11 +33,11 @@ public class PlanoDeCurso extends Model {
 	private Grade grade;
 	private List<Disciplina> disciplinasNaoAlocadas;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "plano_periodo", joinColumns = { @JoinColumn(name = "p_plano") }, inverseJoinColumns = { @JoinColumn(name = "p_periodo") })
+//	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@JoinTable(name = "plano_periodo", joinColumns = { @JoinColumn(name = "p_plano") }, inverseJoinColumns = { @JoinColumn(name = "p_periodo") })
 	private List<Periodo> periodos;
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Usuario user;
 
 	public static Finder<String, PlanoDeCurso> find = new Finder<String, PlanoDeCurso>(String.class, PlanoDeCurso.class);

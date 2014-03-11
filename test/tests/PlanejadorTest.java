@@ -17,7 +17,7 @@ public class PlanejadorTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		planejador = new Planejador();
+		planejador = new Planejador("Usuário");
 		
 	}
 

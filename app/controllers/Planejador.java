@@ -29,7 +29,7 @@ public class Planejador {
 		if (PlanoDeCurso.find.byId(id) == null) {
 			plano = new PlanoDeCurso();
 			plano.setId(id);
-			plano.save();
+//			plano.save();
 		} else {
 			plano = PlanoDeCurso.find.byId(id);
 			plano.atualizaGrade();

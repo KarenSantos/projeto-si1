@@ -1,12 +1,11 @@
 @(form: play.data.Form[Autenticador.Login])
-@main("Caronas Inteligentes"){
+@main("Planejamento de Curso"){
 
 <meta charset="utf-8">
     
-  	<br>
-  	<br>
+	<h1>Planejamento de Curso</h1>
+  	<div id="login">
     <div class="hero-unit">
-    		<h1>Caronas Inteligentes</h1>
 			</div>
 			<div class="form-actions">
 			@if(flash.containsKey("erro")){
@@ -24,7 +23,7 @@
 	<form class="form-signin" role="form" action="@routes.Autenticador.authenticate()" method="post">
    			   <br>
    			   <br>
-   			   <h3>Faça login ou cadastre-se</h3>
+   			   <h3>Faça o login ou cadastre-se</h3>
 			   
    			   <br>	
 			   <div class="control-group">
@@ -45,7 +44,5 @@
 			    </div>
 			  </div>
 			</form>
-		
-
-   
+	</div>
 }

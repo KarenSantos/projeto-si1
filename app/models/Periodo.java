@@ -25,8 +25,8 @@ public class Periodo extends Model {
 	@Id
 	private String id;
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinTable(name = "periodo_disciplina", joinColumns = {@JoinColumn (name = "p_periodo")}, inverseJoinColumns = {@JoinColumn(name = "d_disciplina")})
+//	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+//	@JoinTable(name = "periodo_disciplina", joinColumns = {@JoinColumn (name = "p_periodo")}, inverseJoinColumns = {@JoinColumn(name = "d_disciplina")})
 	private List<Disciplina> disciplinas;
 	
 	private int totalDeCreditos;

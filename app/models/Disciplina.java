@@ -27,8 +27,8 @@ public class Disciplina extends Model {
 	@Column(unique = true, nullable = false)
 	private String nome;
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-    @JoinTable(name = "disciplina_preRequisito", joinColumns = {@JoinColumn (name = "disciplina_name")}, inverseJoinColumns = {@JoinColumn(name = "preRequisito_name")})
+//	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+//    @JoinTable(name = "disciplina_preRequisito", joinColumns = {@JoinColumn (name = "disciplina_name")}, inverseJoinColumns = {@JoinColumn(name = "preRequisito_name")})
 	private List<Disciplina> preRequisitos;
 	
 	private int creditos;

@@ -19,11 +19,11 @@ public class Grade {
 	 */
 	public Grade(){
 		disciplinas = new ArrayList<Disciplina>();
-		if (Disciplina.find.all().isEmpty()) {
+//		if (Disciplina.find.all().isEmpty()) {
 			criaDisciplinas();
-		} else {
-			disciplinas.addAll(Disciplina.find.all());
-		}
+//		} else {
+//			disciplinas.addAll(Disciplina.find.all());
+//		}
 	}
 	
 	/**
@@ -99,7 +99,7 @@ public class Grade {
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos,
 				preRequisitos, periodoSugerido, dificuldade);
 		disciplinas.add(aDisciplina);
-		Disciplina.salvar(aDisciplina);
+//		Disciplina.salvar(aDisciplina);
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class Grade {
 
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos, periodoSugerido, dificuldade);
 		disciplinas.add(aDisciplina);
-		Disciplina.salvar(aDisciplina);
+//		Disciplina.salvar(aDisciplina);
 	}
 	
 	/**
