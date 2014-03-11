@@ -1,0 +1,43 @@
+@(form: play.data.Form[Autenticador.Cadastro])
+@import helper._
+@main("Cadastro") {
+<meta charset="utf-8">
+
+
+
+    <head>
+    	<link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/signin.css")">
+    </head>
+    
+    
+
+    
+    <body>    
+	  <form class="form-signin" role="form" action="@routes.Autenticador.efetuaCadastro()" method="post">
+   			   <br>
+   			   <br>
+   			   <h3>Preencha os campos abaixo para completar o cadastro</h3>
+			   <br>	
+   			   <input type="email" class= "control-label" name="email" placeholder="e-mail" rows = 40>
+			   <br>
+			   <input type="password" class="control-label" name="password" placeholder="senha" rows = 40>
+			   <br>
+			   <input type="password" class="control-label" name="repassword" placeholder="Confirme a senha" rows = 40>
+			   <br>
+			   <button type="submit" class="btn  btn-primary">   Entrar   </button>
+			   
+			   
+       </form>
+	</div>	
+		
+    </body>
+		
+		
+
+  <body>
+
+   
+}
+
+

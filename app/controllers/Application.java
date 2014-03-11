@@ -1,9 +1,12 @@
 package controllers;
 
+import models.Usuario;
 import exceptions.AlocacaoInvalidaException;
 import exceptions.TotalDeCreditosInvalidoException;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
+import views.html.*;
 
 /**
  * Classe Application para a aplicacao web Planejamento de Curso.
@@ -11,16 +14,18 @@ import play.mvc.Result;
  *
  */
 public class Application extends Controller {
-
+	
+	
 	private static Planejador planejador = new Planejador("Usuário");
 	
+	@Security.Authenticated(Secured.class)
 	public static Result index() {
 		return redirect((routes.Application).periodos());
 	}
 
 	public static Result periodos() {
 		planejador.deletaUltimoPeriodoSeVazio();
-		return ok(views.html.index.render(planejador.getPeriodos(), 
+		return ok(index.render(planejador.getPeriodos(), 
 				planejador.getDisciplinasNaoAlocadas(), planejador));
 	}
 	
@@ -35,7 +40,7 @@ public class Application extends Controller {
 	}
 	
 	public static Result editar(int periodo) {
-		return ok(views.html.editar.render(planejador.getPeriodos(), 
+		return ok(editar.render(planejador.getPeriodos(), 
 				planejador.getDisciplinasNaoAlocadas(), periodo, planejador));
 	}
 	

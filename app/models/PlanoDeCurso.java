@@ -36,6 +36,9 @@ public class PlanoDeCurso extends Model {
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "plano_periodo", joinColumns = { @JoinColumn(name = "p_plano") }, inverseJoinColumns = { @JoinColumn(name = "p_periodo") })
 	private List<Periodo> periodos;
+	
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	public Usuario user;
 
 	public static Finder<String, PlanoDeCurso> find = new Finder<String, PlanoDeCurso>(String.class, PlanoDeCurso.class);
 	
@@ -44,11 +47,24 @@ public class PlanoDeCurso extends Model {
 	 * lista de disciplinas não alocadas. Configura os periodos com as
 	 * disciplinas obrigatorias.
 	 */
-	public PlanoDeCurso() {
+	public PlanoDeCurso(){
 		grade = new Grade();
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		periodos = new ArrayList<Periodo>();
-
+		alocaDisciplinas();
+		configuraDisciplinasNaoAlocadas();
+	}
+	/**
+	 * Inicia um plano de curso com um lista de periodos, um curriculo e uma
+	 * lista de disciplinas não alocadas. Configura os periodos com as
+	 * disciplinas obrigatorias.
+	 * @param user, dono do Plano de Curso
+	 */
+	public PlanoDeCurso(Usuario user){
+		grade = new Grade();
+		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
+		periodos = new ArrayList<Periodo>();
+		this.user = user;
 		alocaDisciplinas();
 		configuraDisciplinasNaoAlocadas();
 	}

@@ -5,6 +5,13 @@
 # Home page
 GET     /                           		controllers.Application.index()
 
+# Login/Cadastro
+
+GET      /login                             controllers.Autenticador.login()
+GET      /cadastro                          controllers.Autenticador.cadastro()
+POST     /login                             controllers.Autenticador.authenticate()
+POST     /cadastro 							controllers.Autenticador.efetuaCadastro()
+
 # Periodos	
 GET     /periodos							controllers.Application.periodos()
 GET    	/novoPeriodo	  					controllers.Application.novoPeriodo()
