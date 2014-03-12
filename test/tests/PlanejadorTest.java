@@ -17,7 +17,7 @@ public class PlanejadorTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		planejador = new Planejador("Usu√°rio");
+		planejador = new Planejador("Usu·rio");
 		
 	}
 
@@ -51,9 +51,9 @@ public class PlanejadorTest {
 		try {
 			planejador.addDisciplinaPeriodo("61", 1);
 		} catch (AlocacaoInvalidaException e) {
-			Assert.fail("N√£o deveria ter lan√ßado exce√ß√£o");
+			Assert.fail("N„o deveria ter lanÁado exceÁ„o");
 		} catch (TotalDeCreditosInvalidoException e) {
-			Assert.fail("N√£o deveria ter lan√ßado exce√ß√£o");
+			Assert.fail("N„o deveria ter lanÁado exceÁ„o");
 		}
 		Assert.assertEquals(7, planejador.getPeriodo(1).getTotalDeDisciplinas());
 	}
@@ -61,15 +61,15 @@ public class PlanejadorTest {
 	@Test
 	public void naoDevePoderAdicionarDisciplinaSePreRequisitosNaoForamAlocadosEmPeriodosAnteriores() {
 		
-		planejador.removeDisciplinaPeriodo("03", 1); // liberando espa√ßo para cr√©ditos
+		planejador.removeDisciplinaPeriodo("03", 1); // liberando espaÁo para crÈditos
 		
 		try {
 			planejador.addDisciplinaPeriodo("51", 1);  // calculo 3 no primeiro periodo
-			Assert.fail("Deveria ter lan√ßado exce√ß√£o");
+			Assert.fail("Deveria ter lanÁado exceÁ„o");
 		} catch (AlocacaoInvalidaException e) {
-			Assert.assertEquals("Esta disciplina tem pr√©-requisitos n√£o conclu√≠dos.", e.getMessage());
+			Assert.assertEquals("Esta disciplina tem prÈ-requisitos n„o concluÌdos.", e.getMessage());
 		} catch (TotalDeCreditosInvalidoException e) {
-			Assert.fail("N√£o deveria ter lan√ßado esse tipo de exce√ß√£o");
+			Assert.fail("N„o deveria ter lanÁado esse tipo de exceÁ„o");
 		}
 		
 	}
@@ -79,12 +79,12 @@ public class PlanejadorTest {
 		
 		Assert.assertEquals(6, planejador.getPeriodo(1).getTotalDeDisciplinas());
 		try {
-			planejador.addDisciplinaPeriodo("61", 2);  // segundo periodo j√° tem 26 creditos
-			Assert.fail("Deveria ter lan√ßado exce√ß√£o");
+			planejador.addDisciplinaPeriodo("61", 2);  // segundo periodo j· tem 26 creditos
+			Assert.fail("Deveria ter lanÁado exceÁ„o");
 		} catch (AlocacaoInvalidaException e) {
-			Assert.fail("N√£o deveria ter lan√ßado esse tipo de exce√ß√£o");
+			Assert.fail("N„o deveria ter lanÁado esse tipo de exceÁ„o");
 		} catch (TotalDeCreditosInvalidoException e) {
-			Assert.assertEquals("O n√∫mero m√°ximo de cr√©ditos por per√≠odo √© 28.", e.getMessage());
+			Assert.assertEquals("O n˙mero m·ximo de crÈditos por perÌodo È 28.", e.getMessage());
 		}
 		Assert.assertEquals(6, planejador.getPeriodo(1).getTotalDeDisciplinas());
 	}
@@ -98,7 +98,7 @@ public class PlanejadorTest {
 		try {
 			planejador.moveDisciplina("03", 5, 1); //movendo LPT para o quinto periodo
 		} catch (TotalDeCreditosInvalidoException e) {
-			Assert.fail("N√£o deveria ter lan√ßado exce√ß√£o");
+			Assert.fail("N„o deveria ter lanÁado exceÁ„o");
 		}
 		
 		Assert.assertEquals(5, planejador.getPeriodo(1).getTotalDeDisciplinas()); //5 disc no primeiro periodo
@@ -113,16 +113,16 @@ public class PlanejadorTest {
 		
 		try {
 			planejador.moveDisciplina("03", 2, 1); // movendo LPT para o segundo
-			Assert.fail("N√£o deveria ter lan√ßado exce√ß√£o");
+			Assert.fail("N„o deveria ter lanÁado exceÁ„o");
 		} catch (TotalDeCreditosInvalidoException e) {
-			Assert.assertEquals("O n√∫mero m√°ximo de cr√©ditos por per√≠odo √© 28.", e.getMessage());
+			Assert.assertEquals("O n˙mero m·ximo de crÈditos por perÌodo È 28.", e.getMessage());
 		}
 	}
 	
 	@Test
 	public void aoMoverDisciplinaDeveAtualizarSeuStatusDeAlocacao() throws TotalDeCreditosInvalidoException, AlocacaoInvalidaException {
 		
-		planejador.removeDisciplinaPeriodo("09", 2); //liberando espa√ßo no segundo periodo
+		planejador.removeDisciplinaPeriodo("09", 2); //liberando espaÁo no segundo periodo
 		
 		planejador.moveDisciplina("01", 2, 1); // movendo calculo 1 para o segundo periodo
 		Assert.assertFalse(planejador.getDisciplina("07").isAlocadaCorretamente()); //quem tem calculo 1 como pre-requisito fica alocado incorretamente
@@ -148,12 +148,12 @@ public class PlanejadorTest {
 	@Test
 	public void devePoderRemoverDisciplinas() throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
 		
-		planejador.removeDisciplinaPeriodo("40", 6); // removendo IA que nao √© pre-requisito
-		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("40")); // a disciplina IA n√£o est√° mais alocada
+		planejador.removeDisciplinaPeriodo("40", 6); // removendo IA que nao È pre-requisito
+		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("40")); // a disciplina IA n„o est· mais alocada
 		Assert.assertTrue(planejador.getDisciplinasNaoAlocadas().contains(planejador.getDisciplina("40"))); 
 		
-		planejador.removeDisciplinaPeriodo("03", 1); // removendo LPT que n√£o √© pre-requisito
-		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("03")); // a disciplina LPT n√£o est√° mais alocada
+		planejador.removeDisciplinaPeriodo("03", 1); // removendo LPT que n„o È pre-requisito
+		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("03")); // a disciplina LPT n„o est· mais alocada
 		Assert.assertTrue(planejador.getDisciplinasNaoAlocadas().contains(planejador.getDisciplina("03")));
 		
 	}
@@ -162,26 +162,26 @@ public class PlanejadorTest {
 	public void deveRetirarDisciplinaSePreRequisitoFoiRetirado() throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException{
 
 		planejador.removeDisciplinaPeriodo("01", 1); // removendo calculo 1
-		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("07")); // calculo 2 foi removido tamb√©m
-		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("15")); // probabilidade que depende de calculo 2 tamb√©m foi removido
-		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("21")); // metodos que depende de prob tamb√©m foi removido e por ai vai...
+		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("07")); // calculo 2 foi removido tambÈm
+		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("15")); // probabilidade que depende de calculo 2 tambÈm foi removido
+		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("21")); // metodos que depende de prob tambÈm foi removido e por ai vai...
 	}
 	
 	@Test
 	public void deveIndicarSeDisciplinaEhPreRequisitoDeOutraAlocada() throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
 
-		Assert.assertTrue(planejador.ehPreRequisito(planejador.getDisciplina("10"), 2)); // prog 2 √© pre requisito de outra(s) alocada(s) a frente
-		Assert.assertFalse(planejador.ehPreRequisito(planejador.getDisciplina("09"), 2)); // Metodologia cientifica n√£o √©
+		Assert.assertTrue(planejador.ehPreRequisito(planejador.getDisciplina("10"), 2)); // prog 2 È pre requisito de outra(s) alocada(s) a frente
+		Assert.assertFalse(planejador.ehPreRequisito(planejador.getDisciplina("09"), 2)); // Metodologia cientifica n„o È
 		
 	}
 	
 	@Test
 	public void deveIndicarSeDisciplinaTemPreRequisitoNaoAlocado() throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
 
-		Assert.assertFalse(planejador.temPreRequisitoNaoAlocado(planejador.getDisciplina("20"))); //Gerencia da informa√ß√£o nao tem pre-requisitos
-		Assert.assertFalse(planejador.temPreRequisitoNaoAlocado(planejador.getDisciplina("14"))); //Algebra Linear tem pre-requisito que j√° est√° no periodo 1
+		Assert.assertFalse(planejador.temPreRequisitoNaoAlocado(planejador.getDisciplina("20"))); //Gerencia da informaÁ„o nao tem pre-requisitos
+		Assert.assertFalse(planejador.temPreRequisitoNaoAlocado(planejador.getDisciplina("14"))); //Algebra Linear tem pre-requisito que j· est· no periodo 1
 		
-		planejador.removeDisciplinaPeriodo("10", 2); // removendo prog 2 removemos tamb√©m EDA
+		planejador.removeDisciplinaPeriodo("10", 2); // removendo prog 2 removemos tambÈm EDA
 				
 		Assert.assertTrue(planejador.temPreRequisitoNaoAlocado(planejador.getDisciplina("17"))); //EDA tem prog2 como pre-requisito que nao foi alocado
 		
@@ -190,9 +190,9 @@ public class PlanejadorTest {
 	@Test
 	public void devePoderInverterOrdemDosPeriodos() {
 		
-		Assert.assertEquals(1, planejador.getPeriodos().get(0).getNumero()); // periodo de numero 1 √© o primeiro
-		Assert.assertEquals(2, planejador.getPeriodos().get(1).getNumero()); // periodo de numero 2 √© o segundo
-		Assert.assertEquals(3, planejador.getPeriodos().get(2).getNumero()); // periodo de numero 3 √© o terceiro e assim por diante
+		Assert.assertEquals(1, planejador.getPeriodos().get(0).getNumero()); // periodo de numero 1 È o primeiro
+		Assert.assertEquals(2, planejador.getPeriodos().get(1).getNumero()); // periodo de numero 2 È o segundo
+		Assert.assertEquals(3, planejador.getPeriodos().get(2).getNumero()); // periodo de numero 3 È o terceiro e assim por diante
 		Assert.assertEquals(4, planejador.getPeriodos().get(3).getNumero());
 		Assert.assertEquals(5, planejador.getPeriodos().get(4).getNumero());
 		Assert.assertEquals(6, planejador.getPeriodos().get(5).getNumero());
@@ -201,9 +201,9 @@ public class PlanejadorTest {
 		
 		planejador.inverteOrdemDosPeriodos();
 		
-		Assert.assertEquals(8, planejador.getPeriodos().get(0).getNumero()); // periodo de numero 8 √© o primeiro
-		Assert.assertEquals(7, planejador.getPeriodos().get(1).getNumero()); // periodo de numero 7 √© o segundo
-		Assert.assertEquals(6, planejador.getPeriodos().get(2).getNumero()); // periodo de numero 6 √© o terceiro e assim por diante
+		Assert.assertEquals(8, planejador.getPeriodos().get(0).getNumero()); // periodo de numero 8 È o primeiro
+		Assert.assertEquals(7, planejador.getPeriodos().get(1).getNumero()); // periodo de numero 7 È o segundo
+		Assert.assertEquals(6, planejador.getPeriodos().get(2).getNumero()); // periodo de numero 6 È o terceiro e assim por diante
 		Assert.assertEquals(5, planejador.getPeriodos().get(3).getNumero());
 		Assert.assertEquals(4, planejador.getPeriodos().get(4).getNumero());
 		Assert.assertEquals(3, planejador.getPeriodos().get(5).getNumero());
