@@ -10,6 +10,7 @@ import java.util.List;
  * @author
  *
  */
+
 public class Grade {
 	
 	private List<Disciplina> disciplinas;
@@ -32,6 +33,7 @@ public class Grade {
 	public void atualizar(){
 		disciplinas.addAll(Disciplina.find.all());
 	}
+	
 	
 	/**
 	 * Retorna a lista com todas as disciplinas da grade.

@@ -20,17 +20,27 @@ import play.mvc.Security;
 public class Autenticador extends Controller{
 	
 	public static class Cadastro{
-	    public String email;
-	    public String nome;
+		public String email;
 	    public String password;
 		public String repassword;
 
 		public String validate() {
-		    if (!password.equals(repassword) || password.length() < 8) {
-		    	return "Senha incorreta";
+			String erro = null;
+		    if (!password.equals(repassword)) {
+		    	erro = "Senha incorreta";
 		    }
-		    if(email == null || email.equals("")) return "Tente algum email";
-		    return null;
+		    if (password.length() < 8){
+		    	erro = "Senha deve ter no mínimo 8 caracteres";
+		    }
+		    if(email == null || email.trim().equals("")) {
+		    	return "Tente algum email";
+		    }else if(Usuario.find.where().eq("email", this.email).findUnique() != null){
+					erro = "Usuario já existe";
+		    }
+		    if(erro  != null) {
+				 flash("erro", erro);
+		    }
+		    return erro;
 		}
 	}
 	public static class Login{

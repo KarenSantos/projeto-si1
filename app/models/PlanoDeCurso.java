@@ -30,6 +30,7 @@ public class PlanoDeCurso extends Model {
 	@Id
 	private String id;
 
+	@ManyToOne
 	private Grade grade;
 	private List<Disciplina> disciplinasNaoAlocadas;
 
@@ -68,6 +69,13 @@ public class PlanoDeCurso extends Model {
 		alocaDisciplinas();
 		configuraDisciplinasNaoAlocadas();
 	}
+	
+	
+	public void create(PlanoDeCurso plano){
+		plano.save();
+	}
+	
+	
 	
 	/**
 	 * Atualiza a grade curricular com as disciplinas salvas no BD.
