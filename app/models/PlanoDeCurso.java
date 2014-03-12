@@ -30,11 +30,11 @@ public class PlanoDeCurso extends Model {
 	@Id
 	private String id;
 
-	@ManyToOne
 	private Grade grade;
+
 	private List<Disciplina> disciplinasNaoAlocadas;
 
-//	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //	@JoinTable(name = "plano_periodo", joinColumns = { @JoinColumn(name = "p_plano") }, inverseJoinColumns = { @JoinColumn(name = "p_periodo") })
 	private List<Periodo> periodos;
 	
@@ -55,33 +55,26 @@ public class PlanoDeCurso extends Model {
 		alocaDisciplinas();
 		configuraDisciplinasNaoAlocadas();
 	}
+	
 	/**
-	 * Inicia um plano de curso com um lista de periodos, um curriculo e uma
-	 * lista de disciplinas não alocadas. Configura os periodos com as
-	 * disciplinas obrigatorias.
-	 * @param user, dono do Plano de Curso
+	 * Salva um plano no BD.
+	 * 
+	 * @param plano
 	 */
-	public PlanoDeCurso(Usuario user){
-		grade = new Grade();
-		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
-		periodos = new ArrayList<Periodo>();
-		this.user = user;
-		alocaDisciplinas();
-		configuraDisciplinasNaoAlocadas();
-	}
-	
-	
-	public void create(PlanoDeCurso plano){
+	public static void create(PlanoDeCurso plano){
 		plano.save();
 	}
-	
-	
 	
 	/**
 	 * Atualiza a grade curricular com as disciplinas salvas no BD.
 	 */
-	public void atualizaGrade(){
+	public void atualiza(){
+		grade = new Grade();
 		grade.atualizar();
+		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
+		periodos = new ArrayList<Periodo>();
+//		periodos.addAll();
+		configuraDisciplinasNaoAlocadas();
 	}
 
 	/**

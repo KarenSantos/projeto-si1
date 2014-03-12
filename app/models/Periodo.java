@@ -159,7 +159,7 @@ public class Periodo extends Model {
 	 * @param periodo
 	 *            O periodo a ser salvo.
 	 */
-	public void salvar(Periodo periodo) {
+	public static void salvar(Periodo periodo) {
 		periodo.save();
 	}
 
@@ -169,11 +169,11 @@ public class Periodo extends Model {
 	 * @param periodoId
 	 *            O Id do periodo a ser atualizado.
 	 */
-	public void atualizar(String periodoId) {
+	public static void atualizar(String periodoId) {
 		find.ref(periodoId).update();
 	}
 	
-	public void deletar(String periodoId) {
+	public static void deletar(String periodoId) {
 		find.ref(periodoId).delete();
 	}
 	

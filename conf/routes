@@ -11,6 +11,7 @@ GET      /login                             controllers.Autenticador.login()
 GET      /cadastro                          controllers.Autenticador.cadastro()
 POST     /login                             controllers.Autenticador.authenticate()
 POST     /cadastro 							controllers.Autenticador.efetuaCadastro()
+GET		 /logout							controllers.Autenticador.logout()
 
 # Periodos	
 GET     /periodos							controllers.Application.periodos()

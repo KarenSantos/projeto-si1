@@ -32,7 +32,7 @@ public class Planejador {
 //			plano.save();
 		} else {
 			plano = PlanoDeCurso.find.byId(id);
-			plano.atualizaGrade();
+			plano.atualiza();
 		}
 	}
 
@@ -68,7 +68,7 @@ public class Planejador {
 	public void createPeriodo(String id) throws AlocacaoInvalidaException {
 		plano.createPeriodo(id);
 	}
-
+	
 	/**
 	 * Adiciona uma disciplina a um periodo.
 	 * 

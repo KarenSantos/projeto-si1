@@ -23,12 +23,14 @@ public class Application extends Controller {
 		return redirect((routes.Application).periodos());
 	}
 
+	@Security.Authenticated(Secured.class)
 	public static Result periodos() {
 		planejador.deletaUltimoPeriodoSeVazio();
 		return ok(index.render(planejador.getPeriodos(), 
 				planejador.getDisciplinasNaoAlocadas(), planejador));
 	}
 	
+	@Security.Authenticated(Secured.class)
 	public static Result novoPeriodo() {
 		try {
 			planejador.createPeriodo("Usuario");
@@ -39,11 +41,13 @@ public class Application extends Controller {
 		return redirect((routes.Application).editar(ultimoPeriodo));
 	}
 	
+	@Security.Authenticated(Secured.class)
 	public static Result editar(int periodo) {
 		return ok(editar.render(planejador.getPeriodos(), 
 				planejador.getDisciplinasNaoAlocadas(), periodo, planejador));
 	}
 	
+	@Security.Authenticated(Secured.class)
 	public static Result adicionar(String disciplinaId, int periodo) {
 		try {
 			planejador.addDisciplinaPeriodo(disciplinaId, periodo);
@@ -55,11 +59,13 @@ public class Application extends Controller {
 		return ok();
 	}
 	
+	@Security.Authenticated(Secured.class)
 	public static Result remover(String disciplinaId, int periodo) {
 		planejador.removeDisciplinaPeriodo(disciplinaId, periodo);
 		return redirect((routes.Application).editar(periodo));
 	}
 	
+	@Security.Authenticated(Secured.class)
 	public static Result mover(String disciplinaId, int periodoFuturo, int periodoAtual) {
 		try {
 			planejador.moveDisciplina(disciplinaId, periodoFuturo, periodoAtual);
@@ -69,6 +75,7 @@ public class Application extends Controller {
 		return ok();
 	}
 	
+	@Security.Authenticated(Secured.class)
 	public static Result inverter() {
 		planejador.inverteOrdemDosPeriodos();
 		return ok("invertido");

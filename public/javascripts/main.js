@@ -132,3 +132,18 @@ function inverter(numPeriodo) {
 	
 }
 
+function logout(){
+	$.ajax({
+		  type: "GET",
+		  url: "/logout",
+		  data: "",
+		  success: function(){
+			  window.location = "/login";
+		  },
+		  error: function(XMLHttpRequest, textStatus, errorThrown) {
+			  alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
+			  window.location = "/";
+		  }
+	});
+}
+
