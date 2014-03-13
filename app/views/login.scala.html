@@ -3,22 +3,22 @@
 
 <meta charset="utf-8">
     
-	<h1>Planejamento de Curso</h1>
-	<div id="login">
+<h1>Planejamento de Curso</h1>
+<div id="main">
     
 	<br><br>
 	<h3>Faça o login ou cadastre-se</h3><br>	
  		
 	<form class="form-signin" role="form" action="@routes.Autenticador.authenticate()" method="post">
 		<div class="textBox">
-			<input type="email" class= "form-control" name="email" placeholder="e-mail" value="@form("email").value" required>
-			<input type="password" class="form-control" name="password" placeholder="senha"><br>
+			<input type="email" class="form-control" name="email" placeholder="e-mail" value="@form("email").value" required>
+			<input type="password" class="form-control" name="password" placeholder="senha" required><br>
 			<button type="submit" class="btn btn-primary">Entrar</button>
-			<button type="button" class="btn" onclick="location.href = '@routes.Autenticador.cadastro()';	">Cadastrar</button>
+			
+			<button type="button" class="btn" onclick="location.href ='@routes.Autenticador.cadastro()';">Cadastrar</button>
 		</div>
 	</form>
 			
-		</div>
 		<div class="form-actions">
 			@if(flash.containsKey("erro")){
 				<div class="alert alert-erro container">
@@ -31,5 +31,5 @@
 				</div>
 			}
 		</div>
-	</div>
+</div>
 }

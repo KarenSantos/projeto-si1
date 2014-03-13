@@ -18,15 +18,15 @@ public class Application extends Controller {
 	
 	private static Planejador planejador = new Planejador("Usuário");
 	
-	@Security.Authenticated(Secured.class)
+//	@Security.Authenticated(Secured.class)
 	public static Result index() {
-		return redirect((routes.Application).periodos());
+		return ok(views.html.index.render());
 	}
 
 	@Security.Authenticated(Secured.class)
-	public static Result periodos() {
+	public static Result plano() {
 		planejador.deletaUltimoPeriodoSeVazio();
-		return ok(index.render(planejador.getPeriodos(), 
+		return ok(views.html.plano.render(planejador.getPeriodos(), 
 				planejador.getDisciplinasNaoAlocadas(), planejador));
 	}
 	

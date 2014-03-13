@@ -14,7 +14,7 @@ POST     /cadastro 							controllers.Autenticador.efetuaCadastro()
 GET		 /logout							controllers.Autenticador.logout()
 
 # Periodos	
-GET     /periodos							controllers.Application.periodos()
+GET     /plano								controllers.Application.plano()
 GET    	/novoPeriodo	  					controllers.Application.novoPeriodo()
 
 # Edicoes

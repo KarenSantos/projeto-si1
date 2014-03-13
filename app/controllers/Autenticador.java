@@ -1,21 +1,11 @@
 package controllers;
 
-import java.sql.Connection;
-
-import javax.sql.DataSource;
-
-import views.html.*;
-import java.sql.Connection;
-import java.sql.Date;
-import javax.sql.DataSource;
-import play.db.*;
-import models.*;
-import play.mvc.*;
-import play.data.*;
-import play.data.Form.*;
-import play.db.DB;
+import models.Usuario;
+import play.data.Form;
+import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security;
+import views.html.cadastro;
+import views.html.login;
 
 /**
  * Classe de autenticação e cadastro do usuário
@@ -32,11 +22,27 @@ public class Autenticador extends Controller {
 	 * 
 	 */
 	public static class Cadastro {
-		public String email;
-		public String password;
-		public String repassword;
-		public String nome;
+		private String email;
+		private String password;
+		private String repassword;
+		private String nome;
 
+		public String getEmail(){
+			return this.email;
+		}
+		
+		public String getPassword(){
+			return this.password;
+		}
+		
+		public String getRepassword(){
+			return this.repassword;
+		}
+		
+		public String getNome(){
+			return this.nome;
+		}
+		
 		/**
 		 * Validação dos dados inseridos para o cadastro.
 		 * 
@@ -45,16 +51,15 @@ public class Autenticador extends Controller {
 		 */
 		public String validate() {
 			String erro = null;
-			if (!password.equals(repassword)) {
+			if (!getPassword().equals(getRepassword())) {
 				erro = "Senha incorreta";
 			}
-			if (password.length() < 8) {
+			if (getPassword().length() < 8) {
 				erro = "Senha deve ter no mínimo 8 caracteres";
 			}
-			if (email == null || email.trim().equals("")) {
+			if (getEmail() == null || getEmail().trim().equals("")) {
 				return "Insira um email";
-			} else if (Usuario.find.where().eq("email", this.email)
-					.findUnique() != null) {
+			} else if (Usuario.find.where().eq("email", getEmail()).findUnique() != null) {
 				erro = "Usuario já cadastrado";
 			}
 			if (erro != null) {
@@ -71,16 +76,24 @@ public class Autenticador extends Controller {
 	 *
 	 */
 	public static class Login {
-		public String email;
-		public String password;
+		private String email;
+		private String password;
 
+		public String getEmail(){
+			return this.email;
+		}
+		
+		public String getPassword(){
+			return this.password;
+		}
+		
 		/**
 		 * Valida o login do usuário.
 		 * 
 		 * @return Null se os dados para login foram validos ou mensagem de erro caso contrário.
 		 */
 		public String validate() {
-			String erro = Usuario.authenticate(email, password);
+			String erro = Usuario.authenticate(getEmail(), getPassword());
 			if (erro != null) {
 				flash("erro", erro);
 			}
@@ -100,7 +113,7 @@ public class Autenticador extends Controller {
 			return badRequest(login.render(loginForm));
 		} else {
 			session().clear();
-			session("email", loginForm.get().email);
+			session("email", loginForm.get().getEmail());
 			return redirect(routes.Application.index());
 		}
 	}
