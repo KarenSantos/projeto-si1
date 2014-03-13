@@ -104,6 +104,7 @@ public class Autenticador extends Controller {
 	static Form<Usuario> userForm = Form.form(Usuario.class);
 
 	public static Result login() {
+		criaUsuarios();
 		return ok(login.render(Form.form(Login.class)));
 	}
 
@@ -114,7 +115,7 @@ public class Autenticador extends Controller {
 		} else {
 			session().clear();
 			session("email", loginForm.get().getEmail());
-			return redirect(routes.Application.index());
+			return redirect(routes.Application.index(loginForm.get().getEmail()));
 		}
 	}
 
@@ -130,15 +131,32 @@ public class Autenticador extends Controller {
 
 	public static Result efetuaCadastro(){
 		Form<Cadastro> cadastroForm = Form.form(Cadastro.class).bindFromRequest();
-		Cadastro novoC = cadastroForm.get();
 		if (cadastroForm.hasErrors()) {
-			return badRequest(cadastro.render(Form.form(Cadastro.class)));
+			return badRequest(cadastro.render(cadastroForm));
 		} else if(cadastroForm.get().validate() == null) {
-				Usuario.create(new Usuario(novoC.email, novoC.nome,
-				novoC.password));
+			Cadastro novoC = cadastroForm.get();
+			Usuario.create(new Usuario(novoC.getEmail(), novoC.getNome(),
+			novoC.getPassword()));
 		}else{
 			return redirect(routes.Autenticador.cadastro());
 		}
 		return redirect(routes.Autenticador.login());
+	}
+	
+	private static void criaUsuarios(){
+		
+		if (Usuario.find.all().isEmpty()) {
+			int num = 1;
+			
+			while (num < 31){
+				String email = "usuario" + num + "@email.com"; 
+				String nome = "Usuário " + num;
+				String password = "usuario" + num;
+				
+				Usuario.create(new Usuario(email, nome, password));
+				num ++;
+			}
+		}
+		
 	}
 }

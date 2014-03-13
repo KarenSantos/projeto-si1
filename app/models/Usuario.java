@@ -16,9 +16,12 @@ public class Usuario extends Model {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	public String email;
-	public String nome;
-	public String password;
+	private String email;
+	private String nome;
+	private String password;
+	
+//	@OneToOne
+	private PlanoDeCurso plano;
 
 	/**
 	 * Cria um usuário.
@@ -40,29 +43,51 @@ public class Usuario extends Model {
 		this.email = email;
 		this.nome = nome;
 		this.password = password;
+		
 	}
-
+	
 	public static Finder<String, Usuario> find = new Finder<String, Usuario>(
 			String.class, Usuario.class);
 
-	public static List<Usuario> all() {
-		return Usuario.find.all();
-	}
+	public static List<Usuario> all() {return Usuario.find.all();	}
 
+	public void criaPlano(){
+		plano = new PlanoDeCurso(getEmail());
+//		plano.save();
+	}
+	
+	public PlanoDeCurso getPlano(){
+		return this.plano;
+	}
+	
+	public String getNome(){
+		return this.nome;
+	}
+	
+	public void setNome(String nome){
+		this.nome = nome;
+	}
+	
+	public String getEmail(){
+		return this.email;
+	}
+	
+	public void setEmail(String email){
+		this.email = email;
+	}
+	
+	public void setPassword(String password){
+		this.password = password;
+	}
+	
 	/**
 	 * Salva o usuário no BD.
 	 * 
 	 * @param usuario
 	 *            O usuário a ser salvo no BD.
 	 */
-	public static String create(Usuario usuario) {
-		String resposta = null;
-		if (find.where().eq("email", usuario.email).findUnique() == null) {
-			usuario.save();
-		} else {
-			resposta = "Usuário já cadastrado.";
-		}
-		return resposta;
+	public static void create(Usuario usuario) {
+		usuario.save();
 	}
 
 	/**

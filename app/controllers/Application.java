@@ -16,11 +16,15 @@ import views.html.*;
 public class Application extends Controller {
 	
 	
-	private static Planejador planejador = new Planejador("Usuário");
+	private static Planejador planejador;
 	
-//	@Security.Authenticated(Secured.class)
-	public static Result index() {
-		return ok(views.html.index.render());
+	@Security.Authenticated(Secured.class)
+	public static Result index(String email) {
+		Usuario user = Usuario.find.byId(email);
+
+		planejador = new Planejador(user);
+		
+		return ok(views.html.index.render(user));
 	}
 
 	@Security.Authenticated(Secured.class)

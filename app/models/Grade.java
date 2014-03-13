@@ -4,15 +4,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.*;
+
+import play.db.ebean.Model;
+
 /**
  * Classe da grade curricular do curso de computação 
  * 
  * @author
  *
  */
+@Entity
+public class Grade extends Model{
 
-public class Grade {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	private String id;
 	
+//	@OneToMany
 	private List<Disciplina> disciplinas;
 	
 	/**
@@ -101,7 +111,7 @@ public class Grade {
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos,
 				preRequisitos, periodoSugerido, dificuldade);
 		disciplinas.add(aDisciplina);
-//		Disciplina.salvar(aDisciplina);
+//		aDisciplina.save();
 	}
 
 	/**
@@ -124,7 +134,7 @@ public class Grade {
 
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos, periodoSugerido, dificuldade);
 		disciplinas.add(aDisciplina);
-//		Disciplina.salvar(aDisciplina);
+//		aDisciplina.save();
 	}
 	
 	/**

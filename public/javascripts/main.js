@@ -24,7 +24,7 @@ function editarPeriodo(periodo){
 		  },
 		  error: function(XMLHttpRequest, textStatus, errorThrown) {
 			  alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
-			  window.location = "/";
+			  window.location = "/plano";
 		  }
 	});
 }
@@ -45,7 +45,7 @@ function removerDisciplina(discId, periodo, ehPreRequisito) {
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
 					alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
-					window.location = "/";
+					window.location = "/plano";
 				}
 			});
 		} 
@@ -59,7 +59,7 @@ function removerDisciplina(discId, periodo, ehPreRequisito) {
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
 				alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
-				window.location = "/";
+				window.location = "/plano";
 			}
 		});
 	}
@@ -102,11 +102,11 @@ function adicionarDisciplina(discId, periodo, temPreRequisito){
 function sairEdicao(){
 	$.ajax({
 		  success: function(){
-		        window.location = "/";
+		        window.location = "/plano";
 		  },
 		  error: function(XMLHttpRequest, textStatus, errorThrown) {
 			  alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
-			  window.location = "/";
+			  window.location = "/plano";
 		  }
 	});
 }
@@ -119,7 +119,7 @@ function inverter(numPeriodo) {
 		  data: "",
 		  success: function(){
 			  if (numPeriodo == "0") {
-				  window.location = "/";
+				  window.location = "/plano";
 			  } else {
 				  window.location = "/editar/" + numPeriodo;
 			  }
@@ -142,7 +142,7 @@ function logout(){
 		  },
 		  error: function(XMLHttpRequest, textStatus, errorThrown) {
 			  alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
-			  window.location = "/";
+			  window.location = "/login";
 		  }
 	});
 }

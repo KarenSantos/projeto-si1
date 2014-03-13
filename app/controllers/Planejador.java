@@ -6,7 +6,7 @@ import exceptions.AlocacaoInvalidaException;
 import exceptions.TotalDeCreditosInvalidoException;
 import models.Disciplina;
 import models.Periodo;
-import models.PlanoDeCurso;
+import models.Usuario;
 
 /**
  * Controlador do Plano de Curso.
@@ -16,7 +16,7 @@ import models.PlanoDeCurso;
  */
 public class Planejador {
 
-	private PlanoDeCurso plano;
+	private Usuario usuario;
 
 	/**
 	 * Cria um planejador que recebe um id como usuário.
@@ -24,15 +24,11 @@ public class Planejador {
 	 * @param id
 	 *            O id para identificar o usuário.
 	 */
-	public Planejador(String id) {
+	public Planejador(Usuario usuario) {
 
-		if (PlanoDeCurso.find.byId(id) == null) {
-			plano = new PlanoDeCurso();
-			plano.setId(id);
-//			plano.save();
-		} else {
-			plano = PlanoDeCurso.find.byId(id);
-			plano.atualiza();
+		this.usuario = usuario;
+		if (usuario.getPlano() == null){
+			usuario.criaPlano();
 		}
 	}
 
@@ -42,7 +38,7 @@ public class Planejador {
 	 * @return A lista com todos os períodos criados.
 	 */
 	public List<Periodo> getPeriodos() {
-		return plano.getPeriodos();
+		return usuario.getPlano().getPeriodos();
 	}
 
 	/**
@@ -53,7 +49,7 @@ public class Planejador {
 	 * @return o periodo.
 	 */
 	public Periodo getPeriodo(int periodo) {
-		return plano.getPeriodo(periodo);
+		return usuario.getPlano().getPeriodo(periodo);
 	}
 
 	/**
@@ -66,7 +62,7 @@ public class Planejador {
 	 *             Se o número máximo de períodos já foi alcançado.
 	 */
 	public void createPeriodo(String id) throws AlocacaoInvalidaException {
-		plano.createPeriodo(id);
+		usuario.getPlano().createPeriodo(id);
 	}
 	
 	/**
@@ -85,7 +81,7 @@ public class Planejador {
 	 */
 	public void addDisciplinaPeriodo(String id, int periodo)
 			throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
-		plano.addDisciplinaPeriodo(id, periodo);
+		usuario.getPlano().addDisciplinaPeriodo(id, periodo);
 	}
 
 	/**
@@ -96,7 +92,7 @@ public class Planejador {
 	 * @return A disciplina com o id indicado.
 	 */
 	public Disciplina getDisciplina(String id) {
-		return plano.getDisciplina(id);
+		return usuario.getPlano().getDisciplina(id);
 	}
 
 	/**
@@ -108,7 +104,7 @@ public class Planejador {
 	 *         em nenhum periodo.
 	 */
 	public int getPeriodoDaDisciplina(String discId) {
-		return plano.getPeriodoDaDisciplina(getDisciplina(discId));
+		return usuario.getPlano().getPeriodoDaDisciplina(getDisciplina(discId));
 	}
 
 	/**
@@ -120,7 +116,7 @@ public class Planejador {
 	 *            O periodo de onde vai ser removida a disciplina.
 	 */
 	public void removeDisciplinaPeriodo(String discId, int periodo) {
-		plano.removeDisciplinaPeriodo(discId, periodo);
+		usuario.getPlano().removeDisciplinaPeriodo(discId, periodo);
 	}
 
 	/**
@@ -129,7 +125,7 @@ public class Planejador {
 	 * @return Uma lista com as Disciplinas nao alocadas.
 	 */
 	public List<Disciplina> getDisciplinasNaoAlocadas() {
-		return plano.getDisciplinasNaoAlocadas();
+		return usuario.getPlano().getDisciplinasNaoAlocadas();
 	}
 
 	/**
@@ -137,7 +133,7 @@ public class Planejador {
 	 * estiver sem disciplinas.
 	 */
 	public void deletaUltimoPeriodoSeVazio() {
-		plano.deletaUltimoPeriodoSeVazio();
+		usuario.getPlano().deletaUltimoPeriodoSeVazio();
 	}
 
 	/**
@@ -146,7 +142,7 @@ public class Planejador {
 	 * @return O total de períodos.
 	 */
 	public int getTotalDePeriodos() {
-		return plano.getTotalDePeriodos();
+		return usuario.getPlano().getTotalDePeriodos();
 	}
 
 	/**
@@ -164,7 +160,7 @@ public class Planejador {
 	 */
 	public void moveDisciplina(String disciplinaId, int periodoFuturo,
 			int periodoAtual) throws TotalDeCreditosInvalidoException {
-		plano.moveDisciplina(disciplinaId, periodoFuturo, periodoAtual);
+		usuario.getPlano().moveDisciplina(disciplinaId, periodoFuturo, periodoAtual);
 	}
 
 	/**
@@ -176,7 +172,7 @@ public class Planejador {
 	 * @return True se a disciplina é pre-requisito e false se não é.
 	 */
 	public boolean ehPreRequisito(Disciplina disc, int periodo) {
-		return plano.ehPreRequisito(disc, periodo);
+		return usuario.getPlano().ehPreRequisito(disc, periodo);
 	}
 
 	/**
@@ -190,7 +186,7 @@ public class Planejador {
 	 *         tem.
 	 */
 	public boolean temPreRequisitoNaoAlocado(Disciplina disc) {
-		return plano.temPreRequisitoNaoAlocado(disc);
+		return usuario.getPlano().temPreRequisitoNaoAlocado(disc);
 	}
 
 	/**
@@ -198,7 +194,7 @@ public class Planejador {
 	 * decrescente, se está decrescente fica crescente.
 	 */
 	public void inverteOrdemDosPeriodos() {
-		plano.inverteOrdemDosPeriodos();
+		usuario.getPlano().inverteOrdemDosPeriodos();
 	}
 
 	/**
@@ -207,7 +203,7 @@ public class Planejador {
 	 * @return True se os periodos estao invertidos e false caso contrario.
 	 */
 	public boolean isInvertido() {
-		return plano.isInvertido();
+		return usuario.getPlano().isInvertido();
 	}
 
 	/**
@@ -220,7 +216,7 @@ public class Planejador {
 	 */
 	public boolean ehDisciplinaOptativaGenerica(Disciplina disc) {
 		boolean resp = false;
-		if (plano.getDisciplinasOptativasGenericas().contains(disc)) {
+		if (usuario.getPlano().getDisciplinasOptativasGenericas().contains(disc)) {
 			resp = true;
 		}
 		return resp;

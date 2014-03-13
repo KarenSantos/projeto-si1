@@ -5,13 +5,17 @@
 
 create table disciplina (
   id                        varchar(255) not null,
-  nome                      varchar(255) not null,
+  nome                      varchar(255),
   creditos                  integer,
   periodo_sugerido          integer,
   dificuldade               integer,
   alocada_corretamente      boolean,
-  constraint uq_disciplina_nome unique (nome),
   constraint pk_disciplina primary key (id))
+;
+
+create table grade (
+  id                        varchar(255) not null,
+  constraint pk_grade primary key (id))
 ;
 
 create table periodo (
@@ -41,6 +45,8 @@ create table usuario (
 
 create sequence disciplina_seq;
 
+create sequence grade_seq;
+
 create sequence periodo_seq;
 
 create sequence plano_de_curso_seq;
@@ -56,6 +62,8 @@ SET REFERENTIAL_INTEGRITY FALSE;
 
 drop table if exists disciplina;
 
+drop table if exists grade;
+
 drop table if exists periodo;
 
 drop table if exists plano_de_curso;
@@ -65,6 +73,8 @@ drop table if exists usuario;
 SET REFERENTIAL_INTEGRITY TRUE;
 
 drop sequence if exists disciplina_seq;
+
+drop sequence if exists grade_seq;
 
 drop sequence if exists periodo_seq;
 

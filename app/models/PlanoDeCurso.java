@@ -30,30 +30,33 @@ public class PlanoDeCurso extends Model {
 	@Id
 	private String id;
 
+//	@ManyToOne
 	private Grade grade;
 
+//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@JoinTable(name = "plano_discNA", joinColumns = { @JoinColumn(name = "p_plano") }, inverseJoinColumns = { @JoinColumn(name = "d_disciplinas") })
 	private List<Disciplina> disciplinasNaoAlocadas;
 
 //	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //	@JoinTable(name = "plano_periodo", joinColumns = { @JoinColumn(name = "p_plano") }, inverseJoinColumns = { @JoinColumn(name = "p_periodo") })
 	private List<Periodo> periodos;
 	
-//	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	public Usuario user;
-
 	public static Finder<String, PlanoDeCurso> find = new Finder<String, PlanoDeCurso>(String.class, PlanoDeCurso.class);
 	
+	public PlanoDeCurso(){}
+	
 	/**
-	 * Inicia um plano de curso com um lista de periodos, um curriculo e uma
-	 * lista de disciplinas não alocadas. Configura os periodos com as
+	 * Inicia um plano de curso com uma grade de disciplinas, uma lista de periodos
+	 * e uma lista de disciplinas não alocadas. Configura os periodos com as
 	 * disciplinas obrigatorias.
 	 */
-	public PlanoDeCurso(){
+	public PlanoDeCurso(String id){
+		this.id = id;
 		grade = new Grade();
+//		grade.save();
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		periodos = new ArrayList<Periodo>();
 		alocaDisciplinas();
-		configuraDisciplinasNaoAlocadas();
 	}
 	
 	/**
@@ -65,18 +68,6 @@ public class PlanoDeCurso extends Model {
 		plano.save();
 	}
 	
-	/**
-	 * Atualiza a grade curricular com as disciplinas salvas no BD.
-	 */
-	public void atualiza(){
-		grade = new Grade();
-		grade.atualizar();
-		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
-		periodos = new ArrayList<Periodo>();
-//		periodos.addAll();
-		configuraDisciplinasNaoAlocadas();
-	}
-
 	/**
 	 * Retorna o id do plano de curso.
 	 * 
@@ -176,6 +167,7 @@ public class PlanoDeCurso extends Model {
 
 		int novoNumero = ultimoPeriodo + 1;
 		Periodo novoPeriodo = new Periodo(id + novoNumero, novoNumero);
+//		novoPeriodo.save();
 		if (isInvertido()){
 			periodos.add(0, novoPeriodo);
 		} else {
@@ -363,7 +355,7 @@ public class PlanoDeCurso extends Model {
 			if (getPeriodo(ultimoPeriodo).getTotalDeDisciplinas() == 0) {
 				Periodo oPeriodo = getPeriodo(ultimoPeriodo);
 				periodos.remove(oPeriodo);
-//				oPeriodo.deletar(oPeriodo.getId());
+//				Periodo.deletar(oPeriodo.getId());
 			}
 		}
 	}
@@ -502,29 +494,16 @@ public class PlanoDeCurso extends Model {
 	 */
 	private void alocaDisciplinas() {
 
-//		if (Periodo.find.all().isEmpty()) {
-			for (Disciplina disc : getDisciplinas()) {
-				int periodo = disc.getPeriodoSugerido();
-				if (periodo > 0) {
-					if (getTotalDePeriodos() < periodo) {
-						try {
-							createPeriodo("Usuario");
-						} catch (Exception e) {
-						}
+		for (Disciplina disc : getDisciplinas()) {
+			int periodo = disc.getPeriodoSugerido();
+			if (periodo > 0) {
+				if (getTotalDePeriodos() < periodo) {
+					try {
+						createPeriodo(getId());
+					} catch (Exception e) {
 					}
-					getPeriodo(periodo).addDisciplina(disc);
 				}
-			}
-//		} else {
-//			periodos.addAll(Periodo.find.all());
-//		}
-	}
-	
-	private void configuraDisciplinasNaoAlocadas() {
-		disciplinasNaoAlocadas.addAll(getDisciplinas());
-		for (Periodo periodo : getPeriodos()){
-			for (Disciplina disc : periodo.getDisciplinas()){
-				disciplinasNaoAlocadas.remove(disc);
+				getPeriodo(periodo).addDisciplina(disc);
 			}
 		}
 	}

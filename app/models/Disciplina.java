@@ -23,12 +23,12 @@ public class Disciplina extends Model {
 	@Id
 	private String id;
 	
-	@Required
-	@Column(unique = true, nullable = false)
+//	@Required
+//	@Column(unique = true, nullable = false)
 	private String nome;
 	
 //	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-//    @JoinTable(name = "disciplina_preRequisito", joinColumns = {@JoinColumn (name = "disciplina_name")}, inverseJoinColumns = {@JoinColumn(name = "preRequisito_name")})
+//    @JoinTable(name = "disciplina_preRequisito", joinColumns = {@JoinColumn (name = "di_disciplina")}, inverseJoinColumns = {@JoinColumn(name = "pr_preRequisito")})
 	private List<Disciplina> preRequisitos;
 	
 	private int creditos;
@@ -279,7 +279,7 @@ public class Disciplina extends Model {
 	 * @param disc
 	 *            A disciplina a ser salva.
 	 */
-	public static void salvar(Disciplina disc) {
+	public static void create(Disciplina disc) {
 		disc.save();
 	}
 

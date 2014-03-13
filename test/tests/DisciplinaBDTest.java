@@ -5,6 +5,7 @@ import static play.test.Helpers.*;
 import java.util.List;
 
 import models.Disciplina;
+import models.Usuario;
 
 import org.junit.*;
 
@@ -32,8 +33,10 @@ public class DisciplinaBDTest {
 	 @Test
 	 public void deveConseguirRecuperarAsDisciplinasDoPlanoDoBD() {
 		 
+		 Usuario user = new Usuario("email", "nome", "password");
+		 
 		 Assert.assertTrue(Disciplina.find.all().isEmpty());
-		 Planejador plan = new Planejador("Usuário");
+		 Planejador plan = new Planejador(user);
 		 Assert.assertFalse(Disciplina.find.all().isEmpty());
 		 
 	 }

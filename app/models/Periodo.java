@@ -159,7 +159,7 @@ public class Periodo extends Model {
 	 * @param periodo
 	 *            O periodo a ser salvo.
 	 */
-	public static void salvar(Periodo periodo) {
+	public static void create(Periodo periodo) {
 		periodo.save();
 	}
 
