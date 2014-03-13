@@ -4,34 +4,25 @@
 <meta charset="utf-8">
     
 	<h1>Planejamento de Curso</h1>
-  	<div id="login">
+	<div id="login">
     
-	<form class="form-signin" role="form" action="@routes.Autenticador.authenticate()" method="post">
- 	   <br><br>
- 		<h3>Faça o login ou cadastre-se</h3><br>	
+	<br><br>
+	<h3>Faça o login ou cadastre-se</h3><br>	
  		
-	   <div class="control-group">
-	    <div class="controls">
-	   <input type="email" class= "form-control" name="email" placeholder="e-mail" value="@form("email").value" required>
-	   </div>
-	   </div>
-	   <div class="control-group">
-	    <div class="controls">
-	   <input type="password" class="form-control" name="password" placeholder="senha">
-	   </div>
-	   </div>
-	   <div class="control-group">
-	    <div class="controls">
-		  <button type="submit" class="btn btn-primary">Entrar</button>
-		  <button type="button" class="btn" onclick="location.href = '@routes.Autenticador.cadastro()';	">Cadastrar</button>
+	<form class="form-signin" role="form" action="@routes.Autenticador.authenticate()" method="post">
+		<div class="textBox">
+			<input type="email" class= "form-control" name="email" placeholder="e-mail" value="@form("email").value" required>
+			<input type="password" class="form-control" name="password" placeholder="senha"><br>
+			<button type="submit" class="btn btn-primary">Entrar</button>
+			<button type="button" class="btn" onclick="location.href = '@routes.Autenticador.cadastro()';	">Cadastrar</button>
 		</div>
-	    </div>
 	</form>
 			
-			<div class="form-actions">
+		</div>
+		<div class="form-actions">
 			@if(flash.containsKey("erro")){
 				<div class="alert alert-erro container">
-  					@flash.get("erro")
+					@flash.get("erro")
 				</div>
 			}
 			@if(flash.containsKey("success")){
@@ -39,7 +30,6 @@
 					@flash.get("success")
 				</div>
 			}
-			</div>
-	</div>
+		</div>
 	</div>
 }

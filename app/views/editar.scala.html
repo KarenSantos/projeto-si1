@@ -5,14 +5,14 @@
 @main("Planejamento de Curso") {
 
 <h1>Planejamento de Curso</h1>
-
-<a onclick="novoPeriodo('@planejador.getTotalDePeriodos()')"><div id="botaoPeriodo">Novo Período</div></a>
+<a onclick="logout()"><div id="botao">Sair</div></a>
 
 <div id="top1"><!-- coluna de periodos -->
+	<a onclick="novoPeriodo('@planejador.getTotalDePeriodos()')"><div id="botaoPeriodo">Novo Período</div></a>
 	@if(planejador.isInvertido()){
-		<a onclick="inverter('@numPeriodo')" title="Ordenação crescente"><div id="inverter"> v </div></a>
+		<a onclick="inverter('@numPeriodo')" title="Ordenação crescente"><div id="inverter"> <span class="glyphicon glyphicon-chevron-up"> </div></a>
 	} else {
-		<a onclick="inverter('@numPeriodo')" title="Ordenação decrescente"><div id="inverter"> ^ </div></a>
+		<a onclick="inverter('@numPeriodo')" title="Ordenação decrescente"><div id="inverter"> <span class="glyphicon glyphicon-chevron-down"> </div></a>
 	}
 	<h2>Períodos</h2>
 </div>

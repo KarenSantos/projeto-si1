@@ -12,9 +12,13 @@ import controllers.Planejador;
 
 public class DisciplinaBDTest {
 	
+	@Before
+	public void setUp(){
+		start(fakeApplication(inMemoryDatabase()));
+	}
+	
 	 @Test
 	 public void deveConseguirRecuperarDoBD() {
-		 start(fakeApplication(inMemoryDatabase()));
 		 
 		 List<Disciplina> resultado = Disciplina.find.all();
 		 Assert.assertTrue(resultado.isEmpty());
@@ -27,8 +31,6 @@ public class DisciplinaBDTest {
 
 	 @Test
 	 public void deveConseguirRecuperarAsDisciplinasDoPlanoDoBD() {
-		 
-		 start(fakeApplication(inMemoryDatabase()));
 		 
 		 Assert.assertTrue(Disciplina.find.all().isEmpty());
 		 Planejador plan = new Planejador("Usuário");

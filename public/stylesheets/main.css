@@ -8,36 +8,72 @@ body{
 	background: white;
 }
 h1{
-	color: rgb(90, 90, 90);
-	float: right;
-	line-height: 1.5;
+	color: #C8C8C8;
+	float: left;
+	line-height: 1;
+	margin-top:7px;
 }
 
 h2{
 	color: #fafafa;
 	text-align: center;
-	line-height: 2;
+}
+
+h3{
+	color: rgb(90, 90, 90);
 }
 
 #login{
 	position: fixed;
 	top: 50px;
+	width: 100%;
+	height: 100%;
+	text-align: center;
 	background: lightblue;
 	text-alight: center;
 }
 
-#botaoPeriodo{
+#login .textBox{
 	position: relative;
-	top: 7px;
-	left: 7px;
-	color: lightcoral;
+	width: 20%;
+	height: 40%;
+	left: 40%;
+}
+
+#botao{
+	position: relative;
+	top: 10px;
+	right: 7px;
+	float: right;
 	height: 25px;
 	text-align: center;
 	text-transform: uppercase;
-	padding-top: 5px;
-	padding-left: 5px;
-	padding-right: 5px;
-	border: 2px solid white;
+	padding: 5px;
+	color: rgb(90, 90, 90);
+	cursor: pointer;
+	font-weight:bold;
+	font-size: 19px;
+	display: inline;
+	-webkit-transition: all 200ms ease-in-out;
+	-moz-transition: all 200ms ease-in-out;
+	-ms-transition: all 200ms ease-in-out;
+	-o-transition: all 200ms ease-in-out;
+	transition: all 200ms ease-in-out;
+}
+
+#botao:hover{
+	color: lightcoral;
+}
+
+#botaoPeriodo{
+	position: absolute;
+	top: 10px;
+	left: 7px;
+	height: 25px;
+	color: white;
+	text-align: center;
+	text-transform: uppercase;
+	padding: 5px 5px 5px 5px;
 	cursor: pointer;
 	font-weight:bold;
 	display: inline;
@@ -49,24 +85,30 @@ h2{
 }
 	
 #botaoPeriodo:hover{
-	color: #8D4BC2;
-	border: 2px solid #8D4BC2;
+	color: lightcoral;
 }
 
 #top1{
 	position: fixed;
 	top: 50px;
 	width: 70%;
+	height: 50px;
 	background: rgb(90, 90, 90);
+	padding-top: 7px;
 }
 
 #inverter{
 	position: absolute;
 	font-weight: bold;
-	font-size: 25px;
+	font-size: 20px;
 	margin:7px;
 	right: 20px;
 	color: white;
+	-webkit-transition: all 200ms ease-in-out;
+	-moz-transition: all 200ms ease-in-out;
+	-ms-transition: all 200ms ease-in-out;
+	-o-transition: all 200ms ease-in-out;
+	transition: all 200ms ease-in-out;
 }
 
 #inverter:hover{
@@ -86,9 +128,11 @@ h2{
 #top2{
 	position: fixed;
 	top: 50px;
+	height: 50px;
 	right: 0px;
 	width: 30%;
 	background: rgb(90, 90, 90);
+	padding-top: 7px;
 }
 
 #col2{
@@ -103,7 +147,7 @@ h2{
 
 #periodoBox {
 	width: 47%;
-	height: 300px;
+	height: 305px;
 	border:3px solid white;
 	padding-top: 2px;
 	border-radius:5px;

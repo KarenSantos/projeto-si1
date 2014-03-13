@@ -20,9 +20,22 @@ public class Usuario extends Model {
 	public String nome;
 	public String password;
 
+	/**
+	 * Cria um usuário.
+	 */
 	public Usuario() {
 	}
 
+	/**
+	 * Cria um usuário com um email, um nome e um password.
+	 * 
+	 * @param email
+	 *            O email do usuário.
+	 * @param nome
+	 *            O nome do usuário.
+	 * @param password
+	 *            O password do usuário.
+	 */
 	public Usuario(String email, String nome, String password) {
 		this.email = email;
 		this.nome = nome;
@@ -52,6 +65,16 @@ public class Usuario extends Model {
 		return resposta;
 	}
 
+	/**
+	 * Autentica o usuário ao fazer o login.
+	 * 
+	 * @param email
+	 *            O email do usuário no login.
+	 * @param password
+	 *            O password do usuário no login.
+	 * @return Null se a autenticação é feita com sucesso ou uma string de erro
+	 *         se não.
+	 */
 	public static String authenticate(String email, String password) {
 		String resp = null;
 		Usuario user = find.where().eq("email", email).findUnique();
@@ -64,12 +87,16 @@ public class Usuario extends Model {
 		return resp;
 	}
 
+	/**
+	 * Um usuário é igual a outro se tiver o mesmo email.
+	 */
 	public boolean equals(Object obj) {
+		boolean resp = false;
 		if (obj instanceof Usuario) {
-			Usuario compara = (Usuario) obj;
-			if (email.equals(compara.email))
-				return true;
+			Usuario user = (Usuario) obj;
+			if (email.equals(user.email))
+				resp = true;
 		}
-		return false;
+		return resp;
 	}
 }
