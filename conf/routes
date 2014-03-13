@@ -8,7 +8,7 @@ GET		/home/:email						controllers.Application.index(email: String)
 
 # Login/Cadastro
 
-GET      /login                             controllers.Autenticador.login()
+GET		/login								controllers.Autenticador.login()
 GET      /cadastro                          controllers.Autenticador.cadastro()
 POST     /login                             controllers.Autenticador.authenticate()
 POST     /cadastro 							controllers.Autenticador.efetuaCadastro()
@@ -27,3 +27,6 @@ GET		/inverter								controllers.Application.inverter()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+
+GET		/teste								controllers.Application.test()

@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.List;
+
 import models.Usuario;
 import exceptions.AlocacaoInvalidaException;
 import exceptions.TotalDeCreditosInvalidoException;
@@ -17,6 +19,13 @@ public class Application extends Controller {
 	
 	
 	private static Planejador planejador;
+	
+	public static Result test(){
+		
+		List<Usuario> usuarios = Usuario.find.all();
+		
+		return ok(views.html.teste.render(usuarios));
+	}
 	
 	@Security.Authenticated(Secured.class)
 	public static Result index(String email) {

@@ -93,11 +93,10 @@ public class Autenticador extends Controller {
 		 * @return Null se os dados para login foram validos ou mensagem de erro caso contrário.
 		 */
 		public String validate() {
-			String erro = Usuario.authenticate(getEmail(), getPassword());
-			if (erro != null) {
-				flash("erro", erro);
-			}
-			return erro;
+			if(Usuario.authenticate(email, password) == null) {
+                flash("Usuário ou password inválido.");
+            }
+            return null;
 		}
 	}
 

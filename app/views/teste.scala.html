@@ -1,0 +1,22 @@
+@(usuarios: List[Usuario])
+@main("Planejamento de Curso"){
+
+<meta charset="utf-8">
+    
+<h1>Planejamento de Curso</h1>
+<div id="main">
+    
+	@for(usuario <- usuarios){
+		@usuario.getEmail()<br>
+		@usuario.getNome()<br>
+		@usuario.getPassword()<br>
+		@if(usuario.getPlano() == null){
+			plano é nulo <br>
+		} else {
+			plano nao é nulo<br>
+		}
+		<br><br>
+	}
+	
+</div>
+}

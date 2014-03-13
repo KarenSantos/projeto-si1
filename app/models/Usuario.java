@@ -43,6 +43,7 @@ public class Usuario extends Model {
 		this.email = email;
 		this.nome = nome;
 		this.password = password;
+		plano = new PlanoDeCurso(getEmail());
 		
 	}
 	
@@ -70,6 +71,10 @@ public class Usuario extends Model {
 	
 	public String getEmail(){
 		return this.email;
+	}
+	
+	public String getPassword(){
+		return this.password;
 	}
 	
 	public void setEmail(String email){
@@ -100,16 +105,11 @@ public class Usuario extends Model {
 	 * @return Null se a autenticação é feita com sucesso ou uma string de erro
 	 *         se não.
 	 */
-	public static String authenticate(String email, String password) {
-		String resp = null;
-		Usuario user = find.where().eq("email", email).findUnique();
-		if (user == null) {
-			return "Usuario não encontrado";
-		}
-		if (!user.password.equals(password)) {
-			resp = "Senha incorreta";
-		}
-		return resp;
+	public static Usuario authenticate(String email, String password) {
+		return find.where()
+	            .eq("email", email)
+	            .eq("password", password)
+	            .findUnique();
 	}
 
 	/**
