@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import exceptions.AlocacaoInvalidaException;
+import exceptions.RemocaoInvalidaException;
 import exceptions.TotalDeCreditosInvalidoException;
 import play.db.ebean.*;
 
@@ -24,13 +25,19 @@ public class PlanoDeCurso extends Model {
 	private static final long serialVersionUID = 1L;
 	
 	final private int PERIODO_MAXIMO = 14;
-	private final int MAXIMO_DE_CREDITOS = 28;
+	private final int MAXIMO_DE_CREDITOS = 28; //Pq plano de curso tem esse atributo q eh de periodo?
+	//private final int MINIMO_DE_CREDITOS = 14;
 	private final int PERIODOS_BASE = 8;
 
 	@Id
 	private String id;
 
 	private Grade grade;
+	
+	//---------nova us---------
+	private Periodo periodoAtual;
+	
+	//------
 
 	
 	@OneToMany(cascade = CascadeType.ALL)
@@ -55,6 +62,8 @@ public class PlanoDeCurso extends Model {
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		periodos = new ArrayList<Periodo>();
 		alocaDisciplinas();
+		//---------nova us---------
+		periodoAtual = getPeriodos().get(0);// tem que ver se começa sem escolher nenhum periodo como atual ou se ja começa do um
 	}
 	
 	/**
@@ -136,7 +145,7 @@ public class PlanoDeCurso extends Model {
 			if (per.getNumero() == periodo)
 			oPeriodo = per;
 		}
-		return oPeriodo;
+		return oPeriodo; // Ei retorna null, que treta eh essa? melhor lançar exception n?
 	}
 
 	/**
@@ -246,23 +255,29 @@ public class PlanoDeCurso extends Model {
 	 * @param periodo
 	 *            O periodo de onde vai ser removida a disciplina.
 	 */
-	public void removeDisciplinaPeriodo(String id, int periodo) {
+	public void removeDisciplinaPeriodo(String id, int periodo) throws RemocaoInvalidaException {
 
 		Disciplina aDisciplina = getDisciplina(id);
 		
-		Map<Disciplina, Integer> aRemover = new HashMap<Disciplina, Integer>();
-		identificaDependentes(aDisciplina, periodo, aRemover);
-
-		for (Map.Entry<Disciplina, Integer> entry : aRemover.entrySet()) {
-			getPeriodo(entry.getValue()).removeDisciplina(entry.getKey());
-			disciplinasNaoAlocadas.add(entry.getKey());
-		}
-
-		getPeriodo(periodo).removeDisciplina(aDisciplina);
+		Periodo oPeriodo = getPeriodo(periodo);
 		
-		if (!getDisciplinasOptativasGenericas().contains(aDisciplina)) {
-			disciplinasNaoAlocadas.add(aDisciplina);
+		if(oPeriodo.podeRemover(aDisciplina)){
+			Map<Disciplina, Integer> aRemover = new HashMap<Disciplina, Integer>();
+			identificaDependentes(aDisciplina, periodo, aRemover);
+	
+			for (Map.Entry<Disciplina, Integer> entry : aRemover.entrySet()) {
+				getPeriodo(entry.getValue()).removeDisciplina(entry.getKey());
+				disciplinasNaoAlocadas.add(entry.getKey());
+			}
+	
+			getPeriodo(periodo).removeDisciplina(aDisciplina);
+			
+			if (!getDisciplinasOptativasGenericas().contains(aDisciplina)) {
+				disciplinasNaoAlocadas.add(aDisciplina);
+			}
 		}
+		
+		else throw new RemocaoInvalidaException("Este período não pode ter menos que 14 créditos.");
 
 	}
 
@@ -544,6 +559,24 @@ public class PlanoDeCurso extends Model {
 					}
 				}
 			}
+		}
+	}
+
+	public Periodo getPeriodoAtual() {
+		return periodoAtual;
+	}
+
+	public void setPeriodoAtual(Periodo periodo) {
+		//TODO setar periodos anteriores 
+		periodoAtual = periodo;
+	}
+	
+	public void setPeriodoAtual(int i) {
+		Periodo oPeriodo = getPeriodo(i);
+		periodoAtual = oPeriodo;
+		for(int j = 1; j < i; j++){
+			Periodo mudando = getPeriodo(j);
+			mudando.setValidaRemocao(new RemoverDeAnteriores());
 		}
 	}
 }

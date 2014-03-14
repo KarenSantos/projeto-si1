@@ -21,6 +21,11 @@ public class Periodo extends Model {
 	private static final long serialVersionUID = 1L;
 	private final int MENOR_NUM_PERIODO = 1;
 	private final int MAIOR_NUM_PERIODO = 14;
+	private final int MINIMO_CREDITOS = 14;
+
+	public int getMinimoCreditos() {
+		return MINIMO_CREDITOS;
+	}
 
 	@Id
 	private String id;
@@ -31,8 +36,17 @@ public class Periodo extends Model {
 	private int totalDeCreditos;
 	private int totalDeDificuldade;
 	private int numero;
+	private ValidadorRemocao validaRemocao;
 	
-	 public static Finder<String, Periodo> find = new Finder<String, Periodo>(String.class, Periodo.class);
+	 public ValidadorRemocao getValidaRemocao() {
+		return validaRemocao;
+	}
+
+	public void setValidaRemocao(ValidadorRemocao validaRemocao) {
+		this.validaRemocao = validaRemocao;
+	}
+
+	public static Finder<String, Periodo> find = new Finder<String, Periodo>(String.class, Periodo.class);
 
 	/**
 	 * Cria um periodo sem id e sem numero.
@@ -48,6 +62,7 @@ public class Periodo extends Model {
 		this.numero = numero;
 		disciplinas = new ArrayList<Disciplina>();
 		totalDeCreditos = 0;
+		setValidaRemocao(new RemoverNormalmente());
 	}
 
 	/**
@@ -179,6 +194,10 @@ public class Periodo extends Model {
 	@Override
 	public String toString() {
 		return "[Periodo " + getNumero() + "]";
+	}
+
+	public boolean podeRemover(Disciplina disciplina) {
+		return validaRemocao.podeRemover(this, disciplina);
 	}
 	
 

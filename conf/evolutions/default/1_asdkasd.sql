@@ -31,7 +31,6 @@ create table plano_de_curso (
   id                        varchar(255) not null,
   periodo_maximo            integer,
   maximo_de_creditos        integer,
-  minimo_de_creditos        integer,
   periodos_base             integer,
   constraint pk_plano_de_curso primary key (id))
 ;

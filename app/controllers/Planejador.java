@@ -3,6 +3,7 @@ package controllers;
 import java.util.List;
 
 import exceptions.AlocacaoInvalidaException;
+import exceptions.RemocaoInvalidaException;
 import exceptions.TotalDeCreditosInvalidoException;
 import models.Disciplina;
 import models.Periodo;
@@ -116,8 +117,10 @@ public class Planejador {
 	 *            O id da disciplina a ser removida.
 	 * @param periodo
 	 *            O periodo de onde vai ser removida a disciplina.
+	 * @throws RemocaoInvalidaException 
+	 * 			  Caso minimo de creditos nao permita
 	 */
-	public void removeDisciplinaPeriodo(String discId, int periodo) {
+	public void removeDisciplinaPeriodo(String discId, int periodo) throws RemocaoInvalidaException {
 		plano.removeDisciplinaPeriodo(discId, periodo);
 	}
 
@@ -222,6 +225,18 @@ public class Planejador {
 			resp = true;
 		}
 		return resp;
+	}
+
+	public Periodo getPeriodoAtual() {
+		return plano.getPeriodoAtual();
+	}
+
+	public void setPeriodoAtual(int i) {
+		plano.setPeriodoAtual(i);
+	}
+	
+	public void setPeriodoAtual(Periodo periodo) {
+		plano.setPeriodoAtual(periodo);
 	}
 
 }
