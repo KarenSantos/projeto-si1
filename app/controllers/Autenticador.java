@@ -27,6 +27,22 @@ public class Autenticador extends Controller {
 		private String repassword;
 		private String nome;
 
+		public void setEmail(String email) {
+			this.email = email;
+		}
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+
+		public void setRepassword(String repassword) {
+			this.repassword = repassword;
+		}
+
+		public void setNome(String nome) {
+			this.nome = nome;
+		}
+
 		public String getEmail(){
 			return this.email;
 		}
@@ -52,7 +68,7 @@ public class Autenticador extends Controller {
 		public String validate() {
 			String erro = null;
 			if (!getPassword().equals(getRepassword())) {
-				erro = "Senha incorreta";
+				erro = "Confirmação de senha incorreta!";
 			}
 			if (getPassword().length() < 8) {
 				erro = "Senha deve ter no mínimo 8 caracteres";
@@ -83,6 +99,14 @@ public class Autenticador extends Controller {
 			return this.email;
 		}
 		
+		public void setEmail(String email) {
+			this.email = email;
+		}
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+
 		public String getPassword(){
 			return this.password;
 		}
@@ -114,7 +138,7 @@ public class Autenticador extends Controller {
 		} else {
 			session().clear();
 			session("email", loginForm.get().getEmail());
-			return redirect(routes.Application.index(loginForm.get().getEmail()));
+			return redirect(routes.Application.index());
 		}
 	}
 
@@ -156,6 +180,5 @@ public class Autenticador extends Controller {
 				num ++;
 			}
 		}
-		
 	}
 }

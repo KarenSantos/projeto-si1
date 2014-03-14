@@ -36,14 +36,14 @@ public class Periodo extends Model {
 	private int totalDeCreditos;
 	private int totalDeDificuldade;
 	private int numero;
-	private ValidadorRemocao validaRemocao;
+	//private ValidadorRemocao validaRemocao;
 	
-	 public ValidadorRemocao getValidaRemocao() {
-		return validaRemocao;
-	}
+	// public ValidadorRemocao getValidaRemocao() {
+		//return validaRemocao;
+//	}
 
 	public void setValidaRemocao(ValidadorRemocao validaRemocao) {
-		this.validaRemocao = validaRemocao;
+		//this.validaRemocao = validaRemocao;
 	}
 
 	public static Finder<String, Periodo> find = new Finder<String, Periodo>(String.class, Periodo.class);
@@ -197,7 +197,8 @@ public class Periodo extends Model {
 	}
 
 	public boolean podeRemover(Disciplina disciplina) {
-		return validaRemocao.podeRemover(this, disciplina);
+		return true;
+		//return validaRemocao.podeRemover(this, disciplina);
 	}
 	
 

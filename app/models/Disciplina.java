@@ -15,37 +15,21 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="disciplina") 
+@Table(name ="Disciplinas")
 public class Disciplina extends Model {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
+    @Column(name="Outroid")
 	private String id;
 	
-	@Required
-	@Column(unique = true, nullable = false)
-	private String nome;
-	
-	@ManyToMany
-    @JoinTable(name = "disciplina_preRequisito", joinColumns = {@JoinColumn (name = "di_disciplina")}, inverseJoinColumns = {@JoinColumn(name = "pr_preRequisito")})
 	private List<Disciplina> preRequisitos;
-	
-	@ManyToOne
-//  @JoinTable(name = "disciplina_preRequisito", joinColumns = {@JoinColumn (name = "di_disciplina")}, inverseJoinColumns = {@JoinColumn(name = "pr_preRequisito")})
-	private Periodo periodoAtual;
-	@ManyToOne
-//  @JoinTable(name = "disciplina_preRequisito", joinColumns = {@JoinColumn (name = "di_disciplina")}, inverseJoinColumns = {@JoinColumn(name = "pr_preRequisito")})
-	private PlanoDeCurso planoAtual;
-	
-	
-	@Column
+
+	private String nome;
 	private int creditos;
-	@Column
 	private int periodoSugerido;
-	@Column
 	private int dificuldade;
-	@Column
 	private boolean alocadaCorretamente;
 
 	public static Finder<String, Disciplina> find = new Finder<String, Disciplina>(

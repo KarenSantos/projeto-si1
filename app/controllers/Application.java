@@ -4,6 +4,7 @@ import java.util.List;
 
 import models.Usuario;
 import exceptions.AlocacaoInvalidaException;
+import exceptions.RemocaoInvalidaException;
 import exceptions.TotalDeCreditosInvalidoException;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -28,9 +29,8 @@ public class Application extends Controller {
 	}
 	
 	@Security.Authenticated(Secured.class)
-	public static Result index(String email) {
-		Usuario user = Usuario.find.byId(email);
-
+	public static Result index() {
+		Usuario user = Usuario.find.byId(request().username());
 		planejador = new Planejador(user);
 		
 		return ok(views.html.index.render(user));
@@ -74,7 +74,11 @@ public class Application extends Controller {
 	
 	@Security.Authenticated(Secured.class)
 	public static Result remover(String disciplinaId, int periodo) {
-		planejador.removeDisciplinaPeriodo(disciplinaId, periodo);
+		try{
+			planejador.removeDisciplinaPeriodo(disciplinaId, periodo);
+		}catch(RemocaoInvalidaException e){
+			return badRequest();
+		}
 		return redirect((routes.Application).editar(periodo));
 	}
 	

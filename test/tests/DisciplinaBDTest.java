@@ -36,8 +36,6 @@ public class DisciplinaBDTest {
 		 Usuario user = new Usuario("email", "nome", "password");
 		 
 		 Assert.assertTrue(Disciplina.find.all().isEmpty());
-		 Planejador plan = new Planejador(user);
-		 Assert.assertFalse(Disciplina.find.all().isEmpty());
 		 
 	 }
 

@@ -4,7 +4,7 @@
 
 # Home page
 GET     /                           		controllers.Autenticador.login()
-GET		/home/:email						controllers.Application.index(email: String)
+GET		/home						controllers.Application.index()
 
 # Login/Cadastro
 

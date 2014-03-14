@@ -32,6 +32,7 @@ public class PlanoDeCurso extends Model {
 	@Id
 	private String id;
 
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Grade grade;
 	
 	//---------nova us---------
@@ -57,8 +58,6 @@ public class PlanoDeCurso extends Model {
 	 */
 	public PlanoDeCurso(String id){
 		this.id = id;
-		grade = new Grade();
-//		grade.save();
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		periodos = new ArrayList<Periodo>();
 		alocaDisciplinas();
@@ -73,6 +72,10 @@ public class PlanoDeCurso extends Model {
 	 */
 	public static void create(PlanoDeCurso plano){
 		plano.save();
+	}
+	
+	public void setGrade(Grade grade){
+		this.grade = grade;
 	}
 	
 	/**
@@ -506,7 +509,7 @@ public class PlanoDeCurso extends Model {
 	 * Cria todos os periodos do plano de curso e aloca suas disciplinas.
 	 */
 	private void alocaDisciplinas() {
-
+		disciplinasNaoAlocadas.addAll(getDisciplinas());
 		for (Disciplina disc : getDisciplinas()) {
 			int periodo = disc.getPeriodoSugerido();
 			if (periodo > 0) {
@@ -517,6 +520,7 @@ public class PlanoDeCurso extends Model {
 					}
 				}
 				getPeriodo(periodo).addDisciplina(disc);
+				disciplinasNaoAlocadas.remove(disc);
 			}
 		}
 	}

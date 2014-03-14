@@ -53,10 +53,6 @@ public class Usuario extends Model {
 
 	public static List<Usuario> all() {return Usuario.find.all();	}
 
-	public void criaPlano(){
-		plano = new PlanoDeCurso(getEmail());
-//		plano.save();
-	}
 	
 	public PlanoDeCurso getPlano(){
 		return this.plano;

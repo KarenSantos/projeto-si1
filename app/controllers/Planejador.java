@@ -6,6 +6,7 @@ import exceptions.AlocacaoInvalidaException;
 import exceptions.RemocaoInvalidaException;
 import exceptions.TotalDeCreditosInvalidoException;
 import models.Disciplina;
+import models.Grade;
 import models.Periodo;
 import models.PlanoDeCurso;
 import models.Usuario;
@@ -18,6 +19,7 @@ import models.Usuario;
  */
 public class Planejador {
 
+	private Grade grade;
 	private Usuario usuario;
 	private PlanoDeCurso plano;
 	/**
@@ -27,12 +29,14 @@ public class Planejador {
 	 *            O id para identificar o usuário.
 	 */
 	public Planejador(Usuario usuario) {
-
-		this.usuario = usuario;
-		if (usuario.getPlano() == null){
-			usuario.criaPlano();
+		if (Grade.find.all().isEmpty()){
+			grade = new Grade("Computacao");
+		} else {
+			grade = Grade.find.byId("Computacao");
 		}
+		this.usuario = usuario;
 		plano = usuario.getPlano();
+		plano.setGrade(grade);
 	}
 
 	/**
