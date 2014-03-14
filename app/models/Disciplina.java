@@ -23,17 +23,29 @@ public class Disciplina extends Model {
 	@Id
 	private String id;
 	
-//	@Required
-//	@Column(unique = true, nullable = false)
+	@Required
+	@Column(unique = true, nullable = false)
 	private String nome;
 	
-//	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-//    @JoinTable(name = "disciplina_preRequisito", joinColumns = {@JoinColumn (name = "di_disciplina")}, inverseJoinColumns = {@JoinColumn(name = "pr_preRequisito")})
+	@ManyToMany
+    @JoinTable(name = "disciplina_preRequisito", joinColumns = {@JoinColumn (name = "di_disciplina")}, inverseJoinColumns = {@JoinColumn(name = "pr_preRequisito")})
 	private List<Disciplina> preRequisitos;
 	
+	@ManyToOne
+//  @JoinTable(name = "disciplina_preRequisito", joinColumns = {@JoinColumn (name = "di_disciplina")}, inverseJoinColumns = {@JoinColumn(name = "pr_preRequisito")})
+	private Periodo periodoAtual;
+	@ManyToOne
+//  @JoinTable(name = "disciplina_preRequisito", joinColumns = {@JoinColumn (name = "di_disciplina")}, inverseJoinColumns = {@JoinColumn(name = "pr_preRequisito")})
+	private PlanoDeCurso planoAtual;
+	
+	
+	@Column
 	private int creditos;
+	@Column
 	private int periodoSugerido;
+	@Column
 	private int dificuldade;
+	@Column
 	private boolean alocadaCorretamente;
 
 	public static Finder<String, Disciplina> find = new Finder<String, Disciplina>(
@@ -282,7 +294,17 @@ public class Disciplina extends Model {
 	public static void create(Disciplina disc) {
 		disc.save();
 	}
-
+	
+	/**
+	 * Deleta disciplina do banco de dados
+	 * @param disc
+	 * 			Disciplina a ser deletada
+	 */
+	 
+	public static void remove(Disciplina disc) {
+		disc.delete();
+	}
+	
 	/**
 	 * Atualiza a disciplina no banco de dados.
 	 * 

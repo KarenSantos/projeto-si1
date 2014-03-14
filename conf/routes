@@ -8,7 +8,7 @@ GET		/home/:email						controllers.Application.index(email: String)
 
 # Login/Cadastro
 
-GET		/login								controllers.Autenticador.login()
+GET		 /login								controllers.Autenticador.login()
 GET      /cadastro                          controllers.Autenticador.cadastro()
 POST     /login                             controllers.Autenticador.authenticate()
 POST     /cadastro 							controllers.Autenticador.efetuaCadastro()

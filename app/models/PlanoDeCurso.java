@@ -30,15 +30,13 @@ public class PlanoDeCurso extends Model {
 	@Id
 	private String id;
 
-//	@ManyToOne
 	private Grade grade;
 
-//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@JoinTable(name = "plano_discNA", joinColumns = { @JoinColumn(name = "p_plano") }, inverseJoinColumns = { @JoinColumn(name = "d_disciplinas") })
+	
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Disciplina> disciplinasNaoAlocadas;
 
-//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@JoinTable(name = "plano_periodo", joinColumns = { @JoinColumn(name = "p_plano") }, inverseJoinColumns = { @JoinColumn(name = "p_periodo") })
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Periodo> periodos;
 	
 	public static Finder<String, PlanoDeCurso> find = new Finder<String, PlanoDeCurso>(String.class, PlanoDeCurso.class);
@@ -355,7 +353,7 @@ public class PlanoDeCurso extends Model {
 			if (getPeriodo(ultimoPeriodo).getTotalDeDisciplinas() == 0) {
 				Periodo oPeriodo = getPeriodo(ultimoPeriodo);
 				periodos.remove(oPeriodo);
-//				Periodo.deletar(oPeriodo.getId());
+				Periodo.deletar(oPeriodo.getId());
 			}
 		}
 	}

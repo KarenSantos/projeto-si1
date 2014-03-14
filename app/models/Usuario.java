@@ -2,6 +2,7 @@ package models;
 
 import java.util.*;
 import javax.persistence.*;
+
 import play.db.ebean.*;
 
 /**
@@ -20,7 +21,7 @@ public class Usuario extends Model {
 	private String nome;
 	private String password;
 	
-//	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private PlanoDeCurso plano;
 
 	/**

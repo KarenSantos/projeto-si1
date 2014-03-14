@@ -14,13 +14,13 @@ import play.db.ebean.Model;
  * @author
  *
  */
-@Entity
+//@Entity
 public class Grade extends Model{
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	private String id;
+//	@Id
+//	private String id;
 	
 //	@OneToMany
 	private List<Disciplina> disciplinas;
