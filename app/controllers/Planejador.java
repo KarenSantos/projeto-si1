@@ -19,8 +19,6 @@ import models.Usuario;
  */
 public class Planejador {
 
-	private Grade grade;
-	private Usuario usuario;
 	private PlanoDeCurso plano;
 	/**
 	 * Cria um planejador que recebe um id como usuário.
@@ -28,11 +26,14 @@ public class Planejador {
 	 * @param id
 	 *            O id para identificar o usuário.
 	 */
-	public Planejador(Usuario usuario, Grade grade) {
-		this.grade = grade;
-		this.usuario = usuario;
-		plano = usuario.getPlano();
-		plano.configuraPlano(grade);
+	public Planejador(Usuario usuario) {
+		plano = PlanoDeCurso.find.where().eq("usuario", usuario).findUnique();
+		if (plano == null){
+			Grade grade = new Grade();
+			plano = new PlanoDeCurso(grade, usuario);
+		} else {
+			plano.setGrade(new Grade());
+		}
 	}
 
 	/**
@@ -64,8 +65,8 @@ public class Planejador {
 	 * @throws AlocacaoInvalidaException
 	 *             Se o número máximo de períodos já foi alcançado.
 	 */
-	public void createPeriodo(String id) throws AlocacaoInvalidaException {
-		plano.createPeriodo(id);
+	public void createPeriodo() throws AlocacaoInvalidaException {
+		plano.createPeriodo();
 	}
 	
 	/**

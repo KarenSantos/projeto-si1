@@ -21,9 +21,6 @@ public class Usuario extends Model {
 	private String nome;
 	private String password;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	private PlanoDeCurso plano;
-
 	/**
 	 * Cria um usuário.
 	 */
@@ -44,7 +41,6 @@ public class Usuario extends Model {
 		this.email = email;
 		this.nome = nome;
 		this.password = password;
-		plano = new PlanoDeCurso(getEmail());
 		
 	}
 	
@@ -53,10 +49,6 @@ public class Usuario extends Model {
 
 	public static List<Usuario> all() {return Usuario.find.all();	}
 
-	
-	public PlanoDeCurso getPlano(){
-		return this.plano;
-	}
 	
 	public String getNome(){
 		return this.nome;

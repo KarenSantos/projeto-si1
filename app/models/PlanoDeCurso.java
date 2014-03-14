@@ -23,61 +23,63 @@ import javax.persistence.*;
 public class PlanoDeCurso extends Model {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	final private int PERIODO_MAXIMO = 14;
-	private final int MAXIMO_DE_CREDITOS = 28; //Pq plano de curso tem esse atributo q eh de periodo?
-	//private final int MINIMO_DE_CREDITOS = 14;
+	private final int MAXIMO_DE_CREDITOS = 28; // Pq plano de curso tem esse
+												// atributo q eh de periodo?
+	// private final int MINIMO_DE_CREDITOS = 14;
 	private final int PERIODOS_BASE = 8;
 
 	@Id
 	private String id;
 
-	@ManyToOne
 	private Grade grade;
-	
-	//---------nova us---------
-	private Periodo periodoAtual;
-	
-	//------
 
-	
+	@OneToOne
+	private Usuario usuario;
+
+	// ---------nova us---------
+	private Periodo periodoAtual;
+
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Disciplina> disciplinasNaoAlocadas;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Periodo> periodos;
-	
-	public static Finder<String, PlanoDeCurso> find = new Finder<String, PlanoDeCurso>(String.class, PlanoDeCurso.class);
-	
-	public PlanoDeCurso(){}
-	
+
+	public static Finder<String, PlanoDeCurso> find = new Finder<String, PlanoDeCurso>(
+			String.class, PlanoDeCurso.class);
+
+	public PlanoDeCurso() {
+	}
+
 	/**
-	 * Inicia um plano de curso com uma grade de disciplinas, uma lista de periodos
-	 * e uma lista de disciplinas não alocadas. Configura os periodos com as
-	 * disciplinas obrigatorias.
+	 * Plano de curso recebe uma grade de disciplinas e um usuario, e tem uma
+	 * lista de periodos e uma lista de disciplinas não alocadas.
 	 */
-	public PlanoDeCurso(String id){
-		this.id = id;
+	public PlanoDeCurso(Grade grade, Usuario usuario) {
+		this.grade = grade;
+		this.usuario = usuario;
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		periodos = new ArrayList<Periodo>();
-		//---------nova us---------
-	//	periodoAtual = getPeriodos().get(0);// tem que ver se começa sem escolher nenhum periodo como atual ou se ja começa do um
+		alocacaoInicialDeDisciplinas();
+		// periodoAtual = getPeriodos().get(0);// tem que ver se começa sem
+		// escolher nenhum periodo como atual ou se ja começa do um
 	}
-	
+
 	/**
 	 * Salva um plano no BD.
 	 * 
 	 * @param plano
 	 */
-	public static void create(PlanoDeCurso plano){
+	public static void create(PlanoDeCurso plano) {
 		plano.save();
 	}
 	
-	public void configuraPlano(Grade grade){
+	public void setGrade(Grade grade){
 		this.grade = grade;
-		alocaDisciplinas();
 	}
-	
+
 	/**
 	 * Retorna o id do plano de curso.
 	 * 
@@ -95,6 +97,15 @@ public class PlanoDeCurso extends Model {
 	 */
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	/**
+	 * Retorna o usuario do plano de curso.
+	 * 
+	 * @return O usuario do plano de curso.
+	 */
+	public Usuario getUsuario() {
+		return this.usuario;
 	}
 
 	/**
@@ -146,9 +157,10 @@ public class PlanoDeCurso extends Model {
 		Periodo oPeriodo = null;
 		for (Periodo per : getPeriodos()) {
 			if (per.getNumero() == periodo)
-			oPeriodo = per;
+				oPeriodo = per;
 		}
-		return oPeriodo; // Ei retorna null, que treta eh essa? melhor lançar exception n?
+		return oPeriodo; // Ei retorna null, que treta eh essa? melhor lançar
+							// exception n?
 	}
 
 	/**
@@ -166,7 +178,7 @@ public class PlanoDeCurso extends Model {
 	 * @throws AlocacaoInvalidaException
 	 *             Se o numero maximo de periodos já foi alcançado.
 	 */
-	public void createPeriodo(String id) throws AlocacaoInvalidaException {
+	public void createPeriodo() throws AlocacaoInvalidaException {
 
 		int ultimoPeriodo = getTotalDePeriodos();
 
@@ -176,14 +188,14 @@ public class PlanoDeCurso extends Model {
 		}
 
 		int novoNumero = ultimoPeriodo + 1;
-		Periodo novoPeriodo = new Periodo(id + novoNumero, novoNumero);
-		if (isInvertido()){
+		Periodo novoPeriodo = new Periodo(novoNumero);
+		if (isInvertido()) {
 			periodos.add(0, novoPeriodo);
 		} else {
 			periodos.add(novoPeriodo);
 		}
 	}
-	
+
 	/**
 	 * Retorna a lista das disciplinas optativas genericas.
 	 * 
@@ -222,13 +234,18 @@ public class PlanoDeCurso extends Model {
 		if (periodo != getTotalDePeriodos()) { // se nao for o ultimo periodo
 			if ((getPeriodo(periodo).getTotalDeCreditos() + aDisciplina
 					.getCreditos()) > MAXIMO_DE_CREDITOS) {
-					adicionaDisciplinaOptativaGenerica(periodo); // caso ela tenha sido removida
-					throw new TotalDeCreditosInvalidoException(
-							"O número máximo de créditos por período é 28.");
+				adicionaDisciplinaOptativaGenerica(periodo); // caso ela tenha
+																// sido removida
+				throw new TotalDeCreditosInvalidoException(
+						"O número máximo de créditos por período é 28.");
 			}
 		}
 
-		if (!aDisciplina.getPreRequisitos().isEmpty()) { // checando se tem pre-requisitos nao alocados nos periodos anteriores
+		if (!aDisciplina.getPreRequisitos().isEmpty()) { // checando se tem
+															// pre-requisitos
+															// nao alocados nos
+															// periodos
+															// anteriores
 			for (Disciplina preRequisito : aDisciplina.getPreRequisitos()) {
 				Boolean result = false;
 
@@ -257,29 +274,32 @@ public class PlanoDeCurso extends Model {
 	 * @param periodo
 	 *            O periodo de onde vai ser removida a disciplina.
 	 */
-	public void removeDisciplinaPeriodo(String id, int periodo) throws RemocaoInvalidaException {
+	public void removeDisciplinaPeriodo(String id, int periodo)
+			throws RemocaoInvalidaException {
 
 		Disciplina aDisciplina = getDisciplina(id);
-		
+
 		Periodo oPeriodo = getPeriodo(periodo);
-		
-		if(oPeriodo.podeRemover(aDisciplina)){
+
+		if (oPeriodo.podeRemover(aDisciplina)) {
 			Map<Disciplina, Integer> aRemover = new HashMap<Disciplina, Integer>();
 			identificaDependentes(aDisciplina, periodo, aRemover);
-	
+
 			for (Map.Entry<Disciplina, Integer> entry : aRemover.entrySet()) {
 				getPeriodo(entry.getValue()).removeDisciplina(entry.getKey());
 				disciplinasNaoAlocadas.add(entry.getKey());
 			}
-	
+
 			getPeriodo(periodo).removeDisciplina(aDisciplina);
-			
+
 			if (!getDisciplinasOptativasGenericas().contains(aDisciplina)) {
 				disciplinasNaoAlocadas.add(aDisciplina);
 			}
 		}
-		
-		else throw new RemocaoInvalidaException("Este período não pode ter menos que 14 créditos.");
+
+		else
+			throw new RemocaoInvalidaException(
+					"Este período não pode ter menos que 14 créditos.");
 
 	}
 
@@ -292,45 +312,83 @@ public class PlanoDeCurso extends Model {
 	 *            O periodo para onde vai ser movida a disciplina.
 	 * @param periodoAtual
 	 *            O periodo onde está a disciplina que vai ser movida.
-	 * @throws TotalDeCreditosInvalidoException 
-	 * 			  Se o total de créditos fosse ultrapassar 28 ao mover a disciplina.
+	 * @throws TotalDeCreditosInvalidoException
+	 *             Se o total de créditos fosse ultrapassar 28 ao mover a
+	 *             disciplina.
 	 */
 	public void moveDisciplina(String disciplinaId, int periodoFuturo,
 			int periodoAtual) throws TotalDeCreditosInvalidoException {
 		Disciplina aDisciplina = getDisciplina(disciplinaId);
-		
-		if (!getDisciplinasOptativasGenericas().contains(aDisciplina)) { //se ela nao é uma optativa generica podemos mover
-			
-			removeDisciplinaOptativaGenerica(periodoFuturo); // caso tenha optativas genericas no periodo futuro
-	
-			if (periodoFuturo != getTotalDePeriodos()) { // se nao for o ultimo periodo
+
+		if (!getDisciplinasOptativasGenericas().contains(aDisciplina)) { // se
+																			// ela
+																			// nao
+																			// é
+																			// uma
+																			// optativa
+																			// generica
+																			// podemos
+																			// mover
+
+			removeDisciplinaOptativaGenerica(periodoFuturo); // caso tenha
+																// optativas
+																// genericas no
+																// periodo
+																// futuro
+
+			if (periodoFuturo != getTotalDePeriodos()) { // se nao for o ultimo
+															// periodo
 				if ((getPeriodo(periodoFuturo).getTotalDeCreditos() + aDisciplina
 						.getCreditos()) > MAXIMO_DE_CREDITOS) {
-						adicionaDisciplinaOptativaGenerica(periodoFuturo); // caso ela tenha sido removida coloca de volta
-						throw new TotalDeCreditosInvalidoException(
-								"O número máximo de créditos por período é 28.");
+					adicionaDisciplinaOptativaGenerica(periodoFuturo); // caso
+																		// ela
+																		// tenha
+																		// sido
+																		// removida
+																		// coloca
+																		// de
+																		// volta
+					throw new TotalDeCreditosInvalidoException(
+							"O número máximo de créditos por período é 28.");
 				}
 			}
-	
-				
+
 			getPeriodo(periodoAtual).removeDisciplina(aDisciplina);
-			adicionaDisciplinaOptativaGenerica(periodoAtual); //caso a remoção da disciplina tenha deixado lugar
-			
+			adicionaDisciplinaOptativaGenerica(periodoAtual); // caso a remoção
+																// da disciplina
+																// tenha deixado
+																// lugar
+
 			getPeriodo(periodoFuturo).addDisciplina(aDisciplina);
-	
+
 			List<Disciplina> temComoPreRequisito = temComoPreRequisito(aDisciplina);
 			List<Disciplina> saoPreRequisitos = aDisciplina.getPreRequisitos();
-	
-			for (Disciplina temComo : temComoPreRequisito) { //pra cada disciplina que tem esta como pre-requisito
-				if (getPeriodoDaDisciplina(aDisciplina) >= getPeriodoDaDisciplina(temComo)) { //se a disciplina tiver a frente
+
+			for (Disciplina temComo : temComoPreRequisito) { // pra cada
+																// disciplina
+																// que tem esta
+																// como
+																// pre-requisito
+				if (getPeriodoDaDisciplina(aDisciplina) >= getPeriodoDaDisciplina(temComo)) { // se
+																								// a
+																								// disciplina
+																								// tiver
+																								// a
+																								// frente
 					temComo.setNotAlocadaCorretamente();
 				} else {
 					temComo.setIsAlocadaCorretamente();
 				}
 			}
-	
-			for (Disciplina ehPreRequisito : saoPreRequisitos) { //para cada um dos seus pre-requisitos
-				if (getPeriodoDaDisciplina(ehPreRequisito) >= getPeriodoDaDisciplina(aDisciplina)) { // se eles estiverem a frente
+
+			for (Disciplina ehPreRequisito : saoPreRequisitos) { // para cada um
+																	// dos seus
+																	// pre-requisitos
+				if (getPeriodoDaDisciplina(ehPreRequisito) >= getPeriodoDaDisciplina(aDisciplina)) { // se
+																										// eles
+																										// estiverem
+																										// a
+																										// frente
 					aDisciplina.setNotAlocadaCorretamente();
 					break;
 				} else {
@@ -360,13 +418,13 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
-	 * Deleta o ultimo periodo criado se nao for um dos 8 periodos base
-	 * e se estiver sem disciplinas.
+	 * Deleta o ultimo periodo criado se nao for um dos 8 periodos base e se
+	 * estiver sem disciplinas.
 	 */
-	public void deletaUltimoPeriodoSeVazio(){
-		
+	public void deletaUltimoPeriodoSeVazio() {
+
 		if (getTotalDePeriodos() > PERIODOS_BASE) {
-			int ultimoPeriodo = getTotalDePeriodos(); 
+			int ultimoPeriodo = getTotalDePeriodos();
 			if (getPeriodo(ultimoPeriodo).getTotalDeDisciplinas() == 0) {
 				Periodo oPeriodo = getPeriodo(ultimoPeriodo);
 				periodos.remove(oPeriodo);
@@ -374,7 +432,7 @@ public class PlanoDeCurso extends Model {
 			}
 		}
 	}
-	
+
 	/**
 	 * Diz se uma disciplina é pre-requisito de outra disciplina já alocada.
 	 * 
@@ -394,7 +452,7 @@ public class PlanoDeCurso extends Model {
 		}
 		return resp;
 	}
-	
+
 	/**
 	 * Diz se uma disciplina tem um pre-requisito que ainda não foi alocado.
 	 * 
@@ -407,9 +465,9 @@ public class PlanoDeCurso extends Model {
 	 */
 	public boolean temPreRequisitoNaoAlocado(Disciplina disc) {
 		boolean resp = false;
-		if (!disc.getPreRequisitos().isEmpty()){
-			for (Disciplina pre : disc.getPreRequisitos()){
-				for (Disciplina discNaoAlocada : disciplinasNaoAlocadas){
+		if (!disc.getPreRequisitos().isEmpty()) {
+			for (Disciplina pre : disc.getPreRequisitos()) {
+				for (Disciplina discNaoAlocada : disciplinasNaoAlocadas) {
 					if (pre.equals(discNaoAlocada)) {
 						resp = true;
 						break;
@@ -419,29 +477,29 @@ public class PlanoDeCurso extends Model {
 		}
 		return resp;
 	}
-	
+
 	/**
 	 * Inverte a ordem da lista dos periodos. Se está crescente fica
 	 * decrescente, se está decrescente fica crescente.
 	 */
 	public void inverteOrdemDosPeriodos() {
 		int indice = getTotalDePeriodos();
-		for (int i = 0; i < getTotalDePeriodos(); i ++) {
-			Periodo periodo = periodos.get(indice-1);
+		for (int i = 0; i < getTotalDePeriodos(); i++) {
+			Periodo periodo = periodos.get(indice - 1);
 			periodos.remove(periodo);
 			periodos.add(i, periodo);
 		}
 	}
-	
+
 	/**
 	 * Indica se os periodos estão em ordem invertida ou nao.
 	 * 
 	 * @return True se os periodos estao invertidos e false caso contrario.
 	 */
-	public boolean isInvertido(){
+	public boolean isInvertido() {
 		boolean resp = false;
 		if (getTotalDePeriodos() > 0) {
-			if (periodos.get(0).getNumero() != 1){
+			if (periodos.get(0).getNumero() != 1) {
 				resp = true;
 			}
 		}
@@ -507,14 +565,14 @@ public class PlanoDeCurso extends Model {
 	/**
 	 * Cria todos os periodos do plano de curso e aloca suas disciplinas.
 	 */
-	private void alocaDisciplinas() {
+	private void alocacaoInicialDeDisciplinas() {
 		disciplinasNaoAlocadas.addAll(getDisciplinas());
 		for (Disciplina disc : getDisciplinas()) {
 			int periodo = disc.getPeriodoSugerido();
 			if (periodo > 0) {
 				if (getTotalDePeriodos() < periodo) {
 					try {
-						createPeriodo(getId());
+						createPeriodo();
 					} catch (Exception e) {
 					}
 				}
@@ -523,7 +581,7 @@ public class PlanoDeCurso extends Model {
 			}
 		}
 	}
-	
+
 	/**
 	 * Remove uma unica disciplina optativa generica se o periodo a contem.
 	 * 
@@ -543,8 +601,8 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
-	 * Adiciona uma unica disciplina optativa generica se o periodo nao a
-	 * contem e se o maximo de creditos nao for ultrapassado.
+	 * Adiciona uma unica disciplina optativa generica se o periodo nao a contem
+	 * e se o maximo de creditos nao for ultrapassado.
 	 * 
 	 * @param periodo
 	 *            O periodo onde pode ser adicionada a disciplina generica.
@@ -556,7 +614,8 @@ public class PlanoDeCurso extends Model {
 		for (Disciplina disc : genericas) {
 			if (disc.getPeriodoSugerido() == periodo) {
 				if (!getPeriodo(periodo).getDisciplinas().contains(disc)) {
-					if ((getPeriodo(periodo).getTotalDeCreditos() + disc.getCreditos()) <= MAXIMO_DE_CREDITOS) {
+					if ((getPeriodo(periodo).getTotalDeCreditos() + disc
+							.getCreditos()) <= MAXIMO_DE_CREDITOS) {
 						getPeriodo(periodo).addDisciplina(disc);
 						break;
 					}
@@ -570,14 +629,14 @@ public class PlanoDeCurso extends Model {
 	}
 
 	public void setPeriodoAtual(Periodo periodo) {
-		//TODO setar periodos anteriores 
+		// TODO setar periodos anteriores
 		periodoAtual = periodo;
 	}
-	
+
 	public void setPeriodoAtual(int i) {
 		Periodo oPeriodo = getPeriodo(i);
 		periodoAtual = oPeriodo;
-		for(int j = 1; j < i; j++){
+		for (int j = 1; j < i; j++) {
 			Periodo mudando = getPeriodo(j);
 			mudando.setValidaRemocao(new RemoverDeAnteriores());
 		}

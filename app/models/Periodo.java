@@ -57,8 +57,7 @@ public class Periodo extends Model {
 	 * Um periodo contem uma lista de disciplinas e o total de creditos do
 	 * periodo.
 	 */
-	public Periodo(String id, int numero) {
-		this.id = id;
+	public Periodo(int numero) {
 		this.numero = numero;
 		disciplinas = new ArrayList<Disciplina>();
 		totalDeCreditos = 0;
@@ -167,6 +166,12 @@ public class Periodo extends Model {
 		this.totalDeDificuldade -= disciplina.getDificuldade();
 	}
 	
+	public boolean podeRemover(Disciplina disciplina) {
+		return true;
+		//return validaRemocao.podeRemover(this, disciplina);
+	}
+	
+	
 	/**
 	 * Salva o periodo no banco de dados.
 	 * 
@@ -195,11 +200,5 @@ public class Periodo extends Model {
 	public String toString() {
 		return "[Periodo " + getNumero() + "]";
 	}
-
-	public boolean podeRemover(Disciplina disciplina) {
-		return true;
-		//return validaRemocao.podeRemover(this, disciplina);
-	}
-	
 
 }

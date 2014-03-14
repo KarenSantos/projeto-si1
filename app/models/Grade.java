@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.persistence.*;
-
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
 
 /**
  * Classe da grade curricular do curso de computação 
@@ -15,36 +12,27 @@ import play.db.ebean.Model.Finder;
  * @author
  *
  */
-@Entity
 public class Grade extends Model{
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	private String id;
-
-	@OneToMany(cascade = CascadeType.ALL)
 	private List<Disciplina> disciplinas;
-	
-	/**
-	 * Construtor vazio da Grade
-	 */
-	public Grade(){}
 	
 	/**
 	 * Cria uma grade curricular com uma lista de disciplinas.
 	 */
-	public Grade(String id){
-		this.id = id;
+	public Grade(){
 		disciplinas = new ArrayList<Disciplina>();
 		if (Disciplina.find.all().isEmpty()) {
 			criaDisciplinas();
+		} else {
+			disciplinas.addAll(Disciplina.find.all());
 		}
 	}
 	
 	public static Finder<String, Grade> find = new Finder<String, Grade>(
 			String.class, Grade.class);
-	
+
 	/**
 	 * Retorna a lista com todas as disciplinas da grade.
 	 * 
@@ -111,6 +99,7 @@ public class Grade extends Model{
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos,
 				preRequisitos, periodoSugerido, dificuldade);
 		disciplinas.add(aDisciplina);
+		aDisciplina.save();
 	}
 
 	/**
@@ -133,6 +122,7 @@ public class Grade extends Model{
 
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos, periodoSugerido, dificuldade);
 		disciplinas.add(aDisciplina);
+		aDisciplina.save();
 	}
 	
 	/**
