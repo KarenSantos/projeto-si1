@@ -4,14 +4,14 @@
 # --- !Ups
 
 create table Disciplinas (
-  Outroid                   varchar(255) not null,
+  id                        varchar(255) not null,
   plano_de_curso_id         varchar(255) not null,
   nome                      varchar(255),
   creditos                  integer,
   periodo_sugerido          integer,
   dificuldade               integer,
   alocada_corretamente      boolean,
-  constraint pk_Disciplinas primary key (Outroid))
+  constraint pk_Disciplinas primary key (id))
 ;
 
 create table grade (
@@ -49,16 +49,10 @@ create table usuario (
 ;
 
 
-create table Disciplinas_Disciplinas (
-  Disciplinas_Outroid            varchar(255) not null,
-  Disciplinas_Outroid            varchar(255) not null,
-  constraint pk_Disciplinas_Disciplinas primary key (Disciplinas_Outroid, Disciplinas_Outroid))
-;
-
 create table periodo_Disciplinas (
   periodo_id                     varchar(255) not null,
-  Disciplinas_Outroid            varchar(255) not null,
-  constraint pk_periodo_Disciplinas primary key (periodo_id, Disciplinas_Outroid))
+  Disciplinas_id                 varchar(255) not null,
+  constraint pk_periodo_Disciplinas primary key (periodo_id, Disciplinas_id))
 ;
 create sequence Disciplinas_seq;
 
@@ -81,21 +75,15 @@ create index ix_usuario_plano_4 on usuario (plano_id);
 
 
 
-alter table Disciplinas_Disciplinas add constraint fk_Disciplinas_Disciplinas_Di_01 foreign key (Disciplinas_Outroid) references Disciplinas (Outroid) on delete restrict on update restrict;
-
-alter table Disciplinas_Disciplinas add constraint fk_Disciplinas_Disciplinas_Di_02 foreign key (Disciplinas_Outroid) references Disciplinas (Outroid) on delete restrict on update restrict;
-
 alter table periodo_Disciplinas add constraint fk_periodo_Disciplinas_period_01 foreign key (periodo_id) references periodo (id) on delete restrict on update restrict;
 
-alter table periodo_Disciplinas add constraint fk_periodo_Disciplinas_Discip_02 foreign key (Disciplinas_Outroid) references Disciplinas (Outroid) on delete restrict on update restrict;
+alter table periodo_Disciplinas add constraint fk_periodo_Disciplinas_Discip_02 foreign key (Disciplinas_id) references Disciplinas (id) on delete restrict on update restrict;
 
 # --- !Downs
 
 SET REFERENTIAL_INTEGRITY FALSE;
 
 drop table if exists Disciplinas;
-
-drop table if exists Disciplinas_Disciplinas;
 
 drop table if exists grade;
 

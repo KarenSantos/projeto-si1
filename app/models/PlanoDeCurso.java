@@ -32,7 +32,7 @@ public class PlanoDeCurso extends Model {
 	@Id
 	private String id;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Grade grade;
 	
 	//---------nova us---------
@@ -60,9 +60,8 @@ public class PlanoDeCurso extends Model {
 		this.id = id;
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		periodos = new ArrayList<Periodo>();
-		alocaDisciplinas();
 		//---------nova us---------
-		periodoAtual = getPeriodos().get(0);// tem que ver se começa sem escolher nenhum periodo como atual ou se ja começa do um
+	//	periodoAtual = getPeriodos().get(0);// tem que ver se começa sem escolher nenhum periodo como atual ou se ja começa do um
 	}
 	
 	/**
@@ -74,8 +73,9 @@ public class PlanoDeCurso extends Model {
 		plano.save();
 	}
 	
-	public void setGrade(Grade grade){
+	public void configuraPlano(Grade grade){
 		this.grade = grade;
+		alocaDisciplinas();
 	}
 	
 	/**
@@ -177,7 +177,6 @@ public class PlanoDeCurso extends Model {
 
 		int novoNumero = ultimoPeriodo + 1;
 		Periodo novoPeriodo = new Periodo(id + novoNumero, novoNumero);
-//		novoPeriodo.save();
 		if (isInvertido()){
 			periodos.add(0, novoPeriodo);
 		} else {

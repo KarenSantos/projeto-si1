@@ -21,7 +21,6 @@ public class Disciplina extends Model {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-    @Column(name="Outroid")
 	private String id;
 	
 	private List<Disciplina> preRequisitos;

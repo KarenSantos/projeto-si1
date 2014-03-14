@@ -24,7 +24,6 @@ public class Grade extends Model{
 	private String id;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@Column(name = "preRequisito_ID")
 	private List<Disciplina> disciplinas;
 	
 	/**

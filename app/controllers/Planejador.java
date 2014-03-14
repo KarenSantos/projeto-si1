@@ -28,15 +28,11 @@ public class Planejador {
 	 * @param id
 	 *            O id para identificar o usuário.
 	 */
-	public Planejador(Usuario usuario) {
-		if (Grade.find.all().isEmpty()){
-			grade = new Grade("Computacao");
-		} else {
-			grade = Grade.find.byId("Computacao");
-		}
+	public Planejador(Usuario usuario, Grade grade) {
+		this.grade = grade;
 		this.usuario = usuario;
 		plano = usuario.getPlano();
-		plano.setGrade(grade);
+		plano.configuraPlano(grade);
 	}
 
 	/**
