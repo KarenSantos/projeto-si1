@@ -18,7 +18,7 @@ import play.db.ebean.Model;
 @Entity
 public class Periodo extends Model {
 
-	private static final long serialVersionUID = 1L;
+	public static final long serialVersionUID = 1L;
 	private final int MENOR_NUM_PERIODO = 1;
 	private final int MAIOR_NUM_PERIODO = 14;
 	private final int MINIMO_CREDITOS = 14;
@@ -28,9 +28,9 @@ public class Periodo extends Model {
 	}
 
 	@Id
-	private String id;
+	public String id;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Disciplina> disciplinas;
 	
 	private int totalDeCreditos;

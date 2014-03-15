@@ -1,13 +1,13 @@
 package tests;
 
 import controllers.*;
-
 import static play.test.Helpers.*;
 
 import java.util.List;
 
 import models.Disciplina;
 import models.Grade;
+import models.PlanoDeCurso;
 import models.Usuario;
 
 import org.junit.*;
@@ -22,23 +22,9 @@ public class DisciplinaBDTest {
 	}
 
 	@Test
-	public void deveConseguirRecuperarDoBD() {
-
-		List<Disciplina> resultado = Disciplina.find.all();
-		Assert.assertTrue(resultado.isEmpty());
-
-		Disciplina umaDisciplina = new Disciplina("SI1", "SI1", 4, 4, 1);
-		umaDisciplina.save();
-		resultado = Disciplina.find.all();
-		Assert.assertEquals(1, resultado.size());
-	}
-
-	@Test
 	public void deveConseguirRecuperarAsDisciplinasDoPlanoDoBD() {
-		Usuario user = new Usuario("email", "nome", "password");
-		user.save();
-
-		Planejador planejador = new Planejador(user);
+		PlanoDeCurso plano = new PlanoDeCurso("asd", "asd", "asd");
+		plano.save();
 		Assert.assertFalse(Disciplina.find.all().isEmpty());
 
 	}

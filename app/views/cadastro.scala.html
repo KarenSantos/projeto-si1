@@ -15,9 +15,9 @@
 	<form class="form-signin" role="form" action="@routes.Autenticador.efetuaCadastro()" method="post">
  		<br><br>
 		<div class="textBox">
-			<input type="nome" class="form-control" name="nome" placeholder="nome de usário" value="@form("email").value" required>
-			<br>
 			<input type="email" class="form-control" name="email" placeholder="e-mail" required>
+			<br>
+			<input type="nome" class="form-control" name="nome" placeholder="nome de usuário" value="@form("email").value" required>
 			<br>
 			<input type="password" class="form-control" name="password" placeholder="senha (mínimo 8 digitos)" required>
 			<br>

@@ -1,5 +1,6 @@
 package controllers;
 
+import models.PlanoDeCurso;
 import models.Usuario;
 import play.data.Form;
 import play.mvc.Controller;
@@ -157,7 +158,7 @@ public class Autenticador extends Controller {
 			return badRequest(cadastro.render(cadastroForm));
 		} else if(cadastroForm.get().validate() == null) {
 			Cadastro novoC = cadastroForm.get();
-			Usuario.create(new Usuario(novoC.getEmail(), novoC.getNome(),
+			PlanoDeCurso.create(new PlanoDeCurso(novoC.getEmail(), novoC.getNome(),
 			novoC.getPassword()));
 		}else{
 			return redirect(routes.Autenticador.cadastro());

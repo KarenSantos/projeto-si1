@@ -15,14 +15,14 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name ="Disciplinas")
+@Table (name = "Disciplina")
 public class Disciplina extends Model {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	private String id;
-	
+	private long id;
+
 	private List<Disciplina> preRequisitos;
 
 	private String nome;
@@ -59,7 +59,7 @@ public class Disciplina extends Model {
 	 *            A dificuldade indicada para a disciplina
 	 * 
 	 */
-	public Disciplina(String id, String nome, int creditos,
+	public Disciplina(long id, String nome, int creditos,
 			List<Disciplina> preRequisitos, int periodoSugerido, int dificuldade) {
 		this.id = id;
 		this.nome = nome;
@@ -95,7 +95,7 @@ public class Disciplina extends Model {
 	 *            A dificuldade indicada para a disciplina
 	 * 
 	 */
-	public Disciplina(String id, String nome, int creditos,
+	public Disciplina(long id, String nome, int creditos,
 			int periodoSugerido, int dificuldade) {
 		this.id = id;
 		this.nome = nome;
@@ -119,7 +119,7 @@ public class Disciplina extends Model {
 	 * 
 	 * @return O id da disciplina.
 	 */
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -129,7 +129,7 @@ public class Disciplina extends Model {
 	 * @param id
 	 *            O novo id.
 	 */
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -305,7 +305,7 @@ public class Disciplina extends Model {
 	public boolean equals(Object obj) {
 		if (obj instanceof Disciplina) {
 			Disciplina dis = (Disciplina) obj;
-			if (dis.getId().equals(getId())) {
+			if (dis.getId() ==getId()) {
 				return true;
 			}
 		}

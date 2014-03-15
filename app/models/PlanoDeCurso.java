@@ -27,16 +27,16 @@ public class PlanoDeCurso extends Model {
 	final private int PERIODO_MAXIMO = 14;
 	private final int MAXIMO_DE_CREDITOS = 28; // Pq plano de curso tem esse
 												// atributo q eh de periodo?
-	// private final int MINIMO_DE_CREDITOS = 14;
+	private final int MINIMO_DE_CREDITOS = 14;
 	private final int PERIODOS_BASE = 8;
 
 	@Id
-	private long id;
+	public long id;
 
 	private Grade grade;
 
-	@OneToOne
-	private Usuario usuario;
+	@ManyToMany
+	public Usuario usuario;
 
 	// ---------nova us---------
 	private Periodo periodoAtual;
@@ -44,7 +44,7 @@ public class PlanoDeCurso extends Model {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Disciplina> disciplinasNaoAlocadas;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Periodo> periodos;
 
 	public static Finder<String, PlanoDeCurso> find = new Finder<String, PlanoDeCurso>(
@@ -57,9 +57,9 @@ public class PlanoDeCurso extends Model {
 	 * Plano de curso recebe uma grade de disciplinas e um usuario, e tem uma
 	 * lista de periodos e uma lista de disciplinas não alocadas.
 	 */
-	public PlanoDeCurso(Grade grade, Usuario usuario) {
-		this.grade = grade;
-		this.usuario = usuario;
+	public PlanoDeCurso(String email, String nome, String senha) {
+		this.grade = new Grade();
+		this.usuario = new Usuario(email, nome, senha);
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		periodos = new ArrayList<Periodo>();
 		alocacaoInicialDeDisciplinas();
@@ -78,6 +78,10 @@ public class PlanoDeCurso extends Model {
 	
 	public void setGrade(Grade grade){
 		this.grade = grade;
+	}
+	
+	public Grade getGrade(){
+		return this.grade;
 	}
 
 	/**
@@ -106,18 +110,10 @@ public class PlanoDeCurso extends Model {
 	 *            O id da disciplina.
 	 * @return A disciplina que tem o id.
 	 */
-	public Disciplina getDisciplina(String id) {
+	public Disciplina getDisciplina(long id) {
 		return grade.getDisciplina(id);
 	}
-
 	/**
-	 * Retorna todas as disciplinas da grade de computação.
-	 * 
-	 * @return a lista de disciplinas da grade.
-	 */
-	public List<Disciplina> getDisciplinas() {
-		return grade.getDisciplinas();
-	}
 
 	/**
 	 * Retorna a lista das Disciplinas nao alocadas.
@@ -194,7 +190,7 @@ public class PlanoDeCurso extends Model {
 	 */
 	public List<Disciplina> getDisciplinasOptativasGenericas() {
 		List<Disciplina> disciplinas = new ArrayList<Disciplina>();
-		for (Disciplina disc : getDisciplinas()) {
+		for (Disciplina disc : grade.getDisciplinas()) {
 			if (disc.getNome().contains("Optativa")) {
 				disciplinas.add(disc);
 			}
@@ -215,7 +211,7 @@ public class PlanoDeCurso extends Model {
 	 * @throws TotalDeCreditosInvalidoException
 	 *             Caso o periodo ja tenha o total maximo de creditos alocado.
 	 */
-	public void addDisciplinaPeriodo(String id, int periodo)
+	public void addDisciplinaPeriodo(long id, int periodo)
 			throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
 
 		Disciplina aDisciplina = getDisciplina(id);
@@ -265,7 +261,7 @@ public class PlanoDeCurso extends Model {
 	 * @param periodo
 	 *            O periodo de onde vai ser removida a disciplina.
 	 */
-	public void removeDisciplinaPeriodo(String id, int periodo)
+	public void removeDisciplinaPeriodo(long id, int periodo)
 			throws RemocaoInvalidaException {
 
 		Disciplina aDisciplina = getDisciplina(id);
@@ -307,7 +303,7 @@ public class PlanoDeCurso extends Model {
 	 *             Se o total de créditos fosse ultrapassar 28 ao mover a
 	 *             disciplina.
 	 */
-	public void moveDisciplina(String disciplinaId, int periodoFuturo,
+	public void moveDisciplina(long disciplinaId, int periodoFuturo,
 			int periodoAtual) throws TotalDeCreditosInvalidoException {
 		Disciplina aDisciplina = getDisciplina(disciplinaId);
 
@@ -540,7 +536,7 @@ public class PlanoDeCurso extends Model {
 
 		List<Disciplina> resp = new ArrayList<Disciplina>();
 
-		for (Disciplina disc : getDisciplinas()) {
+		for (Disciplina disc : grade.getDisciplinas()) {
 			if (disc.getPeriodoSugerido() > aDisciplina.getPeriodoSugerido()) {
 				for (Disciplina preRequisito : disc.getPreRequisitos()) {
 					if (aDisciplina == preRequisito) {
@@ -557,8 +553,9 @@ public class PlanoDeCurso extends Model {
 	 * Cria todos os periodos do plano de curso e aloca suas disciplinas.
 	 */
 	private void alocacaoInicialDeDisciplinas() {
+		System.out.println(grade.getDisciplinas().size());
 		disciplinasNaoAlocadas.addAll(grade.getDisciplinas());
-		for (Disciplina disc : getDisciplinas()) {
+		for (Disciplina disc : grade.getDisciplinas()) {
 			int periodo = disc.getPeriodoSugerido();
 			if (periodo > 0) {
 				if (getTotalDePeriodos() < periodo) {
