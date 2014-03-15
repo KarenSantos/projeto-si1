@@ -166,19 +166,19 @@ public class Autenticador extends Controller {
 		return redirect(routes.Autenticador.login());
 	}
 	
-	private static void criaUsuarios(){
-		
-		if (Usuario.find.all().isEmpty()) {
-			int num = 1;
-			
-			while (num < 31){
-				String email = "usuario" + num + "@email.com"; 
-				String nome = "Usuário " + num;
-				String password = "usuario" + num;
-				
-				Usuario.create(new Usuario(email, nome, password));
-				num ++;
-			}
-		}
-	}
+//	private static void criaUsuarios(){
+//		
+//		if (Usuario.find.all().isEmpty()) {
+//			int num = 1;
+//			
+//			while (num < 31){
+//				String email = "usuario" + num + "@email.com"; 
+//				String nome = "Usuário " + num;
+//				String password = "usuario" + num;
+//				
+//				Usuario.create(new Usuario(email, nome, password));
+//				num ++;
+//			}
+//		}
+//	}
 }

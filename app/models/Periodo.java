@@ -30,7 +30,7 @@ public class Periodo extends Model {
 	@Id
 	private String id;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany
 	private List<Disciplina> disciplinas;
 	
 	private int totalDeCreditos;

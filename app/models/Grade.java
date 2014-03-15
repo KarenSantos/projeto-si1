@@ -16,7 +16,7 @@ public class Grade extends Model{
 
 	private static final long serialVersionUID = 1L;
 
-	private List<Disciplina> disciplinas;
+	private static List<Disciplina> disciplinas;
 	
 	/**
 	 * Cria uma grade curricular com uma lista de disciplinas.
@@ -99,7 +99,6 @@ public class Grade extends Model{
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos,
 				preRequisitos, periodoSugerido, dificuldade);
 		disciplinas.add(aDisciplina);
-		aDisciplina.save();
 	}
 
 	/**
@@ -122,8 +121,8 @@ public class Grade extends Model{
 
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos, periodoSugerido, dificuldade);
 		disciplinas.add(aDisciplina);
-		aDisciplina.save();
 	}
+	
 	
 	/**
 	 * Cria todas as disciplinas do curso de computação.
@@ -214,17 +213,17 @@ public class Grade extends Model{
 		createDisciplina("70", "Empreendedorismo em Software 1", 4, -2, 3);
 		createDisciplina("71", "Estágio 2", 4, -2, 3);
 
-		createDisciplina("80", "Optativa 1", 4, 6, 3);
-		createDisciplina("81", "Optativa 2", 4, 6, 3);
-		createDisciplina("82", "Optativa 3", 4, 7, 3);
-		createDisciplina("83", "Optativa 4", 4, 7, 3);
-		createDisciplina("84", "Optativa 5", 4, 7, 3);
-		createDisciplina("85", "Optativa 6", 4, 7, 3);
-		createDisciplina("86", "Optativa 7", 4, 8, 3);
-		createDisciplina("87", "Optativa 8", 4, 8, 3);
-		createDisciplina("88", "Optativa 9", 4, 8, 3);
-		createDisciplina("89", "Optativa 10", 4, 8, 3);
-		createDisciplina("90", "Optativa 11", 2, 8, 3);
+		createDisciplina("72", "Optativa 1", 4, 6, 3);
+		createDisciplina("73", "Optativa 2", 4, 6, 3);
+		createDisciplina("74", "Optativa 3", 4, 7, 3);
+		createDisciplina("75", "Optativa 4", 4, 7, 3);
+		createDisciplina("76", "Optativa 5", 4, 7, 3);
+		createDisciplina("77", "Optativa 6", 4, 7, 3);
+		createDisciplina("78", "Optativa 7", 4, 8, 3);
+		createDisciplina("78", "Optativa 8", 4, 8, 3);
+		createDisciplina("79", "Optativa 9", 4, 8, 3);
+		createDisciplina("80", "Optativa 10", 4, 8, 3);
+		createDisciplina("81", "Optativa 11", 2, 8, 3);
 		
 	}
 }

@@ -31,7 +31,7 @@ public class PlanoDeCurso extends Model {
 	private final int PERIODOS_BASE = 8;
 
 	@Id
-	private String id;
+	private long id;
 
 	private Grade grade;
 
@@ -41,10 +41,10 @@ public class PlanoDeCurso extends Model {
 	// ---------nova us---------
 	private Periodo periodoAtual;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Disciplina> disciplinasNaoAlocadas;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Periodo> periodos;
 
 	public static Finder<String, PlanoDeCurso> find = new Finder<String, PlanoDeCurso>(
@@ -85,19 +85,10 @@ public class PlanoDeCurso extends Model {
 	 * 
 	 * @return O id do plano de curso.
 	 */
-	public String getId() {
+	public long getId() {
 		return this.id;
 	}
 
-	/**
-	 * Altera o id do plano de curso.
-	 * 
-	 * @param id
-	 *            O novo id do plano de curso.
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	/**
 	 * Retorna o usuario do plano de curso.
@@ -566,7 +557,7 @@ public class PlanoDeCurso extends Model {
 	 * Cria todos os periodos do plano de curso e aloca suas disciplinas.
 	 */
 	private void alocacaoInicialDeDisciplinas() {
-		disciplinasNaoAlocadas.addAll(getDisciplinas());
+		disciplinasNaoAlocadas.addAll(grade.getDisciplinas());
 		for (Disciplina disc : getDisciplinas()) {
 			int periodo = disc.getPeriodoSugerido();
 			if (periodo > 0) {
@@ -628,6 +619,7 @@ public class PlanoDeCurso extends Model {
 		return periodoAtual;
 	}
 
+	
 	public void setPeriodoAtual(Periodo periodo) {
 		// TODO setar periodos anteriores
 		periodoAtual = periodo;
