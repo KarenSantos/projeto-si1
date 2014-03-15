@@ -127,7 +127,6 @@ public class Autenticador extends Controller {
 	static Form<Usuario> userForm = Form.form(Usuario.class);
 
 	public static Result login() {
-		criaUsuarios();
 		return ok(login.render(Form.form(Login.class)));
 	}
 
