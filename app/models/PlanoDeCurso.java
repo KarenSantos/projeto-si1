@@ -31,24 +31,24 @@ public class PlanoDeCurso extends Model {
 	private final int PERIODOS_BASE = 8;
 
 	@Id
-	public long id;
+	private long id;
 
 	private Grade grade;
 
-	@ManyToMany
+	@OneToOne(cascade = CascadeType.ALL)
 	public Usuario usuario;
 
 	// ---------nova us---------
 	private Periodo periodoAtual;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Disciplina> disciplinasNaoAlocadas;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Periodo> periodos;
 
-	public static Finder<String, PlanoDeCurso> find = new Finder<String, PlanoDeCurso>(
-			String.class, PlanoDeCurso.class);
+	public static Finder<Long, PlanoDeCurso> find = new Finder<Long, PlanoDeCurso>(
+			Long.class, PlanoDeCurso.class);
 
 	public PlanoDeCurso() {
 	}
@@ -74,6 +74,10 @@ public class PlanoDeCurso extends Model {
 	 */
 	public static void create(PlanoDeCurso plano) {
 		plano.save();
+	}
+	
+	public static void atualiza(Long id){
+		find.ref(id).update();
 	}
 	
 	public void setGrade(Grade grade){
@@ -553,7 +557,6 @@ public class PlanoDeCurso extends Model {
 	 * Cria todos os periodos do plano de curso e aloca suas disciplinas.
 	 */
 	private void alocacaoInicialDeDisciplinas() {
-		System.out.println(grade.getDisciplinas().size());
 		disciplinasNaoAlocadas.addAll(grade.getDisciplinas());
 		for (Disciplina disc : grade.getDisciplinas()) {
 			int periodo = disc.getPeriodoSugerido();

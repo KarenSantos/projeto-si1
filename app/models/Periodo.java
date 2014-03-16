@@ -28,9 +28,9 @@ public class Periodo extends Model {
 	}
 
 	@Id
-	public String id;
+	private long id;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany
 	private List<Disciplina> disciplinas;
 	
 	private int totalDeCreditos;
@@ -46,7 +46,7 @@ public class Periodo extends Model {
 		//this.validaRemocao = validaRemocao;
 	}
 
-	public static Finder<String, Periodo> find = new Finder<String, Periodo>(String.class, Periodo.class);
+	public static Finder<Long, Periodo> find = new Finder<Long, Periodo>(Long.class, Periodo.class);
 
 	/**
 	 * Cria um periodo sem id e sem numero.
@@ -78,7 +78,7 @@ public class Periodo extends Model {
 	 * 
 	 * @return O id do periodo.
 	 */
-	public String getId() {
+	public long getId() {
 		return this.id;
 	}
 
@@ -88,7 +88,7 @@ public class Periodo extends Model {
 	 * @param id
 	 *            O novo id do periodo.
 	 */
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	
@@ -188,11 +188,11 @@ public class Periodo extends Model {
 	 * @param periodoId
 	 *            O Id do periodo a ser atualizado.
 	 */
-	public static void atualizar(String periodoId) {
+	public static void atualizar(long periodoId) {
 		find.ref(periodoId).update();
 	}
 	
-	public static void deletar(String periodoId) {
+	public static void deletar(long periodoId) {
 		find.ref(periodoId).delete();
 	}
 	

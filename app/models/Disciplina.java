@@ -8,9 +8,11 @@ import play.data.validation.Constraints.*;
 
 import javax.persistence.*;
 
+import net.sf.ehcache.config.PersistenceConfiguration.Strategy;
+
 /**
  * Classe de disciplinas.
- * 
+ *
  * @author
  * 
  */
@@ -23,7 +25,7 @@ public class Disciplina extends Model {
 	@Id
 	private long id;
 
-	private List<Disciplina> preRequisitos;
+	private long[] idsPreRequisitos;
 
 	private String nome;
 	private int creditos;
@@ -31,8 +33,8 @@ public class Disciplina extends Model {
 	private int dificuldade;
 	private boolean alocadaCorretamente;
 
-	public static Finder<String, Disciplina> find = new Finder<String, Disciplina>(
-			String.class, Disciplina.class);
+	public static Finder<Long, Disciplina> find = new Finder<Long, Disciplina>(
+			Long.class, Disciplina.class);
 
 	/**
 	 * Cria uma disciplina com tudo null.
@@ -60,11 +62,11 @@ public class Disciplina extends Model {
 	 * 
 	 */
 	public Disciplina(long id, String nome, int creditos,
-			List<Disciplina> preRequisitos, int periodoSugerido, int dificuldade) {
+			long[] preRequisitos, int periodoSugerido, int dificuldade) {
 		this.id = id;
 		this.nome = nome;
 		this.creditos = creditos;
-		this.preRequisitos = preRequisitos;
+		this.idsPreRequisitos = preRequisitos;
 		this.periodoSugerido = periodoSugerido;
 
 		if (dificuldade < 0) {
@@ -100,7 +102,7 @@ public class Disciplina extends Model {
 		this.id = id;
 		this.nome = nome;
 		this.creditos = creditos;
-		this.preRequisitos = new ArrayList<Disciplina>();
+		this.idsPreRequisitos = new long[0];
 		this.periodoSugerido = periodoSugerido;
 
 		if (dificuldade < 0) {
@@ -176,8 +178,8 @@ public class Disciplina extends Model {
 	 * 
 	 * @return A lista de pre requisitos da disciplina.
 	 */
-	public List<Disciplina> getPreRequisitos() {
-		return preRequisitos;
+	public long[] getIdsPreRequisitos() {
+		return idsPreRequisitos;
 	}
 
 	/**
@@ -186,8 +188,8 @@ public class Disciplina extends Model {
 	 * @param preRequisitos
 	 *            A nova lista de pre-requisitos da disciplina.
 	 */
-	public void setPreRequisitos(List<Disciplina> preRequisitos) {
-		this.preRequisitos = preRequisitos;
+	public void setPreRequisitos(long[] preRequisitos) {
+		this.idsPreRequisitos = preRequisitos;
 	}
 
 	/**
@@ -294,7 +296,7 @@ public class Disciplina extends Model {
 	 * @param discId
 	 *            O Id da disciplina a ser atualizada.
 	 */
-	public static void atualizar(String discId) {
+	public static void atualizar(Long discId) {
 		find.ref(discId).update();
 	}
 

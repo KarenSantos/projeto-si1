@@ -90,14 +90,8 @@ public class Grade extends Model{
 	public void createDisciplina(long id, String nome, int creditos,
 			long[] preRequisitosIds, int periodoSugerido, int dificuldade) {
 
-		List<Disciplina> preRequisitos = new ArrayList<Disciplina>();
-
-		for (Long preRequisitoId : preRequisitosIds) {
-			preRequisitos.add(getDisciplina(preRequisitoId));
-		}
-
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos,
-				preRequisitos, periodoSugerido, dificuldade);
+				preRequisitosIds, periodoSugerido, dificuldade);
 		disciplinas.add(aDisciplina);
 	}
 
