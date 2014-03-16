@@ -20,9 +20,9 @@ GET    	/novoPeriodo	  					controllers.Application.novoPeriodo()
 
 # Edicoes
 GET    	/editar/:periodo						controllers.Application.editar(periodo: Int)
-GET     /adicionar/:disciplinaId/:periodo		controllers.Application.adicionar(disciplinaId: Long, periodo: Int)
-GET 	/remover/:disciplinaId/:periodo			controllers.Application.remover(disciplinaId: Long, periodo: Int)
-GET		/mover/:disciplinaId/:futuro/:atual		controllers.Application.mover(disciplinaId: Long, futuro: Int, atual: Int)
+GET     /adicionar/:disciplinaId/:periodo		controllers.Application.adicionar(disciplinaId: String, periodo: Int)
+GET 	/remover/:disciplinaId/:periodo			controllers.Application.remover(disciplinaId: String, periodo: Int)
+GET		/mover/:disciplinaId/:futuro/:atual		controllers.Application.mover(disciplinaId: String, futuro: Int, atual: Int)
 GET		/inverter								controllers.Application.inverter()
 
 # Map static resources from the /public folder to the /assets URL path

@@ -114,7 +114,7 @@ public class PlanoDeCurso extends Model {
 	 *            O id da disciplina.
 	 * @return A disciplina que tem o id.
 	 */
-	public Disciplina getDisciplina(long id) {
+	public Disciplina getDisciplina(String id) {
 		return grade.getDisciplina(id);
 	}
 	/**
@@ -215,7 +215,7 @@ public class PlanoDeCurso extends Model {
 	 * @throws TotalDeCreditosInvalidoException
 	 *             Caso o periodo ja tenha o total maximo de creditos alocado.
 	 */
-	public void addDisciplinaPeriodo(long id, int periodo)
+	public void addDisciplinaPeriodo(String id, int periodo)
 			throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
 
 		Disciplina aDisciplina = getDisciplina(id);
@@ -265,7 +265,7 @@ public class PlanoDeCurso extends Model {
 	 * @param periodo
 	 *            O periodo de onde vai ser removida a disciplina.
 	 */
-	public void removeDisciplinaPeriodo(long id, int periodo)
+	public void removeDisciplinaPeriodo(String id, int periodo)
 			throws RemocaoInvalidaException {
 
 		Disciplina aDisciplina = getDisciplina(id);
@@ -307,7 +307,7 @@ public class PlanoDeCurso extends Model {
 	 *             Se o total de créditos fosse ultrapassar 28 ao mover a
 	 *             disciplina.
 	 */
-	public void moveDisciplina(long disciplinaId, int periodoFuturo,
+	public void moveDisciplina(String disciplinaId, int periodoFuturo,
 			int periodoAtual) throws TotalDeCreditosInvalidoException {
 		Disciplina aDisciplina = getDisciplina(disciplinaId);
 
@@ -557,8 +557,14 @@ public class PlanoDeCurso extends Model {
 	 * Cria todos os periodos do plano de curso e aloca suas disciplinas.
 	 */
 	private void alocacaoInicialDeDisciplinas() {
-		disciplinasNaoAlocadas.addAll(grade.getDisciplinas());
 		for (Disciplina disc : grade.getDisciplinas()) {
+			if(disc.getPreRequisitos().isEmpty()){
+				disciplinasNaoAlocadas.add(new Disciplina(disc.getId(), disc.getNome(), disc.getCreditos(),
+						disc.getDificuldade(), disc.getDificuldade()));
+			}else{
+				disciplinasNaoAlocadas.add(new Disciplina(disc.getId(), disc.getNome(), disc.getCreditos(),
+						disc.getPreRequisitos(), disc.getDificuldade(), disc.getDificuldade()));
+			}
 			int periodo = disc.getPeriodoSugerido();
 			if (periodo > 0) {
 				if (getTotalDePeriodos() < periodo) {
@@ -567,6 +573,7 @@ public class PlanoDeCurso extends Model {
 					} catch (Exception e) {
 					}
 				}
+				System.out.println(disc.getNome());
 				getPeriodo(periodo).addDisciplina(disc);
 				disciplinasNaoAlocadas.remove(disc);
 			}

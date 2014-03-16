@@ -23,9 +23,14 @@ public class Disciplina extends Model {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	private long id;
-
-	private long[] idsPreRequisitos;
+	@Column(name = "codigo")
+	private String id;
+	
+	
+	@ManyToMany
+	@JoinTable(name = "dependencias", joinColumns = @JoinColumn(name = "dependente"), 
+	inverseJoinColumns = @JoinColumn(name = "requisito"))
+	private List<Disciplina> preRequisitos;
 
 	private String nome;
 	private int creditos;
@@ -33,8 +38,8 @@ public class Disciplina extends Model {
 	private int dificuldade;
 	private boolean alocadaCorretamente;
 
-	public static Finder<Long, Disciplina> find = new Finder<Long, Disciplina>(
-			Long.class, Disciplina.class);
+	public static Finder<String, Disciplina> find = new Finder<String, Disciplina>(
+			String.class, Disciplina.class);
 
 	/**
 	 * Cria uma disciplina com tudo null.
@@ -61,12 +66,12 @@ public class Disciplina extends Model {
 	 *            A dificuldade indicada para a disciplina
 	 * 
 	 */
-	public Disciplina(long id, String nome, int creditos,
-			long[] preRequisitos, int periodoSugerido, int dificuldade) {
+	public Disciplina(String id, String nome, int creditos,
+			List<Disciplina> preRequisitos, int periodoSugerido, int dificuldade) {
 		this.id = id;
 		this.nome = nome;
 		this.creditos = creditos;
-		this.idsPreRequisitos = preRequisitos;
+		this.preRequisitos = preRequisitos;
 		this.periodoSugerido = periodoSugerido;
 
 		if (dificuldade < 0) {
@@ -97,12 +102,12 @@ public class Disciplina extends Model {
 	 *            A dificuldade indicada para a disciplina
 	 * 
 	 */
-	public Disciplina(long id, String nome, int creditos,
+	public Disciplina(String id, String nome, int creditos,
 			int periodoSugerido, int dificuldade) {
 		this.id = id;
 		this.nome = nome;
 		this.creditos = creditos;
-		this.idsPreRequisitos = new long[0];
+		this.preRequisitos = new ArrayList<Disciplina>();
 		this.periodoSugerido = periodoSugerido;
 
 		if (dificuldade < 0) {
@@ -121,7 +126,7 @@ public class Disciplina extends Model {
 	 * 
 	 * @return O id da disciplina.
 	 */
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -131,7 +136,7 @@ public class Disciplina extends Model {
 	 * @param id
 	 *            O novo id.
 	 */
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -178,8 +183,8 @@ public class Disciplina extends Model {
 	 * 
 	 * @return A lista de pre requisitos da disciplina.
 	 */
-	public long[] getIdsPreRequisitos() {
-		return idsPreRequisitos;
+	public List<Disciplina> getPreRequisitos() {
+		return preRequisitos;
 	}
 
 	/**
@@ -188,8 +193,8 @@ public class Disciplina extends Model {
 	 * @param preRequisitos
 	 *            A nova lista de pre-requisitos da disciplina.
 	 */
-	public void setPreRequisitos(long[] preRequisitos) {
-		this.idsPreRequisitos = preRequisitos;
+	public void setPreRequisitos(List<Disciplina> preRequisitos) {
+		this.preRequisitos = preRequisitos;
 	}
 
 	/**
@@ -296,7 +301,7 @@ public class Disciplina extends Model {
 	 * @param discId
 	 *            O Id da disciplina a ser atualizada.
 	 */
-	public static void atualizar(Long discId) {
+	public static void atualizar(String discId) {
 		find.ref(discId).update();
 	}
 

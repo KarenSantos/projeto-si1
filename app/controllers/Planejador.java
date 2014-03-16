@@ -80,7 +80,7 @@ public class Planejador {
 	 *             Caso adicionando a disciplina o periodo ultrapasse o maximo
 	 *             de creditos.
 	 */
-	public void addDisciplinaPeriodo(long id, int periodo)
+	public void addDisciplinaPeriodo(String id, int periodo)
 			throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
 		plano.addDisciplinaPeriodo(id, periodo);
 	}
@@ -92,7 +92,7 @@ public class Planejador {
 	 *            O id da disciplina.
 	 * @return A disciplina com o id indicado.
 	 */
-	public Disciplina getDisciplina(long id) {
+	public Disciplina getDisciplina(String id) {
 		return plano.getDisciplina(id);
 	}
 
@@ -104,7 +104,7 @@ public class Planejador {
 	 * @return O número do periodo em que está a disciplina ou zero se não está
 	 *         em nenhum periodo.
 	 */
-	public int getPeriodoDaDisciplina(long discId) {
+	public int getPeriodoDaDisciplina(String discId) {
 		return plano.getPeriodoDaDisciplina(getDisciplina(discId));
 	}
 
@@ -118,7 +118,7 @@ public class Planejador {
 	 * @throws RemocaoInvalidaException 
 	 * 			  Caso minimo de creditos nao permita
 	 */
-	public void removeDisciplinaPeriodo(long discId, int periodo) throws RemocaoInvalidaException {
+	public void removeDisciplinaPeriodo(String discId, int periodo) throws RemocaoInvalidaException {
 		plano.removeDisciplinaPeriodo(discId, periodo);
 	}
 
@@ -161,7 +161,7 @@ public class Planejador {
 	 *             Se o total de créditos fosse ultrapassar 28 ao mover a
 	 *             disciplina.
 	 */
-	public void moveDisciplina(long disciplinaId, int periodoFuturo,
+	public void moveDisciplina(String disciplinaId, int periodoFuturo,
 			int periodoAtual) throws TotalDeCreditosInvalidoException {
 		plano.moveDisciplina(disciplinaId, periodoFuturo, periodoAtual);
 	}

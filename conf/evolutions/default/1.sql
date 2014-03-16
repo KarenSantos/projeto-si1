@@ -4,19 +4,17 @@
 # --- !Ups
 
 create table Disciplina (
-  id                        bigint not null,
-  plano_de_curso_id         bigint not null,
+  codigo                    varchar(255) not null,
   nome                      varchar(255),
   creditos                  integer,
   periodo_sugerido          integer,
   dificuldade               integer,
   alocada_corretamente      boolean,
-  constraint pk_Disciplina primary key (id))
+  constraint pk_Disciplina primary key (codigo))
 ;
 
 create table periodo (
-  id                        varchar(255) not null,
-  plano_de_curso_id         bigint not null,
+  id                        bigint not null,
   menor_num_periodo         integer,
   maior_num_periodo         integer,
   minimo_creditos           integer,
@@ -32,6 +30,7 @@ create table plano_de_curso (
   maximo_de_creditos        integer,
   minimo_de_creditos        integer,
   periodos_base             integer,
+  usuario_id                bigint,
   constraint pk_plano_de_curso primary key (id))
 ;
 
@@ -44,10 +43,28 @@ create table usuario (
 ;
 
 
+create table dependencias (
+  dependente                     varchar(255) not null,
+  requisito                      varchar(255) not null,
+  constraint pk_dependencias primary key (dependente, requisito))
+;
+
 create table periodo_Disciplina (
-  periodo_id                     varchar(255) not null,
-  Disciplina_id                  bigint not null,
-  constraint pk_periodo_Disciplina primary key (periodo_id, Disciplina_id))
+  periodo_id                     bigint not null,
+  Disciplina_codigo              varchar(255) not null,
+  constraint pk_periodo_Disciplina primary key (periodo_id, Disciplina_codigo))
+;
+
+create table plano_de_curso_Disciplina (
+  plano_de_curso_id              bigint not null,
+  Disciplina_codigo              varchar(255) not null,
+  constraint pk_plano_de_curso_Disciplina primary key (plano_de_curso_id, Disciplina_codigo))
+;
+
+create table plano_de_curso_periodo (
+  plano_de_curso_id              bigint not null,
+  periodo_id                     bigint not null,
+  constraint pk_plano_de_curso_periodo primary key (plano_de_curso_id, periodo_id))
 ;
 create sequence Disciplina_seq;
 
@@ -57,16 +74,26 @@ create sequence plano_de_curso_seq;
 
 create sequence usuario_seq;
 
-alter table Disciplina add constraint fk_Disciplina_plano_de_curso_1 foreign key (plano_de_curso_id) references plano_de_curso (id) on delete restrict on update restrict;
-create index ix_Disciplina_plano_de_curso_1 on Disciplina (plano_de_curso_id);
-alter table periodo add constraint fk_periodo_plano_de_curso_2 foreign key (plano_de_curso_id) references plano_de_curso (id) on delete restrict on update restrict;
-create index ix_periodo_plano_de_curso_2 on periodo (plano_de_curso_id);
+alter table plano_de_curso add constraint fk_plano_de_curso_usuario_1 foreign key (usuario_id) references usuario (id) on delete restrict on update restrict;
+create index ix_plano_de_curso_usuario_1 on plano_de_curso (usuario_id);
 
 
+
+alter table dependencias add constraint fk_dependencias_Disciplina_01 foreign key (dependente) references Disciplina (codigo) on delete restrict on update restrict;
+
+alter table dependencias add constraint fk_dependencias_Disciplina_02 foreign key (requisito) references Disciplina (codigo) on delete restrict on update restrict;
 
 alter table periodo_Disciplina add constraint fk_periodo_Disciplina_periodo_01 foreign key (periodo_id) references periodo (id) on delete restrict on update restrict;
 
-alter table periodo_Disciplina add constraint fk_periodo_Disciplina_Discipl_02 foreign key (Disciplina_id) references Disciplina (id) on delete restrict on update restrict;
+alter table periodo_Disciplina add constraint fk_periodo_Disciplina_Discipl_02 foreign key (Disciplina_codigo) references Disciplina (codigo) on delete restrict on update restrict;
+
+alter table plano_de_curso_Disciplina add constraint fk_plano_de_curso_Disciplina__01 foreign key (plano_de_curso_id) references plano_de_curso (id) on delete restrict on update restrict;
+
+alter table plano_de_curso_Disciplina add constraint fk_plano_de_curso_Disciplina__02 foreign key (Disciplina_codigo) references Disciplina (codigo) on delete restrict on update restrict;
+
+alter table plano_de_curso_periodo add constraint fk_plano_de_curso_periodo_pla_01 foreign key (plano_de_curso_id) references plano_de_curso (id) on delete restrict on update restrict;
+
+alter table plano_de_curso_periodo add constraint fk_plano_de_curso_periodo_per_02 foreign key (periodo_id) references periodo (id) on delete restrict on update restrict;
 
 # --- !Downs
 
@@ -74,11 +101,17 @@ SET REFERENTIAL_INTEGRITY FALSE;
 
 drop table if exists Disciplina;
 
+drop table if exists dependencias;
+
 drop table if exists periodo;
 
 drop table if exists periodo_Disciplina;
 
 drop table if exists plano_de_curso;
+
+drop table if exists plano_de_curso_Disciplina;
+
+drop table if exists plano_de_curso_periodo;
 
 drop table if exists usuario;
 

@@ -56,7 +56,7 @@ public class Application extends Controller {
 	}
 	
 	@Security.Authenticated(Secured.class)
-	public static Result adicionar(long disciplinaId, int periodo) {
+	public static Result adicionar(String disciplinaId, int periodo) {
 		try {
 			planejador.addDisciplinaPeriodo(disciplinaId, periodo);
 		} catch (TotalDeCreditosInvalidoException e) {
@@ -68,7 +68,7 @@ public class Application extends Controller {
 	}
 	
 	@Security.Authenticated(Secured.class)
-	public static Result remover(long disciplinaId, int periodo) {
+	public static Result remover(String disciplinaId, int periodo) {
 		try{
 			planejador.removeDisciplinaPeriodo(disciplinaId, periodo);
 		}catch(RemocaoInvalidaException e){
@@ -78,7 +78,7 @@ public class Application extends Controller {
 	}
 	
 	@Security.Authenticated(Secured.class)
-	public static Result mover(long disciplinaId, int periodoFuturo, int periodoAtual) {
+	public static Result mover(String disciplinaId, int periodoFuturo, int periodoAtual) {
 		try {
 			planejador.moveDisciplina(disciplinaId, periodoFuturo, periodoAtual);
 		} catch (TotalDeCreditosInvalidoException e) {
