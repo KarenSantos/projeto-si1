@@ -120,7 +120,7 @@
 			
 	<div class="disc2">
 		@for(disciplina <- naoAlocadas) {
-			@if(disciplina.getPeriodoSugerido() == -2){
+			@if(disciplina.getPeriodoSugerido() == 20){
 				<a title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
 			}
@@ -132,7 +132,7 @@
 	
 	<div class="disc2">
 		@for(disciplina <- naoAlocadas) {
-				@if(disciplina.getPeriodoSugerido() == -1){
+				@if(disciplina.getPeriodoSugerido() == 19){
 					<a title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 					<br>
 				}

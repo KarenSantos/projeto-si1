@@ -558,7 +558,8 @@ public class PlanoDeCurso extends Model {
 	 */
 	private void alocacaoInicialDeDisciplinas() {
 		for (Disciplina disc : grade.getDisciplinas()) {
-			if(disc.getPreRequisitos().isEmpty()){
+			if(disc.getPreRequisitos().isEmpty()){// como é cascade, o plano tem que criar 
+												 // as disciplinas e não a grade como era antes.
 				disciplinasNaoAlocadas.add(new Disciplina(disc.getId(), disc.getNome(), disc.getCreditos(),
 						disc.getDificuldade(), disc.getDificuldade()));
 			}else{
@@ -566,14 +567,13 @@ public class PlanoDeCurso extends Model {
 						disc.getPreRequisitos(), disc.getDificuldade(), disc.getDificuldade()));
 			}
 			int periodo = disc.getPeriodoSugerido();
-			if (periodo > 0) {
+			if (periodo > 0 && periodo < 15) {
 				if (getTotalDePeriodos() < periodo) {
 					try {
 						createPeriodo();
 					} catch (Exception e) {
 					}
 				}
-				System.out.println(disc.getNome());
 				getPeriodo(periodo).addDisciplina(disc);
 				disciplinasNaoAlocadas.remove(disc);
 			}

@@ -17,7 +17,6 @@ public class Usuario extends Model {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private long id;
 	private String email;
 	private String nome;
 	private String password;

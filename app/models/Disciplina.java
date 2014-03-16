@@ -27,7 +27,7 @@ public class Disciplina extends Model {
 	private String id;
 	
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "dependencias", joinColumns = @JoinColumn(name = "dependente"), 
 	inverseJoinColumns = @JoinColumn(name = "requisito"))
 	private List<Disciplina> preRequisitos;

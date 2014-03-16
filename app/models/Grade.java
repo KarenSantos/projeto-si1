@@ -30,9 +30,6 @@ public class Grade extends Model{
 		}
 	}
 	
-	public static Finder<String, Grade> find = new Finder<String, Grade>(
-			String.class, Grade.class);
-
 	/**
 	 * Retorna a lista com todas as disciplinas da grade.
 	 * 
@@ -183,35 +180,35 @@ public class Grade extends Model{
 		createDisciplina("44", "Projeto em Computação 2", 6,new String[] { "43" }, 8, 3);
 
 		// Optativas Outros Departamentos
-		createDisciplina("45", "Futsal", 2, -1, 3);
-		createDisciplina("46", "Sociologia Industrial 1", 4, -1, 3);
-		createDisciplina("47", "Basquete masc/fem", 2, -1, 3);
-		createDisciplina("48", "Administração", 4, -1, 3);
-		createDisciplina("49", "Economia", 4, -1, 3);
-		createDisciplina("50", "Relações Humanas", 4, -1, 3);
-		createDisciplina("51", "Cálculo Diferencial e Integral 3", 5, new String[] { "07" }, -1, 3);
-		createDisciplina("52", "Equações Diferenciais", 4, -1, 3);
-		createDisciplina("53", "Ética", 4, -1, 3);
-		createDisciplina("54", "Expressão Gráfica", 4, -1, 3);
-		createDisciplina("55", "Futebol de Campo", 2, -1, 3);
-		createDisciplina("56", "Gestão da Qualidade", 4, -1, 3);
-		createDisciplina("57", "Ginástica Masc/Fem", 2, -1, 3);
-		createDisciplina("58", "Inglês", 4, -1, 3);
-		createDisciplina("59", "Introdução à Filosofia", 2, -1, 3);
-		createDisciplina("60", "Processo Decisório", 4, -1, 3);
+		createDisciplina("45", "Futsal", 2, 19, 3);
+		createDisciplina("46", "Sociologia Industrial 1", 4, 19, 3);
+		createDisciplina("47", "Basquete masc/fem", 2, 19, 3);
+		createDisciplina("48", "Administração", 4, 19, 3);
+		createDisciplina("49", "Economia", 4, 19, 3);
+		createDisciplina("50", "Relações Humanas", 4, 19, 3);
+		createDisciplina("51", "Cálculo Diferencial e Integral 3", 5, new String[] { "07" }, 19, 3);
+		createDisciplina("52", "Equações Diferenciais", 4, 19, 3);
+		createDisciplina("53", "Ética", 4, 19, 3);
+		createDisciplina("54", "Expressão Gráfica", 4, 19, 3);
+		createDisciplina("55", "Futebol de Campo", 2, 19, 3);
+		createDisciplina("56", "Gestão da Qualidade", 4, 19, 3);
+		createDisciplina("57", "Ginástica Masc/Fem", 2, 19, 3);
+		createDisciplina("58", "Inglês", 4, 19, 3);
+		createDisciplina("59", "Introdução à Filosofia", 2, 19, 3);
+		createDisciplina("60", "Processo Decisório", 4, 19, 3);
 
 		// Optativas TECC
-		createDisciplina("61", "Administração Financeira", 4, -2, 3);
-		createDisciplina("62", "Realidade Virtual", 4, new String[] { "27" },-2, 3);
-		createDisciplina("63", "Administração de Sistemas", 4, -2, 3);
-		createDisciplina("64", "Análise de Dados 1", 4, new String[] { "15" },-2, 3);
-		createDisciplina("65", "Arquitetura de Software", 4, new String[] {"26", "27" }, -2, 3);
-		createDisciplina("66", "Desenvolvimento Dirigido a Modelos", 4,new String[] { "26" }, -2, 3);
-		createDisciplina("67", "Desenvolvimento de App Corporativas", 4,new String[] { "27", "32" }, -2, 3);
-		createDisciplina("68", "Didática em Ciência da Computação", 2, -2, 3);
-		createDisciplina("69", "Economia de TI", 4, -2, 3);
-		createDisciplina("70", "Empreendedorismo em Software 1", 4, -2, 3);
-		createDisciplina("71", "Estágio 2", 4, -2, 3);
+		createDisciplina("61", "Administração Financeira", 4, 20, 3);
+		createDisciplina("62", "Realidade Virtual", 4, new String[] { "27" },20, 3);
+		createDisciplina("63", "Administração de Sistemas", 4, 20, 3);
+		createDisciplina("64", "Análise de Dados 1", 4, new String[] { "15" },20, 3);
+		createDisciplina("65", "Arquitetura de Software", 4, new String[] {"26", "27" }, 20, 3);
+		createDisciplina("66", "Desenvolvimento Dirigido a Modelos", 4,new String[] { "26" }, 20, 3);
+		createDisciplina("67", "Desenvolvimento de App Corporativas", 4,new String[] { "27", "32" }, 20, 3);
+		createDisciplina("68", "Didática em Ciência da Computação", 2, 20, 3);
+		createDisciplina("69", "Economia de TI", 4, 20, 3);
+		createDisciplina("70", "Empreendedorismo em Software 1", 4, 20, 3);
+		createDisciplina("71", "Estágio 2", 4, 20, 3);
 
 		createDisciplina("80", "Optativa 1", 4, 6, 3);
 		createDisciplina("81", "Optativa 2", 4, 6, 3);

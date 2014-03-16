@@ -30,16 +30,15 @@ create table plano_de_curso (
   maximo_de_creditos        integer,
   minimo_de_creditos        integer,
   periodos_base             integer,
-  usuario_id                bigint,
+  usuario_email             varchar(255),
   constraint pk_plano_de_curso primary key (id))
 ;
 
 create table usuario (
-  id                        bigint not null,
-  email                     varchar(255),
+  email                     varchar(255) not null,
   nome                      varchar(255),
   password                  varchar(255),
-  constraint pk_usuario primary key (id))
+  constraint pk_usuario primary key (email))
 ;
 
 
@@ -74,8 +73,8 @@ create sequence plano_de_curso_seq;
 
 create sequence usuario_seq;
 
-alter table plano_de_curso add constraint fk_plano_de_curso_usuario_1 foreign key (usuario_id) references usuario (id) on delete restrict on update restrict;
-create index ix_plano_de_curso_usuario_1 on plano_de_curso (usuario_id);
+alter table plano_de_curso add constraint fk_plano_de_curso_usuario_1 foreign key (usuario_email) references usuario (email) on delete restrict on update restrict;
+create index ix_plano_de_curso_usuario_1 on plano_de_curso (usuario_email);
 
 
 
