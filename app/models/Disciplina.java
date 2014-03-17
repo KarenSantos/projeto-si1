@@ -23,13 +23,12 @@ public class Disciplina extends Model {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "codigo")
 	private String id;
 	
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "dependencias", joinColumns = @JoinColumn(name = "dependente"), 
-	inverseJoinColumns = @JoinColumn(name = "requisito"))
+	@ManyToMany//(cascade = CascadeType.ALL)
+	@JoinTable(name = "dependencias", joinColumns = @JoinColumn(name = "disciplina"), 
+	inverseJoinColumns = @JoinColumn(name = "preRequisito"))
 	private List<Disciplina> preRequisitos;
 
 	private String nome;

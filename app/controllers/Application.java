@@ -2,10 +2,10 @@ package controllers;
 
 import java.util.List;
 
+import models.AlocacaoInvalidaException;
+import models.RemocaoInvalidaException;
+import models.TotalDeCreditosInvalidoException;
 import models.Usuario;
-import exceptions.AlocacaoInvalidaException;
-import exceptions.RemocaoInvalidaException;
-import exceptions.TotalDeCreditosInvalidoException;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;

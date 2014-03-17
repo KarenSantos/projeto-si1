@@ -1,4 +1,4 @@
-package exceptions;
+package models;
 
 public class RemocaoInvalidaException extends Exception {
 	

@@ -1,6 +1,5 @@
 package controllers;
 
-import models.PlanoDeCurso;
 import models.Usuario;
 import play.data.Form;
 import play.mvc.Controller;
@@ -128,6 +127,7 @@ public class Autenticador extends Controller {
 	static Form<Usuario> userForm = Form.form(Usuario.class);
 
 	public static Result login() {
+		criaUsuarios();
 		return ok(login.render(Form.form(Login.class)));
 	}
 
@@ -158,27 +158,27 @@ public class Autenticador extends Controller {
 			return badRequest(cadastro.render(cadastroForm));
 		} else if(cadastroForm.get().validate() == null) {
 			Cadastro novoC = cadastroForm.get();
-			PlanoDeCurso.create(new PlanoDeCurso(novoC.getEmail(), novoC.getNome(),
-			novoC.getPassword()));
+			Usuario.create(new Usuario(novoC.getEmail(), novoC.getNome(),
+					novoC.getPassword()));
 		}else{
 			return redirect(routes.Autenticador.cadastro());
 		}
 		return redirect(routes.Autenticador.login());
 	}
 	
-//	private static void criaUsuarios(){
-//		
-//		if (Usuario.find.all().isEmpty()) {
-//			int num = 1;
-//			
-//			while (num < 31){
-//				String email = "usuario" + num + "@email.com"; 
-//				String nome = "Usuário " + num;
-//				String password = "usuario" + num;
-//				
-//				Usuario.create(new Usuario(email, nome, password));
-//				num ++;
-//			}
-//		}
-//	}
+	private static void criaUsuarios(){
+		
+		if (Usuario.find.all().isEmpty()) {
+			int num = 1;
+			
+			while (num < 31){
+				String email = "usuario" + num + "@email.com"; 
+				String nome = "Usuário " + num;
+				String password = "usuario" + num;
+				
+				Usuario.create(new Usuario(email, nome, password));
+				num ++;
+			}
+		}
+	}
 }

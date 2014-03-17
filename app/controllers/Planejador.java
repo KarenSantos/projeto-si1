@@ -2,13 +2,13 @@ package controllers;
 
 import java.util.List;
 
-import exceptions.AlocacaoInvalidaException;
-import exceptions.RemocaoInvalidaException;
-import exceptions.TotalDeCreditosInvalidoException;
+import models.AlocacaoInvalidaException;
 import models.Disciplina;
 import models.Grade;
 import models.Periodo;
 import models.PlanoDeCurso;
+import models.RemocaoInvalidaException;
+import models.TotalDeCreditosInvalidoException;
 import models.Usuario;
 
 /**
@@ -27,8 +27,13 @@ public class Planejador {
 	 *            O id para identificar o usuário.
 	 */
 	public Planejador(Usuario usuario) {
-		plano = PlanoDeCurso.find.where().eq("usuario", usuario).findUnique();
-		if(plano.getGrade() == null){
+		plano = PlanoDeCurso.find.byId("plano_" + usuario.getEmail());
+		if (plano == null){
+			Grade grade = new Grade();
+			plano = new PlanoDeCurso("plano_" + usuario.getEmail(), grade, usuario);
+			plano.save();
+			plano.reset();
+		} else {
 			plano.setGrade(new Grade());
 		}
 	}

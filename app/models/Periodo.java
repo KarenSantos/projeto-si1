@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import exceptions.NumeroInvalidoException;
-import exceptions.TotalDeCreditosInvalidoException;
 import play.db.ebean.Model;
 
 /**
@@ -23,41 +21,40 @@ public class Periodo extends Model {
 	private final int MAIOR_NUM_PERIODO = 14;
 	private final int MINIMO_CREDITOS = 14;
 
-	public int getMinimoCreditos() {
-		return MINIMO_CREDITOS;
-	}
-
 	@Id
-	private long id;
-	
-	@ManyToMany(cascade = CascadeType.ALL)
-	private List<Disciplina> disciplinas;
-	
+	private String id;
+
+	private int numero;
 	private int totalDeCreditos;
 	private int totalDeDificuldade;
-	private int numero;
-	//private ValidadorRemocao validaRemocao;
-	
+
+	@ManyToMany
+	private List<Disciplina> disciplinas;
+
+	// private ValidadorRemocao validaRemocao;
 	// public ValidadorRemocao getValidaRemocao() {
-		//return validaRemocao;
-//	}
+	// return validaRemocao;
+	// }
 
 	public void setValidaRemocao(ValidadorRemocao validaRemocao) {
-		//this.validaRemocao = validaRemocao;
+		// this.validaRemocao = validaRemocao;
 	}
 
-	public static Finder<Long, Periodo> find = new Finder<Long, Periodo>(Long.class, Periodo.class);
+	public static Finder<String, Periodo> find = new Finder<String, Periodo>(
+			String.class, Periodo.class);
 
 	/**
 	 * Cria um periodo sem id e sem numero.
 	 */
-	public Periodo() {}
-	
+	public Periodo() {
+	}
+
 	/**
 	 * Um periodo contem uma lista de disciplinas e o total de creditos do
 	 * periodo.
 	 */
-	public Periodo(int numero) {
+	public Periodo(String id, int numero) {
+		this.id = id;
 		this.numero = numero;
 		disciplinas = new ArrayList<Disciplina>();
 		totalDeCreditos = 0;
@@ -65,20 +62,11 @@ public class Periodo extends Model {
 	}
 
 	/**
-	 * Retorna a lista de disciplinas do periodo.
-	 * 
-	 * @return A lista de disciplinas do periodo.
-	 */
-	public List<Disciplina> getDisciplinas() {
-		return disciplinas;
-	}
-
-	/**
 	 * Retorna o id do periodo.
 	 * 
 	 * @return O id do periodo.
 	 */
-	public long getId() {
+	public String getId() {
 		return this.id;
 	}
 
@@ -88,17 +76,17 @@ public class Periodo extends Model {
 	 * @param id
 	 *            O novo id do periodo.
 	 */
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	/**
 	 * Retorna o numero do periodo.
 	 * 
 	 * @return O numero do periodo.
 	 */
 	public int getNumero() {
-		return numero;
+		return this.numero;
 	}
 
 	/**
@@ -116,7 +104,16 @@ public class Periodo extends Model {
 		}
 		this.numero = numero;
 	}
-	
+
+	/**
+	 * Retorna a lista de disciplinas do periodo.
+	 * 
+	 * @return A lista de disciplinas do periodo.
+	 */
+	public List<Disciplina> getDisciplinas() {
+		return disciplinas;
+	}
+
 	/**
 	 * Adiciona uma disciplina a lista de disciplinas do periodo.
 	 * 
@@ -142,6 +139,15 @@ public class Periodo extends Model {
 	}
 
 	/**
+	 * Retorna o numero minimo de creditos de um periodo.
+	 * 
+	 * @return O minimo de creditos de um periodo.
+	 */
+	public int getMinimoDeCreditos() {
+		return MINIMO_CREDITOS;
+	}
+
+	/**
 	 * Retorna o numero total de disciplinas do periodo.
 	 * 
 	 * @return O numero total de disciplinas do periodo.
@@ -149,7 +155,7 @@ public class Periodo extends Model {
 	public int getTotalDeDisciplinas() {
 		return getDisciplinas().size();
 	}
-	
+
 	public int getTotalDeDificuldade() {
 		return totalDeDificuldade;
 	}
@@ -165,13 +171,12 @@ public class Periodo extends Model {
 		this.totalDeCreditos -= disciplina.getCreditos();
 		this.totalDeDificuldade -= disciplina.getDificuldade();
 	}
-	
+
 	public boolean podeRemover(Disciplina disciplina) {
 		return true;
-		//return validaRemocao.podeRemover(this, disciplina);
+		// return validaRemocao.podeRemover(this, disciplina);
 	}
-	
-	
+
 	/**
 	 * Salva o periodo no banco de dados.
 	 * 
@@ -188,14 +193,14 @@ public class Periodo extends Model {
 	 * @param periodoId
 	 *            O Id do periodo a ser atualizado.
 	 */
-	public static void atualizar(long periodoId) {
+	public static void atualizar(String periodoId) {
 		find.ref(periodoId).update();
 	}
-	
-	public static void deletar(long periodoId) {
+
+	public static void deletar(String periodoId) {
 		find.ref(periodoId).delete();
 	}
-	
+
 	@Override
 	public String toString() {
 		return "[Periodo " + getNumero() + "]";

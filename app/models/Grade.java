@@ -96,6 +96,7 @@ public class Grade extends Model{
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos,
 				preRequisitos, periodoSugerido, dificuldade);
 		disciplinas.add(aDisciplina);
+		aDisciplina.save();
 	}
 
 	/**
@@ -118,6 +119,7 @@ public class Grade extends Model{
 
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos, periodoSugerido, dificuldade);
 		disciplinas.add(aDisciplina);
+		aDisciplina.save();
 	}
 	
 	

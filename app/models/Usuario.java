@@ -17,6 +17,7 @@ public class Usuario extends Model {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	private String id;
 	private String email;
 	private String nome;
 	private String password;
@@ -38,6 +39,7 @@ public class Usuario extends Model {
 	 *            O password do usuário.
 	 */
 	public Usuario(String email, String nome, String password) {
+		this.id = email;
 		this.email = email;
 		this.nome = nome;
 		this.password = password;
@@ -49,6 +51,13 @@ public class Usuario extends Model {
 
 	public static List<Usuario> all() {return Usuario.find.all();	}
 
+	public String getId(){
+		return this.id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
 	
 	public String getNome(){
 		return this.nome;
@@ -62,12 +71,12 @@ public class Usuario extends Model {
 		return this.email;
 	}
 	
-	public String getPassword(){
-		return this.password;
-	}
-	
 	public void setEmail(String email){
 		this.email = email;
+	}
+	
+	public String getPassword(){
+		return this.password;
 	}
 	
 	public void setPassword(String password){

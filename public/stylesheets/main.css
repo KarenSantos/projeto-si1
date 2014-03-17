@@ -75,15 +75,21 @@ h3{
 }
 
 #indexBox{
-	display: inline;
-	padding: 10px;
-	color: rgb(90, 90, 90);
+	float: left;
+	width: 150px;
+	height: 150px;
+	padding: 20px;
 	margin: 20px;
+	color: rgb(90, 90, 90);
+	text-weight: 100;
 	background: white;
+	border-radius: 10px;
+	line-height: 2;
 }
 
 #indexIcons{
-	font-size: 50px;
+	position: relative;
+	font-size: 70px;
 }
 
 #botaoPeriodo{
