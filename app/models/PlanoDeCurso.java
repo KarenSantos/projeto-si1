@@ -40,6 +40,7 @@ public class PlanoDeCurso extends Model {
 	private List<Disciplina> disciplinasNaoAlocadas;
 
 	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "plano_periodos", joinColumns = @JoinColumn(name = "plano"), inverseJoinColumns = @JoinColumn(name = "periodo"))
 	private List<Periodo> periodos;
 
 	private Periodo periodoAtual;
@@ -550,8 +551,11 @@ public class PlanoDeCurso extends Model {
 		
 		for (Disciplina disc : getGrade().getDisciplinas()) {
 			int periodo = disc.getPeriodoSugerido();
-			getPeriodo(periodo).addDisciplina(disc);
-			disciplinasNaoAlocadas.remove(disc);
+			if(periodo >= 0){
+				getPeriodo(periodo).addDisciplina(disc);
+				disciplinasNaoAlocadas.remove(disc);
+			}
+			
 		}
 	}
 
