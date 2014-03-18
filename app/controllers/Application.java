@@ -33,7 +33,7 @@ public class Application extends Controller {
 
 	@Security.Authenticated(Secured.class)
 	public static Result plano() {
-		planejador.deletaUltimoPeriodoSeVazio();
+//		planejador.deletaUltimoPeriodoSeVazio();
 		return ok(views.html.plano.render(planejador.getPeriodos(), 
 				planejador.getDisciplinasNaoAlocadas(), planejador));
 	}
@@ -91,5 +91,10 @@ public class Application extends Controller {
 	public static Result inverter() {
 		planejador.inverteOrdemDosPeriodos();
 		return ok("invertido");
+	}
+	
+	@Security.Authenticated(Secured.class)
+	public static Result disciplinas(String disciplinaId) {
+		return ok(views.html.disciplinas.render(planejador.getDisciplinas(), planejador.getDisciplina(disciplinaId)));
 	}
 }

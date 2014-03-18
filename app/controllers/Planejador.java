@@ -20,6 +20,7 @@ import models.Usuario;
 public class Planejador {
 
 	private PlanoDeCurso plano;
+
 	/**
 	 * Cria um planejador que recebe um id como usuário.
 	 * 
@@ -28,9 +29,10 @@ public class Planejador {
 	 */
 	public Planejador(Usuario usuario) {
 		plano = PlanoDeCurso.find.byId("plano_" + usuario.getEmail());
-		if (plano == null){
+		if (plano == null) {
 			Grade grade = new Grade();
-			plano = new PlanoDeCurso("plano_" + usuario.getEmail(), grade, usuario);
+			plano = new PlanoDeCurso("plano_" + usuario.getEmail(), grade,
+					usuario);
 			plano.save();
 			plano.reset();
 		} else {
@@ -70,7 +72,7 @@ public class Planejador {
 	public void createPeriodo() throws AlocacaoInvalidaException {
 		plano.createPeriodo();
 	}
-	
+
 	/**
 	 * Adiciona uma disciplina a um periodo.
 	 * 
@@ -100,6 +102,15 @@ public class Planejador {
 	public Disciplina getDisciplina(String id) {
 		return plano.getDisciplina(id);
 	}
+	
+	/**
+	 * Retorna todas as disciplinas do plano de curso.
+	 * 
+	 * @return A lista com todas as disciplinas do plano de curso.
+	 */
+	public List<Disciplina> getDisciplinas() {
+		return plano.getDisciplinas();
+	}
 
 	/**
 	 * Retorna em qual periodo está a disciplina.
@@ -120,10 +131,11 @@ public class Planejador {
 	 *            O id da disciplina a ser removida.
 	 * @param periodo
 	 *            O periodo de onde vai ser removida a disciplina.
-	 * @throws RemocaoInvalidaException 
-	 * 			  Caso minimo de creditos nao permita
+	 * @throws RemocaoInvalidaException
+	 *             Caso minimo de creditos nao permita
 	 */
-	public void removeDisciplinaPeriodo(String discId, int periodo) throws RemocaoInvalidaException {
+	public void removeDisciplinaPeriodo(String discId, int periodo)
+			throws RemocaoInvalidaException {
 		plano.removeDisciplinaPeriodo(discId, periodo);
 	}
 
@@ -230,16 +242,50 @@ public class Planejador {
 		return resp;
 	}
 
-	public Periodo getPeriodoAtual() {
-		return plano.getPeriodoAtual();
+	/**
+	 * Retorna o numero do periodo atual do plano de curso.
+	 * 
+	 * @return O numero do periodo atual do plano de curso.
+	 */
+	public int getNumPeriodoAtual() {
+		return plano.getNumPeriodoAtual();
 	}
 
-	public void setPeriodoAtual(int i) {
-		plano.setPeriodoAtual(i);
+	/**
+	 * Altera o periodo atual do plano do curso pelo numero.
+	 * 
+	 * @param numPeriodo
+	 *            O numero do novo periodo atual do plano de curso.
+	 */
+	public void setPeriodoAtual(int numPeriodo) {
+		plano.setPeriodoAtual(numPeriodo);
+	}
+
+	/**
+	 * Retorna o total de creditos dos periodos anteriores ao atual.
+	 * 
+	 * @return O total de creditos dos periodos anteriores ao atual.
+	 */
+	public int getTotalDeCreditosCursados() {
+		return plano.getTotalDeCreditosCursados();
+	}
+
+	/**
+	 * Retorna o total de creditos de todos os periodos.
+	 * 
+	 * @return O total de creditos de todos os periodos.
+	 */
+	public int getTotalDeCreditos() {
+		return plano.getTotalDeCreditos();
 	}
 	
-	public void setPeriodoAtual(Periodo periodo) {
-		plano.setPeriodoAtual(periodo);
+	/**
+	 * Retorna o minimo de creditos necessarios para concluir o curso.
+	 * 
+	 * @return O minimo de creditos necessarios para concluir o curso.
+	 */
+	public int getMinimoDeCreditosDoCurso() {
+		return plano.getMinimoDeCreditosDoCurso();
 	}
 
 }
