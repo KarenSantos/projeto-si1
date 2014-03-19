@@ -191,7 +191,7 @@ public class Periodo extends Model {
 			throws TotalDeCreditosInvalidoException {
 		if (!validador.podeAdicionar(this, disciplina)) {
 			throw new TotalDeCreditosInvalidoException(
-					"O número máximo de créditos neste período é 28.");
+					"O número máximo de créditos por período é 28.");
 		}
 		disciplinas.add(disciplina);
 		this.totalDeCreditos += disciplina.getCreditos();

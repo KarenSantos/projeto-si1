@@ -1,5 +1,7 @@
 package controllers;
 
+//import models.AlocacaoInvalidaException;
+//import models.TotalDeCreditosInvalidoException;
 import models.AlocacaoInvalidaException;
 import models.TotalDeCreditosInvalidoException;
 import models.Usuario;

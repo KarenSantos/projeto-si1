@@ -5,6 +5,7 @@ import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.start;
 import models.AlocacaoInvalidaException;
 import models.Disciplina;
+import models.Grade;
 import models.TotalDeCreditosInvalidoException;
 import models.Usuario;
 
@@ -17,10 +18,15 @@ import controllers.Planejador;
 public class PlanejadorTest {
 
 	private Planejador planejador;
+	private Grade grade;
+	private Usuario testador;
 
 	@Before
 	public void setUp() throws Exception {
-		Usuario testador = new Usuario("testador@teste.teste", "Nome", "password");
+		start(fakeApplication(inMemoryDatabase()));
+		grade = new Grade();
+		testador = new Usuario("testador@teste.teste", "Nome", "password");
+		testador.save();
 		planejador = new Planejador(testador);
 
 	}
@@ -85,8 +91,8 @@ public class PlanejadorTest {
 	@Test
 	public void naoDevePermitirAdicionarSePeriodoNaoForOUltimoEPassarMaximoDeCreditos() {
 
-		Assert.assertEquals(6, planejador.getPeriodo(1).getTotalDeDisciplinas());
-		Assert.assertEquals(26, planejador.getPeriodo(1).getTotalDeCreditos());
+		Assert.assertEquals(7, planejador.getPeriodo(2).getTotalDeDisciplinas());
+		Assert.assertEquals(26, planejador.getPeriodo(2).getTotalDeCreditos());
 		
 		try {
 			planejador.addDisciplinaPeriodo("61", 2); // segundo periodo ja tem 26 creditos
@@ -257,6 +263,7 @@ public class PlanejadorTest {
 	@Test
 	public void naoDevePoderRemoverDePeriodoAtualMenosQueMinimo()
 			throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
+		//TODO ajeitar isso
 
 		planejador.setPeriodoAtual(1);
 		planejador.removeDisciplinaPeriodo("01", 1);
@@ -277,13 +284,30 @@ public class PlanejadorTest {
 	}
 
 	@Test
+	public void naoDeveRetirarDisciplinaSePreRequisitoFoiRetiradoEConsomeMinimoDosOutros()
+			throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException{
+		
+		planejador.setPeriodoAtual(2);
+		try{
+			planejador.removeDisciplinaPeriodo("01", 1); // removendo calculo 1
+			Assert.fail("Deveria ter pego exception.");
+		}
+		catch(TotalDeCreditosInvalidoException e){
+			Assert.assertEquals(e.getMessage(), "O número mínimo de créditos neste período é 14.");
+		}
+		
+	}
+
+	@Test
 	public void deveRetirarDisciplinaSePreRequisitoFoiRetirado()
 			throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException{
-
-		planejador.removeDisciplinaPeriodo("01", 1); // removendo calculo 1
-		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("07")); // calculo 2 foi removido tambem
-		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("15")); // probabilidade que depende de calculo 2 também foi removido
-		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("21")); // metodos que depende de prob tambem foi removido and so on...
+		
+		planejador.setPeriodoAtual(3);
+		planejador.removeDisciplinaPeriodo("20", 3); // removendo gi
+		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("27")); // si1 foi removido tambem
+		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("33")); // si2 foi removido tambem
+		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("32")); // bd1 foi removido tambem
+		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("39")); // bd2 foi removido tambem
 	}
 
 	@Test

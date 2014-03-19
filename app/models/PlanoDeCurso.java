@@ -338,7 +338,7 @@ public class PlanoDeCurso extends Model {
 		Disciplina aDisciplina = getDisciplina(id);
 		Periodo oPeriodo = getPeriodo(periodo);
 
-		Map<Disciplina, Integer> aRemover = new HashMap<Disciplina, Integer>();
+		Map<Integer, List<Disciplina>> aRemover = new HashMap<Integer, List<Disciplina>>();
 		identificaDependentes(aDisciplina, periodo, aRemover);
 
 		if (!oPeriodo.podeRemover(aDisciplina)) {
@@ -347,20 +347,34 @@ public class PlanoDeCurso extends Model {
 		}
 		// se alguma das disciplinas dependentes desta a frente nao puder ser
 		// removida
-		for (Map.Entry<Disciplina, Integer> entry : aRemover.entrySet()) {
-			if (!getPeriodo(entry.getValue()).podeRemover(entry.getKey())) {
-				throw new TotalDeCreditosInvalidoException("Removendo "
-						+ entry.getKey().getNome()
-						+ ", que é dependente desta, do " + entry.getValue()
-						+ "º periodo o mínimo de créditos seria violado.");
+		for (Integer key : aRemover.keySet()) {
+			for(Disciplina secundaria : aRemover.get(key)){
+				if(!getPeriodo(key).podeRemover(secundaria)){
+					throw new TotalDeCreditosInvalidoException("Removendo "
+							+ secundaria.getNome()
+							+ ", que é dependente desta, do " + key
+							+ "º periodo o mínimo de créditos seria violado.");
+				}
 			}
+//			if (!getPeriodo(key).podeRemover(entry.getKey())) {
+//				throw new TotalDeCreditosInvalidoException("Removendo "
+//						+ entry.getKey().getNome()
+//						+ ", que é dependente desta, do " + entry.getValue()
+//						+ "º periodo o mínimo de créditos seria violado.");
+//			}
 		}
 
 		oPeriodo.removeDisciplina(aDisciplina);
-		for (Map.Entry<Disciplina, Integer> entry : aRemover.entrySet()) {
-			getPeriodo(entry.getValue()).removeDisciplina(entry.getKey());
-			disciplinasNaoAlocadas.add(entry.getKey());
+		for (Integer key : aRemover.keySet()) {
+			for(Disciplina secundaria : aRemover.get(key)){
+				getPeriodo(key).removeDisciplina(secundaria);
+				disciplinasNaoAlocadas.add(secundaria);
+			}
 		}
+//		for (Map.Entry<Disciplina, Integer> entry : aRemover.entrySet()) {
+//			getPeriodo(entry.getValue()).removeDisciplina(entry.getKey());
+//			disciplinasNaoAlocadas.add(entry.getKey());
+//		}
 
 		if (!getDisciplinasOptativasGenericas().contains(aDisciplina)) {
 			disciplinasNaoAlocadas.add(aDisciplina);
@@ -472,7 +486,7 @@ public class PlanoDeCurso extends Model {
 	public boolean ehPreRequisito(Disciplina disc, int periodo) {
 		boolean resp = false;
 
-		Map<Disciplina, Integer> dependentes = new HashMap<Disciplina, Integer>();
+		Map<Integer, List<Disciplina>> dependentes = new HashMap<Integer, List<Disciplina>>();
 		identificaDependentes(disc, periodo, dependentes);
 
 		if (!dependentes.isEmpty()) {
@@ -573,7 +587,7 @@ public class PlanoDeCurso extends Model {
 	 *            pre-requisito e seu respectivo periodo.
 	 */
 	private void identificaDependentes(Disciplina disciplina, int periodo,
-			Map<Disciplina, Integer> dependentes) {
+			Map<Integer, List<Disciplina>> dependentes) {
 		periodo++;
 		if (getPeriodos().size() >= periodo) {
 
@@ -583,7 +597,19 @@ public class PlanoDeCurso extends Model {
 				for (Disciplina preRequito : disciplinaAcima.getPreRequisitos()) {
 
 					if (disciplina.equals(preRequito)) {
-						dependentes.put(disciplinaAcima, periodo);
+						if(dependentes.containsKey(periodo)){
+							boolean contem = false;
+							for(Disciplina d : dependentes.get(periodo)){
+								if(d.equals(disciplinaAcima))
+									contem = true;
+							}
+							if(!contem) dependentes.get(periodo).add(disciplinaAcima);
+						}
+						else{
+							dependentes.put(periodo, new ArrayList<Disciplina>());
+							dependentes.get(periodo).add(disciplinaAcima);
+						}
+//						dependentes.put(disciplinaAcima, periodo);
 						identificaDependentes(disciplinaAcima, periodo,
 								dependentes);
 					}
