@@ -1,6 +1,7 @@
 package models;
 
 import java.util.*;
+
 import javax.persistence.*;
 
 import play.db.ebean.*;
@@ -103,11 +104,19 @@ public class Usuario extends Model {
 	 * @return Null se a autenticação é feita com sucesso ou uma string de erro
 	 *         se não.
 	 */
-	public static Usuario authenticate(String email, String password) {
-		return find.where()
-	            .eq("email", email)
-	            .eq("password", password)
-	            .findUnique();
+	public static String authenticate(String email, String password){
+        Usuario usuario = find.where().eq("email", email).findUnique();
+        if(usuario == null){
+        	return "Usuario não encontrado";
+        }
+		if(usuario.getPassword().equals(password)){
+			return null;
+		}
+        else{
+			return "Senha incorreta";
+		}
+		
+
 	}
 
 	/**

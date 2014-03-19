@@ -27,6 +27,7 @@ public class Planejador {
 	 *            O id para identificar o usuário.
 	 */
 	public Planejador(Usuario usuario) {
+		usuario.getNome();
 		plano = PlanoDeCurso.find.byId("plano_" + usuario.getEmail());
 		if (plano == null) {
 			Grade grade = new Grade();
@@ -71,7 +72,7 @@ public class Planejador {
 	 */
 	public void createPeriodo() throws AlocacaoInvalidaException {
 		plano.createPeriodo();
-		plano.save();
+		plano.update();
 	}
 
 	/**
@@ -141,7 +142,7 @@ public class Planejador {
 	 */
 	public void setPeriodoAtual(int numPeriodo) {
 		plano.setPeriodoAtual(numPeriodo);
-		plano.save();
+		plano.update();
 	}
 
 	/**
@@ -188,7 +189,7 @@ public class Planejador {
 	public void addDisciplinaPeriodo(String id, int periodo)
 			throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
 		plano.addDisciplinaPeriodo(id, periodo);
-		plano.save();
+		plano.update();
 	}
 	
 	/**
@@ -205,7 +206,7 @@ public class Planejador {
 	public void removeDisciplinaPeriodo(String discId, int periodo)
 			throws TotalDeCreditosInvalidoException {
 		plano.removeDisciplinaPeriodo(discId, periodo);
-		plano.save();
+		plano.update();
 	}
 
 	/**
@@ -224,7 +225,7 @@ public class Planejador {
 	public void moveDisciplina(String disciplinaId, int periodoFuturo,
 			int periodoAtual) throws TotalDeCreditosInvalidoException {
 		plano.moveDisciplina(disciplinaId, periodoFuturo, periodoAtual);
-		plano.save();
+		plano.update();
 	}
 	
 	/**
@@ -233,7 +234,7 @@ public class Planejador {
 	 */
 	public void deletaUltimoPeriodoSeVazio() {
 		plano.deletaUltimoPeriodoSeVazio();
-		plano.save();
+		plano.update();
 	}
 
 	/**
@@ -268,7 +269,7 @@ public class Planejador {
 	 */
 	public void inverteOrdemDosPeriodos() {
 		plano.inverteOrdemDosPeriodos();
-		plano.save();
+		plano.update();
 	}
 
 	/**

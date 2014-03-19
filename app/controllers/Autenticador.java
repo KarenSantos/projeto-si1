@@ -117,8 +117,9 @@ public class Autenticador extends Controller {
 		 * @return Null se os dados para login foram validos ou mensagem de erro caso contrário.
 		 */
 		public String validate() {
-			if(Usuario.authenticate(email, password) == null) {
+			if(Usuario.authenticate(email, password) != null) {
                 flash("Usuário ou password inválido.");
+                return "Login inválido";
             }
             return null;
 		}
@@ -136,6 +137,7 @@ public class Autenticador extends Controller {
 		if (loginForm.hasErrors()) {
 			return badRequest(login.render(loginForm));
 		} else {
+			
 			session().clear();
 			session("email", loginForm.get().getEmail());
 			return redirect(routes.Application.index());
