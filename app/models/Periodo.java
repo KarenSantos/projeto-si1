@@ -17,9 +17,10 @@ import play.db.ebean.Model;
 public class Periodo extends Model {
 
 	public static final long serialVersionUID = 1L;
+	private final int MAXIMO_DE_CREDITOS = 28;
+	private final int MINIMO_DE_CREDITOS = 14;
 	private final int MENOR_NUM_PERIODO = 1;
 	private final int MAIOR_NUM_PERIODO = 14;
-	private final int MINIMO_CREDITOS = 14;
 
 	@Id
 	private String id;
@@ -31,14 +32,7 @@ public class Periodo extends Model {
 	@ManyToMany
 	private List<Disciplina> disciplinas;
 
-	// private ValidadorRemocao validaRemocao;
-	// public ValidadorRemocao getValidaRemocao() {
-	// return validaRemocao;
-	// }
-
-	public void setValidaRemocao(ValidadorRemocao validaRemocao) {
-		// this.validaRemocao = validaRemocao;
-	}
+	private ValidadorDeAlocacao validador;
 
 	public static Finder<String, Periodo> find = new Finder<String, Periodo>(
 			String.class, Periodo.class);
@@ -58,7 +52,7 @@ public class Periodo extends Model {
 		this.numero = numero;
 		disciplinas = new ArrayList<Disciplina>();
 		totalDeCreditos = 0;
-		setValidaRemocao(new RemoverNormalmente());
+		setValidadorDeAlocacao(new TemMinimoDeCreditos());
 	}
 
 	/**
@@ -115,18 +109,22 @@ public class Periodo extends Model {
 	}
 
 	/**
-	 * Adiciona uma disciplina a lista de disciplinas do periodo.
+	 * Recupera o tipo de validador de alocacao do periodo.
 	 * 
-	 * @param disciplina
-	 *            A disciplina a ser adicionada.
-	 * @throws TotalDeCreditosInvalidoException
-	 *             Se o numero total de creditos ficaria acima do maximo de
-	 *             creditos por periodo.
+	 * @return O validador de alocacao do periodo.
 	 */
-	public void addDisciplina(Disciplina disciplina) {
-		disciplinas.add(disciplina);
-		this.totalDeCreditos += disciplina.getCreditos();
-		this.totalDeDificuldade += disciplina.getDificuldade();
+	public ValidadorDeAlocacao getValidadorDeAlocacao() {
+		return this.validador;
+	}
+
+	/**
+	 * Altera o tipo de validador de alocacao do periodo.
+	 * 
+	 * @param validador
+	 *            O novo validador de alocacao do periodo.
+	 */
+	public void setValidadorDeAlocacao(ValidadorDeAlocacao validador) {
+		this.validador = validador;
 	}
 
 	/**
@@ -136,15 +134,6 @@ public class Periodo extends Model {
 	 */
 	public int getTotalDeCreditos() {
 		return totalDeCreditos;
-	}
-
-	/**
-	 * Retorna o numero minimo de creditos de um periodo.
-	 * 
-	 * @return O minimo de creditos de um periodo.
-	 */
-	public int getMinimoDeCreditos() {
-		return MINIMO_CREDITOS;
 	}
 
 	/**
@@ -161,20 +150,72 @@ public class Periodo extends Model {
 	}
 
 	/**
+	 * Recupera o maximo de creditos possivel no periodo.
+	 * 
+	 * @return O maximo de creditos possivel no periodo.
+	 */
+	public int getMaximoDeCreditos() {
+		return this.MAXIMO_DE_CREDITOS;
+	}
+
+	/**
+	 * Retorna o numero minimo de creditos de um periodo.
+	 * 
+	 * @return O minimo de creditos de um periodo.
+	 */
+	public int getMinimoDeCreditos() {
+		return MINIMO_DE_CREDITOS;
+	}
+
+	/**
+	 * Retorna se a disciplina pode ser ou nao removida do periodo.
+	 * 
+	 * @param disciplina
+	 *            A disciplina a ser removida.
+	 * @return True se pode ser removida ou false caso contrario.
+	 */
+	public boolean podeRemover(Disciplina disciplina) {
+		return validador.podeRemover(this, disciplina);
+	}
+
+	/**
+	 * Adiciona uma disciplina a lista de disciplinas do periodo.
+	 * 
+	 * @param disciplina
+	 *            A disciplina a ser adicionada.
+	 * @throws TotalDeCreditosInvalidoException
+	 *             Se o numero total de creditos ficar acima do maximo de
+	 *             creditos por periodo.
+	 */
+	public void addDisciplina(Disciplina disciplina)
+			throws TotalDeCreditosInvalidoException {
+		if (!validador.podeAdicionar(this, disciplina)) {
+			throw new TotalDeCreditosInvalidoException(
+					"O número máximo de créditos neste período é 28.");
+		}
+		disciplinas.add(disciplina);
+		this.totalDeCreditos += disciplina.getCreditos();
+		this.totalDeDificuldade += disciplina.getDificuldade();
+	}
+
+	/**
 	 * Remove uma disciplina da lista de disciplinas do periodo.
 	 * 
 	 * @param disciplina
 	 *            A disciplina a ser removida.
+	 * @throws TotalDeCreditosInvalidoException
+	 *             Se o numero total de creditos ficar abaixo do minimo de
+	 *             creditos por periodo.
 	 */
-	public void removeDisciplina(Disciplina disciplina) {
+	public void removeDisciplina(Disciplina disciplina)
+			throws TotalDeCreditosInvalidoException {
+		if (!validador.podeRemover(this, disciplina)) {
+			throw new TotalDeCreditosInvalidoException(
+					"O número mínimo de créditos neste período é 14.");
+		}
 		disciplinas.remove(disciplina);
 		this.totalDeCreditos -= disciplina.getCreditos();
 		this.totalDeDificuldade -= disciplina.getDificuldade();
-	}
-
-	public boolean podeRemover(Disciplina disciplina) {
-		return true;
-		// return validaRemocao.podeRemover(this, disciplina);
 	}
 
 	/**
@@ -205,5 +246,4 @@ public class Periodo extends Model {
 	public String toString() {
 		return "[Periodo " + getNumero() + "]";
 	}
-
 }

@@ -20,16 +20,31 @@
 	@for(periodo <- periodos){
 		@if(periodo.getNumero() == numPeriodo){
 			<div id="periodoBox">
-				<a onclick="sairEdicao()" title="Clique aqui para fechar edição"><div id="numPeriodoEditando"><b>@periodo.getNumero()º</b> Período</div></a>
+			
+				<div id="numPeriodoEditando"><b>@periodo.getNumero()º</b> Período
+				<div id="periodoOptions">
+			  		<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+			    		<span class="caret"></span>
+			  		</button>
+			  		<ul class="dropdown-menu pull-right" role="menu">
+			    		<li><a href="/plano">Fechar edição</a></li>
+			    		<li><a href="/marcar/@periodo.getNumero()">Marcar como atual</a></li>
+			  		</ul>
+			  	</div>
+				@if(periodo.getNumero() == planejador.getNumPeriodoAtual()){
+					<div id="cursando">Cursando...</div>
+				}
+				</div>
+			
 				<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
 				<div class="disc"><!-- Disciplinas do periodo -->
 				    @for(disciplinaPeriodo <- periodo.getDisciplinas()) {
 				    	@if(disciplinaPeriodo.isAlocadaCorretamente()) {
-				    	   	<a onclick="rDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo', '@planejador.ehPreRequisito(disciplinaPeriodo, periodo.getNumero())')" class="cada1" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a>
+				    	   	<a onclick="removerDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo', '@planejador.ehPreRequisito(disciplinaPeriodo, periodo.getNumero())')" class="cada1" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a>
 				    	   	<span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
 				    		<br>
 				    	} else {
-				    		<a onclick="rDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo', '@planejador.ehPreRequisito(disciplinaPeriodo, periodo.getNumero())')" class="cada1 discRed" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a>
+				    		<a onclick="removerDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo', '@planejador.ehPreRequisito(disciplinaPeriodo, periodo.getNumero())')" class="cada1 discRed" title="Pré-requisitos: @disciplinaPeriodo.getPreRequisitos">@disciplinaPeriodo.getNome()</a>
 				    		<span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>
 				    		<br>
 				    	}
@@ -45,7 +60,22 @@
 			</div><!-- Fim de um periodo -->
 		} else {
 			<div id="periodoBox">
-				<a onclick="editarPeriodo('@periodo.getNumero()')" title="Clique aqui para editar"><div id="numPeriodo"><b>@periodo.getNumero()º</b> Período</div></a><!-- Numero do periodo -->
+			
+				<div id="numPeriodo"><b>@periodo.getNumero()º</b> Período
+				<div id="periodoOptions">
+			  		<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+			    		<span class="caret"></span>
+			  		</button>
+			  		<ul class="dropdown-menu pull-right" role="menu">
+			    		<li><a href="/editar/@periodo.getNumero()">Editar período</a></li>
+			    		<li><a href="/marcar/@periodo.getNumero()">Marcar como atual</a></li>
+			  		</ul>
+			  	</div>
+				@if(periodo.getNumero() == planejador.getNumPeriodoAtual()){
+					<div id="cursando">Cursando...</div>
+				}
+				</div>
+				
 				<div id="headerDescription">Disciplina <span>créditos / <a title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
 				<div class="disc"><!-- Disciplinas do periodo -->
 				    @for(disciplinaPeriodo <- periodo.getDisciplinas()) {
@@ -167,8 +197,8 @@
 </div>
 
 <div id="barraDeStatus">
-	<b>Cursados:</b> @planejador.getTotalDeCreditosCursados() créditos / 
-	<b>Cursados + Planejados:</b> @planejador.getTotalDeCreditos() créditos / 
-	<b>Mínimo de créditos para concluir o curso:</b> @planejador.getMinimoDeCreditosDoCurso() créditos 
+	Cursados: <b>@planejador.getTotalDeCreditosCursados() créditos</b> / 
+	Cursados + Planejados: <b>@planejador.getTotalDeCreditos() créditos</b> 
+	<span>Mínimo de créditos para concluir o curso: <b>@planejador.getMinimoDeCreditosDoCurso() créditos</b></span>
 </div>
 }

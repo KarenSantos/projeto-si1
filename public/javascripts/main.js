@@ -16,19 +16,6 @@ function novoPeriodo(periodo) {
 	
 }
 
-function editarPeriodo(periodo){
-	
-	$.ajax({
-		  success: function(){
-		        window.location = "/editar/" + periodo;
-		  },
-		  error: function(XMLHttpRequest, textStatus, errorThrown) {
-			  alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
-			  window.location = "/plano";
-		  }
-	});
-}
-
 function removerDisciplina(discId, periodo, ehPreRequisito) {
 	
 	if (ehPreRequisito == "true") {
@@ -95,18 +82,6 @@ function adicionarDisciplina(discId, periodo, temPreRequisito){
 			  } else {
 				  alert("Esta disciplina possui pré-requisitos ainda não alocados em períodos anteriores.");
 			  }
-		  }
-	});
-}
-
-function sairEdicao(){
-	$.ajax({
-		  success: function(){
-		        window.location = "/plano";
-		  },
-		  error: function(XMLHttpRequest, textStatus, errorThrown) {
-			  alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
-			  window.location = "/plano";
 		  }
 	});
 }

@@ -3,32 +3,33 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-import play.db.ebean.*;
-import play.data.validation.Constraints.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
-import javax.persistence.*;
-
-import net.sf.ehcache.config.PersistenceConfiguration.Strategy;
+import play.db.ebean.Model;
 
 /**
  * Classe de disciplinas.
- *
+ * 
  * @author
  * 
  */
 @Entity
-@Table (name = "Disciplina")
+@Table(name = "Disciplina")
 public class Disciplina extends Model {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	private String id;
-	
-	
-	@ManyToMany//(cascade = CascadeType.ALL)
-	@JoinTable(name = "dependencias", joinColumns = @JoinColumn(name = "disciplina"), 
-	inverseJoinColumns = @JoinColumn(name = "preRequisito"))
+
+	@ManyToMany
+	// (cascade = CascadeType.ALL)
+	@JoinTable(name = "dependencias", joinColumns = @JoinColumn(name = "disciplina"), inverseJoinColumns = @JoinColumn(name = "preRequisito"))
 	private List<Disciplina> preRequisitos;
 
 	private String nome;
@@ -283,17 +284,17 @@ public class Disciplina extends Model {
 	public static void create(Disciplina disc) {
 		disc.save();
 	}
-	
+
 	/**
 	 * Deleta disciplina do banco de dados
+	 * 
 	 * @param disc
-	 * 			Disciplina a ser deletada
+	 *            Disciplina a ser deletada
 	 */
-	 
 	public static void remove(Disciplina disc) {
 		disc.delete();
 	}
-	
+
 	/**
 	 * Atualiza a disciplina no banco de dados.
 	 * 
@@ -311,7 +312,7 @@ public class Disciplina extends Model {
 	public boolean equals(Object obj) {
 		if (obj instanceof Disciplina) {
 			Disciplina dis = (Disciplina) obj;
-			if (dis.getId() ==getId()) {
+			if (dis.getId() == getId()) {
 				return true;
 			}
 		}

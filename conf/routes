@@ -24,6 +24,7 @@ GET     /adicionar/:disciplinaId/:periodo		controllers.Application.adicionar(dis
 GET 	/remover/:disciplinaId/:periodo			controllers.Application.remover(disciplinaId: String, periodo: Int)
 GET		/mover/:disciplinaId/:futuro/:atual		controllers.Application.mover(disciplinaId: String, futuro: Int, atual: Int)
 GET		/inverter								controllers.Application.inverter()
+GET		/marcar/:periodo						controllers.Application.marcarComoAtual(periodo: Int)
 
 # Disciplinas
 GET		/disciplinas/:disciplinaId			controllers.Application.disciplinas(disciplinaId: String)

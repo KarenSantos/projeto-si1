@@ -92,6 +92,10 @@ h3{
 	font-size: 70px;
 }
 
+/* ==================================================
+   Periodos
+================================================== */
+
 #botaoPeriodo{
 	position: absolute;
 	top: 10px;
@@ -183,30 +187,23 @@ h3{
 	overflow:auto;
 }
 
-#header{
-	background: #D8D8D8;
-	line-height: 1.5;
-	text-align: center;
-	text-transform: uppercase;
-	font-size: 15px;
-	font-weight: 700;
-	color: lightcoral;
+#cursando{
+	position: absolute;
+	top: 2px;
+	left: 10px;
+	text-transform: none;
 }
 
-#headerDescription{
-	background: white;
-	line-height: 1.5;
-	padding-left: 15px;
-	text-align: left;
-	text-transform: uppercase;
-	font-size: 11px;
-	font-weight: 900;
+#periodoOptions{
+	position: absolute;
+	top: 1px;
+	right: 15px;
+	text-transform: none;
 }
 
 #numPeriodo{
 	position: relative;
 	width: 100%;
-	cursor: pointer;
 	text-align: center;
 	text-transform: uppercase;
 	line-height: 2;
@@ -226,7 +223,6 @@ h3{
 #numPeriodoEditando {
 	position: relative;
 	width: 100%;
-	cursor: pointer;
 	text-align: center;
 	text-transform: uppercase;
 	line-height: 2;
@@ -241,6 +237,26 @@ h3{
 
 #numPeriodoEditando:hover{
 	background: darkslateblue;
+}
+
+#header{
+	background: #D8D8D8;
+	line-height: 1.5;
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 15px;
+	font-weight: 700;
+	color: lightcoral;
+}
+
+#headerDescription{
+	background: white;
+	line-height: 1.5;
+	padding-left: 15px;
+	text-align: left;
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 900;
 }
 
 #editandoNote {
@@ -309,8 +325,8 @@ span{
 	width: 100%;
 	height: 30px;
 	bottom: 0px;
-	background: white;
-	color: rgb(90, 90, 90);
+	color: white;
+	background: rgb(90, 90, 90);
 	padding-left: 10px;
 	padding-top: 5px;
 }

@@ -22,8 +22,6 @@ public class PlanoDeCurso extends Model {
 	private static final long serialVersionUID = 1L;
 
 	final private int PERIODO_MAXIMO = 14;
-	private final int MAXIMO_DE_CREDITOS = 28; // Pq plano de curso tem esse
-												// atributo q eh de periodo?
 	private final int PERIODOS_BASE = 8;
 	private final int MINIMI_DE_CREDITOS_DO_CURSO = 208;
 
@@ -43,7 +41,7 @@ public class PlanoDeCurso extends Model {
 	@JoinTable(name = "plano_periodos", joinColumns = @JoinColumn(name = "plano"), inverseJoinColumns = @JoinColumn(name = "periodo"))
 	private List<Periodo> periodos;
 
-	private Periodo periodoAtual;
+	private int periodoAtual;
 
 	public static Finder<String, PlanoDeCurso> find = new Finder<String, PlanoDeCurso>(
 			String.class, PlanoDeCurso.class);
@@ -72,6 +70,9 @@ public class PlanoDeCurso extends Model {
 		plano.save();
 	}
 
+	/**
+	 * Reseta o plano e volta ao formato inicial de periodos e disciplinas.
+	 */
 	public void reset() {
 		disciplinasNaoAlocadas.clear();
 		periodos.clear();
@@ -98,14 +99,31 @@ public class PlanoDeCurso extends Model {
 		this.id = id;
 	}
 
+	/**
+	 * Atualiza o plano de curso no banco de dados.
+	 * 
+	 * @param id
+	 *            O id do plano que deve ser atualizado.
+	 */
 	public static void atualiza(String id) {
 		find.byId(id).update();
 	}
 
+	/**
+	 * Muda a grade do plano de curso.
+	 * 
+	 * @param grade
+	 *            A nova grade do plano de curso.
+	 */
 	public void setGrade(Grade grade) {
 		this.grade = grade;
 	}
 
+	/**
+	 * Recupera a grade do plano de curso.
+	 * 
+	 * @return A grade do plano de curso.
+	 */
 	public Grade getGrade() {
 		return this.grade;
 	}
@@ -190,7 +208,7 @@ public class PlanoDeCurso extends Model {
 	 * @return O numero do periodo atual.
 	 */
 	public int getNumPeriodoAtual() {
-		return this.periodoAtual.getNumero();
+		return this.periodoAtual;
 	}
 
 	/**
@@ -200,12 +218,16 @@ public class PlanoDeCurso extends Model {
 	 *            O numero do novo periodo atual.
 	 */
 	public void setPeriodoAtual(int numPeriodo) {
-		Periodo oPeriodo = getPeriodo(numPeriodo);
-		this.periodoAtual = oPeriodo;
+		this.periodoAtual = numPeriodo;
 		for (int j = 1; j < numPeriodo; j++) {
 			Periodo periodoConcluido = getPeriodo(j);
-			periodoConcluido.setValidaRemocao(new RemoverDeAnteriores());
+			periodoConcluido.setValidadorDeAlocacao(new TemMaximoDeCreditos());
 		}
+		for (int i = numPeriodo; i < getTotalDePeriodos(); i++){
+			Periodo periodoFuturo = getPeriodo(i);
+			periodoFuturo.setValidadorDeAlocacao(new TemMinimoEMaximoDeCreditos());
+		}
+		getPeriodo(getTotalDePeriodos()).setValidadorDeAlocacao(new TemMinimoDeCreditos());
 	}
 
 	/**
@@ -269,24 +291,13 @@ public class PlanoDeCurso extends Model {
 	 *             Caso a disciplina que vai ser adicionada tenha pre requisitos
 	 *             que ainda nao foram alocados.
 	 * @throws TotalDeCreditosInvalidoException
-	 *             Caso o periodo ja tenha o total maximo de creditos alocado.
+	 *             Se o numero total de creditos ficar acima do maximo de
+	 *             creditos permitido neste periodo.
 	 */
 	public void addDisciplinaPeriodo(String id, int periodo)
 			throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
 
 		Disciplina aDisciplina = getDisciplina(id);
-
-		removeDisciplinaOptativaGenerica(periodo); // caso tenha
-
-		if (periodo != getTotalDePeriodos()) { // se nao for o ultimo periodo
-			if ((getPeriodo(periodo).getTotalDeCreditos() + aDisciplina
-					.getCreditos()) > MAXIMO_DE_CREDITOS) {
-				adicionaDisciplinaOptativaGenerica(periodo); // caso ela tenha
-																// sido removida
-				throw new TotalDeCreditosInvalidoException(
-						"O número máximo de créditos por período é 28.");
-			}
-		}
 
 		// checando se tem pre-requisitos nao alocados nos periodos anteriores
 		if (!aDisciplina.getPreRequisitos().isEmpty()) {
@@ -317,33 +328,43 @@ public class PlanoDeCurso extends Model {
 	 *            O id da disciplina a ser removida.
 	 * @param periodo
 	 *            O periodo de onde vai ser removida a disciplina.
+	 * @throws TotalDeCreditosInvalidoException
+	 *             Se o numero total de creditos ficar abaixo do minimo de
+	 *             creditos permitido neste periodo.
 	 */
 	public void removeDisciplinaPeriodo(String id, int periodo)
-			throws RemocaoInvalidaException {
+			throws TotalDeCreditosInvalidoException {
 
 		Disciplina aDisciplina = getDisciplina(id);
-
 		Periodo oPeriodo = getPeriodo(periodo);
 
-		if (oPeriodo.podeRemover(aDisciplina)) {
-			Map<Disciplina, Integer> aRemover = new HashMap<Disciplina, Integer>();
-			identificaDependentes(aDisciplina, periodo, aRemover);
+		Map<Disciplina, Integer> aRemover = new HashMap<Disciplina, Integer>();
+		identificaDependentes(aDisciplina, periodo, aRemover);
 
-			for (Map.Entry<Disciplina, Integer> entry : aRemover.entrySet()) {
-				getPeriodo(entry.getValue()).removeDisciplina(entry.getKey());
-				disciplinasNaoAlocadas.add(entry.getKey());
-			}
-
-			getPeriodo(periodo).removeDisciplina(aDisciplina);
-
-			if (!getDisciplinasOptativasGenericas().contains(aDisciplina)) {
-				disciplinasNaoAlocadas.add(aDisciplina);
+		if (!oPeriodo.podeRemover(aDisciplina)) {
+			throw new TotalDeCreditosInvalidoException(
+					"O número mínimo de créditos neste período é 14.");
+		}
+		// se alguma das disciplinas dependentes desta a frente nao puder ser
+		// removida
+		for (Map.Entry<Disciplina, Integer> entry : aRemover.entrySet()) {
+			if (!getPeriodo(entry.getValue()).podeRemover(entry.getKey())) {
+				throw new TotalDeCreditosInvalidoException("Removendo "
+						+ entry.getKey().getNome()
+						+ ", que é dependente desta, do " + entry.getValue()
+						+ "º periodo o mínimo de créditos seria violado.");
 			}
 		}
 
-		else
-			throw new RemocaoInvalidaException(
-					"Este período não pode ter menos que 14 créditos.");
+		oPeriodo.removeDisciplina(aDisciplina);
+		for (Map.Entry<Disciplina, Integer> entry : aRemover.entrySet()) {
+			getPeriodo(entry.getValue()).removeDisciplina(entry.getKey());
+			disciplinasNaoAlocadas.add(entry.getKey());
+		}
+
+		if (!getDisciplinasOptativasGenericas().contains(aDisciplina)) {
+			disciplinasNaoAlocadas.add(aDisciplina);
+		}
 
 	}
 
@@ -362,31 +383,22 @@ public class PlanoDeCurso extends Model {
 	 */
 	public void moveDisciplina(String disciplinaId, int periodoFuturo,
 			int periodoAtual) throws TotalDeCreditosInvalidoException {
+
 		Disciplina aDisciplina = getDisciplina(disciplinaId);
 
 		// se ela nao é uma optativa generica podemos mover
 		if (!getDisciplinasOptativasGenericas().contains(aDisciplina)) {
 
-			// caso tenha optativas genericas no periodo futuro
-			removeDisciplinaOptativaGenerica(periodoFuturo);
+			Periodo oPeriodo = getPeriodo(periodoFuturo);
+			Periodo perAtual = getPeriodo(periodoAtual);
 
-			if (periodoFuturo != getTotalDePeriodos()) { // se nao for o ultimo
-															// periodo
-				if ((getPeriodo(periodoFuturo).getTotalDeCreditos() + aDisciplina
-						.getCreditos()) > MAXIMO_DE_CREDITOS) {
-					// caso ela tenha sido removida coloca de volta
-					adicionaDisciplinaOptativaGenerica(periodoFuturo);
-					throw new TotalDeCreditosInvalidoException(
-							"O número máximo de créditos por período é 28.");
-				}
+			if (!perAtual.podeRemover(aDisciplina)) {
+				throw new TotalDeCreditosInvalidoException(
+						"Esta disciplina não pode sair do seu periodo atual pois o mínimo de créditos do período seria violado.");
 			}
 
-			getPeriodo(periodoAtual).removeDisciplina(aDisciplina);
-
-			// caso a remoção da disciplina tenha deixado lugar
-			adicionaDisciplinaOptativaGenerica(periodoAtual);
-
-			getPeriodo(periodoFuturo).addDisciplina(aDisciplina);
+			oPeriodo.addDisciplina(aDisciplina); //pode lancar excecao
+			perAtual.removeDisciplina(aDisciplina);
 
 			List<Disciplina> temComoPreRequisito = temComoPreRequisito(aDisciplina);
 			List<Disciplina> saoPreRequisitos = aDisciplina.getPreRequisitos();
@@ -558,7 +570,7 @@ public class PlanoDeCurso extends Model {
 	 *            O periodo da disciplina.
 	 * @param dependentes
 	 *            A lista de disciplinas que tem esta disciplina como
-	 *            pre-requisito.
+	 *            pre-requisito e seu respectivo periodo.
 	 */
 	private void identificaDependentes(Disciplina disciplina, int periodo,
 			Map<Disciplina, Integer> dependentes) {
@@ -621,52 +633,13 @@ public class PlanoDeCurso extends Model {
 		for (Disciplina disc : getGrade().getDisciplinas()) {
 			int periodo = disc.getPeriodoSugerido();
 			if (periodo >= 0) {
-				getPeriodo(periodo).addDisciplina(disc);
+				try{
+					getPeriodo(periodo).addDisciplina(disc);
+				} catch (TotalDeCreditosInvalidoException e){
+				}
 				disciplinasNaoAlocadas.remove(disc);
 			}
 
-		}
-	}
-
-	/**
-	 * Remove uma unica disciplina optativa generica se o periodo a contem.
-	 * 
-	 * @param periodo
-	 *            O periodo de onde pode ser removida a disciplina generica.
-	 */
-	private void removeDisciplinaOptativaGenerica(int periodo) {
-
-		List<Disciplina> genericas = getDisciplinasOptativasGenericas();
-
-		for (Disciplina disc : getPeriodo(periodo).getDisciplinas()) {
-			if (genericas.contains(disc)) {
-				getPeriodo(periodo).removeDisciplina(disc);
-				break;
-			}
-		}
-	}
-
-	/**
-	 * Adiciona uma unica disciplina optativa generica se o periodo nao a contem
-	 * e se o maximo de creditos nao for ultrapassado.
-	 * 
-	 * @param periodo
-	 *            O periodo onde pode ser adicionada a disciplina generica.
-	 */
-	private void adicionaDisciplinaOptativaGenerica(int periodo) {
-
-		List<Disciplina> genericas = getDisciplinasOptativasGenericas();
-
-		for (Disciplina disc : genericas) {
-			if (disc.getPeriodoSugerido() == periodo) {
-				if (!getPeriodo(periodo).getDisciplinas().contains(disc)) {
-					if ((getPeriodo(periodo).getTotalDeCreditos() + disc
-							.getCreditos()) <= MAXIMO_DE_CREDITOS) {
-						getPeriodo(periodo).addDisciplina(disc);
-						break;
-					}
-				}
-			}
 		}
 	}
 }

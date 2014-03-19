@@ -1,15 +1,12 @@
 package controllers;
 
-import java.util.List;
-
 import models.AlocacaoInvalidaException;
-import models.RemocaoInvalidaException;
 import models.TotalDeCreditosInvalidoException;
 import models.Usuario;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-import views.html.*;
+import views.html.editar;
 
 /**
  * Classe Application para a aplicacao web Planejamento de Curso.
@@ -18,10 +15,7 @@ import views.html.*;
  */
 public class Application extends Controller {
 	
-	
 	private static Planejador planejador;
-	
-	
 	
 	@Security.Authenticated(Secured.class)
 	public static Result index() {
@@ -33,7 +27,7 @@ public class Application extends Controller {
 
 	@Security.Authenticated(Secured.class)
 	public static Result plano() {
-//		planejador.deletaUltimoPeriodoSeVazio();
+		planejador.deletaUltimoPeriodoSeVazio();
 		return ok(views.html.plano.render(planejador.getPeriodos(), 
 				planejador.getDisciplinasNaoAlocadas(), planejador));
 	}
@@ -60,9 +54,9 @@ public class Application extends Controller {
 		try {
 			planejador.addDisciplinaPeriodo(disciplinaId, periodo);
 		} catch (TotalDeCreditosInvalidoException e) {
-			return badRequest();
+			return ok(e.getMessage());
 		} catch (AlocacaoInvalidaException e) {
-			return forbidden();
+			return ok(e.getMessage());
 		}
 		return ok();
 	}
@@ -71,8 +65,8 @@ public class Application extends Controller {
 	public static Result remover(String disciplinaId, int periodo) {
 		try{
 			planejador.removeDisciplinaPeriodo(disciplinaId, periodo);
-		}catch(RemocaoInvalidaException e){
-			return badRequest();
+		}catch(TotalDeCreditosInvalidoException e){
+			return ok(e.getMessage());
 		}
 		return redirect((routes.Application).editar(periodo));
 	}
@@ -82,7 +76,7 @@ public class Application extends Controller {
 		try {
 			planejador.moveDisciplina(disciplinaId, periodoFuturo, periodoAtual);
 		} catch (TotalDeCreditosInvalidoException e) {
-			return badRequest();
+			return ok(e.getMessage());
 		}
 		return ok();
 	}
@@ -96,5 +90,11 @@ public class Application extends Controller {
 	@Security.Authenticated(Secured.class)
 	public static Result disciplinas(String disciplinaId) {
 		return ok(views.html.disciplinas.render(planejador.getDisciplinas(), planejador.getDisciplina(disciplinaId)));
+	}
+	
+	@Security.Authenticated(Secured.class)
+	public static Result marcarComoAtual(int periodo){
+		planejador.setPeriodoAtual(periodo);
+		return redirect((routes.Application).plano());
 	}
 }
