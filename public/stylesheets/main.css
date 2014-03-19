@@ -23,6 +23,32 @@ h3{
 	color: rgb(90, 90, 90);
 }
 
+a{
+	cursor: pointer;
+	text-decoration: none;
+}
+
+a.periodo{
+	color: #C8C8C8;
+}
+
+a.periodo:hover{
+	color: lightcoral;
+}
+
+a.dificuldade{
+	color:black;
+	cursor: default;
+}
+
+a.disciplina{
+	color:white;
+}
+
+a.disciplina:hover{
+	color:lightcoral;
+}
+
 #main{
 	position: fixed;
 	top: 50px;
@@ -42,13 +68,13 @@ h3{
 
 #botao{
 	position: relative;
-	top: 10px;
+	top: 7px;
 	right: 7px;
 	float: right;
 	height: 25px;
 	text-align: center;
 	text-transform: uppercase;
-	padding: 5px;
+	padding: 10px;
 	color: rgb(90, 90, 90);
 	cursor: pointer;
 	font-weight:bold;
@@ -67,9 +93,9 @@ h3{
 
 #index{
 	position: relative;
-	width: 60%;
+	width: 30%;
 	height: 40%;
-	left: 20%;
+	left: 35%;
 	top: 20%;
 	padding: 2em;
 }
@@ -93,31 +119,8 @@ h3{
 }
 
 /* ==================================================
-   Periodos
+   Tops, colunas e barra de status
 ================================================== */
-
-#botaoPeriodo{
-	position: absolute;
-	top: 10px;
-	left: 7px;
-	height: 25px;
-	color: white;
-	text-align: center;
-	text-transform: uppercase;
-	padding: 5px 5px 5px 5px;
-	cursor: pointer;
-	font-weight:bold;
-	display: inline;
-	-webkit-transition: all 200ms ease-in-out;
-	-moz-transition: all 200ms ease-in-out;
-	-ms-transition: all 200ms ease-in-out;
-	-o-transition: all 200ms ease-in-out;
-	transition: all 200ms ease-in-out;
-}
-	
-#botaoPeriodo:hover{
-	color: lightcoral;
-}
 
 #top1{
 	position: fixed;
@@ -126,25 +129,6 @@ h3{
 	height: 50px;
 	background: rgb(90, 90, 90);
 	padding-top: 7px;
-}
-
-#inverter{
-	position: absolute;
-	font-weight: bold;
-	font-size: 20px;
-	margin:7px;
-	right: 20px;
-	color: white;
-	-webkit-transition: all 200ms ease-in-out;
-	-moz-transition: all 200ms ease-in-out;
-	-ms-transition: all 200ms ease-in-out;
-	-o-transition: all 200ms ease-in-out;
-	transition: all 200ms ease-in-out;
-}
-
-#inverter:hover{
-	cursor:pointer;
-	color: lightcoral;
 }
 
 #col1{
@@ -174,6 +158,63 @@ h3{
 	height: 83%;
 	overflow-y: scroll;
 	position: fixed;
+}
+
+#barraDeStatus{
+	position:fixed;
+	width: 100%;
+	height: 30px;
+	bottom: 0px;
+	color: white;
+	background: rgb(90, 90, 90);
+	padding-left: 10px;
+	padding-top: 5px;
+}
+
+/* ==================================================
+   Periodos
+================================================== */
+
+#botaoPeriodo{
+	position: absolute;
+	top: 10px;
+	left: 7px;
+	height: 25px;
+	color: white;
+	text-align: center;
+	text-transform: uppercase;
+	padding: 5px 5px 5px 5px;
+	cursor: pointer;
+	font-weight:bold;
+	display: inline;
+	-webkit-transition: all 200ms ease-in-out;
+	-moz-transition: all 200ms ease-in-out;
+	-ms-transition: all 200ms ease-in-out;
+	-o-transition: all 200ms ease-in-out;
+	transition: all 200ms ease-in-out;
+}
+	
+#botaoPeriodo:hover{
+	color: lightcoral;
+}
+
+#inverter{
+	position: absolute;
+	font-weight: bold;
+	font-size: 20px;
+	margin:7px;
+	right: 20px;
+	color: white;
+	-webkit-transition: all 200ms ease-in-out;
+	-moz-transition: all 200ms ease-in-out;
+	-ms-transition: all 200ms ease-in-out;
+	-o-transition: all 200ms ease-in-out;
+	transition: all 200ms ease-in-out;
+}
+
+#inverter:hover{
+	cursor:pointer;
+	color: lightcoral;
 }
 
 #periodoBox {
@@ -274,6 +315,10 @@ span{
 	margin-right: 15px;
 }
 
+.infoIcon{
+	color: white;
+}
+
 .disc{
 	background: #eee;
 	line-height: 1.5;
@@ -320,14 +365,44 @@ span{
 	cursor: pointer;
 }
 
-#barraDeStatus{
-	position:fixed;
-	width: 100%;
-	height: 30px;
-	bottom: 0px;
-	color: white;
-	background: rgb(90, 90, 90);
-	padding-left: 10px;
-	padding-top: 5px;
+/* ==================================================
+   Disciplinas
+================================================== */
+
+#disciplinaBox{
+	position: relative;
+	left:14%;
+	top: 30px;
+	width: 70%;
+	padding: 20px;
+	margin: 20px;
+	background: #EFFCFF;
+	border-radius: 20px;
 }
 
+.nome{
+	text-align: center;
+	font-weight: bold;
+	font-size: 30px;
+	color: rgb(90, 90, 90);
+}
+
+.creditos{
+	line-height: 2;
+	text-align: center;
+	color: #8D4BC2;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.discInfo{
+	font-size: 20px;
+	color: rgb(90, 90, 90);
+	line-height: 2;
+}
+
+.preRequisitos{
+	position: relative;
+	left: 15%;
+	font-size: 15px;
+}

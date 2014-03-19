@@ -29,8 +29,7 @@ public class Disciplina extends Model {
 
 	@ManyToMany
 	// (cascade = CascadeType.ALL)
-	@JoinTable(name = "dependencias", joinColumns = @JoinColumn(name = "disciplina"), 
-		inverseJoinColumns = @JoinColumn(name = "preRequisito"))
+	@JoinTable(name = "dependencias", joinColumns = @JoinColumn(name = "disciplina"), inverseJoinColumns = @JoinColumn(name = "preRequisito"))
 	private List<Disciplina> preRequisitos;
 
 	private String nome;
@@ -196,6 +195,15 @@ public class Disciplina extends Model {
 	 */
 	public void setPreRequisitos(List<Disciplina> preRequisitos) {
 		this.preRequisitos = preRequisitos;
+	}
+
+	/**
+	 * Retorna o total de pre requisitos da disciplina.
+	 * 
+	 * @return O total de pre requisitos da disciplina.
+	 */
+	public int getTotalDePreRequisitos() {
+		return getPreRequisitos().size();
 	}
 
 	/**

@@ -56,9 +56,9 @@ public class Application extends Controller {
 		try {
 			planejador.addDisciplinaPeriodo(disciplinaId, periodo);
 		} catch (TotalDeCreditosInvalidoException e) {
-			return ok(e.getMessage());
+			return badRequest(e.getMessage());
 		} catch (AlocacaoInvalidaException e) {
-			return ok(e.getMessage());
+			return forbidden(e.getMessage());
 		}
 		return ok();
 	}
@@ -68,7 +68,7 @@ public class Application extends Controller {
 		try{
 			planejador.removeDisciplinaPeriodo(disciplinaId, periodo);
 		}catch(TotalDeCreditosInvalidoException e){
-			return ok(e.getMessage());
+			return badRequest(e.getMessage());
 		}
 		return redirect((routes.Application).editar(periodo));
 	}
@@ -78,7 +78,7 @@ public class Application extends Controller {
 		try {
 			planejador.moveDisciplina(disciplinaId, periodoFuturo, periodoAtual);
 		} catch (TotalDeCreditosInvalidoException e) {
-			return ok(e.getMessage());
+			return badRequest(e.getMessage());
 		}
 		return ok();
 	}
@@ -91,7 +91,7 @@ public class Application extends Controller {
 	
 	@Security.Authenticated(Secured.class)
 	public static Result disciplinas(String disciplinaId) {
-		return ok(views.html.disciplinas.render(planejador.getDisciplinas(), planejador.getDisciplina(disciplinaId)));
+		return ok(views.html.disciplinas.render(planejador.getDisciplinas(), planejador.getDisciplina(disciplinaId), planejador));
 	}
 	
 	@Security.Authenticated(Secured.class)

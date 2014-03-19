@@ -34,14 +34,6 @@ audio:not ([controls] ){
 	display: none
 }
 
-a {
-	background: 0 0
-}
-
-a:active,a:hover {
-	outline: 0
-}
-
 abbr[title] {
 	border-bottom: 1px dotted
 }
@@ -278,16 +270,6 @@ input,button,select,textarea {
 	font-family: inherit;
 	font-size: inherit;
 	line-height: inherit
-}
-
-a {
-	text-decoration: none
-}
-
-a:focus {
-	outline: thin dotted;
-	outline: 5px auto -webkit-focus-ring-color;
-	outline-offset: -2px
 }
 
 figure {

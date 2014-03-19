@@ -1,4 +1,4 @@
-@(disciplinas: List[Disciplina], disciplinaAtual: Disciplina)
+@(disciplinas: List[Disciplina], disciplinaAtual: Disciplina, planejador: Planejador)
 
 @import helper._
 
@@ -6,13 +6,38 @@
 
 <h1>Planejamento de Curso</h1>
 <a onclick="logout()"><div id="botao">Sair</div></a>
+<a href="/plano"><div id="botao">Plano</div></a>
+<a href="/home"><div id="botao">Home</div></a>
 
 <div id="top1"><!-- coluna de periodos -->
 	<h2>Disciplinas</h2>
 </div>
 <div id="col1">
 	
-	Fazer informações da disciplina escolhida
+	<div id="disciplinaBox">
+		<div class="nome">@disciplinaAtual.getNome()</div>
+		<div class="creditos">@disciplinaAtual.getCreditos() créditos </div>
+		<div class="discInfo">
+			@if(disciplinaAtual.getPeriodoSugerido() < 0){
+				Disciplina optativa.<br>
+			} else {
+				Período indicado: @disciplinaAtual.getPeriodoSugerido()<br>
+			}
+		    Dificuldade: @disciplinaAtual.getDificuldade()<br>
+			@if(disciplinaAtual.getTotalDePreRequisitos() == 0){
+				Não tem pré-requisitos.				
+			} else {
+				Pré-requisitos: 
+				<div class="preRequisitos">
+					<ul>
+						@for(disciplina <- disciplinaAtual.getPreRequisitos()){
+							<li>@disciplina.getNome() - @disciplina.getCreditos() créditos</li>	
+						}
+					</ul>
+				</div>
+			}
+		</div>
+	</div>
 	
 </div>
 
@@ -24,7 +49,8 @@
 	<div class="disc2">
 		@for(disciplina <- disciplinas) {
 			@if(disciplina.getPeriodoSugerido() == 1){
-				<a title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
+				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
+					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
 			}
 		}
@@ -32,49 +58,56 @@
 		
 		@for(disciplina <- disciplinas) {
 			@if(disciplina.getPeriodoSugerido() == 2){
-				<a title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
+				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
+					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
 			}
 		}
 		<br>
 		@for(disciplina <- disciplinas) {
 			@if(disciplina.getPeriodoSugerido() == 3){
-				<a title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
+				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
+					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
 			}
 		}
 		<br>
 		@for(disciplina <- disciplinas) {
 			@if(disciplina.getPeriodoSugerido() == 4){
-				<a title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
+				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
+					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
 			}
 		}
 		<br>
 		@for(disciplina <- disciplinas) {
 			@if(disciplina.getPeriodoSugerido() == 5){
-				<a title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
+				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
+					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
 			}
 		}
 		<br>
 		@for(disciplina <- disciplinas) {
-			@if(disciplina.getPeriodoSugerido() == 6){
-				<a title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
+			@if(disciplina.getPeriodoSugerido() == 6 && !planejador.ehDisciplinaOptativaGenerica(disciplina)){
+				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
+					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
 			}
 		}
 		<br>
 		@for(disciplina <- disciplinas) {
-			@if(disciplina.getPeriodoSugerido() == 7){
-				<a title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
+			@if(disciplina.getPeriodoSugerido() == 7 && !planejador.ehDisciplinaOptativaGenerica(disciplina)){
+				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
+					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
 			}
 		}
 		<br>
 		@for(disciplina <- disciplinas) {
-			@if(disciplina.getPeriodoSugerido() == 8){
-				<a title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
+			@if(disciplina.getPeriodoSugerido() == 8 && !planejador.ehDisciplinaOptativaGenerica(disciplina)){
+				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
+					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
 			}
 		}
@@ -86,7 +119,8 @@
 	<div class="disc2">
 		@for(disciplina <- disciplinas) {
 			@if(disciplina.getPeriodoSugerido() == -2){
-				<a title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
+				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
+					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
 			}
 		}
@@ -98,8 +132,9 @@
 	<div class="disc2">
 		@for(disciplina <- disciplinas) {
 				@if(disciplina.getPeriodoSugerido() == -1){
-					<a title="Pré-requisitos: @disciplina.getPreRequisitos()">@disciplina.getNome()</a>   <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
-					<br>
+					<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
+					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
+				<br>
 				}
 		}
 	</div>
