@@ -246,4 +246,8 @@ public class Periodo extends Model {
 	public String toString() {
 		return "[Periodo " + getNumero() + "]";
 	}
+
+	public boolean podeRemoverVarias(List<Disciplina> list) {
+		return validador.podeRemoverVarias(this, list);
+	}
 }

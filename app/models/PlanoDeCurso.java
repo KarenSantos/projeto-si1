@@ -348,20 +348,13 @@ public class PlanoDeCurso extends Model {
 		// se alguma das disciplinas dependentes desta a frente nao puder ser
 		// removida
 		for (Integer key : aRemover.keySet()) {
-			for(Disciplina secundaria : aRemover.get(key)){
-				if(!getPeriodo(key).podeRemover(secundaria)){
-					throw new TotalDeCreditosInvalidoException("Removendo "
-							+ secundaria.getNome()
-							+ ", que é dependente desta, do " + key
-							+ "º periodo o mínimo de créditos seria violado.");
-				}
+			if(!getPeriodo(key).podeRemoverVarias(aRemover.get(key))){
+				throw new TotalDeCreditosInvalidoException("Removendo "
+						+ aDisciplina.getNome()
+						+ " fará o " + key
+						+ "º periodo ficar com menos que o mínimo de créditos.");
 			}
-//			if (!getPeriodo(key).podeRemover(entry.getKey())) {
-//				throw new TotalDeCreditosInvalidoException("Removendo "
-//						+ entry.getKey().getNome()
-//						+ ", que é dependente desta, do " + entry.getValue()
-//						+ "º periodo o mínimo de créditos seria violado.");
-//			}
+			
 		}
 
 		oPeriodo.removeDisciplina(aDisciplina);
@@ -371,11 +364,6 @@ public class PlanoDeCurso extends Model {
 				disciplinasNaoAlocadas.add(secundaria);
 			}
 		}
-//		for (Map.Entry<Disciplina, Integer> entry : aRemover.entrySet()) {
-//			getPeriodo(entry.getValue()).removeDisciplina(entry.getKey());
-//			disciplinasNaoAlocadas.add(entry.getKey());
-//		}
-
 		if (!getDisciplinasOptativasGenericas().contains(aDisciplina)) {
 			disciplinasNaoAlocadas.add(aDisciplina);
 		}
@@ -387,7 +375,7 @@ public class PlanoDeCurso extends Model {
 	 * 
 	 * @param disciplinaId
 	 *            A disciplina que vai ser movida.
-	 * @param periodoFuturu
+	 * @param periodoFuturo
 	 *            O periodo para onde vai ser movida a disciplina.
 	 * @param periodoAtual
 	 *            O periodo onde está a disciplina que vai ser movida.
