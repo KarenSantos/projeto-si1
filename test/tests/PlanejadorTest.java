@@ -265,17 +265,15 @@ public class PlanejadorTest {
 			throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
 		//TODO ajeitar isso
 
-		planejador.setPeriodoAtual(1);
-		planejador.removeDisciplinaPeriodo("01", 1);
-		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("01"));
+		planejador.setPeriodoAtual(planejador.getTotalDePeriodos());
+		planejador.removeDisciplinaPeriodo("86", planejador.getTotalDePeriodos());
+		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("86"));
 		
-		planejador.removeDisciplinaPeriodo("02", 1);
-		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("02"));
-		Assert.assertTrue(planejador.getDisciplinasNaoAlocadas().contains(
-				planejador.getDisciplina("02")));
+		planejador.removeDisciplinaPeriodo("87", planejador.getTotalDePeriodos());
+		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("87"));
 
 		try {
-			planejador.removeDisciplinaPeriodo("03", 1);
+			planejador.removeDisciplinaPeriodo("88", planejador.getTotalDePeriodos());
 			Assert.fail("Deveria ter lançado excecao.");
 		} catch (TotalDeCreditosInvalidoException e) {
 			Assert.assertEquals("O número mínimo de créditos neste período é 14.", e.getMessage());
@@ -293,7 +291,8 @@ public class PlanejadorTest {
 			Assert.fail("Deveria ter pego exception.");
 		}
 		catch(TotalDeCreditosInvalidoException e){
-			Assert.assertEquals(e.getMessage(), "O número mínimo de créditos neste período é 14.");
+			//Devia mudar essa mensagem de erro, n?
+			Assert.assertEquals(e.getMessage(), "Removendo Cálculo Diferencial e Integral 1 fará o 4º periodo ficar com menos que o mínimo de créditos.");
 		}
 		
 	}
@@ -303,6 +302,7 @@ public class PlanejadorTest {
 			throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException{
 		
 		planejador.setPeriodoAtual(3);
+		Assert.assertEquals(7, planejador.getPeriodo(3).getTotalDeDisciplinas());
 		planejador.removeDisciplinaPeriodo("20", 3); // removendo gi
 		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("27")); // si1 foi removido tambem
 		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("33")); // si2 foi removido tambem

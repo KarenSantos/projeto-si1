@@ -73,19 +73,5 @@ public class DisciplinaBDTest {
 //		plano.reset();
 	}
 	
-	@Test
-	public void deveConseguir() {
-		Grade grade = new Grade();
-		Usuario usuario = new Usuario("email2@email.com", "meuNome", "senha");
-		usuario.save();
-		
-		Planejador planejador = new Planejador(usuario);
-		//PlanoDeCurso plano = new PlanoDeCurso("id", grade, usuario);
-		//plano.save();
-		Assert.assertTrue(!PlanoDeCurso.find.all().isEmpty());
-		//Assert.assertNotNull(PlanoDeCurso.find.byId("id"));
-		//Assert.assertNotNull(PlanoDeCurso.find.byId("id").getPeriodos());
-		
-//		plano.reset();
-	}
+	
 }

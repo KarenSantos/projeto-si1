@@ -1,5 +1,7 @@
 package models;
 
+import java.util.List;
+
 public class TemMinimoEMaximoDeCreditos implements ValidadorDeAlocacao {
 
 	@Override
@@ -15,6 +17,20 @@ public class TemMinimoEMaximoDeCreditos implements ValidadorDeAlocacao {
 	public boolean podeAdicionar(Periodo periodo, Disciplina disciplina) {
 		boolean pode = false;
 		if ((periodo.getTotalDeCreditos() + disciplina.getCreditos()) <= periodo.getMaximoDeCreditos()){
+			pode = true;
+		}
+		return pode;
+	}
+
+	@Override
+	public boolean podeRemoverVarias(Periodo periodo,
+			List<Disciplina> disciplinas) {
+		boolean pode = false;
+		int numCreditos = 0;
+		for (Disciplina disciplina : disciplinas) {
+			numCreditos += disciplina.getCreditos();
+		}
+		if(periodo.getTotalDeCreditos() - numCreditos >= periodo.getMinimoDeCreditos()){
 			pode = true;
 		}
 		return pode;
