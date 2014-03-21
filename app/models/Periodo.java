@@ -29,7 +29,6 @@ public class Periodo extends Model {
 	private int totalDeCreditos;
 	private int totalDeDificuldade;
 	private ValidadorDeAlocacao validador;
-	private boolean menosQueOMinimo;
 
 	@ManyToMany
 	private List<Disciplina> disciplinas;
@@ -56,7 +55,6 @@ public class Periodo extends Model {
 		disciplinas = new ArrayList<Disciplina>();
 		totalDeCreditos = 0;
 		setValidadorDeAlocacao(new TemMinimoDeCreditos());
-		configuraMenosQueOMinimo();
 	}
 
 	/**
@@ -82,7 +80,7 @@ public class Periodo extends Model {
 	 * Retorna o numero do periodo.
 	 * 
 	 * @return O numero do periodo.
-	 */
+	 */		
 	public int getNumero() {
 		return this.numero;
 	}
@@ -129,14 +127,6 @@ public class Periodo extends Model {
 	 */
 	public void setValidadorDeAlocacao(ValidadorDeAlocacao validador) {
 		this.validador = validador;
-	}
-
-	public boolean isMenosQueOMinimo() {
-		return menosQueOMinimo;
-	}
-
-	private void configuraMenosQueOMinimo() {
-		menosQueOMinimo = totalDeCreditos < MINIMO_DE_CREDITOS;
 	}
 
 	/**
@@ -228,23 +218,6 @@ public class Periodo extends Model {
 		disciplinas.remove(disciplina);
 		this.totalDeCreditos -= disciplina.getCreditos();
 		this.totalDeDificuldade -= disciplina.getDificuldade();
-		configuraMenosQueOMinimo();
-		
-	}
-	
-	/**
-	 * Remove uma disciplina da lista de disciplinas do periodo ignorando minimo.
-	 * 
-	 * @param disciplina
-	 *            A disciplina a ser removida.
-	 */
-	public void removeDisciplinaIgnorandoMinimo(Disciplina disciplina){
-		
-		disciplinas.remove(disciplina);
-		this.totalDeCreditos -= disciplina.getCreditos();
-		this.totalDeDificuldade -= disciplina.getDificuldade();
-		configuraMenosQueOMinimo();
-		
 	}
 
 	/**

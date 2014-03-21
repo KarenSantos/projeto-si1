@@ -253,6 +253,13 @@ public class PlanoDeCurso extends Model {
 			throw new AlocacaoInvalidaException(
 					"Você já alcançou o número máximo de períodos");
 		}
+		
+		if(ultimoPeriodo != 0){
+			if (getPeriodo(ultimoPeriodo).getTotalDeCreditos() > getPeriodo(ultimoPeriodo).getMaximoDeCreditos()){
+				throw new AlocacaoInvalidaException(
+					"Numero de creditos do ultimo periodo impede criaçao de um novo.");
+			}
+		}
 
 		int novoNumero = ultimoPeriodo + 1;
 		Periodo novoPeriodo = new Periodo(usuario.getEmail() + novoNumero,
@@ -345,22 +352,13 @@ public class PlanoDeCurso extends Model {
 			throw new TotalDeCreditosInvalidoException(
 					"O número mínimo de créditos neste período é 14.");
 		}
-		// se alguma das disciplinas dependentes desta a frente nao puder ser
-		// removida
-//		for (Integer key : aRemover.keySet()) {
-//			if(!getPeriodo(key).podeRemoverVarias(aRemover.get(key))){
-//				throw new TotalDeCreditosInvalidoException("Removendo "
-//						+ aDisciplina.getNome()
-//						+ " fará o " + key
-//						+ "º periodo ficar com menos que o mínimo de créditos.");
-//			}
-//			
-//		}
+		
+		verificaDependentes(aRemover);
 
 		oPeriodo.removeDisciplina(aDisciplina);
 		for (Integer key : aRemover.keySet()) {
 			for(Disciplina secundaria : aRemover.get(key)){
-				getPeriodo(key).removeDisciplinaIgnorandoMinimo(secundaria);
+				getPeriodo(key).removeDisciplina(secundaria);
 				disciplinasNaoAlocadas.add(secundaria);
 			}
 		}
@@ -368,6 +366,27 @@ public class PlanoDeCurso extends Model {
 			disciplinasNaoAlocadas.add(aDisciplina);
 		}
 
+	}
+	
+	/**
+	 * Verifica se disciplinas dependetes podem ser removidas
+	 * 
+	 * @param aRemover Contem as disciplinas a serem removidas
+	 * 
+	 * @throws TotalDeCreditosInvalidoException
+	 * 				Se o total de creditos de algum periodo dor menor que o minimo.
+	 */
+	private void verificaDependentes(Map<Integer, List<Disciplina>> aRemover) throws TotalDeCreditosInvalidoException{
+		// se alguma das disciplinas dependentes desta a frente nao puder ser
+		// removida
+		for (Integer key : aRemover.keySet()) {
+			if(!getPeriodo(key).podeRemoverVarias(aRemover.get(key))){
+				throw new TotalDeCreditosInvalidoException("Remoção "
+						+ " fará o " + key
+						+ "º periodo ficar com menos que o mínimo de créditos.");
+			}
+			
+		}
 	}
 
 	/**
@@ -597,7 +616,6 @@ public class PlanoDeCurso extends Model {
 							dependentes.put(periodo, new ArrayList<Disciplina>());
 							dependentes.get(periodo).add(disciplinaAcima);
 						}
-//						dependentes.put(disciplinaAcima, periodo);
 						identificaDependentes(disciplinaAcima, periodo,
 								dependentes);
 					}

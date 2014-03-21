@@ -263,8 +263,7 @@ public class PlanejadorTest {
 	@Test
 	public void naoDevePoderRemoverDePeriodoAtualMenosQueMinimo()
 			throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
-		//TODO ajeitar isso
-
+		
 		planejador.setPeriodoAtual(planejador.getTotalDePeriodos());
 		planejador.removeDisciplinaPeriodo("86", planejador.getTotalDePeriodos());
 		Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("86"));
@@ -282,19 +281,34 @@ public class PlanejadorTest {
 	}
 
 	@Test
-	public void deveRetirarDisciplinaSePreRequisitoFoiRetiradoEPeriodoFicaMarcado()
+	public void naoDeveRetirarDisciplinaSeDependentesInvalidamAlgumPeriodo()
 			throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException{
 		
 		planejador.setPeriodoAtual(2);
 		try{
 			planejador.removeDisciplinaPeriodo("01", 1); // removendo calculo 1
-			Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("01"));
+			Assert.fail("Deveria ter pego exception.");
 		}
 		catch(TotalDeCreditosInvalidoException e){
-			//Devia mudar essa mensagem de erro, n?
-			Assert.fail("Nao Deveria ter pego exception.");
+			Assert.assertEquals(e.getMessage(), "Remoção  fará o 4º periodo ficar com menos que o mínimo de créditos.");
 		}
 		
+	}
+	
+	@Test
+	public void deveImpedirACriacaoDeUmNovoPeriodoSeUltimoTemMaisQueMaximo(){
+		try {
+			planejador.addDisciplinaPeriodo("45", planejador.getTotalDePeriodos());
+			planejador.addDisciplinaPeriodo("46", planejador.getTotalDePeriodos());
+			planejador.addDisciplinaPeriodo("47", planejador.getTotalDePeriodos());
+			planejador.addDisciplinaPeriodo("48", planejador.getTotalDePeriodos());
+			planejador.addDisciplinaPeriodo("49", planejador.getTotalDePeriodos());
+			planejador.createPeriodo();
+		} catch (AlocacaoInvalidaException e) {
+			Assert.assertEquals(e.getMessage(), "Numero de creditos do ultimo periodo impede criaçao de um novo.");
+		} catch (TotalDeCreditosInvalidoException e) {
+			Assert.fail("Nao deveria ter lançado excessao");
+		} 
 	}
 
 	@Test
