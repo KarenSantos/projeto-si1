@@ -347,20 +347,20 @@ public class PlanoDeCurso extends Model {
 		}
 		// se alguma das disciplinas dependentes desta a frente nao puder ser
 		// removida
-		for (Integer key : aRemover.keySet()) {
-			if(!getPeriodo(key).podeRemoverVarias(aRemover.get(key))){
-				throw new TotalDeCreditosInvalidoException("Removendo "
-						+ aDisciplina.getNome()
-						+ " fará o " + key
-						+ "º periodo ficar com menos que o mínimo de créditos.");
-			}
-			
-		}
+//		for (Integer key : aRemover.keySet()) {
+//			if(!getPeriodo(key).podeRemoverVarias(aRemover.get(key))){
+//				throw new TotalDeCreditosInvalidoException("Removendo "
+//						+ aDisciplina.getNome()
+//						+ " fará o " + key
+//						+ "º periodo ficar com menos que o mínimo de créditos.");
+//			}
+//			
+//		}
 
 		oPeriodo.removeDisciplina(aDisciplina);
 		for (Integer key : aRemover.keySet()) {
 			for(Disciplina secundaria : aRemover.get(key)){
-				getPeriodo(key).removeDisciplina(secundaria);
+				getPeriodo(key).removeDisciplinaIgnorandoMinimo(secundaria);
 				disciplinasNaoAlocadas.add(secundaria);
 			}
 		}

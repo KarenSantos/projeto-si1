@@ -282,17 +282,17 @@ public class PlanejadorTest {
 	}
 
 	@Test
-	public void naoDeveRetirarDisciplinaSePreRequisitoFoiRetiradoEConsomeMinimoDosOutros()
+	public void deveRetirarDisciplinaSePreRequisitoFoiRetiradoEPeriodoFicaMarcado()
 			throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException{
 		
 		planejador.setPeriodoAtual(2);
 		try{
 			planejador.removeDisciplinaPeriodo("01", 1); // removendo calculo 1
-			Assert.fail("Deveria ter pego exception.");
+			Assert.assertEquals(0, planejador.getPeriodoDaDisciplina("01"));
 		}
 		catch(TotalDeCreditosInvalidoException e){
 			//Devia mudar essa mensagem de erro, n?
-			Assert.assertEquals(e.getMessage(), "Removendo Cálculo Diferencial e Integral 1 fará o 4º periodo ficar com menos que o mínimo de créditos.");
+			Assert.fail("Nao Deveria ter pego exception.");
 		}
 		
 	}
