@@ -28,10 +28,10 @@ public class Planejador {
 	 */
 	public Planejador(Usuario usuario) {
 		usuario.getNome();
-		plano = PlanoDeCurso.find.byId("plano_" + usuario.getEmail());
+		plano = PlanoDeCurso.find.byId("p_" + usuario.getEmail());
 		if (plano == null) {
 			Grade grade = new Grade();
-			plano = new PlanoDeCurso("plano_" + usuario.getEmail(), grade,
+			plano = new PlanoDeCurso("p_" + usuario.getEmail(), grade,
 					usuario);
 			plano.reset();
 			plano.save();

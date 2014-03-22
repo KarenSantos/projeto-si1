@@ -30,8 +30,8 @@ public class PlanoDeCurso extends Model {
 
 	private Grade grade;
 
-	@OneToOne
-	public Usuario usuario;
+//	@OneToOne
+//	public Usuario usuario;
 
 	@ManyToMany
 	@JoinTable(name = "plano_disc_nao_alocadas", joinColumns = @JoinColumn(name = "plano"), inverseJoinColumns = @JoinColumn(name = "disciplina"))
@@ -56,7 +56,7 @@ public class PlanoDeCurso extends Model {
 	public PlanoDeCurso(String id, Grade grade, Usuario usuario) {
 		this.id = id;
 		this.grade = grade;
-		this.usuario = usuario;
+//		this.usuario = usuario;
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		periodos = new ArrayList<Periodo>();
 	}
@@ -118,14 +118,14 @@ public class PlanoDeCurso extends Model {
 		return this.grade;
 	}
 
-	/**
-	 * Retorna o usuario do plano de curso.
-	 * 
-	 * @return O usuario do plano de curso.
-	 */
-	public Usuario getUsuario() {
-		return this.usuario;
-	}
+//	/**
+//	 * Retorna o usuario do plano de curso.
+//	 * 
+//	 * @return O usuario do plano de curso.
+//	 */
+//	public Usuario getUsuario() {
+//		return this.usuario;
+//	}
 
 	/**
 	 * Retorna uma disciplina pelo seu id.
@@ -263,7 +263,7 @@ public class PlanoDeCurso extends Model {
 		}
 		
 		int novoNumero = ultimoPeriodo + 1;
-		Periodo novoPeriodo = new Periodo(usuario.getEmail() + novoNumero, novoNumero);
+		Periodo novoPeriodo = new Periodo(this.id + novoNumero, novoNumero);
 		novoPeriodo.save();
 		
 		if (isInvertido()) {
