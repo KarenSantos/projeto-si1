@@ -18,18 +18,19 @@
 			<button type="button" class="btn" onclick="location.href ='@routes.Autenticador.cadastro()';">Cadastrar</button>
 		</div>
 	</form>
+	<br><br>
 			
-		<div class="form-actions">
-			@if(flash.containsKey("erro")){
-				<div class="alert alert-erro container">
-					@flash.get("erro")
-				</div>
-			}
-			@if(flash.containsKey("success")){
-				<div class="alert alert-success container">
-					@flash.get("success")
-				</div>
-			}
-		</div>
+	<div class="form-actions">
+		@if(flash.containsKey("erro")){
+			<div class="alert alert-erro container">
+				@flash.get("erro")
+			</div>
+		}
+		@if(flash.containsKey("success")){
+			<div class="alert alert-success container">
+				@flash.get("success")
+			</div>
+		}
+	</div>
 </div>
 }

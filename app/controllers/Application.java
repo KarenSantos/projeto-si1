@@ -1,7 +1,5 @@
 package controllers;
 
-//import models.AlocacaoInvalidaException;
-//import models.TotalDeCreditosInvalidoException;
 import models.AlocacaoInvalidaException;
 import models.TotalDeCreditosInvalidoException;
 import models.Usuario;
@@ -29,6 +27,7 @@ public class Application extends Controller {
 
 	@Security.Authenticated(Secured.class)
 	public static Result plano() {
+		planejador.reSetPeriodoAtual();
 		planejador.deletaUltimoPeriodoSeVazio();
 		return ok(views.html.plano.render(planejador.getPeriodos(), 
 				planejador.getDisciplinasNaoAlocadas(), planejador));
@@ -40,6 +39,8 @@ public class Application extends Controller {
 			planejador.createPeriodo();
 		} catch (AlocacaoInvalidaException e) {
 			return badRequest();
+		} catch (TotalDeCreditosInvalidoException e) {
+			return forbidden();
 		}
 		int ultimoPeriodo = planejador.getPeriodos().size();
 		return redirect((routes.Application).editar(ultimoPeriodo));

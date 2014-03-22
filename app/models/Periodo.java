@@ -241,7 +241,7 @@ public class Periodo extends Model {
 	}
 
 	public static void deletar(String periodoId) {
-		find.ref(periodoId).delete();
+		find.byId(periodoId).delete();
 	}
 
 	@Override

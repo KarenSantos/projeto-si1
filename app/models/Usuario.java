@@ -115,8 +115,6 @@ public class Usuario extends Model {
         else{
 			return "Senha incorreta";
 		}
-		
-
 	}
 
 	/**

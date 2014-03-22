@@ -75,9 +75,8 @@ a.disciplina:hover{
 	text-align: center;
 	text-transform: uppercase;
 	padding: 10px;
-	color: rgb(90, 90, 90);
+	color: #C8C8C8;
 	cursor: pointer;
-	font-weight:bold;
 	font-size: 19px;
 	display: inline;
 	-webkit-transition: all 200ms ease-in-out;

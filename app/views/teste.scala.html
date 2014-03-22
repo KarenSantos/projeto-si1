@@ -1,4 +1,4 @@
-@(usuarios: List[Usuario])
+@(s: String)
 @main("Planejamento de Curso"){
 
 <meta charset="utf-8">
@@ -6,13 +6,8 @@
 <h1>Planejamento de Curso</h1>
 <div id="main">
     
-	@for(usuario <- usuarios){
-		@usuario.getEmail()<br>
-		@usuario.getNome()<br>
-		@usuario.getPassword()<br>
+	@s
 		
 		<br><br>
-	}
-	
 </div>
 }

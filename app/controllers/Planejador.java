@@ -40,7 +40,7 @@ public class Planejador {
 			plano.save();
 		}
 	}
-
+	
 	/**
 	 * Retorna uma lista com todos os períodos criados no plano de curso.
 	 * 
@@ -70,7 +70,7 @@ public class Planejador {
 	 * @throws AlocacaoInvalidaException
 	 *             Se o número máximo de períodos já foi alcançado.
 	 */
-	public void createPeriodo() throws AlocacaoInvalidaException {
+	public void createPeriodo() throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
 		plano.createPeriodo();
 		plano.update();
 	}
@@ -143,6 +143,14 @@ public class Planejador {
 	public void setPeriodoAtual(int numPeriodo) {
 		plano.setPeriodoAtual(numPeriodo);
 		plano.update();
+	}
+	
+	/**
+	 * Configura novamente o periodo atual como sendo o periodo atual guardado
+	 * no BD.
+	 */
+	public void reSetPeriodoAtual() {
+		plano.reSetPeriodoAtual();
 	}
 
 	/**

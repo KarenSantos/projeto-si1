@@ -117,11 +117,11 @@ public class Autenticador extends Controller {
 		 * @return Null se os dados para login foram validos ou mensagem de erro caso contrário.
 		 */
 		public String validate() {
+			String erro = null;
 			if(Usuario.authenticate(email, password) != null) {
-                flash("Usuário ou password inválido.");
-                return "Login inválido";
+                erro = "Usuário ou password inválido.";
             }
-            return null;
+            return erro;
 		}
 	}
 
@@ -135,9 +135,10 @@ public class Autenticador extends Controller {
 	public static Result authenticate() {
 		Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
 		if (loginForm.hasErrors()) {
-			return badRequest(login.render(loginForm));
-		} else {
-			
+			flash("erro", "Usuário ou senha incorretos.");
+			return redirect(routes.Autenticador.login());
+//			return badRequest(login.render(loginForm));
+		} else { 
 			session().clear();
 			session("email", loginForm.get().getEmail());
 			return redirect(routes.Application.index());
@@ -146,7 +147,7 @@ public class Autenticador extends Controller {
 
 	public static Result logout() {
 		session().clear();
-		flash("success", "You've been logged out");
+		flash("success", "You've been logged out.");
 		return redirect(routes.Autenticador.login());
 	}
 
@@ -162,9 +163,8 @@ public class Autenticador extends Controller {
 			Cadastro novoC = cadastroForm.get();
 			Usuario.create(new Usuario(novoC.getEmail(), novoC.getNome(),
 					novoC.getPassword()));
-		}else{
-			return redirect(routes.Autenticador.cadastro());
 		}
+		flash("success", "Cadastro realizado com sucesso.");
 		return redirect(routes.Autenticador.login());
 	}
 	

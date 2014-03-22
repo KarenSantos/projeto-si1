@@ -11,7 +11,11 @@ function novoPeriodo(periodo) {
 					window.location = "/editar/" + novoPeriodo;
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
-					alert("Você já alcançou o número máximo de períodos permitido pelo curso.");
+					if (errorThrown == "Bad Request") {
+						alert("Você já alcançou o número máximo de períodos permitido pelo curso.");
+					} else {
+						alert("O último período precisa ter total de créditos de no mínimo 14 e no máximo 28.");
+					}
 				}
 			});
 
@@ -34,8 +38,8 @@ function removerDisciplina(discId, periodo, ehPreRequisito) {
 						},
 						error : function(XMLHttpRequest, textStatus,
 								errorThrown) {
-							alert("Não é possível remover esta disciplina pois o mínimo de 14 créditos por " +
-									"período seria violado. Insira alguma disciplina e tente novamente.");
+							alert("Não é possível remover esta disciplina pois o mínimo de 14 créditos por "
+									+ "período seria violado. Insira alguma disciplina e tente novamente.");
 							window.location = "/editar/" + periodo;
 						}
 					});
@@ -50,8 +54,8 @@ function removerDisciplina(discId, periodo, ehPreRequisito) {
 						window.location = "/editar/" + periodo;
 					},
 					error : function(XMLHttpRequest, textStatus, errorThrown) {
-						alert("Não é possível remover esta disciplina pois este período deve ter no mínimo de 14 créditos." +
-						" Insira alguma disciplina e tente novamente.");
+						alert("Não é possível remover esta disciplina pois este período deve ter no mínimo de 14 créditos."
+								+ " Insira alguma disciplina e tente novamente.");
 						window.location = "/editar/" + periodo;
 					}
 				});
@@ -70,8 +74,8 @@ function moverDisciplina(discId, periodoFuturo, periodoAtual) {
 					window.location = "/editar/" + periodoFuturo;
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
-					alert("O máximo de 28 créditos neste período seria ultrapassado e/ou mínimo de 14 " +
-							"créditos no período onde está a disciplina seria violado.");
+					alert("O máximo de 28 créditos neste período seria ultrapassado e/ou mínimo de 14 "
+							+ "créditos no período onde está a disciplina seria violado.");
 				}
 			});
 }
