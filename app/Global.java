@@ -9,7 +9,8 @@ import static play.mvc.Results.*;
 public class Global extends GlobalSettings {
 
 	public Promise<SimpleResult> onError(RequestHeader request, Throwable t) {
-		return Promise.<SimpleResult>pure(internalServerError(views.html.error.render(t + "erro")));
+		return Promise.<SimpleResult>pure(internalServerError(views.html.error.render("Erro encontrado:\n"
+													+ t + "\n" + "Request: \n" + request.toString())));
     }
 	
 	public Promise<SimpleResult> onHandlerNotFound(RequestHeader request) {
