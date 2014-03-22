@@ -3,6 +3,7 @@ package models;
 import java.util.*;
 
 import javax.persistence.*;
+import org.mindrot.jbcrypt.BCrypt;	
 
 import play.db.ebean.*;
 
@@ -44,7 +45,7 @@ public class Usuario extends Model {
 		this.id = email;
 		this.email = email;
 		this.nome = nome;
-		this.password = password;
+		this.password = BCrypt.hashpw(password, BCrypt.gensalt());
 		
 	}
 	
@@ -110,7 +111,7 @@ public class Usuario extends Model {
         if(usuario == null){
         	return "Usuario não encontrado";
         }
-		if(usuario.getPassword().equals(password)){
+		if(BCrypt.checkpw(password, usuario.getPassword())){
 			return null;
 		}
         else{
