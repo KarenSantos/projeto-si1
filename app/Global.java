@@ -10,7 +10,7 @@ public class Global extends GlobalSettings {
 
 	public Promise<SimpleResult> onError(RequestHeader request, Throwable t) {
 		return Promise.<SimpleResult>pure(internalServerError(views.html.error.render("Erro encontrado:\n"
-													+ t + "\n" + "Request: \n" + request.toString())));
+													+ t.getMessage() + "\n" + "Request: \n" + request.path())));
     }
 	
 	public Promise<SimpleResult> onHandlerNotFound(RequestHeader request) {
