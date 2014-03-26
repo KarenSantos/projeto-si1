@@ -52,6 +52,17 @@ public class PlanejadorTest {
 		Assert.assertEquals(28, planejador.getPeriodo(7).getTotalDeCreditos());
 		Assert.assertEquals(24, planejador.getPeriodo(8).getTotalDeCreditos());
 	}
+	
+	@Test
+	public void deveRetornarDificuldadeDaDisciplina() {
+		Assert.assertEquals(4, planejador.getDisciplina("01").getDificuldade());
+		Assert.assertEquals(3, planejador.getDisciplina("02").getDificuldade());
+		Assert.assertEquals(2, planejador.getDisciplina("03").getDificuldade());
+		
+		Assert.assertEquals(3, planejador.getDisciplina("10").getDificuldade());
+		Assert.assertEquals(2, planejador.getDisciplina("20").getDificuldade());
+		Assert.assertEquals(3, planejador.getDisciplina("30").getDificuldade());
+	}
 
 	@Test
 	public void devePoderAdicionarDisciplina() {
