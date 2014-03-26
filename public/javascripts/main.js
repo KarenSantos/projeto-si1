@@ -36,10 +36,14 @@ function removerDisciplina(discId, periodo, ehPreRequisito) {
 						success : function() {
 							window.location = "/editar/" + periodo;
 						},
-						error : function(XMLHttpRequest, textStatus,
-								errorThrown) {
-							alert("Não é possível remover esta disciplina pois o mínimo de 14 créditos por "
-									+ "período seria violado. Insira alguma disciplina e tente novamente.");
+						error : function(XMLHttpRequest, textStatus, errorThrown) {
+							if (errorThrown == "Bad Request") {
+								alert("Não é possível remover esta disciplina pois o mínimo de 14 créditos por "
+										+ "período seria violado. Insira alguma disciplina e tente novamente.");
+							} else {
+								alert("Removendo uma disciplina dependente desta o mínimo de 14 créditos em seu " +
+										"período seria violado. Insira alguma disciplina e tente novamente.");
+							}
 							window.location = "/editar/" + periodo;
 						}
 					});

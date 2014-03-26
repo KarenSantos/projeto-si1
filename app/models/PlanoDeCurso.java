@@ -30,9 +30,6 @@ public class PlanoDeCurso extends Model {
 
 	private Grade grade;
 
-	// @OneToOne
-	// public Usuario usuario;
-
 	@ManyToMany
 	@JoinTable(name = "plano_disc_nao_alocadas", joinColumns = @JoinColumn(name = "plano"), inverseJoinColumns = @JoinColumn(name = "disciplina"))
 	private List<Disciplina> disciplinasNaoAlocadas;
@@ -53,10 +50,9 @@ public class PlanoDeCurso extends Model {
 	 * Plano de curso recebe uma grade de disciplinas e um usuario, e tem uma
 	 * lista de periodos e uma lista de disciplinas não alocadas.
 	 */
-	public PlanoDeCurso(String id, Grade grade, Usuario usuario) {
+	public PlanoDeCurso(String id, Grade grade) {
 		this.id = id;
 		this.grade = grade;
-		// this.usuario = usuario;
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		periodos = new ArrayList<Periodo>();
 	}
@@ -516,6 +512,33 @@ public class PlanoDeCurso extends Model {
 			}
 		}
 		return resp;
+	}
+
+	/**
+	 * Retorna uma lista de todas as disciplinas que sao pre-requisitos desta
+	 * que estao alocadas em periodos a frente.
+	 * 
+	 * @param disc
+	 *            A disciplina que se quer verificar os pre-requisitos.
+	 * @param periodo
+	 *            O numero do periodo da disciplina.
+	 * @return A lista dos pre-requisitos alocados a frente.
+	 */
+	public List<Disciplina> getPreRequisitosAlocadosEmPeriodosPosteriores(
+			Disciplina disc, int periodo) {
+		List<Disciplina> preRequisitos = new ArrayList<Disciplina>();
+
+		if (!disc.getPreRequisitos().isEmpty()) {
+			for (Disciplina pre : disc.getPreRequisitos()) {
+				for (int i = periodo; i < getTotalDePeriodos(); i++) {
+					if (getPeriodo(i).getDisciplinas().contains(pre)) {
+						preRequisitos.add(pre);
+						break;
+					}
+				}
+			}
+		}
+		return preRequisitos;
 	}
 
 	/**

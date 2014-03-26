@@ -4,7 +4,7 @@
 
 @main("Planejamento de Curso") {
 
-<h1>Planejamento de Curso</h1>
+<h1>Planejamento de Curso</h1> <h1 class="nomeUsuario"> &nbsp; - @planejador.getUsuario().getNome()</h1>
 <a onclick="logout()"><div id="botao">Sair</div></a>
 <a href="/disciplinas/01"><div id="botao">Disciplinas</div></a>
 <a href="/home"><div id="botao">Home</div></a>
@@ -50,14 +50,15 @@
 							<br>
 				    	} else {
 				    		<a class="periodo" href="/disciplinas/@disciplinaPeriodo.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
-							<a class="discRed">@disciplinaPeriodo.getNome()</a> <span>@disciplinaPeriodo.getCreditos()  /  @disciplinaPeriodo.getDificuldade()</span>
+							<a class="discRed" title="Os pré-requisitos: '@planejador.getPreRequisitosAlocadosEmPeriodosPosteriores(disciplinaPeriodo, periodo.getNumero)' precisam estar alocados antes desta">
+							@disciplinaPeriodo.getNome()</a> <span>@disciplinaPeriodo.getCreditos()  /  @disciplinaPeriodo.getDificuldade()</span>
 							<br>
 				    	}
 			    	}
 			    }
 			</div>
 			<div class="totalC"><!-- Total de créditos do periodo -->
-			@if(periodo.getTotalDeCreditos() < 14){
+			@if(periodo.getTotalDeCreditos() < 14 && periodo.getNumero >= planejador.getNumPeriodoAtual()){
 				<div class="totalCNota">Número mínimo de 14 créditos não alcançado</div>
 			}
 				<b>Total: </b>@periodo.getTotalDeCreditos()  /   @periodo.getTotalDeDificuldade()

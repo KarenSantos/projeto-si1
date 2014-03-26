@@ -5,7 +5,6 @@ import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.start;
 import models.AlocacaoInvalidaException;
 import models.Disciplina;
-import models.Grade;
 import models.TotalDeCreditosInvalidoException;
 import models.Usuario;
 
@@ -18,13 +17,11 @@ import controllers.Planejador;
 public class PlanejadorTest {
 
 	private Planejador planejador;
-	private Grade grade;
 	private Usuario testador;
 
 	@Before
 	public void setUp() throws Exception {
 		start(fakeApplication(inMemoryDatabase()));
-		grade = new Grade();
 		testador = new Usuario("testador@teste.teste", "Nome", "password");
 		testador.save();
 		planejador = new Planejador(testador);
@@ -166,36 +163,44 @@ public class PlanejadorTest {
 	}
 
 	@Test
-	public void aoMoverDisciplinaDeveAtualizarSeuStatusDeAlocacao()
+	public void devePoderVerificarSePreRequisitosEstaoAlocadosAnteriormente()
 			throws TotalDeCreditosInvalidoException, AlocacaoInvalidaException {
 
 		planejador.setPeriodoAtual(2);
 		planejador.removeDisciplinaPeriodo("09", 2); // liberando espaço no segundo periodo
 
 		planejador.moveDisciplina("01", 2, 1); // movendo calculo 1 para o segundo periodo
-		Assert.assertFalse(planejador.getDisciplina("07")
-				.isAlocadaCorretamente()); // quem tem calculo 1 como pre-requisito fica alocado incorretamente
-		Assert.assertFalse(planejador.getDisciplina("13").isAlocadaCorretamente());
+		
+		// quem tem calculo 1 como pre-requisito nao tem mais os pre-requisitos em periodos anteriores
+		Assert.assertFalse(planejador.temPreRequisitosEmPeriodosAnteriores(planejador.getDisciplina("07"), 2)); 
+		Assert.assertFalse(planejador.temPreRequisitosEmPeriodosAnteriores(planejador.getDisciplina("13"), 2));
+		
 		planejador.moveDisciplina("01", 1, 2); // movendo de volta para o lugar certo
-		Assert.assertTrue(planejador.getDisciplina("01").isAlocadaCorretamente());
+		
+		Assert.assertTrue(planejador.temPreRequisitosEmPeriodosAnteriores(planejador.getDisciplina("07"), 2)); 
+		Assert.assertTrue(planejador.temPreRequisitosEmPeriodosAnteriores(planejador.getDisciplina("13"), 2));
 
 		planejador.moveDisciplina("17", 1, 3); // movendo EDA para o primeiro periodo
-		Assert.assertFalse(planejador.getDisciplina("17")
-				.isAlocadaCorretamente()); // EDA fica alocada incorretamente, seus preRequisitos nao foram satisfeitos
+		
+		// EDA nao tem seus preRequisitos satisfeitos
+		Assert.assertFalse(planejador.temPreRequisitosEmPeriodosAnteriores(planejador.getDisciplina("17"), 1));
 
 		planejador.moveDisciplina("17", 5, 1); // movendo EDA para o quinto periodo
-		Assert.assertTrue(planejador.getDisciplina("17")
-				.isAlocadaCorretamente()); // EDA fica ok
-		Assert.assertFalse(planejador.getDisciplina("22")
-				.isAlocadaCorretamente()); // aquelas que tem EDA como pre-requisito nao estao ok
-		Assert.assertFalse(planejador.getDisciplina("24").isAlocadaCorretamente());
-		Assert.assertFalse(planejador.getDisciplina("25").isAlocadaCorretamente());
+		
+		// EDA fica ok
+		Assert.assertTrue(planejador.temPreRequisitosEmPeriodosAnteriores(planejador.getDisciplina("17"), 5)); 
+		
+		// aquelas que tem EDA como pre-requisito nao tem pre-requisitos satisfeitos
+		Assert.assertFalse(planejador.temPreRequisitosEmPeriodosAnteriores(planejador.getDisciplina("22"), 4));
+		Assert.assertFalse(planejador.temPreRequisitosEmPeriodosAnteriores(planejador.getDisciplina("24"), 4));
+		Assert.assertFalse(planejador.temPreRequisitosEmPeriodosAnteriores(planejador.getDisciplina("25"), 4));
 
 		planejador.moveDisciplina("17", 3, 5); // voltando EDA para o periodo correto
-		Assert.assertTrue(planejador.getDisciplina("22")
-				.isAlocadaCorretamente()); // aquelas que tem EDA como pre-requisito ficam ok
-		Assert.assertTrue(planejador.getDisciplina("24").isAlocadaCorretamente());
-		Assert.assertTrue(planejador.getDisciplina("25").isAlocadaCorretamente());
+		
+		// aquelas que tem EDA como pre-requisito tem seus pre-requisitos satisfeitos
+		Assert.assertTrue(planejador.temPreRequisitosEmPeriodosAnteriores(planejador.getDisciplina("22"), 4));
+		Assert.assertTrue(planejador.temPreRequisitosEmPeriodosAnteriores(planejador.getDisciplina("24"), 4));
+		Assert.assertTrue(planejador.temPreRequisitosEmPeriodosAnteriores(planejador.getDisciplina("25"), 4));
 	}
 
 	@Test

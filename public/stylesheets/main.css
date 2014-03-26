@@ -18,6 +18,12 @@ h1.erro{
 	color: rgb(90, 90, 90);
 }
 
+h1.nomeUsuario{
+	font-size:20px;
+	font-style: italic;
+	margin-top:18px;
+}
+
 h2{
 	color: #fafafa;
 	text-align: center;

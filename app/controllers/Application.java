@@ -1,6 +1,9 @@
 package controllers;
 
+import java.util.List;
+
 import models.AlocacaoInvalidaException;
+import models.PlanoDeCurso;
 import models.TotalDeCreditosInvalidoException;
 import models.Usuario;
 import play.mvc.Controller;
@@ -69,7 +72,11 @@ public class Application extends Controller {
 		try{
 			planejador.removeDisciplinaPeriodo(disciplinaId, periodo);
 		}catch(TotalDeCreditosInvalidoException e){
-			return badRequest(e.getMessage());
+			if (e.getMessage().equals("O número mínimo de créditos neste período é 14.")){
+				return badRequest();
+			} else {
+				return forbidden();
+			}
 		}
 		return redirect((routes.Application).editar(periodo));
 	}
@@ -106,4 +113,11 @@ public class Application extends Controller {
 		planejador.setPeriodoAtual(periodo);
 		return redirect((routes.Application).plano());
 	}
+	
+//	@Security.Authenticated(Secured.class)
+//	public static Result outrosPlanos(String usuarioId){
+//		List<Usuario> usuarios = Usuario.find.all();
+//		PlanoDeCurso plano = PlanoDeCurso.find.byId("p_" + usuarioId);
+//		return ok(views.html.outrosPlanos.render(plano, usuarios));
+//	}
 }

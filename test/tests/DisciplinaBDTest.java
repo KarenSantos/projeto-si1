@@ -1,7 +1,8 @@
 package tests;
 
-import controllers.*;
-import static play.test.Helpers.*;
+import static play.test.Helpers.fakeApplication;
+import static play.test.Helpers.inMemoryDatabase;
+import static play.test.Helpers.start;
 
 import java.util.List;
 
@@ -11,9 +12,10 @@ import models.Periodo;
 import models.PlanoDeCurso;
 import models.Usuario;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-import controllers.Planejador;
 
 public class DisciplinaBDTest {
 
@@ -64,7 +66,7 @@ public class DisciplinaBDTest {
 		Usuario usuario = new Usuario("email2@email.com", "meuNome", "senha");
 		usuario.save();
 		
-		PlanoDeCurso plano = new PlanoDeCurso("id", grade, usuario);
+		PlanoDeCurso plano = new PlanoDeCurso("id", grade);
 		plano.save();
 		Assert.assertTrue(!PlanoDeCurso.find.all().isEmpty());
 		Assert.assertNotNull(PlanoDeCurso.find.byId("id"));

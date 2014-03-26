@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import models.AlocacaoInvalidaException;
@@ -19,6 +20,7 @@ import models.Usuario;
 public class Planejador {
 
 	private PlanoDeCurso plano;
+	private Usuario usuario;
 
 	/**
 	 * Cria um planejador que recebe um id como usuário.
@@ -27,12 +29,12 @@ public class Planejador {
 	 *            O id para identificar o usuário.
 	 */
 	public Planejador(Usuario usuario) {
-		usuario.getNome();
+		this.usuario = usuario;
+
 		plano = PlanoDeCurso.find.byId("p_" + usuario.getEmail());
 		if (plano == null) {
 			Grade grade = new Grade();
-			plano = new PlanoDeCurso("p_" + usuario.getEmail(), grade,
-					usuario);
+			plano = new PlanoDeCurso("p_" + usuario.getEmail(), grade);
 			plano.reset();
 			plano.save();
 		} else {
@@ -40,7 +42,16 @@ public class Planejador {
 			plano.save();
 		}
 	}
-	
+
+	/**
+	 * Retorna o usuario da seção atual.
+	 * 
+	 * @return O usuario da secão atual.
+	 */
+	public Usuario getUsuario() {
+		return this.usuario;
+	}
+
 	/**
 	 * Retorna uma lista com todos os períodos criados no plano de curso.
 	 * 
@@ -70,7 +81,8 @@ public class Planejador {
 	 * @throws AlocacaoInvalidaException
 	 *             Se o número máximo de períodos já foi alcançado.
 	 */
-	public void createPeriodo() throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
+	public void createPeriodo() throws AlocacaoInvalidaException,
+			TotalDeCreditosInvalidoException {
 		plano.createPeriodo();
 		plano.update();
 	}
@@ -106,7 +118,7 @@ public class Planejador {
 	public int getPeriodoDaDisciplina(String discId) {
 		return plano.getPeriodoDaDisciplina(getDisciplina(discId));
 	}
-	
+
 	/**
 	 * Retorna a lista das Disciplinas nao alocadas.
 	 * 
@@ -124,7 +136,7 @@ public class Planejador {
 	public int getTotalDePeriodos() {
 		return plano.getTotalDePeriodos();
 	}
-	
+
 	/**
 	 * Retorna o numero do periodo atual do plano de curso.
 	 * 
@@ -144,7 +156,7 @@ public class Planejador {
 		plano.setPeriodoAtual(numPeriodo);
 		plano.update();
 	}
-	
+
 	/**
 	 * Configura novamente o periodo atual como sendo o periodo atual guardado
 	 * no BD.
@@ -179,7 +191,7 @@ public class Planejador {
 	public int getMinimoDeCreditosDoCurso() {
 		return plano.getMinimoDeCreditosDoCurso();
 	}
-	
+
 	/**
 	 * Adiciona uma disciplina a um periodo.
 	 * 
@@ -199,7 +211,7 @@ public class Planejador {
 		plano.addDisciplinaPeriodo(id, periodo);
 		plano.update();
 	}
-	
+
 	/**
 	 * Remove uma disciplina de um periodo.
 	 * 
@@ -235,7 +247,7 @@ public class Planejador {
 		plano.moveDisciplina(disciplinaId, periodoFuturo, periodoAtual);
 		plano.update();
 	}
-	
+
 	/**
 	 * Deleta o ultimo periodo criado se nao for um dos 8 periodos base e se
 	 * estiver sem disciplinas.
@@ -258,7 +270,8 @@ public class Planejador {
 	}
 
 	/**
-	 * Verifica se uma disciplina tem algum pre-requisito que ainda não foi alocado.
+	 * Verifica se uma disciplina tem algum pre-requisito que ainda não foi
+	 * alocado.
 	 * 
 	 * @param disc
 	 *            A disciplina que pode ter um pre-requisito não alocado.
@@ -270,7 +283,7 @@ public class Planejador {
 	public boolean temPreRequisitoNaoAlocado(Disciplina disc) {
 		return plano.temPreRequisitoNaoAlocado(disc);
 	}
-	
+
 	/**
 	 * Verifica se uma disciplina tem todos os seus pre requisitos alocados em
 	 * periodos anteriores.
@@ -282,8 +295,25 @@ public class Planejador {
 	 * @return True se todos os seus pre-requisitos estao alocados anteriormente
 	 *         e false caso contrario.
 	 */
-	public boolean temPreRequisitosEmPeriodosAnteriores(Disciplina disc, int periodo) {
+	public boolean temPreRequisitosEmPeriodosAnteriores(Disciplina disc,
+			int periodo) {
 		return plano.temPreRequisitosEmPeriodosAnteriores(disc, periodo);
+	}
+
+	/**
+	 * Retorna uma lista de todas as disciplinas que sao pre-requisitos desta
+	 * que estao alocadas em periodos a frente.
+	 * 
+	 * @param disc
+	 *            A disciplina que se quer verificar os pre-requisitos.
+	 * @param periodo
+	 *            O numero do periodo da disciplina.
+	 * @return A lista dos pre-requisitos alocados a frente.
+	 */
+	public List<Disciplina> getPreRequisitosAlocadosEmPeriodosPosteriores(
+			Disciplina disc, int periodo) {
+		return plano.getPreRequisitosAlocadosEmPeriodosPosteriores(disc,
+				periodo);
 	}
 
 	/**
@@ -293,7 +323,7 @@ public class Planejador {
 		plano.inverteOrdemDosPeriodos();
 		plano.update();
 	}
-	
+
 	/**
 	 * Ordena lista dos periodos pelo numero ficando em ordem crescente.
 	 */

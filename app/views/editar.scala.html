@@ -4,7 +4,7 @@
 
 @main("Planejamento de Curso") {
 
-<h1>Planejamento de Curso</h1>
+<h1>Planejamento de Curso</h1> <h1 class="nomeUsuario"> &nbsp; - @planejador.getUsuario().getNome()</h1>
 <a onclick="logout()"><div id="botao">Sair</div></a>
 <a href="/disciplinas/01"><div id="botao">Disciplinas</div></a>
 <a href="/home"><div id="botao">Home</div></a>
@@ -57,7 +57,7 @@
 				    }
 				</div>
 				<div class="totalC"><!-- Total de créditos do periodo -->
-				@if(periodo.getTotalDeCreditos() < 14){
+				@if(periodo.getTotalDeCreditos() < 14 && periodo.getNumero >= planejador.getNumPeriodoAtual()){
 					<div class="totalCNota">Número mínimo de 14 créditos não alcançado</div>
 				}
 					<b>Total: </b>@periodo.getTotalDeCreditos()  /   @periodo.getTotalDeDificuldade()
@@ -105,7 +105,7 @@
 				    }
 			   	</div>
 				<div class="totalC"><!-- Total de créditos do periodo -->
-				@if(periodo.getTotalDeCreditos() < 14){
+				@if(periodo.getTotalDeCreditos() < 14 && periodo.getNumero >= planejador.getNumPeriodoAtual()){
 					<div class="totalCNota">Número mínimo de 14 créditos não alcançado</div>
 				}
 					<b>Total: </b>@periodo.getTotalDeCreditos()  /   @periodo.getTotalDeDificuldade()
