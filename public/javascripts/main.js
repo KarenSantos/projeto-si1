@@ -122,6 +122,26 @@ function inverter(numPeriodo) {
 
 }
 
+function ordenar(numPeriodo) {
+	$
+	.ajax({
+		type : "GET",
+		url : "/ordenar",
+		data : "",
+		success : function() {
+			if (numPeriodo == "0") {
+				window.location = "/plano";
+			} else {
+				window.location = "/editar/" + numPeriodo;
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("Não foi possível atender a esta requisição. Por favor tente mais tarde.");
+			window.location = "/";
+		}
+	});
+}
+
 function logout() {
 	$
 			.ajax({

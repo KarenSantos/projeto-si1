@@ -272,11 +272,18 @@ public class Planejador {
 	}
 
 	/**
-	 * Inverte a ordem da lista dos periodos. Se está crescente fica
-	 * decrescente, se está decrescente fica crescente.
+	 * Inverte a ordem da lista dos periodos ficando com ordem decrescente.
 	 */
 	public void inverteOrdemDosPeriodos() {
 		plano.inverteOrdemDosPeriodos();
+		plano.update();
+	}
+	
+	/**
+	 * Ordena lista dos periodos pelo numero ficando em ordem crescente.
+	 */
+	public void ordenarPeriodos() {
+		plano.ordenarPeriodos();
 		plano.update();
 	}
 

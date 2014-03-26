@@ -91,6 +91,12 @@ public class Application extends Controller {
 	}
 	
 	@Security.Authenticated(Secured.class)
+	public static Result ordenar() {
+		planejador.ordenarPeriodos();
+		return ok("ordenado");
+	}
+	
+	@Security.Authenticated(Secured.class)
 	public static Result disciplinas(String disciplinaId) {
 		return ok(views.html.disciplinas.render(planejador.getDisciplinas(), planejador.getDisciplina(disciplinaId), planejador));
 	}

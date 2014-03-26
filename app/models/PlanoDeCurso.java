@@ -509,16 +509,17 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
-	 * Inverte a ordem da lista dos periodos. Se está crescente fica
-	 * decrescente, se está decrescente fica crescente.
+	 * Inverte a ordem da lista dos periodos ficando decrescente.
 	 */
 	public void inverteOrdemDosPeriodos() {
-		int indice = getTotalDePeriodos();
-		for (int i = 0; i < getTotalDePeriodos(); i++) {
-			Periodo periodo = periodos.get(indice - 1);
-			periodos.remove(periodo);
-			periodos.add(i, periodo);
-		}
+		Collections.reverse(this.periodos);
+	}
+	
+	/**
+	 * Ordena a lista de periodos pelo numero do periodo.
+	 */
+	public void ordenarPeriodos() {
+		Collections.sort(this.periodos);;
 	}
 
 	/**

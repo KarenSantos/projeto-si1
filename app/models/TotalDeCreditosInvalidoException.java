@@ -1,4 +1,4 @@
-package exceptions;
+package models;
 
 public class TotalDeCreditosInvalidoException extends Exception {
 

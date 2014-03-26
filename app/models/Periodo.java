@@ -14,7 +14,7 @@ import play.db.ebean.Model;
  * 
  */
 @Entity
-public class Periodo extends Model {
+public class Periodo extends Model implements Comparable<Periodo> {
 
 	public static final long serialVersionUID = 1L;
 	private final int MAXIMO_DE_CREDITOS = 28;
@@ -218,6 +218,14 @@ public class Periodo extends Model {
 		disciplinas.remove(disciplina);
 		this.totalDeCreditos -= disciplina.getCreditos();
 		this.totalDeDificuldade -= disciplina.getDificuldade();
+	}
+	
+	/**
+	 * Compara as tarefas de acordo com a sua prioridade.
+	 */
+	@Override
+	public int compareTo(Periodo periodo) {
+		return getNumero() - periodo.getNumero();
 	}
 
 	/**
