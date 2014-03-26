@@ -258,7 +258,7 @@ public class Planejador {
 	}
 
 	/**
-	 * Diz se uma disciplina tem um pre-requisito que ainda não foi alocado.
+	 * Verifica se uma disciplina tem algum pre-requisito que ainda não foi alocado.
 	 * 
 	 * @param disc
 	 *            A disciplina que pode ter um pre-requisito não alocado.
@@ -269,6 +269,21 @@ public class Planejador {
 	 */
 	public boolean temPreRequisitoNaoAlocado(Disciplina disc) {
 		return plano.temPreRequisitoNaoAlocado(disc);
+	}
+	
+	/**
+	 * Verifica se uma disciplina tem todos os seus pre requisitos alocados em
+	 * periodos anteriores.
+	 * 
+	 * @param disc
+	 *            A disciplina que se quer verificar.
+	 * @param periodo
+	 *            O numero do periodo da disciplina.
+	 * @return True se todos os seus pre-requisitos estao alocados anteriormente
+	 *         e false caso contrario.
+	 */
+	public boolean temPreRequisitosEmPeriodosAnteriores(Disciplina disc, int periodo) {
+		return plano.temPreRequisitosEmPeriodosAnteriores(disc, periodo);
 	}
 
 	/**

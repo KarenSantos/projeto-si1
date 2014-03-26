@@ -44,13 +44,13 @@
 				    	<span>@disciplinaPeriodo.getCreditos() / _</span>
 				    	<br>
 			    	} else {
-				    	@if(disciplinaPeriodo.isAlocadaCorretamente()) {
+				    	@if(planejador.temPreRequisitosEmPeriodosAnteriores(disciplinaPeriodo, periodo.getNumero)) {
 				    	   	<a class="periodo" href="/disciplinas/@disciplinaPeriodo.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
 							@disciplinaPeriodo.getNome() <span>@disciplinaPeriodo.getCreditos()  /  @disciplinaPeriodo.getDificuldade()</span>
 							<br>
 				    	} else {
 				    		<a class="periodo" href="/disciplinas/@disciplinaPeriodo.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
-							<div class="discRed">@disciplinaPeriodo.getNome()</div> <span>@disciplinaPeriodo.getCreditos()  /  @disciplinaPeriodo.getDificuldade()</span>
+							<a class="discRed">@disciplinaPeriodo.getNome()</a> <span>@disciplinaPeriodo.getCreditos()  /  @disciplinaPeriodo.getDificuldade()</span>
 							<br>
 				    	}
 			    	}

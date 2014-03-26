@@ -20,28 +20,28 @@
 </div>
 <div id="col1">
 	@for(periodo <- periodos){
-		@if(periodo.getNumero() == numPeriodo){
+		@if(periodo.getNumero() == numPeriodo){  <!-- Se eh o periodo atual -->
 			<div id="periodoBox">
 			
 				<div id="numPeriodoEditando"><b>@periodo.getNumero()º</b> Período
-				<div id="periodoOptions">
-			  		<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-			    		<span class="caret"></span>
-			  		</button>
-			  		<ul class="dropdown-menu pull-right" role="menu">
-			    		<li><a href="/plano">Fechar edição</a></li>
-			    		<li><a href="/marcar/@periodo.getNumero()">Marcar como atual</a></li>
-			  		</ul>
-			  	</div>
-				@if(periodo.getNumero() == planejador.getNumPeriodoAtual()){
-					<div id="cursando">Cursando...</div>
-				}
+					<div id="periodoOptions">
+				  		<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+				    		<span class="caret"></span>
+				  		</button>
+				  		<ul class="dropdown-menu pull-right" role="menu">
+				    		<li><a href="/plano">Fechar edição</a></li>
+				    		<li><a href="/marcar/@periodo.getNumero()">Marcar como atual</a></li>
+				  		</ul>
+				  	</div>
+					@if(periodo.getNumero() == planejador.getNumPeriodoAtual()){
+						<div id="cursando">Cursando...</div>
+					}
 				</div>
 			
 				<div id="headerDescription">Disciplina <span>créditos / <a class="dificuldade" title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
 				<div class="disc"><!-- Disciplinas do periodo -->
 				    @for(disciplinaPeriodo <- periodo.getDisciplinas()) {
-				    	@if(disciplinaPeriodo.isAlocadaCorretamente()) {
+				    	@if(planejador.temPreRequisitosEmPeriodosAnteriores(disciplinaPeriodo, periodo.getNumero)) {
 				    		@if(!planejador.ehDisciplinaOptativaGenerica(disciplinaPeriodo)){
 					    		<a class="periodo" href="/disciplinas/@disciplinaPeriodo.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp;
 				    		}
@@ -63,8 +63,8 @@
 					<b>Total: </b>@periodo.getTotalDeCreditos()  /   @periodo.getTotalDeDificuldade()
 				</div>
 				<div id="editandoNote">Clique em uma disciplina para adicionar aqui, mover de outro período ou remover deste.</div>
-			</div><!-- Fim de um periodo -->
-		} else {
+			</div>
+		} else {  <!-- Se nao eh o periodo atual -->
 			<div id="periodoBox">
 			
 				<div id="numPeriodo"><b>@periodo.getNumero()º</b> Período
@@ -90,7 +90,7 @@
 					    	<span>@disciplinaPeriodo.getCreditos() / _</span>
 					  		<br>
 				    	} else {
-					    	@if(disciplinaPeriodo.isAlocadaCorretamente()) {
+					    	@if(planejador.temPreRequisitosEmPeriodosAnteriores(disciplinaPeriodo, periodo.getNumero)) {
 					    		<a class="periodo" href="/disciplinas/@disciplinaPeriodo.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp;
 					    	   	<a onclick="moverDisciplina('@disciplinaPeriodo.getId()', '@numPeriodo', '@periodo.getNumero()')" class="cada1">@disciplinaPeriodo.getNome()</a>
 					    	   	<span>@disciplinaPeriodo.getCreditos() / @disciplinaPeriodo.getDificuldade()</span>

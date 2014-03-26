@@ -28,7 +28,6 @@ h3{
 }
 
 a{
-	cursor: pointer;
 	text-decoration: none;
 }
 
@@ -38,6 +37,7 @@ a.periodo{
 
 a.periodo:hover{
 	color: lightcoral;
+	cursor: pointer;
 }
 
 a.dificuldade{
@@ -51,6 +51,7 @@ a.disciplina{
 
 a.disciplina:hover{
 	color:lightcoral;
+	cursor: pointer;
 }
 
 #main{
@@ -80,7 +81,6 @@ a.disciplina:hover{
 	text-transform: uppercase;
 	padding: 10px;
 	color: #C8C8C8;
-	cursor: pointer;
 	font-size: 19px;
 	display: inline;
 	-webkit-transition: all 200ms ease-in-out;
@@ -92,6 +92,7 @@ a.disciplina:hover{
 
 #botao:hover{
 	color: lightcoral;
+	cursor: pointer;
 }
 
 #index{
@@ -187,7 +188,6 @@ a.disciplina:hover{
 	text-align: center;
 	text-transform: uppercase;
 	padding: 5px 5px 5px 5px;
-	cursor: pointer;
 	font-weight:bold;
 	display: inline;
 	-webkit-transition: all 200ms ease-in-out;
@@ -199,6 +199,7 @@ a.disciplina:hover{
 	
 #botaoPeriodo:hover{
 	color: lightcoral;
+	cursor: pointer;
 }
 
 #ordenacao{
@@ -215,7 +216,7 @@ a.disciplina:hover{
 	transition: all 200ms ease-in-out;
 }
 
-#inverter:hover{
+#ordenacao:hover{
 	cursor:pointer;
 	color: lightcoral;
 }

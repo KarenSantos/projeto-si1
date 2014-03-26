@@ -30,8 +30,8 @@ public class PlanoDeCurso extends Model {
 
 	private Grade grade;
 
-//	@OneToOne
-//	public Usuario usuario;
+	// @OneToOne
+	// public Usuario usuario;
 
 	@ManyToMany
 	@JoinTable(name = "plano_disc_nao_alocadas", joinColumns = @JoinColumn(name = "plano"), inverseJoinColumns = @JoinColumn(name = "disciplina"))
@@ -56,7 +56,7 @@ public class PlanoDeCurso extends Model {
 	public PlanoDeCurso(String id, Grade grade, Usuario usuario) {
 		this.id = id;
 		this.grade = grade;
-//		this.usuario = usuario;
+		// this.usuario = usuario;
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		periodos = new ArrayList<Periodo>();
 	}
@@ -76,7 +76,7 @@ public class PlanoDeCurso extends Model {
 	public void reset() {
 		disciplinasNaoAlocadas.clear();
 		periodos.clear();
-		alocacaoInicialDeDisciplinas();
+		alocacaoBaseDeDisciplinas();
 		setPeriodoAtual(1);
 	}
 
@@ -118,14 +118,14 @@ public class PlanoDeCurso extends Model {
 		return this.grade;
 	}
 
-//	/**
-//	 * Retorna o usuario do plano de curso.
-//	 * 
-//	 * @return O usuario do plano de curso.
-//	 */
-//	public Usuario getUsuario() {
-//		return this.usuario;
-//	}
+	// /**
+	// * Retorna o usuario do plano de curso.
+	// *
+	// * @return O usuario do plano de curso.
+	// */
+	// public Usuario getUsuario() {
+	// return this.usuario;
+	// }
 
 	/**
 	 * Retorna uma disciplina pelo seu id.
@@ -246,7 +246,8 @@ public class PlanoDeCurso extends Model {
 	 *             Se o ultimo periodo tem mais creditos que o maximo de
 	 *             creditos padrão.
 	 */
-	public void createPeriodo() throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
+	public void createPeriodo() throws AlocacaoInvalidaException,
+			TotalDeCreditosInvalidoException {
 
 		int ultimoPeriodo = getTotalDePeriodos();
 
@@ -254,18 +255,21 @@ public class PlanoDeCurso extends Model {
 			throw new AlocacaoInvalidaException(
 					"Você já alcançou o número máximo de períodos");
 		}
-		if (ultimoPeriodo > PERIODOS_BASE){ // se eh um periodo acima dos periodos normais
-			if (getPeriodo(ultimoPeriodo).getTotalDeCreditos() > getPeriodo(ultimoPeriodo).getMaximoDeCreditos() || 
-					getPeriodo(ultimoPeriodo).getTotalDeCreditos() < getPeriodo(ultimoPeriodo).getMinimoDeCreditos()) {
+		if (ultimoPeriodo > PERIODOS_BASE) { // se eh um periodo acima dos
+												// periodos normais
+			if (getPeriodo(ultimoPeriodo).getTotalDeCreditos() > getPeriodo(
+					ultimoPeriodo).getMaximoDeCreditos()
+					|| getPeriodo(ultimoPeriodo).getTotalDeCreditos() < getPeriodo(
+							ultimoPeriodo).getMinimoDeCreditos()) {
 				throw new TotalDeCreditosInvalidoException(
 						"Numero de creditos do ultimo periodo impede criaçao de um novo.");
 			}
 		}
-		
+
 		int novoNumero = ultimoPeriodo + 1;
 		Periodo novoPeriodo = new Periodo(this.id + novoNumero, novoNumero);
 		novoPeriodo.save();
-		
+
 		if (isInvertido()) {
 			periodos.add(0, novoPeriodo);
 		} else {
@@ -354,7 +358,7 @@ public class PlanoDeCurso extends Model {
 					"O número mínimo de créditos neste período é 14.");
 		}
 
-		verificaDependentes(aRemover);
+		verificaRemocaoDeDependentes(aRemover);
 
 		oPeriodo.removeDisciplina(aDisciplina);
 		for (Integer key : aRemover.keySet()) {
@@ -400,30 +404,6 @@ public class PlanoDeCurso extends Model {
 
 			oPeriodo.addDisciplina(aDisciplina); // pode lancar excecao
 			perAtual.removeDisciplina(aDisciplina);
-
-			List<Disciplina> temComoPreRequisito = temComoPreRequisito(aDisciplina);
-			List<Disciplina> saoPreRequisitos = aDisciplina.getPreRequisitos();
-
-			// pra cada disciplina que tem esta como pre-requisito
-			for (Disciplina temComo : temComoPreRequisito) {
-				// se a disciplina tiver a frente
-				if (getPeriodoDaDisciplina(aDisciplina) >= getPeriodoDaDisciplina(temComo)) {
-					temComo.setNotAlocadaCorretamente();
-				} else {
-					temComo.setIsAlocadaCorretamente();
-				}
-			}
-
-			// para cada um dos seus pre-requisitos
-			for (Disciplina ehPreRequisito : saoPreRequisitos) {
-				// se eles estiverem a frente
-				if (getPeriodoDaDisciplina(ehPreRequisito) >= getPeriodoDaDisciplina(aDisciplina)) {
-					aDisciplina.setNotAlocadaCorretamente();
-					break;
-				} else {
-					aDisciplina.setIsAlocadaCorretamente();
-				}
-			}
 		}
 	}
 
@@ -484,7 +464,8 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
-	 * Diz se uma disciplina tem um pre-requisito que ainda não foi alocado.
+	 * Verifica se uma disciplina tem algum pre-requisito que ainda não foi
+	 * alocado.
 	 * 
 	 * @param disc
 	 *            A disciplina que pode ter um pre-requisito não alocado.
@@ -509,17 +490,47 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
+	 * Verifica se uma disciplina tem todos os seus pre requisitos alocados em
+	 * periodos anteriores.
+	 * 
+	 * @param disc
+	 *            A disciplina que se quer verificar.
+	 * @param periodo
+	 *            O numero do periodo da disciplina.
+	 * @return True se todos os seus pre-requisitos estao alocados anteriormente
+	 *         e false caso contrario.
+	 */
+	public boolean temPreRequisitosEmPeriodosAnteriores(Disciplina disc,
+			int periodo) {
+		boolean resp = true;
+		if (!disc.getPreRequisitos().isEmpty()) {
+			for (Disciplina pre : disc.getPreRequisitos()) {
+				resp = false;
+				for (int i = 1; i < periodo; i++) {
+					if (getPeriodo(i).getDisciplinas().contains(pre)) {
+						resp = true;
+					}
+				}
+				if (resp == false)
+					break;
+			}
+		}
+		return resp;
+	}
+
+	/**
 	 * Inverte a ordem da lista dos periodos ficando decrescente.
 	 */
 	public void inverteOrdemDosPeriodos() {
 		Collections.reverse(this.periodos);
 	}
-	
+
 	/**
 	 * Ordena a lista de periodos pelo numero do periodo.
 	 */
 	public void ordenarPeriodos() {
-		Collections.sort(this.periodos);;
+		Collections.sort(this.periodos);
+		;
 	}
 
 	/**
@@ -606,7 +617,7 @@ public class PlanoDeCurso extends Model {
 			}
 		}
 	}
-	
+
 	/**
 	 * Verifica se disciplinas dependetes podem ser removidas
 	 * 
@@ -617,7 +628,8 @@ public class PlanoDeCurso extends Model {
 	 *             Se o total de creditos de algum periodo dor menor que o
 	 *             minimo.
 	 */
-	private void verificaDependentes(Map<Integer, List<Disciplina>> aRemover)
+	private void verificaRemocaoDeDependentes(
+			Map<Integer, List<Disciplina>> aRemover)
 			throws TotalDeCreditosInvalidoException {
 		// se alguma das disciplinas dependentes desta a frente nao puder ser
 		// removida
@@ -632,33 +644,9 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
-	 * Retorna uma lista de disciplinas da qual esta é pre-requisito.
-	 * 
-	 * @param discId
-	 *            A disciplina que pode ser pre-requisito ou nao de outras.
-	 * @return A lista de disciplinas da qual esta é pre-requisito.
-	 */
-	private List<Disciplina> temComoPreRequisito(Disciplina aDisciplina) {
-
-		List<Disciplina> resp = new ArrayList<Disciplina>();
-
-		for (Disciplina disc : grade.getDisciplinas()) {
-			if (disc.getPeriodoSugerido() > aDisciplina.getPeriodoSugerido()) {
-				for (Disciplina preRequisito : disc.getPreRequisitos()) {
-					if (aDisciplina == preRequisito) {
-						resp.add(disc);
-					}
-				}
-			}
-		}
-
-		return resp;
-	}
-
-	/**
 	 * Cria todos os periodos do plano de curso e aloca suas disciplinas.
 	 */
-	private void alocacaoInicialDeDisciplinas() {
+	private void alocacaoBaseDeDisciplinas() {
 
 		for (int i = 0; i < PERIODOS_BASE; i++) {
 			try {

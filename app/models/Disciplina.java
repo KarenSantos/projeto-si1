@@ -36,7 +36,6 @@ public class Disciplina extends Model {
 	private int creditos;
 	private int periodoSugerido;
 	private int dificuldade;
-	private boolean alocadaCorretamente;
 
 	public static Finder<String, Disciplina> find = new Finder<String, Disciplina>(
 			String.class, Disciplina.class);
@@ -81,8 +80,6 @@ public class Disciplina extends Model {
 		} else {
 			this.dificuldade = dificuldade;
 		}
-
-		this.alocadaCorretamente = true;
 	}
 
 	/**
@@ -117,8 +114,6 @@ public class Disciplina extends Model {
 		} else {
 			this.dificuldade = dificuldade;
 		}
-
-		this.alocadaCorretamente = true;
 	}
 
 	/**
@@ -248,40 +243,6 @@ public class Disciplina extends Model {
 		} else {
 			this.dificuldade = dif;
 		}
-	}
-
-	/**
-	 * Retorna se a disciplina está ou não alocada corretamente.
-	 * 
-	 * @return True se a disciplina esta alocada corretamente, e false caso
-	 *         contrario.
-	 */
-	public boolean isAlocadaCorretamente() {
-		return alocadaCorretamente;
-	}
-
-	/**
-	 * Altera o status da disciplina se esta alocada corretamente ou nao.
-	 * 
-	 * @param alocada
-	 *            O novo status da disciplina.
-	 */
-	public void setAlocadaCorretamente(boolean alocada) {
-		this.alocadaCorretamente = alocada;
-	}
-
-	/**
-	 * Altera o status da disciplina para esta alocada corretamente.
-	 */
-	public void setIsAlocadaCorretamente() {
-		this.alocadaCorretamente = true;
-	}
-
-	/**
-	 * Altera o status da disciplina para não alocada corretamente.
-	 */
-	public void setNotAlocadaCorretamente() {
-		this.alocadaCorretamente = false;
 	}
 
 	/**

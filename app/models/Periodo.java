@@ -221,7 +221,7 @@ public class Periodo extends Model implements Comparable<Periodo> {
 	}
 	
 	/**
-	 * Compara as tarefas de acordo com a sua prioridade.
+	 * Compara os periodos de acordo com seu numero.
 	 */
 	@Override
 	public int compareTo(Periodo periodo) {
