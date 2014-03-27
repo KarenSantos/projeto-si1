@@ -31,7 +31,7 @@ GET		/ordenar								controllers.Application.ordenar()
 GET		/disciplinas/:disciplinaId			controllers.Application.disciplinas(disciplinaId: String)
 
 # Rede Social
-GET     /usuarios/:usuarioId				controllers.Application.outrosPlanos(usuarioId: String)
+GET     /outro_plano/:usuarioId				controllers.Application.outroPlano(usuarioId: String)
 GET		/inverterplanos						controllers.Application.inverter()
 GET		/ordenarPlanos						controllers.Application.ordenar()
 

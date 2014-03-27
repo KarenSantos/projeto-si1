@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import models.AlocacaoInvalidaException;
@@ -32,15 +31,8 @@ public class Planejador {
 		this.usuario = usuario;
 
 		plano = PlanoDeCurso.find.byId("p_" + usuario.getEmail());
-		if (plano == null) {
-			Grade grade = new Grade();
-			plano = new PlanoDeCurso("p_" + usuario.getEmail(), grade);
-			plano.reset();
-			plano.save();
-		} else {
-			plano.setGrade(new Grade());
-			plano.save();
-		}
+		plano.setGrade(new Grade());
+		plano.save();
 	}
 
 	/**
@@ -355,5 +347,14 @@ public class Planejador {
 			resp = true;
 		}
 		return resp;
+	}
+
+	/**
+	 * Retorna o plano de curso do usuario passado como parametro.
+	 * 
+	 * @return O plano de curso do usuario passado como parametro.
+	 */
+	public PlanoDeCurso getPlanoDoUsuario(Usuario usuario) {
+		return plano = PlanoDeCurso.find.byId("p_" + usuario.getEmail());
 	}
 }

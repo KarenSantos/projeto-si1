@@ -1,5 +1,7 @@
 package controllers;
 
+import models.Grade;
+import models.PlanoDeCurso;
 import models.Usuario;
 import play.data.Form;
 import play.mvc.Controller;
@@ -161,8 +163,12 @@ public class Autenticador extends Controller {
 			return badRequest(cadastro.render(cadastroForm));
 		} else if(cadastroForm.get().validate() == null) {
 			Cadastro novoC = cadastroForm.get();
-			Usuario.create(new Usuario(novoC.getEmail(), novoC.getNome(),
-					novoC.getPassword()));
+			Usuario usuario = new Usuario(novoC.getEmail(), novoC.getNome(), novoC.getPassword()); 
+			Usuario.create(usuario);
+
+			//criando o plano do novo usuario
+			//TODO este metodo vai receber tbm o tipo de plano q o usuario escolher no cadastro
+			criaPlanoDoUsuario(usuario);
 		}
 		flash("success", "Cadastro realizado com sucesso.");
 		return redirect(routes.Autenticador.login());
@@ -177,10 +183,18 @@ public class Autenticador extends Controller {
 				String email = "usuario" + num + "@email.com"; 
 				String nome = "Usuário " + num;
 				String password = "usuario" + num;
-				
-				Usuario.create(new Usuario(email, nome, password));
+				Usuario user = new Usuario(email, nome, password);
+				Usuario.create(user);
+				criaPlanoDoUsuario(user);
 				num ++;
 			}
 		}
+	}
+	
+	private static void criaPlanoDoUsuario(Usuario usuario){
+		Grade grade = new Grade();
+		PlanoDeCurso plano = new PlanoDeCurso("p_" + usuario.getEmail(), grade);
+		plano.reset();
+		plano.save();
 	}
 }

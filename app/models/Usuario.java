@@ -3,7 +3,8 @@ package models;
 import java.util.*;
 
 import javax.persistence.*;
-import org.mindrot.jbcrypt.BCrypt;	
+
+import org.mindrot.jbcrypt.BCrypt;
 
 import play.db.ebean.*;
 
@@ -15,7 +16,7 @@ import play.db.ebean.*;
  */
 @Entity
 @Table(name = "usuario")
-public class Usuario extends Model {
+public class Usuario extends Model implements Comparable<Usuario> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,7 +25,7 @@ public class Usuario extends Model {
 	private String email;
 	private String nome;
 	private String password;
-	
+
 	/**
 	 * Cria um usuário.
 	 */
@@ -46,54 +47,100 @@ public class Usuario extends Model {
 		this.email = email;
 		this.nome = nome;
 		this.password = BCrypt.hashpw(password, BCrypt.gensalt());
-		
+
 	}
-	
+
 	public static Finder<String, Usuario> find = new Finder<String, Usuario>(
 			String.class, Usuario.class);
 
-	public static List<Usuario> all() {return Usuario.find.all();	}
+	public static List<Usuario> all() {
+		return Usuario.find.all();
+	}
 
-	public String getId(){
+	/**
+	 * Retorna o Id do usuario.
+	 * 
+	 * @return O Id do usuario.
+	 */
+	public String getId() {
 		return this.id;
 	}
-	
+
+	/**
+	 * Altera o id do usuario.
+	 * 
+	 * @param id
+	 *            O novo Id do usuario.
+	 */
 	public void setId(String id) {
 		this.id = id;
 	}
-	
-	public String getNome(){
+
+	/**
+	 * Retorna o nome do usuario.
+	 * 
+	 * @return O nome do usuario.
+	 */
+	public String getNome() {
 		return this.nome;
 	}
-	
-	public void setNome(String nome){
+
+	/**
+	 * Altera o nome do usuario.
+	 * 
+	 * @param nome
+	 *            O novo nome do usuario.
+	 */
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	public String getEmail(){
+
+	/**
+	 * Retorna o email do usuario.
+	 * 
+	 * @return O email do usuario.
+	 */
+	public String getEmail() {
 		return this.email;
 	}
-	
-	public void setEmail(String email){
+
+	/**
+	 * Altera o email do usuario.
+	 * 
+	 * @param email
+	 *            O novo email do usuario.
+	 */
+	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	public String getPassword(){
+
+	/**
+	 * Retorna o password do usuario.
+	 * 
+	 * @return O password do usuario.
+	 */
+	public String getPassword() {
 		return this.password;
 	}
-	
-	public void setPassword(String password){
+
+	/**
+	 * Altera o password do usuario.
+	 * 
+	 * @param password
+	 *            O novo password do usuario.
+	 */
+	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	public  boolean hasPlano(){
-		if(PlanoDeCurso.find.byId("p_"+email) == null){
-			return false;
-		}else{
-			return true;
-		}
+
+	/**
+	 * Compara os usuarios de acordo com seu nome.
+	 */
+	@Override
+	public int compareTo(Usuario usuario) {
+		return getNome().compareTo(usuario.getNome());
 	}
-	
+
 	/**
 	 * Salva o usuário no BD.
 	 * 
@@ -114,15 +161,14 @@ public class Usuario extends Model {
 	 * @return Null se a autenticação é feita com sucesso ou uma string de erro
 	 *         se não.
 	 */
-	public static String authenticate(String email, String password){
-        Usuario usuario = find.where().eq("email", email).findUnique();
-        if(usuario == null){
-        	return "Usuario não encontrado";
-        }
-		if(BCrypt.checkpw(password, usuario.getPassword())){
-			return null;
+	public static String authenticate(String email, String password) {
+		Usuario usuario = find.where().eq("email", email).findUnique();
+		if (usuario == null) {
+			return "Usuario não encontrado";
 		}
-        else{
+		if (BCrypt.checkpw(password, usuario.getPassword())) {
+			return null;
+		} else {
 			return "Senha incorreta";
 		}
 	}

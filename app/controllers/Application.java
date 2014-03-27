@@ -1,9 +1,9 @@
 package controllers;
 
+import java.util.Collections;
 import java.util.List;
 
 import models.AlocacaoInvalidaException;
-import models.PlanoDeCurso;
 import models.TotalDeCreditosInvalidoException;
 import models.Usuario;
 import play.mvc.Controller;
@@ -24,13 +24,13 @@ public class Application extends Controller {
 	public static Result index() {
 		Usuario user = Usuario.find.byId(request().username());
 		planejador = new Planejador(user);
+		planejador.reSetPeriodoAtual();
 		
 		return ok(views.html.index.render(user));
 	}
 
 	@Security.Authenticated(Secured.class)
 	public static Result plano() {
-		planejador.reSetPeriodoAtual();
 		planejador.deletaUltimoPeriodoSeVazio();
 		return ok(views.html.plano.render(planejador.getPeriodos(), 
 				planejador.getDisciplinasNaoAlocadas(), planejador));
@@ -116,11 +116,16 @@ public class Application extends Controller {
 	}
 	
 	@Security.Authenticated(Secured.class)
-	public static Result outrosPlanos(String usuarioId){
-		Usuario usuario = Usuario.find.byId(usuarioId);
+	public static Result outroPlano(String usuarioId){
 		List<Usuario> usuarios = Usuario.find.all();
-		PlanoDeCurso plano = PlanoDeCurso.find.byId("p_" + usuarioId);
-		return ok(views.html.rede.render(plano, usuarios, usuario, Usuario.find.byId(request().username()).getNome(), planejador));
+		Collections.sort(usuarios);
+
+		if (usuarioId.equals("id")){
+			return ok(views.html.outrosPlanos.render(usuarios, null, planejador));
+		} else {
+			Usuario usuario = Usuario.find.byId(usuarioId);
+			return ok(views.html.outrosPlanos.render(usuarios, usuario, planejador));
+		}
 	}
 	
 }

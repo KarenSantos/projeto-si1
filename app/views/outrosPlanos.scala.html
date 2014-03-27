@@ -1,0 +1,77 @@
+@(usuarios: List[Usuario], usuarioDaVez: Usuario, planejador: Planejador)
+
+@import helper._
+
+@main("Planejamento de Curso") {
+
+<h1>Planejamento de Curso</h1> <h1 class="nomeUsuario"> &nbsp; - @planejador.getUsuario.getNome</h1>
+
+<a onclick="logout()"><div id="botao">Sair</div></a>
+<a href="/disciplinas/01"><div id="botao">Disciplinas</div></a>
+<a href="/plano"><div id="botao">Meu Plano</div></a>
+<a href="/home"><div id="botao">Home</div></a>
+
+
+@if(usuarioDaVez == null){
+	<div id="top1"><h2>Plano de Curso</h2></div>
+	<div id="col1">
+		<div id="index">
+			<h1 class="dark">Escolha um usuário >>>></h1>
+		</div>
+	</div>
+
+} else {
+	<div id="top1"><h2>Plano de Curso: @usuarioDaVez.getNome</h2></div>
+	<div id="col1">
+		@for(periodo <- planejador.getPlanoDoUsuario(usuarioDaVez).getPeriodos()){
+			<div id="periodoBox">
+				<div id="numPeriodoImutavel"><b>@periodo.getNumero()º</b> Período</div>
+			
+				<div id="headerDescription">Disciplina <span>créditos / <a class="dificuldade" title="variando de 1-fácil até 5-difícil">dificuldade</a></span></div>
+				<div class="disc" align="left"><!-- Disciplinas do periodo -->
+				    @for(disciplinaPeriodo <- periodo.getDisciplinas()) {
+				    	@if(planejador.ehDisciplinaOptativaGenerica(disciplinaPeriodo)){
+				    		@disciplinaPeriodo.getNome()
+					    	<span>@disciplinaPeriodo.getCreditos() / _</span>
+					    	<br>
+				    	} else {
+					    	@if(planejador.temPreRequisitosEmPeriodosAnteriores(disciplinaPeriodo, periodo.getNumero)) {
+					    	   	<a class="periodo" href="/disciplinas/@disciplinaPeriodo.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
+								@disciplinaPeriodo.getNome() <span>@disciplinaPeriodo.getCreditos()  /  @disciplinaPeriodo.getDificuldade()</span>
+								<br>
+					    	} else {
+					    		<a class="periodo" href="/disciplinas/@disciplinaPeriodo.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
+								<a class="discRed" title="Os pré-requisitos: '@planejador.getPreRequisitosAlocadosEmPeriodosPosteriores(disciplinaPeriodo, periodo.getNumero)' precisam estar alocados antes desta">
+								@disciplinaPeriodo.getNome()</a> <span>@disciplinaPeriodo.getCreditos()  /  @disciplinaPeriodo.getDificuldade()</span>
+								<br>
+					    	}
+				    	}
+				    }
+				</div>
+				<div class="totalC"><!-- Total de créditos do periodo -->
+				@if(periodo.getTotalDeCreditos() < 14 && periodo.getNumero >= planejador.getNumPeriodoAtual()){
+					<div class="totalCNota">Número mínimo de 14 créditos não alcançado</div>
+				}
+					<b>Total: </b>@periodo.getTotalDeCreditos()  /   @periodo.getTotalDeDificuldade()
+				</div>
+			</div><!-- Fim de um periodo -->
+		}
+	</div>
+
+}
+
+	<div id="top2"><h2>Planos de outros usuarios</h2></div><!-- coluna de disciplinas -->
+	<div id="col2">
+		<div id="header">Colocar pesquisa aqui!!</div>
+		<div class="disc2">
+		@for(user <- usuarios) {
+			<a class="disciplina" href="/outro_plano/@user.getId()"><div class="glyphicon glyphicon-eye-open"></div></a> &nbsp;
+			 @user.getNome()
+			<br>
+		}
+		</div>
+	</div>
+		
+<div id="barraDeStatus">
+</div>
+}
