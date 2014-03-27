@@ -15,3 +15,5 @@ val appDependencies = Seq(
 )
 
 play.Project.playJavaSettings
+
+ebeanEnabled := true
