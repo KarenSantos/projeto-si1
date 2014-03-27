@@ -9,7 +9,6 @@ create table Disciplina (
   creditos                  integer,
   periodo_sugerido          integer,
   dificuldade               integer,
-  alocada_corretamente      boolean,
   constraint pk_Disciplina primary key (id))
 ;
 

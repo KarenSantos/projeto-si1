@@ -86,6 +86,14 @@ public class Usuario extends Model {
 		this.password = password;
 	}
 	
+	public  boolean hasPlano(){
+		if(PlanoDeCurso.find.byId("p_"+email) == null){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
 	/**
 	 * Salva o usuário no BD.
 	 * 

@@ -103,6 +103,7 @@ public class Application extends Controller {
 		return ok("ordenado");
 	}
 	
+	
 	@Security.Authenticated(Secured.class)
 	public static Result disciplinas(String disciplinaId) {
 		return ok(views.html.disciplinas.render(planejador.getDisciplinas(), planejador.getDisciplina(disciplinaId), planejador));
@@ -114,10 +115,12 @@ public class Application extends Controller {
 		return redirect((routes.Application).plano());
 	}
 	
-//	@Security.Authenticated(Secured.class)
-//	public static Result outrosPlanos(String usuarioId){
-//		List<Usuario> usuarios = Usuario.find.all();
-//		PlanoDeCurso plano = PlanoDeCurso.find.byId("p_" + usuarioId);
-//		return ok(views.html.outrosPlanos.render(plano, usuarios));
-//	}
+	@Security.Authenticated(Secured.class)
+	public static Result outrosPlanos(String usuarioId){
+		Usuario usuario = Usuario.find.byId(usuarioId);
+		List<Usuario> usuarios = Usuario.find.all();
+		PlanoDeCurso plano = PlanoDeCurso.find.byId("p_" + usuarioId);
+		return ok(views.html.rede.render(plano, usuarios, usuario, Usuario.find.byId(request().username()).getNome(), planejador));
+	}
+	
 }
