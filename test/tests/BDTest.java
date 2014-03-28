@@ -8,6 +8,7 @@ import java.util.List;
 
 import models.Disciplina;
 import models.Grade;
+import models.GradeAntiga;
 import models.Periodo;
 import models.PlanoDeCurso;
 import models.Usuario;
@@ -37,11 +38,14 @@ public class BDTest {
 	}
 
 	@Test
-	public void deveCriarGradePopulada() {
+	public void deveConseguirRecuperarGradeDoBD() {
 
-		Grade grade = new Grade();
-		Assert.assertTrue(!grade.getDisciplinas().isEmpty());
-		Assert.assertEquals(82, grade.getTotalDeDisciplinas());
+		Grade grade = new GradeAntiga();
+		grade.configuraGrade("id");
+//		Assert.assertTrue(!grade.getDisciplinas().isEmpty());
+//		Assert.assertEquals(82, grade.getTotalDeDisciplinas());
+		grade.save();
+		Assert.assertFalse(Grade.find.all().isEmpty());
 	}
 
 	@Test
@@ -62,7 +66,7 @@ public class BDTest {
 	
 	@Test
 	public void deveConseguirRecuperarPlanoDeCursoDoBD() {
-		Grade grade = new Grade();
+		Grade grade = new GradeAntiga();
 		Usuario usuario = new Usuario("email2@email.com", "meuNome", "senha");
 		usuario.save();
 		

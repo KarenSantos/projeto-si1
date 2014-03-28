@@ -114,15 +114,6 @@ public class PlanoDeCurso extends Model {
 		return this.grade;
 	}
 
-	// /**
-	// * Retorna o usuario do plano de curso.
-	// *
-	// * @return O usuario do plano de curso.
-	// */
-	// public Usuario getUsuario() {
-	// return this.usuario;
-	// }
-
 	/**
 	 * Retorna uma disciplina pelo seu id.
 	 * 

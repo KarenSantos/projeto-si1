@@ -6,6 +6,7 @@ import java.util.List;
 import models.AlocacaoInvalidaException;
 import models.Disciplina;
 import models.Grade;
+import models.GradeAntiga;
 import models.Periodo;
 import models.PlanoDeCurso;
 import models.TotalDeCreditosInvalidoException;
@@ -32,7 +33,6 @@ public class Planejador {
 		this.usuario = usuario;
 
 		plano = PlanoDeCurso.find.byId("p_" + usuario.getEmail());
-		plano.setGrade(new Grade());
 		plano.save();
 	}
 

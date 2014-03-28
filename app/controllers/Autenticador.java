@@ -1,8 +1,6 @@
 package controllers;
 
-import models.Grade;
-import models.PlanoDeCurso;
-import models.Usuario;
+import models.*;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -192,7 +190,8 @@ public class Autenticador extends Controller {
 	}
 	
 	private static void criaPlanoDoUsuario(Usuario usuario){
-		Grade grade = new Grade();
+		Grade grade = new GradeAntiga();
+		grade.configuraGrade("g_" + usuario.getEmail());
 		PlanoDeCurso plano = new PlanoDeCurso("p_" + usuario.getEmail(), grade);
 		plano.reset();
 		plano.save();

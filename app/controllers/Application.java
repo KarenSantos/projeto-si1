@@ -27,6 +27,7 @@ public class Application extends Controller {
 		Usuario user = Usuario.find.byId(request().username());
 		planejador = new Planejador(user);
 		planejador.reSetPeriodoAtual();
+		planejador.ordenarPeriodos();
 		
 		return ok(views.html.index.render(user));
 	}

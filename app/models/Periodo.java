@@ -28,6 +28,8 @@ public class Periodo extends Model implements Comparable<Periodo> {
 	private int numero;
 	private int totalDeCreditos;
 	private int totalDeDificuldade;
+	
+	@Transient
 	private ValidadorDeAlocacao validador;
 
 	@ManyToMany
