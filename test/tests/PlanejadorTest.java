@@ -5,6 +5,8 @@ import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.start;
 import models.AlocacaoInvalidaException;
 import models.Disciplina;
+import models.Grade;
+import models.PlanoDeCurso;
 import models.TotalDeCreditosInvalidoException;
 import models.Usuario;
 
@@ -24,7 +26,12 @@ public class PlanejadorTest {
 		start(fakeApplication(inMemoryDatabase()));
 		testador = new Usuario("testador@teste.teste", "Nome", "password");
 		testador.save();
+		Grade grade = new Grade();
+		PlanoDeCurso plano = new PlanoDeCurso("p_" + testador.getEmail(), grade);
+		plano.reset();
+		plano.save();
 		planejador = new Planejador(testador);
+		
 
 	}
 
@@ -390,5 +397,35 @@ public class PlanejadorTest {
 		Assert.assertEquals(2, planejador.getPeriodos().get(6).getNumero());
 		Assert.assertEquals(1, planejador.getPeriodos().get(7).getNumero());
 	}
+	
+	@Test
+	public void deveOrdenarPeriodos() {
+		
+		Assert.assertEquals(2, planejador.getPeriodo(2).getNumero());
+		Assert.assertEquals(1, planejador.getPeriodo(1).getNumero());
+		Assert.assertEquals(8, planejador.getPeriodo(8).getNumero());
+		Assert.assertEquals(5, planejador.getPeriodo(5).getNumero());
+		Assert.assertEquals(3, planejador.getPeriodo(3).getNumero());
+		Assert.assertEquals(6, planejador.getPeriodo(6).getNumero());
+		Assert.assertEquals(7, planejador.getPeriodo(7).getNumero());
+		Assert.assertEquals(4, planejador.getPeriodo(4).getNumero());
+		
+		
+		planejador.ordenarPeriodos();
+		
+		Assert.assertEquals(1, planejador.getPeriodo(1).getNumero());
+		Assert.assertEquals(2, planejador.getPeriodo(2).getNumero());
+		Assert.assertEquals(3, planejador.getPeriodo(3).getNumero());
+		Assert.assertEquals(4, planejador.getPeriodo(4).getNumero());
+		Assert.assertEquals(5, planejador.getPeriodo(5).getNumero());
+		Assert.assertEquals(6, planejador.getPeriodo(6).getNumero());
+		Assert.assertEquals(7, planejador.getPeriodo(7).getNumero());
+		Assert.assertEquals(8, planejador.getPeriodo(8).getNumero());
+		
+	}
+	
+
+	
+	
 
 }
