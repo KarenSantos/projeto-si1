@@ -32,6 +32,7 @@ GET		/disciplinas/:disciplinaId			controllers.Application.disciplinas(disciplina
 
 # Rede Social
 GET     /outro_plano/:usuarioId				controllers.Application.outroPlano(usuarioId: String)
+POST     /outro_plano/:usuarioId			controllers.Application.outroPlanoBusca(usuarioId: String)
 GET		/inverterplanos						controllers.Application.inverter()
 GET		/ordenarPlanos						controllers.Application.ordenar()
 

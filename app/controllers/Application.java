@@ -6,6 +6,8 @@ import java.util.List;
 import models.AlocacaoInvalidaException;
 import models.TotalDeCreditosInvalidoException;
 import models.Usuario;
+import play.data.DynamicForm;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -128,4 +130,18 @@ public class Application extends Controller {
 		}
 	}
 	
+	@Security.Authenticated(Secured.class)
+	public static Result outroPlanoBusca(String usuarioId){
+		DynamicForm buscaForm = Form.form().bindFromRequest();
+		List<Usuario> usuarios = planejador.buscaDeUsuarios(buscaForm.get("texto"));
+		Collections.sort(usuarios);
+		if (usuarioId.equals("id")){
+			return ok(views.html.outrosPlanos.render(usuarios, null, planejador));
+		} else if(usuarios.isEmpty()){
+			return ok(views.html.outrosPlanos.render(null, null, planejador));
+		}else {
+			Usuario usuario = Usuario.find.byId(usuarioId);
+			return ok(views.html.outrosPlanos.render(usuarios, usuario, planejador));
+		}
+	}
 }

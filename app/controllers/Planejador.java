@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import models.AlocacaoInvalidaException;
@@ -356,5 +357,24 @@ public class Planejador {
 	 */
 	public PlanoDeCurso getPlanoDoUsuario(Usuario usuario) {
 		return plano = PlanoDeCurso.find.byId("p_" + usuario.getEmail());
+	}
+	
+	public List<Usuario> buscaDeUsuarios(String usuarioProcurado){
+		List<Usuario> usuarios = Usuario.find.all();
+		if(usuarioProcurado.length() == 0){
+			return usuarios;
+		}else{
+			List<Usuario> achados  = new ArrayList<Usuario>();
+			usuarioProcurado = usuarioProcurado.toLowerCase();
+			int size = usuarioProcurado.length();
+			for (Usuario usuario : usuarios) {
+				String nome = usuario.getNome().toLowerCase();
+				if(nome.length() >= size &&
+				  nome.substring(0, size).equals(usuarioProcurado)){
+					achados.add(usuario);
+				}
+			}
+			return achados;
+		}
 	}
 }

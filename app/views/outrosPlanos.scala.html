@@ -23,7 +23,7 @@
 } else {
 	<div id="top1"><h2>Plano de Curso: @usuarioDaVez.getNome</h2></div>
 	<div id="col1">
-		@for(periodo <- planejador.getPlanoDoUsuario(usuarioDaVez).getPeriodos()){
+		@for(periodo <- PlanoDeCurso.find.byId("p_"+usuarioDaVez.getId()).getPeriodos){
 			<div id="periodoBox">
 				<div id="numPeriodoImutavel"><b>@periodo.getNumero()º</b> Período</div>
 			
@@ -62,12 +62,21 @@
 
 	<div id="top2"><h2>Planos de outros usuarios</h2></div><!-- coluna de disciplinas -->
 	<div id="col2">
-		<div id="header">Colocar pesquisa aqui!!</div>
+		<div id="header">
+		<form role="form" id="search-box" method="post">
+  <input type="text" name="texto" size="31" />
+  <input type="submit" name="sa" value="Buscar" />
+</form></div>
 		<div class="disc2">
-		@for(user <- usuarios) {
-			<a class="disciplina" href="/outro_plano/@user.getId()"><div class="glyphicon glyphicon-eye-open"></div></a> &nbsp;
-			 @user.getNome()
-			<br>
+		@if(usuarios == null){
+			Nenhum usuário encontrado
+		}else{
+			@for(user <- usuarios) {
+				<a class="disciplina" href="/outro_plano/@user.getId()"><div class="glyphicon glyphicon-eye-open"></div></a> &nbsp;
+				 @user.getNome()
+				<br>
+			}
+		
 		}
 		</div>
 	</div>
