@@ -1,12 +1,15 @@
 package models;
 
-import java.util.*;
 
-import javax.persistence.*;
+import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-import play.db.ebean.*;
+import play.db.ebean.Model;
+
 
 /**
  * Classe de usuário.

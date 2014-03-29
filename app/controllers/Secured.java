@@ -1,8 +1,8 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
-import play.mvc.Http.*;
+import play.mvc.Http.Context;
+import play.mvc.Result;
+import play.mvc.Security;
 
 /**
  * Classe para autenticar o acesso do usuário às páginas.

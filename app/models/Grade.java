@@ -7,91 +7,94 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.ManyToMany;
 
 import play.db.ebean.Model;
 
 /**
- * Classe da grade curricular do curso de computação 
+ * Classe da grade curricular do curso de computação
  * 
  * @author
- *
+ * 
  */
 @Entity
 @Inheritance
-public abstract class Grade extends Model{
+public abstract class Grade extends Model {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	private final int INICIO_OPTATIVA_TECC = 100;
+	private final int FIM_OPTATIVA_TECC = 199;
+	private final int INICIO_OPTATIVA_OUTROS = 200;
+
 	@Id
 	private String id;
-	
-	@ManyToOne
+
+	@ManyToMany
 	private List<Disciplina> disciplinas;
-	
-	@ManyToOne
-	private List<Periodo> periodos;
-	
 
-
+	@ManyToMany
+	protected List<Periodo> periodos;
 
 	public static Finder<String, Grade> find = new Finder<String, Grade>(
 			String.class, Grade.class);
-	
+
 	/**
 	 * Cria uma grade curricular com uma lista de disciplinas.
 	 */
-	public Grade(){
+	public Grade() {
 	}
-	
-	public void configuraGrade(String id) throws TotalDeCreditosInvalidoException{
+
+	public void configuraGrade(String id) {
 		this.id = id;
 		disciplinas = new ArrayList<Disciplina>();
+
 		if (Disciplina.find.all().isEmpty()) {
 			criaDisciplinas();
-		} else {
-			disciplinas.addAll(Disciplina.find.all());
 		}
-		this.periodos = new ArrayList<Periodo>();
+
+		periodos = new ArrayList<Periodo>();
 		if (Periodo.find.all().isEmpty()) {
-			criaPeriodos();
-		} else {
-			periodos.addAll(Periodo.find.all());
+			configuraPeriodos();
 		}
 	}
-	
-	public List<Periodo> getPeriodos() {
-		return periodos;
-	}
 
-	public void setPeriodos(List<Periodo> periodos) {
-		this.periodos = periodos;
-	}
-	
-	protected abstract void criaPeriodos () throws TotalDeCreditosInvalidoException;
-
-	public String getId(){
+	/**
+	 * Retorna o id da grade.
+	 * 
+	 * @return O id da grade.
+	 */
+	public String getId() {
 		return this.id;
 	}
-	
+
+	/**
+	 * Altera o id da grade.
+	 * 
+	 * @param id
+	 *            O novo id da grade.
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	/**
 	 * Retorna a lista com todas as disciplinas da grade.
 	 * 
 	 * @return A lista com todas as disciplinas da grade.
 	 */
-	public List<Disciplina> getDisciplinas(){
-		return Collections.unmodifiableList(disciplinas);
+	public List<Disciplina> getDisciplinas() {
+		return Collections.unmodifiableList(this.disciplinas);
 	}
-	
+
 	/**
 	 * Retorna uma disciplina da grade curricular.
 	 * 
-	 * @param id 
-	 * 			   O id da disciplina que vai ser retornada.
+	 * @param id
+	 *            O id da disciplina que vai ser retornada.
 	 * @return A disciplina com o id ou null se não existir.
 	 */
-	public Disciplina getDisciplina(String id){
+	public Disciplina getDisciplina(String id) {
 		Disciplina aDisciplina = null;
 		for (Disciplina disc : disciplinas) {
 			if (disc.getId().equals(id)) {
@@ -100,16 +103,79 @@ public abstract class Grade extends Model{
 		}
 		return aDisciplina;
 	}
-	
+
+	/**
+	 * Retorna o periodo que a disciplina esta na grade do curso.
+	 * 
+	 * @param disc
+	 *            A disciplina que se quer saber o numero do periodo.
+	 * @return O numero do periodo da disciplina ou zero se a disciplina for
+	 *         optativa.
+	 */
+	public int getPeriodoDaDisciplina(Disciplina disc) {
+		int numPeriodo = 0;
+		for (Periodo periodo : getPeriodos()) {
+			if (periodo.getDisciplinas().contains(disc)) {
+				numPeriodo = periodo.getNumero();
+			}
+		}
+		return numPeriodo;
+	}
+
 	/**
 	 * Retorna o total de disciplinas da grade curricular.
 	 * 
 	 * @return O total de disciplinas.
 	 */
-	public int getTotalDeDisciplinas(){
+	public int getTotalDeDisciplinas() {
 		return getDisciplinas().size();
 	}
-	
+
+	/**
+	 * Retorna uma lista com todas as disciplinas optativas, ou seja, todas as
+	 * disciplinas que nao estao em nenhum periodo.
+	 * 
+	 * @return A lista de disciplinas optativas.
+	 */
+	public List<Disciplina> getDisciplinasOptativas() {
+		List<Disciplina> optativas = new ArrayList<Disciplina>();
+		optativas.addAll(getDisciplinas());
+		for (Periodo periodo : getPeriodos()) {
+			for (Disciplina disc : periodo.getDisciplinas()) {
+				if (optativas.contains(disc)) {
+					optativas.remove(disc);
+				}
+			}
+		}
+		return optativas;
+	}
+
+	/**
+	 * Retorna a lista de periodos da grade.
+	 * 
+	 * @return A lista de periodos da grade.
+	 */
+	public List<Periodo> getPeriodos() {
+		return Collections.unmodifiableList(this.periodos);
+	}
+
+	/**
+	 * Retorna um periodo pelo seu numero.
+	 * 
+	 * @param numPeriodo
+	 *            O numero do periodo a ser retornado
+	 * @return O periodo do numero ou null se nao existir.
+	 */
+	public Periodo getPeriodo(int numPeriodo) {
+		Periodo oPeriodo = null;
+		for (Periodo periodo : getPeriodos()) {
+			if (periodo.getNumero() == numPeriodo) {
+				oPeriodo = periodo;
+			}
+		}
+		return oPeriodo;
+	}
+
 	/**
 	 * Cria uma disciplina com um id, um nome, o total de creditos, uma lista de
 	 * disciplinas que sao pre requisitos, o periodo sugerido para cursar a
@@ -123,14 +189,12 @@ public abstract class Grade extends Model{
 	 *            O total de creditos da disciplina.
 	 * @param preRequisitosIds
 	 *            A lista de disciplinas que sao pre requisitos desta.
-	 * @param periodoSugerido
-	 *            O periodo sugerido para cursar esta disciplina.
 	 * @param dificuldade
-	 * 			  A dificuldade indicada para a disciplina
+	 *            A dificuldade indicada para a disciplina
 	 * 
 	 */
 	public void createDisciplina(String id, String nome, int creditos,
-			String[] preRequisitosIds, int periodoSugerido, int dificuldade) {
+			String[] preRequisitosIds, int dificuldade) {
 
 		List<Disciplina> preRequisitos = new ArrayList<Disciplina>();
 
@@ -139,14 +203,13 @@ public abstract class Grade extends Model{
 		}
 
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos,
-				preRequisitos,  dificuldade);
-		disciplinas.add(aDisciplina);
+				preRequisitos, dificuldade);
+		this.disciplinas.add(aDisciplina);
 		aDisciplina.save();
 	}
-	
 
 	/**
-	 * Cria uma disciplina com um id, um nome, o total de creditos, o periodo 
+	 * Cria uma disciplina com um id, um nome, o total de creditos, o periodo
 	 * sugerido para cursar a disciplina e a dificuldade indicada da disciplina.
 	 * 
 	 * @param id
@@ -155,31 +218,79 @@ public abstract class Grade extends Model{
 	 *            O nome da disciplina.
 	 * @param creditos
 	 *            O total de creditos da disciplina.
-	 * @param periodoSugerido
-	 *            O periodo sugerido para cursar esta disciplina.
 	 * @param dificuldade
-	 * 			  A dificuldade indicada para a disciplina
-	 *             
+	 *            A dificuldade indicada para a disciplina
+	 * 
 	 */
-	public void createDisciplina(String id, String nome, int creditos, int periodoSugerido, int dificuldade) {
-		Disciplina aDisciplina = new Disciplina(id, nome, creditos,  dificuldade);
-		disciplinas.add(aDisciplina);
+	public void createDisciplina(String id, String nome, int creditos,
+			int dificuldade) {
+		Disciplina aDisciplina = new Disciplina(id, nome, creditos, dificuldade);
+		this.disciplinas.add(aDisciplina);
 		aDisciplina.save();
 	}
-	
-	public void addPeriodo(Periodo p) {
-		//TODO javadoc
-		periodos.add(p);
-		p.save();
 
+	/**
+	 * Cria um periodo com o numero indicado com as disciplinas da lista caso o
+	 * periodo ainda nao exista.
+	 * 
+	 * @param numPeriodo
+	 *            O numero do periodo a ser criado.
+	 * @param disciplinaIds
+	 *            Os ids das disciplinas a serem inseridas no periodo criado.
+	 * @throws TotalDeCreditosInvalidoException
+	 *             Se o total de créditos do periodo for violado.
+	 */
+	public void createPeriodo(int numPeriodo, String[] disciplinasIds)
+			throws TotalDeCreditosInvalidoException {
+		if (getPeriodo(numPeriodo) == null) {
+			Periodo oPeriodo = new Periodo(this.getId() + numPeriodo,
+					numPeriodo);
+			for (int i = 0; i < disciplinasIds.length; i++) {
+				oPeriodo.addDisciplina(getDisciplina(disciplinasIds[i]));
+			}
+			this.periodos.add(oPeriodo);
+			oPeriodo.save();
+		}
 	}
-	
-	
+
+	/**
+	 * Verifica se a disciplina eh uma disciplina optativa do TECC.
+	 * 
+	 * @param disc
+	 *            A disciplina que se quer verificar.
+	 * @return True se a disciplina for optativa TECC ou false caso contrario.
+	 */
+	public boolean ehOptativaTECC(Disciplina disc) {
+		boolean resp = false;
+		int id = Integer.parseInt(disc.getId());
+		if (id >= INICIO_OPTATIVA_TECC && id <= FIM_OPTATIVA_TECC) {
+			resp = true;
+		}
+		return resp;
+	}
+
+	/**
+	 * Verifica se a disciplina eh uma disciplina optativa de outros cursos.
+	 * 
+	 * @param disc
+	 *            A disciplina que se quer verificar.
+	 * @return True se a disciplina for optativa de outros cursos ou false caso
+	 *         contrario.
+	 */
+	public boolean ehOptativaDeOutrosCursos(Disciplina disc) {
+		boolean resp = false;
+		int id = Integer.parseInt(disc.getId());
+		if (id >= INICIO_OPTATIVA_OUTROS) {
+			resp = true;
+		}
+		return resp;
+	}
+
 	/**
 	 * Cria todas as disciplinas do curso de computação.
 	 */
 	protected abstract void criaDisciplinas();
 
-
+	protected abstract void configuraPeriodos();
 
 }

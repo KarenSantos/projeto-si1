@@ -76,7 +76,7 @@
 	
 	<div class="disc2">
 		@for(disciplina <- naoAlocadas) {
-			@if(disciplina.getPeriodoSugerido() == 1){
+			@if(planejador.getPeriodoDaDisciplinaNaGrade(disciplina) == 1){
 				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
 					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
@@ -85,7 +85,7 @@
 		<br>
 		
 		@for(disciplina <- naoAlocadas) {
-			@if(disciplina.getPeriodoSugerido() == 2){
+			@if(planejador.getPeriodoDaDisciplinaNaGrade(disciplina) == 2){
 				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
 					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
@@ -93,7 +93,7 @@
 		}
 		<br>
 		@for(disciplina <- naoAlocadas) {
-			@if(disciplina.getPeriodoSugerido() == 3){
+			@if(planejador.getPeriodoDaDisciplinaNaGrade(disciplina) == 3){
 				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
 					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
@@ -101,7 +101,7 @@
 		}
 		<br>
 		@for(disciplina <- naoAlocadas) {
-			@if(disciplina.getPeriodoSugerido() == 4){
+			@if(planejador.getPeriodoDaDisciplinaNaGrade(disciplina) == 4){
 				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
 					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
@@ -109,7 +109,7 @@
 		}
 		<br>
 		@for(disciplina <- naoAlocadas) {
-			@if(disciplina.getPeriodoSugerido() == 5){
+			@if(planejador.getPeriodoDaDisciplinaNaGrade(disciplina) == 5){
 				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
 					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
@@ -117,7 +117,7 @@
 		}
 		<br>
 		@for(disciplina <- naoAlocadas) {
-			@if(disciplina.getPeriodoSugerido() == 6){
+			@if(planejador.getPeriodoDaDisciplinaNaGrade(disciplina) == 6){
 				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
 					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
@@ -125,7 +125,7 @@
 		}
 		<br>
 		@for(disciplina <- naoAlocadas) {
-			@if(disciplina.getPeriodoSugerido() == 7){
+			@if(planejador.getPeriodoDaDisciplinaNaGrade(disciplina) == 7){
 				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
 					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
@@ -133,7 +133,7 @@
 		}
 		<br>
 		@for(disciplina <- naoAlocadas) {
-			@if(disciplina.getPeriodoSugerido() == 8){
+			@if(planejador.getPeriodoDaDisciplinaNaGrade(disciplina) == 8){
 				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
 					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
@@ -146,7 +146,7 @@
 			
 	<div class="disc2">
 		@for(disciplina <- naoAlocadas) {
-			@if(disciplina.getPeriodoSugerido() == -2){
+			@if(planejador.ehOptativaTECC(disciplina)){
 				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
 					@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 				<br>
@@ -159,7 +159,7 @@
 	
 	<div class="disc2">
 		@for(disciplina <- naoAlocadas) {
-			@if(disciplina.getPeriodoSugerido() == -1){
+			@if(planejador.ehOptativaDeOutrosCursos(disciplina)){
 				<a class="disciplina" href="/disciplinas/@disciplina.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
 				@disciplina.getNome() <span>@disciplina.getCreditos()  /  @disciplina.getDificuldade()</span>
 			<br>

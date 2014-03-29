@@ -5,8 +5,6 @@ import java.util.List;
 
 import models.AlocacaoInvalidaException;
 import models.Disciplina;
-import models.Grade;
-import models.GradeAntiga;
 import models.Periodo;
 import models.PlanoDeCurso;
 import models.TotalDeCreditosInvalidoException;
@@ -31,9 +29,7 @@ public class Planejador {
 	 */
 	public Planejador(Usuario usuario) {
 		this.usuario = usuario;
-
 		plano = PlanoDeCurso.find.byId("p_" + usuario.getEmail());
-		plano.save();
 	}
 
 	/**
@@ -110,6 +106,17 @@ public class Planejador {
 	 */
 	public int getPeriodoDaDisciplina(String discId) {
 		return plano.getPeriodoDaDisciplina(getDisciplina(discId));
+	}
+
+	/**
+	 * Retorna o periodo da disciplina alocada na grade do curso.
+	 * 
+	 * @param disc
+	 *            A disciplina que se quer saber o periodo.
+	 * @return O numero do periodo desta disciplina na grade do curso.
+	 */
+	public int getPeriodoDaDisciplinaNaGrade(Disciplina disc) {
+		return plano.getPeriodoDaDisciplinaNaGrade(disc);
 	}
 
 	/**
@@ -351,26 +358,55 @@ public class Planejador {
 	}
 
 	/**
-	 * Retorna o plano de curso do usuario passado como parametro.
+	 * Verifica se a disciplina eh uma disciplina optativa do TECC.
 	 * 
-	 * @return O plano de curso do usuario passado como parametro.
+	 * @param disc
+	 *            A disciplina que se quer verificar.
+	 * @return True se a disciplina for optativa TECC ou false caso contrario.
 	 */
-	public PlanoDeCurso getPlanoDoUsuario(Usuario usuario) {
-		return plano = PlanoDeCurso.find.byId("p_" + usuario.getEmail());
+	public boolean ehOptativaTECC(Disciplina disc) {
+		return plano.ehOptativaTECC(disc);
 	}
-	
-	public List<Usuario> buscaDeUsuarios(String usuarioProcurado){
+
+	/**
+	 * Verifica se a disciplina eh uma disciplina optativa de outros cursos.
+	 * 
+	 * @param disc
+	 *            A disciplina que se quer verificar.
+	 * @return True se a disciplina for optativa de outros cursos ou false caso
+	 *         contrario.
+	 */
+	public boolean ehOptativaDeOutrosCursos(Disciplina disc) {
+		return plano.ehOptativaDeOutrosCursos(disc);
+	}
+
+	/**
+	 * Retorna os periodos do plano de curso do usuario passado como parametro.
+	 * 
+	 * @return A lista de periodos do plano de curso do usuario passado como
+	 *         parametro ou uma lista vazia se o usuario nao tem um plano.
+	 */
+	public List<Periodo> getPeriodosDoUsuario(Usuario usuario) {
+		List<Periodo> outrosPeriodos = new ArrayList<Periodo>();
+		PlanoDeCurso outroPlano = PlanoDeCurso.find.byId("p_" + usuario.getEmail());
+		if (outroPlano != null){
+			outrosPeriodos = outroPlano.getPeriodos();
+		}
+		return outrosPeriodos;
+	}
+
+	public List<Usuario> buscaDeUsuarios(String usuarioProcurado) {
 		List<Usuario> usuarios = Usuario.find.all();
-		if(usuarioProcurado.length() == 0){
+		if (usuarioProcurado.length() == 0) {
 			return usuarios;
-		}else{
-			List<Usuario> achados  = new ArrayList<Usuario>();
+		} else {
+			List<Usuario> achados = new ArrayList<Usuario>();
 			usuarioProcurado = usuarioProcurado.toLowerCase();
 			int size = usuarioProcurado.length();
 			for (Usuario usuario : usuarios) {
 				String nome = usuario.getNome().toLowerCase();
-				if(nome.length() >= size &&
-				  nome.substring(0, size).equals(usuarioProcurado)){
+				if (nome.length() >= size
+						&& nome.substring(0, size).equals(usuarioProcurado)) {
 					achados.add(usuario);
 				}
 			}

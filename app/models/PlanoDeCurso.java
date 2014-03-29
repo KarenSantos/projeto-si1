@@ -5,10 +5,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import play.db.ebean.Model.Finder;
-import play.db.ebean.*;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import play.db.ebean.Model;
 
 /**
  * Classe do plano de curso.
@@ -21,13 +27,15 @@ public class PlanoDeCurso extends Model {
 
 	private static final long serialVersionUID = 1L;
 
-	final private int PERIODO_MAXIMO = 14;
 	private final int PERIODOS_BASE = 8;
+	private final int PERIODO_MAXIMO = 14;
+	private final int PRIMEIRO_PERIODO = 1;
 	private final int MINIMI_DE_CREDITOS_DO_CURSO = 208;
 
 	@Id
 	private String id;
 
+	@ManyToOne
 	private Grade grade;
 
 	@ManyToMany
@@ -49,22 +57,16 @@ public class PlanoDeCurso extends Model {
 	/**
 	 * Plano de curso recebe uma grade de disciplinas e um usuario, e tem uma
 	 * lista de periodos e uma lista de disciplinas não alocadas.
-	 * @throws TotalDeCreditosInvalidoException 
 	 */
-	public PlanoDeCurso(String id, Grade grade) throws TotalDeCreditosInvalidoException {
+	public PlanoDeCurso(String id, Grade grade) {
 		this.id = id;
 		this.grade = grade;
-		grade.configuraGrade(id + grade.getId());
-		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
-		configuraPeriodos();
-	}
+		this.periodos = new ArrayList<Periodo>();
+		this.disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 
-	private void configuraPeriodos() {
-		// TODO Auto-generated method stub
-		for (Periodo periodo : grade.getPeriodos()) {
-			this.periodos.add(periodo);
-		}
-		
+		this.periodos.addAll(grade.getPeriodos());
+		this.disciplinasNaoAlocadas.addAll(grade.getDisciplinasOptativas());
+		setPeriodoAtual(PRIMEIRO_PERIODO);
 	}
 
 	/**
@@ -80,10 +82,12 @@ public class PlanoDeCurso extends Model {
 	 * Reseta o plano e volta ao formato inicial de periodos e disciplinas.
 	 */
 	public void reset() {
-		disciplinasNaoAlocadas.clear();
-		periodos.clear();
-		configuraPeriodos();
-		setPeriodoAtual(1);
+		this.periodos.clear();
+		this.disciplinasNaoAlocadas.clear();
+
+		this.periodos.addAll(grade.getPeriodos());
+		this.disciplinasNaoAlocadas.addAll(grade.getDisciplinasOptativas());
+		setPeriodoAtual(PRIMEIRO_PERIODO);
 	}
 
 	/**
@@ -106,7 +110,7 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
-	 * Muda a grade do plano de curso.
+	 * Altera a grade do plano de curso.
 	 * 
 	 * @param grade
 	 *            A nova grade do plano de curso.
@@ -142,6 +146,36 @@ public class PlanoDeCurso extends Model {
 	 */
 	public List<Disciplina> getDisciplinas() {
 		return grade.getDisciplinas();
+	}
+
+	/**
+	 * Retorna em qual periodo está a disciplina.
+	 * 
+	 * @param disc
+	 *            A disciplina que se quer saber em que periodo está.
+	 * @return O número do periodo em que está a disciplina ou zero se não está
+	 *         em nenhum periodo.
+	 */
+	public int getPeriodoDaDisciplina(Disciplina disc) {
+		int periodo = 0;
+		for (Periodo per : getPeriodos()) {
+			if (per.getDisciplinas().contains(disc)) {
+				periodo = per.getNumero();
+				break;
+			}
+		}
+		return periodo;
+	}
+
+	/**
+	 * Retorna o numero do periodo da disciplina alocada na grade do curso.
+	 * 
+	 * @param disc
+	 *            A disciplina que se quer saber o periodo.
+	 * @return O numero do periodo desta disciplina na grade do curso.
+	 */
+	public int getPeriodoDaDisciplinaNaGrade(Disciplina disc) {
+		return grade.getPeriodoDaDisciplina(disc);
 	}
 
 	/**
@@ -405,25 +439,6 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
-	 * Retorna em qual periodo está a disciplina.
-	 * 
-	 * @param disc
-	 *            A disciplina que se quer saber em que periodo está.
-	 * @return O número do periodo em que está a disciplina ou zero se não está
-	 *         em nenhum periodo.
-	 */
-	public int getPeriodoDaDisciplina(Disciplina disc) {
-		int periodo = 0;
-		for (Periodo per : getPeriodos()) {
-			if (per.getDisciplinas().contains(disc)) {
-				periodo = per.getNumero();
-				break;
-			}
-		}
-		return periodo;
-	}
-
-	/**
 	 * Deleta o ultimo periodo criado se nao for um dos 8 periodos base e se
 	 * estiver sem disciplinas.
 	 */
@@ -513,6 +528,29 @@ public class PlanoDeCurso extends Model {
 			}
 		}
 		return resp;
+	}
+
+	/**
+	 * Verifica se a disciplina eh uma disciplina optativa do TECC.
+	 * 
+	 * @param disc
+	 *            A disciplina que se quer verificar.
+	 * @return True se a disciplina for optativa TECC ou false caso contrario.
+	 */
+	public boolean ehOptativaTECC(Disciplina disc) {
+		return grade.ehOptativaTECC(disc);
+	}
+
+	/**
+	 * Verifica se a disciplina eh uma disciplina optativa de outros cursos.
+	 * 
+	 * @param disc
+	 *            A disciplina que se quer verificar.
+	 * @return True se a disciplina for optativa de outros cursos ou false caso
+	 *         contrario.
+	 */
+	public boolean ehOptativaDeOutrosCursos(Disciplina disc) {
+		return grade.ehOptativaDeOutrosCursos(disc);
 	}
 
 	/**
@@ -667,33 +705,33 @@ public class PlanoDeCurso extends Model {
 		}
 	}
 
-//	/**
-//	 * Cria todos os periodos do plano de curso e aloca suas disciplinas.
-//	 */
-//	private void alocacaoBaseDeDisciplinas() {
-//
-//		for (int i = 0; i < PERIODOS_BASE; i++) {
-//			try {
-//				createPeriodo();
-//			} catch (AlocacaoInvalidaException e) {
-//				e.printStackTrace();
-//			} catch (TotalDeCreditosInvalidoException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//
-//		disciplinasNaoAlocadas.addAll(getGrade().getDisciplinas());
-//
-//		for (Disciplina disc : getGrade().getDisciplinas()) {
-//			int numPeriodo = disc.getPeriodoSugerido();
-//			if (numPeriodo > 0) {
-//				try {
-//					getPeriodo(numPeriodo).addDisciplina(disc);
-//				} catch (TotalDeCreditosInvalidoException e) {
-//				}
-//				disciplinasNaoAlocadas.remove(disc);
-//			}
-//
-//		}
-//	}
+	// /**
+	// * Cria todos os periodos do plano de curso e aloca suas disciplinas.
+	// */
+	// private void alocacaoBaseDeDisciplinas() {
+	//
+	// for (int i = 0; i < PERIODOS_BASE; i++) {
+	// try {
+	// createPeriodo();
+	// } catch (AlocacaoInvalidaException e) {
+	// e.printStackTrace();
+	// } catch (TotalDeCreditosInvalidoException e) {
+	// e.printStackTrace();
+	// }
+	// }
+	//
+	// disciplinasNaoAlocadas.addAll(getGrade().getDisciplinas());
+	//
+	// for (Disciplina disc : getGrade().getDisciplinas()) {
+	// int numPeriodo = disc.getPeriodoSugerido();
+	// if (numPeriodo > 0) {
+	// try {
+	// getPeriodo(numPeriodo).addDisciplina(disc);
+	// } catch (TotalDeCreditosInvalidoException e) {
+	// }
+	// disciplinasNaoAlocadas.remove(disc);
+	// }
+	//
+	// }
+	// }
 }

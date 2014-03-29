@@ -119,7 +119,7 @@ public class Autenticador extends Controller {
 		public String validate() {
 			String erro = null;
 			if(Usuario.authenticate(email, password) != null) {
-                erro = "Usuário ou password inválido.";
+                erro = "Usuário ou senha inválidos.";
             }
             return erro;
 		}
@@ -128,10 +128,8 @@ public class Autenticador extends Controller {
 	static Form<Usuario> userForm = Form.form(Usuario.class);
 
 	public static Result login() {
-		try {
-			criaUsuarios();
-		} catch (TotalDeCreditosInvalidoException e) {
-			flash(e.getMessage());
+		if (Usuario.find.all().isEmpty()){
+			criaUsuariosAleatorios();
 		}
 		return ok(login.render(Form.form(Login.class)));
 	}
@@ -141,7 +139,6 @@ public class Autenticador extends Controller {
 		if (loginForm.hasErrors()) {
 			flash("erro", "Usuário ou senha incorretos.");
 			return redirect(routes.Autenticador.login());
-//			return badRequest(login.render(loginForm));
 		} else { 
 			session().clear();
 			session("email", loginForm.get().getEmail());
@@ -166,45 +163,45 @@ public class Autenticador extends Controller {
 		} else if(cadastroForm.get().validate() == null) {
 			Cadastro novoC = cadastroForm.get();
 			Usuario usuario = new Usuario(novoC.getEmail(), novoC.getNome(), novoC.getPassword()); 
-			Usuario.create(usuario);
+			usuario.save();
 
 			//criando o plano do novo usuario
 			//TODO este metodo vai receber tbm o tipo de plano q o usuario escolher no cadastro
-			try {
-				criaPlanoDoUsuario(usuario);
-			} catch (TotalDeCreditosInvalidoException e) {
-				
-				
-				flash(e.getMessage());
+			Grade grade = Grade.find.byId("Computacao grade antiga");
+			if (grade == null){
+//				grade = new GradeAntiga("Computacao grade antiga");
+//				grade.save();
 			}
+			
+			criaPlanoDoUsuario(usuario, grade);
 		}
 		flash("success", "Cadastro realizado com sucesso.");
 		return redirect(routes.Autenticador.login());
 	}
 	
-	private static void criaUsuarios() throws TotalDeCreditosInvalidoException{
+	private static void criaUsuariosAleatorios() {
 		
-		if (Usuario.find.all().isEmpty()) {
-			int num = 1;
-			
-			while (num < 31){
-				String email = "usuario" + num + "@email.com"; 
-				String nome = "Usuário " + num;
-				String password = "usuario" + num;
-				Usuario user = new Usuario(email, nome, password);
-				Usuario.create(user);
-				criaPlanoDoUsuario(user);
-				num ++;
-			}
+		Grade grade = Grade.find.byId("Computacao grade antiga");
+		if (grade == null){
+//			grade = new GradeAntiga("Computacao grade antiga");
+//			grade.save();
+		}
+		
+		int num = 1;
+		while (num < 31){
+			String email = "usuario" + num + "@email.com"; 
+			String nome = "Usuário " + num;
+			String password = "usuario" + num;
+			Usuario user = new Usuario(email, nome, password);
+			user.save();		
+
+			criaPlanoDoUsuario(user, grade);
+			num ++;
 		}
 	}
 	
-	private static void criaPlanoDoUsuario(Usuario usuario) throws TotalDeCreditosInvalidoException{
-		
-		Grade grade = new GradeAntiga();
-		grade.configuraGrade("g_" + usuario.getEmail());
+	private static void criaPlanoDoUsuario(Usuario usuario, Grade grade){
 		PlanoDeCurso plano = new PlanoDeCurso("p_" + usuario.getEmail(), grade);
-		plano.reset();
 		plano.save();
 	}
 }

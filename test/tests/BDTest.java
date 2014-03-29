@@ -27,12 +27,12 @@ public class BDTest {
 	}
 
 	@Test
-	public void deveConseguirRecuperarDoBD() {
+	public void deveConseguirRecuperarDisciplinasDoBD() {
 
 		List<Disciplina> resultado = Disciplina.find.all();
 		Assert.assertTrue(resultado.isEmpty());
 
-		Disciplina umaDisciplina = new Disciplina("SI1", "SI1", 4, 1);
+		Disciplina umaDisciplina = new Disciplina("SI1", "SI1", 4, 3);
 		umaDisciplina.save();
 		resultado = Disciplina.find.all();
 		Assert.assertEquals(1, resultado.size());
@@ -43,9 +43,9 @@ public class BDTest {
 
 		Grade grade = new GradeAntiga();
 		grade.configuraGrade("id");
-//		Assert.assertTrue(!grade.getDisciplinas().isEmpty());
-//		Assert.assertEquals(82, grade.getTotalDeDisciplinas());
 		grade.save();
+		Assert.assertTrue(!grade.getDisciplinas().isEmpty());
+//		Assert.assertEquals(82, grade.getTotalDeDisciplinas());
 		Assert.assertFalse(Grade.find.all().isEmpty());
 	}
 
@@ -68,11 +68,14 @@ public class BDTest {
 	@Test
 	public void deveConseguirRecuperarPlanoDeCursoDoBD() {
 		Grade grade = new GradeAntiga();
+		grade.configuraGrade("grade antiga");
+		
 		Usuario usuario = new Usuario("email2@email.com", "meuNome", "senha");
 		usuario.save();
 		
 		PlanoDeCurso plano = new PlanoDeCurso("id", grade);
 		plano.save();
+		
 		Assert.assertTrue(!PlanoDeCurso.find.all().isEmpty());
 		Assert.assertNotNull(PlanoDeCurso.find.byId("id"));
 		Assert.assertNotNull(PlanoDeCurso.find.byId("id").getPeriodos());

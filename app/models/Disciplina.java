@@ -34,7 +34,6 @@ public class Disciplina extends Model {
 
 	private String nome;
 	private int creditos;
-	private int periodoSugerido;
 	private int dificuldade;
 
 	public static Finder<String, Disciplina> find = new Finder<String, Disciplina>(
@@ -48,8 +47,8 @@ public class Disciplina extends Model {
 
 	/**
 	 * Cria uma disciplina com um id, um nome, a quantidade de creditos, uma
-	 * lista de disciplinas de pre requisitos, o periodo sugerido para cursar a
-	 * disciplina e a dificuldade indicada da disciplina.
+	 * lista de disciplinas de pre requisitos e a dificuldade indicada da
+	 * disciplina.
 	 * 
 	 * @param id
 	 *            O id da disciplina.
@@ -59,19 +58,16 @@ public class Disciplina extends Model {
 	 *            A quantidade de creditos da disciplina.
 	 * @param preRequisitos
 	 *            As disciplinas que sao pre requisitos desta disciplina.
-	 * @param periodoSugerido
-	 *            O periodo sugerido para cursar esta disciplina.
 	 * @param dificuldade
 	 *            A dificuldade indicada para a disciplina
 	 * 
 	 */
 	public Disciplina(String id, String nome, int creditos,
-			List<Disciplina> preRequisitos,  int dificuldade) {
+			List<Disciplina> preRequisitos, int dificuldade) {
 		this.id = id;
 		this.nome = nome;
 		this.creditos = creditos;
 		this.preRequisitos = preRequisitos;
-		this.periodoSugerido = periodoSugerido;
 
 		if (dificuldade < 0) {
 			this.dificuldade = 0;
@@ -83,9 +79,8 @@ public class Disciplina extends Model {
 	}
 
 	/**
-	 * Cria uma disciplina com um id, um nome, a quantidade de creditos, o
-	 * periodo sugerido para cursar a disciplina e a dificuldade indicada da
-	 * disciplina.
+	 * Cria uma disciplina com um id, um nome, a quantidade de creditos e a
+	 * dificuldade indicada da disciplina.
 	 * 
 	 * @param id
 	 *            O id da disciplina.
@@ -93,19 +88,15 @@ public class Disciplina extends Model {
 	 *            O nome da disciplina.
 	 * @param creditos
 	 *            A quantidade de creditos da disciplina.
-	 * @param periodoSugerido
-	 *            O periodo sugerido para cursar esta disciplina.
 	 * @param dificuldade
 	 *            A dificuldade indicada para a disciplina
 	 * 
 	 */
-	public Disciplina(String id, String nome, int creditos,
-			 int dificuldade) {
+	public Disciplina(String id, String nome, int creditos, int dificuldade) {
 		this.id = id;
 		this.nome = nome;
 		this.creditos = creditos;
 		this.preRequisitos = new ArrayList<Disciplina>();
-		this.periodoSugerido = periodoSugerido;
 
 		if (dificuldade < 0) {
 			this.dificuldade = 0;
@@ -199,25 +190,6 @@ public class Disciplina extends Model {
 	 */
 	public int getTotalDePreRequisitos() {
 		return getPreRequisitos().size();
-	}
-
-	/**
-	 * Retorna o periodo sugerido para cursar a disciplina.
-	 * 
-	 * @return O periodo sugerido para cursar a disciplina.
-	 */
-	public int getPeriodoSugerido() {
-		return periodoSugerido;
-	}
-
-	/**
-	 * Altera o periodo sugerido da disciplina.
-	 * 
-	 * @param periodo
-	 *            O novo periodo sugerido da disciplina.
-	 */
-	public void setPeriodoSugerido(int periodo) {
-		this.periodoSugerido = periodo;
 	}
 
 	/**

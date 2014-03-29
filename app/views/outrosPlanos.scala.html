@@ -23,7 +23,7 @@
 } else {
 	<div id="top1"><h2>Plano de Curso: @usuarioDaVez.getNome</h2></div>
 	<div id="col1">
-		@for(periodo <- PlanoDeCurso.find.byId("p_"+usuarioDaVez.getId()).getPeriodos){
+		@for(periodo <- planejador.getPeriodosDoUsuario(usuarioDaVez)){
 			<div id="periodoBox">
 				<div id="numPeriodoImutavel"><b>@periodo.getNumero()º</b> Período</div>
 			
