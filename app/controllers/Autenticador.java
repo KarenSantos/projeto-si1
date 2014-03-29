@@ -128,7 +128,11 @@ public class Autenticador extends Controller {
 	static Form<Usuario> userForm = Form.form(Usuario.class);
 
 	public static Result login() {
-		criaUsuarios();
+		try {
+			criaUsuarios();
+		} catch (TotalDeCreditosInvalidoException e) {
+			flash(e.getMessage());
+		}
 		return ok(login.render(Form.form(Login.class)));
 	}
 
@@ -166,13 +170,19 @@ public class Autenticador extends Controller {
 
 			//criando o plano do novo usuario
 			//TODO este metodo vai receber tbm o tipo de plano q o usuario escolher no cadastro
-			criaPlanoDoUsuario(usuario);
+			try {
+				criaPlanoDoUsuario(usuario);
+			} catch (TotalDeCreditosInvalidoException e) {
+				
+				
+				flash(e.getMessage());
+			}
 		}
 		flash("success", "Cadastro realizado com sucesso.");
 		return redirect(routes.Autenticador.login());
 	}
 	
-	private static void criaUsuarios(){
+	private static void criaUsuarios() throws TotalDeCreditosInvalidoException{
 		
 		if (Usuario.find.all().isEmpty()) {
 			int num = 1;
@@ -189,7 +199,8 @@ public class Autenticador extends Controller {
 		}
 	}
 	
-	private static void criaPlanoDoUsuario(Usuario usuario){
+	private static void criaPlanoDoUsuario(Usuario usuario) throws TotalDeCreditosInvalidoException{
+		
 		Grade grade = new GradeAntiga();
 		grade.configuraGrade("g_" + usuario.getEmail());
 		PlanoDeCurso plano = new PlanoDeCurso("p_" + usuario.getEmail(), grade);

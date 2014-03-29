@@ -11,6 +11,7 @@ import models.Grade;
 import models.GradeAntiga;
 import models.Periodo;
 import models.PlanoDeCurso;
+import models.TotalDeCreditosInvalidoException;
 import models.Usuario;
 
 import org.junit.Assert;
@@ -31,14 +32,14 @@ public class BDTest {
 		List<Disciplina> resultado = Disciplina.find.all();
 		Assert.assertTrue(resultado.isEmpty());
 
-		Disciplina umaDisciplina = new Disciplina("SI1", "SI1", 4, 4, 1);
+		Disciplina umaDisciplina = new Disciplina("SI1", "SI1", 4, 1);
 		umaDisciplina.save();
 		resultado = Disciplina.find.all();
 		Assert.assertEquals(1, resultado.size());
 	}
 
 	@Test
-	public void deveConseguirRecuperarGradeDoBD() {
+	public void deveConseguirRecuperarGradeDoBD() throws TotalDeCreditosInvalidoException {
 
 		Grade grade = new GradeAntiga();
 		grade.configuraGrade("id");

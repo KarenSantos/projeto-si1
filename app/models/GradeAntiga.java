@@ -119,4 +119,135 @@ public class GradeAntiga extends Grade{
 		
 	}
 
+	@Override
+	protected void criaPeriodos() throws TotalDeCreditosInvalidoException {
+		criaPrimeiroPeriodo();
+		criaSegundoPeriodo();
+		criaTerceiroPeriodo();
+		criaQuartoPeriodo();
+		criaQuintoPeriodo();
+		criaSextoPeriodo();
+		criaSetimoPeriodo();
+		criaOitavoPeriodo();
+		
+	}
+	
+	private void criaPrimeiroPeriodo() throws TotalDeCreditosInvalidoException {
+		// TODO Auto-generated method stub
+		Periodo primeiro = new Periodo(this.getId() + 1, 1);
+		
+		primeiro.addDisciplina(getDisciplina("01"));
+		primeiro.addDisciplina(getDisciplina("02"));
+		primeiro.addDisciplina(getDisciplina("03"));
+		primeiro.addDisciplina(getDisciplina("04"));
+		primeiro.addDisciplina(getDisciplina("05"));
+		primeiro.addDisciplina(getDisciplina("06"));
+		
+		addPeriodo(primeiro);
+
+	}
+	
+	private void criaSegundoPeriodo() throws TotalDeCreditosInvalidoException {
+		// TODO Auto-generated method stub
+		Periodo segundo = new Periodo(this.getId() + 2, 2);
+		
+		segundo.addDisciplina(getDisciplina("07"));
+		segundo.addDisciplina(getDisciplina("08"));
+		segundo.addDisciplina(getDisciplina("09"));
+		segundo.addDisciplina(getDisciplina("10"));
+		segundo.addDisciplina(getDisciplina("11"));
+		segundo.addDisciplina(getDisciplina("12"));
+		segundo.addDisciplina(getDisciplina("13"));
+		
+		addPeriodo(segundo);
+
+	}
+	
+	private void criaTerceiroPeriodo() throws TotalDeCreditosInvalidoException {
+		// TODO Auto-generated method stub
+		Periodo terceiro = new Periodo(this.getId() + 3, 3);
+		
+		terceiro.addDisciplina(getDisciplina("14"));
+		terceiro.addDisciplina(getDisciplina("15"));
+		terceiro.addDisciplina(getDisciplina("16"));
+		terceiro.addDisciplina(getDisciplina("17"));
+		terceiro.addDisciplina(getDisciplina("18"));
+		terceiro.addDisciplina(getDisciplina("19"));
+		terceiro.addDisciplina(getDisciplina("20"));
+		
+		addPeriodo(terceiro);
+
+	}
+	
+	private void criaQuartoPeriodo() throws TotalDeCreditosInvalidoException {
+		// TODO Auto-generated method stub
+		Periodo quarto = new Periodo(this.getId() + 4, 4);
+		
+		quarto.addDisciplina(getDisciplina("21"));
+		quarto.addDisciplina(getDisciplina("22"));
+		quarto.addDisciplina(getDisciplina("23"));
+		quarto.addDisciplina(getDisciplina("24"));
+		quarto.addDisciplina(getDisciplina("25"));
+		quarto.addDisciplina(getDisciplina("26"));
+		quarto.addDisciplina(getDisciplina("27"));
+		
+		addPeriodo(quarto);
+
+	}
+	
+	private void criaQuintoPeriodo() throws TotalDeCreditosInvalidoException {
+		// TODO Auto-generated method stub
+		Periodo quinto = new Periodo(this.getId() + 5, 5);
+		
+		quinto.addDisciplina(getDisciplina("28"));
+		quinto.addDisciplina(getDisciplina("29"));
+		quinto.addDisciplina(getDisciplina("30"));
+		quinto.addDisciplina(getDisciplina("31"));
+		quinto.addDisciplina(getDisciplina("32"));
+		quinto.addDisciplina(getDisciplina("33"));
+		quinto.addDisciplina(getDisciplina("34"));
+		
+		addPeriodo(quinto);
+
+	}
+	
+	private void criaSextoPeriodo() throws TotalDeCreditosInvalidoException {
+		// TODO Auto-generated method stub
+		Periodo sexto = new Periodo(this.getId() + 6, 6);
+		
+		sexto.addDisciplina(getDisciplina("35"));
+		sexto.addDisciplina(getDisciplina("36"));
+		sexto.addDisciplina(getDisciplina("37"));
+		sexto.addDisciplina(getDisciplina("38"));
+		sexto.addDisciplina(getDisciplina("39"));
+		sexto.addDisciplina(getDisciplina("40"));
+
+		addPeriodo(sexto);
+
+	}
+	
+	private void criaSetimoPeriodo() throws TotalDeCreditosInvalidoException {
+		// TODO Auto-generated method stub
+		Periodo setimo = new Periodo(this.getId() + 7, 7);
+		
+		setimo.addDisciplina(getDisciplina("41"));
+		setimo.addDisciplina(getDisciplina("42"));
+		setimo.addDisciplina(getDisciplina("43"));
+
+		addPeriodo(setimo);
+
+	}
+	
+	private void criaOitavoPeriodo() throws TotalDeCreditosInvalidoException {
+		// TODO Auto-generated method stub
+		Periodo oitavo = new Periodo(this.getId() + 8, 8);
+		
+		oitavo.addDisciplina(getDisciplina("44"));
+
+		addPeriodo(oitavo);
+
+	}
+	
+	
+
 }

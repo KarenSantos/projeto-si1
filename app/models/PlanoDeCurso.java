@@ -49,12 +49,22 @@ public class PlanoDeCurso extends Model {
 	/**
 	 * Plano de curso recebe uma grade de disciplinas e um usuario, e tem uma
 	 * lista de periodos e uma lista de disciplinas não alocadas.
+	 * @throws TotalDeCreditosInvalidoException 
 	 */
-	public PlanoDeCurso(String id, Grade grade) {
+	public PlanoDeCurso(String id, Grade grade) throws TotalDeCreditosInvalidoException {
 		this.id = id;
 		this.grade = grade;
+		grade.configuraGrade(id + grade.getId());
 		disciplinasNaoAlocadas = new ArrayList<Disciplina>();
-		periodos = new ArrayList<Periodo>();
+		configuraPeriodos();
+	}
+
+	private void configuraPeriodos() {
+		// TODO Auto-generated method stub
+		for (Periodo periodo : grade.getPeriodos()) {
+			this.periodos.add(periodo);
+		}
+		
 	}
 
 	/**
@@ -72,7 +82,7 @@ public class PlanoDeCurso extends Model {
 	public void reset() {
 		disciplinasNaoAlocadas.clear();
 		periodos.clear();
-		alocacaoBaseDeDisciplinas();
+		configuraPeriodos();
 		setPeriodoAtual(1);
 	}
 
@@ -657,33 +667,33 @@ public class PlanoDeCurso extends Model {
 		}
 	}
 
-	/**
-	 * Cria todos os periodos do plano de curso e aloca suas disciplinas.
-	 */
-	private void alocacaoBaseDeDisciplinas() {
-
-		for (int i = 0; i < PERIODOS_BASE; i++) {
-			try {
-				createPeriodo();
-			} catch (AlocacaoInvalidaException e) {
-				e.printStackTrace();
-			} catch (TotalDeCreditosInvalidoException e) {
-				e.printStackTrace();
-			}
-		}
-
-		disciplinasNaoAlocadas.addAll(getGrade().getDisciplinas());
-
-		for (Disciplina disc : getGrade().getDisciplinas()) {
-			int numPeriodo = disc.getPeriodoSugerido();
-			if (numPeriodo > 0) {
-				try {
-					getPeriodo(numPeriodo).addDisciplina(disc);
-				} catch (TotalDeCreditosInvalidoException e) {
-				}
-				disciplinasNaoAlocadas.remove(disc);
-			}
-
-		}
-	}
+//	/**
+//	 * Cria todos os periodos do plano de curso e aloca suas disciplinas.
+//	 */
+//	private void alocacaoBaseDeDisciplinas() {
+//
+//		for (int i = 0; i < PERIODOS_BASE; i++) {
+//			try {
+//				createPeriodo();
+//			} catch (AlocacaoInvalidaException e) {
+//				e.printStackTrace();
+//			} catch (TotalDeCreditosInvalidoException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//
+//		disciplinasNaoAlocadas.addAll(getGrade().getDisciplinas());
+//
+//		for (Disciplina disc : getGrade().getDisciplinas()) {
+//			int numPeriodo = disc.getPeriodoSugerido();
+//			if (numPeriodo > 0) {
+//				try {
+//					getPeriodo(numPeriodo).addDisciplina(disc);
+//				} catch (TotalDeCreditosInvalidoException e) {
+//				}
+//				disciplinasNaoAlocadas.remove(disc);
+//			}
+//
+//		}
+//	}
 }

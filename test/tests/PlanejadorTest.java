@@ -6,6 +6,7 @@ import static play.test.Helpers.start;
 import models.AlocacaoInvalidaException;
 import models.Disciplina;
 import models.Grade;
+import models.GradeAntiga;
 import models.PlanoDeCurso;
 import models.TotalDeCreditosInvalidoException;
 import models.Usuario;
@@ -26,7 +27,7 @@ public class PlanejadorTest {
 		start(fakeApplication(inMemoryDatabase()));
 		testador = new Usuario("testador@teste.teste", "Nome", "password");
 		testador.save();
-		Grade grade = new Grade();
+		Grade grade = new GradeAntiga();
 		PlanoDeCurso plano = new PlanoDeCurso("p_" + testador.getEmail(), grade);
 		plano.reset();
 		plano.save();

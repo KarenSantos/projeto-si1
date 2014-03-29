@@ -30,6 +30,12 @@ public abstract class Grade extends Model{
 	@ManyToOne
 	private List<Disciplina> disciplinas;
 	
+	@ManyToOne
+	private List<Periodo> periodos;
+	
+
+
+
 	public static Finder<String, Grade> find = new Finder<String, Grade>(
 			String.class, Grade.class);
 	
@@ -39,7 +45,7 @@ public abstract class Grade extends Model{
 	public Grade(){
 	}
 	
-	public void configuraGrade(String id){
+	public void configuraGrade(String id) throws TotalDeCreditosInvalidoException{
 		this.id = id;
 		disciplinas = new ArrayList<Disciplina>();
 		if (Disciplina.find.all().isEmpty()) {
@@ -47,8 +53,24 @@ public abstract class Grade extends Model{
 		} else {
 			disciplinas.addAll(Disciplina.find.all());
 		}
+		this.periodos = new ArrayList<Periodo>();
+		if (Periodo.find.all().isEmpty()) {
+			criaPeriodos();
+		} else {
+			periodos.addAll(Periodo.find.all());
+		}
 	}
 	
+	public List<Periodo> getPeriodos() {
+		return periodos;
+	}
+
+	public void setPeriodos(List<Periodo> periodos) {
+		this.periodos = periodos;
+	}
+	
+	protected abstract void criaPeriodos () throws TotalDeCreditosInvalidoException;
+
 	public String getId(){
 		return this.id;
 	}
@@ -117,10 +139,11 @@ public abstract class Grade extends Model{
 		}
 
 		Disciplina aDisciplina = new Disciplina(id, nome, creditos,
-				preRequisitos, periodoSugerido, dificuldade);
+				preRequisitos,  dificuldade);
 		disciplinas.add(aDisciplina);
 		aDisciplina.save();
 	}
+	
 
 	/**
 	 * Cria uma disciplina com um id, um nome, o total de creditos, o periodo 
@@ -139,9 +162,16 @@ public abstract class Grade extends Model{
 	 *             
 	 */
 	public void createDisciplina(String id, String nome, int creditos, int periodoSugerido, int dificuldade) {
-		Disciplina aDisciplina = new Disciplina(id, nome, creditos, periodoSugerido, dificuldade);
+		Disciplina aDisciplina = new Disciplina(id, nome, creditos,  dificuldade);
 		disciplinas.add(aDisciplina);
 		aDisciplina.save();
+	}
+	
+	public void addPeriodo(Periodo p) {
+		//TODO javadoc
+		periodos.add(p);
+		p.save();
+
 	}
 	
 	
@@ -149,9 +179,7 @@ public abstract class Grade extends Model{
 	 * Cria todas as disciplinas do curso de computação.
 	 */
 	protected abstract void criaDisciplinas();
-	
-	public static void create(Grade grade){
-		grade.save();
-	}
+
+
 
 }

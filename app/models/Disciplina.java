@@ -66,7 +66,7 @@ public class Disciplina extends Model {
 	 * 
 	 */
 	public Disciplina(String id, String nome, int creditos,
-			List<Disciplina> preRequisitos, int periodoSugerido, int dificuldade) {
+			List<Disciplina> preRequisitos,  int dificuldade) {
 		this.id = id;
 		this.nome = nome;
 		this.creditos = creditos;
@@ -100,7 +100,7 @@ public class Disciplina extends Model {
 	 * 
 	 */
 	public Disciplina(String id, String nome, int creditos,
-			int periodoSugerido, int dificuldade) {
+			 int dificuldade) {
 		this.id = id;
 		this.nome = nome;
 		this.creditos = creditos;
