@@ -169,8 +169,9 @@ public class Autenticador extends Controller {
 			//TODO este metodo vai receber tbm o tipo de plano q o usuario escolher no cadastro
 			Grade grade = Grade.find.byId("Computacao grade antiga");
 			if (grade == null){
-//				grade = new GradeAntiga("Computacao grade antiga");
-//				grade.save();
+				grade = new GradeAntiga();
+				grade.configuraGrade("Computacao grade antiga");
+				grade.save();
 			}
 			
 			criaPlanoDoUsuario(usuario, grade);
@@ -179,12 +180,18 @@ public class Autenticador extends Controller {
 		return redirect(routes.Autenticador.login());
 	}
 	
+	private static void criaPlanoDoUsuario(Usuario usuario, Grade grade){
+		PlanoDeCurso plano = new PlanoDeCurso("p_" + usuario.getEmail(), grade);
+		plano.save();
+	}
+
 	private static void criaUsuariosAleatorios() {
 		
 		Grade grade = Grade.find.byId("Computacao grade antiga");
 		if (grade == null){
-//			grade = new GradeAntiga("Computacao grade antiga");
-//			grade.save();
+			grade = new GradeAntiga();
+			grade.configuraGrade("Computacao grade antiga");
+			grade.save();
 		}
 		
 		int num = 1;
@@ -198,10 +205,5 @@ public class Autenticador extends Controller {
 			criaPlanoDoUsuario(user, grade);
 			num ++;
 		}
-	}
-	
-	private static void criaPlanoDoUsuario(Usuario usuario, Grade grade){
-		PlanoDeCurso plano = new PlanoDeCurso("p_" + usuario.getEmail(), grade);
-		plano.save();
 	}
 }

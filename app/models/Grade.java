@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import play.db.ebean.Model;
@@ -30,10 +33,11 @@ public abstract class Grade extends Model {
 	@Id
 	private String id;
 
-	@ManyToMany
+	@ManyToMany (cascade = CascadeType.ALL)
+	@JoinTable(name = "grade_disciplina", joinColumns = @JoinColumn(name = "grade"), inverseJoinColumns = @JoinColumn(name = "disciplina"))
 	private List<Disciplina> disciplinas;
 
-	@ManyToMany
+	@ManyToMany (cascade = CascadeType.ALL)
 	protected List<Periodo> periodos;
 
 	public static Finder<String, Grade> find = new Finder<String, Grade>(

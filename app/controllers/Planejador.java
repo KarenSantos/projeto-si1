@@ -88,9 +88,9 @@ public class Planejador {
 	}
 
 	/**
-	 * Retorna todas as disciplinas do plano de curso.
+	 * Retorna todas as disciplinas da grade do plano de curso.
 	 * 
-	 * @return A lista com todas as disciplinas do plano de curso.
+	 * @return A lista com todas as disciplinas da grade do plano de curso.
 	 */
 	public List<Disciplina> getDisciplinas() {
 		return plano.getDisciplinas();
@@ -388,8 +388,9 @@ public class Planejador {
 	 */
 	public List<Periodo> getPeriodosDoUsuario(Usuario usuario) {
 		List<Periodo> outrosPeriodos = new ArrayList<Periodo>();
-		PlanoDeCurso outroPlano = PlanoDeCurso.find.byId("p_" + usuario.getEmail());
-		if (outroPlano != null){
+		PlanoDeCurso outroPlano = PlanoDeCurso.find.byId("p_"
+				+ usuario.getEmail());
+		if (outroPlano != null) {
 			outrosPeriodos = outroPlano.getPeriodos();
 		}
 		return outrosPeriodos;

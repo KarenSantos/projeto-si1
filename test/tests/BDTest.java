@@ -44,9 +44,11 @@ public class BDTest {
 		Grade grade = new GradeAntiga();
 		grade.configuraGrade("id");
 		grade.save();
-		Assert.assertTrue(!grade.getDisciplinas().isEmpty());
-//		Assert.assertEquals(82, grade.getTotalDeDisciplinas());
+
 		Assert.assertFalse(Grade.find.all().isEmpty());
+		Assert.assertTrue(!grade.getDisciplinas().isEmpty());
+		Assert.assertEquals(82, grade.getTotalDeDisciplinas());
+		Assert.assertFalse(Disciplina.find.all().isEmpty());
 	}
 
 	@Test
@@ -69,6 +71,7 @@ public class BDTest {
 	public void deveConseguirRecuperarPlanoDeCursoDoBD() {
 		Grade grade = new GradeAntiga();
 		grade.configuraGrade("grade antiga");
+		grade.save();
 		
 		Usuario usuario = new Usuario("email2@email.com", "meuNome", "senha");
 		usuario.save();
@@ -80,7 +83,9 @@ public class BDTest {
 		Assert.assertNotNull(PlanoDeCurso.find.byId("id"));
 		Assert.assertNotNull(PlanoDeCurso.find.byId("id").getPeriodos());
 		
-//		plano.reset();
+		Assert.assertFalse(Disciplina.find.all().isEmpty());
+		Assert.assertFalse(grade.getDisciplinas().isEmpty());
+		
 	}
 	
 	

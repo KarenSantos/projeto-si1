@@ -35,7 +35,7 @@ public class PlanoDeCurso extends Model {
 	@Id
 	private String id;
 
-	@ManyToOne
+	@ManyToOne (cascade = CascadeType.ALL)
 	private Grade grade;
 
 	@ManyToMany
@@ -61,11 +61,13 @@ public class PlanoDeCurso extends Model {
 	public PlanoDeCurso(String id, Grade grade) {
 		this.id = id;
 		this.grade = grade;
-		this.periodos = new ArrayList<Periodo>();
-		this.disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 
-		this.periodos.addAll(grade.getPeriodos());
+		this.periodos = new ArrayList<Periodo>();
+		configuraPeriodos();
+
+		this.disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		this.disciplinasNaoAlocadas.addAll(grade.getDisciplinasOptativas());
+		
 		setPeriodoAtual(PRIMEIRO_PERIODO);
 	}
 
@@ -85,7 +87,7 @@ public class PlanoDeCurso extends Model {
 		this.periodos.clear();
 		this.disciplinasNaoAlocadas.clear();
 
-		this.periodos.addAll(grade.getPeriodos());
+		configuraPeriodos();
 		this.disciplinasNaoAlocadas.addAll(grade.getDisciplinasOptativas());
 		setPeriodoAtual(PRIMEIRO_PERIODO);
 	}
@@ -705,33 +707,22 @@ public class PlanoDeCurso extends Model {
 		}
 	}
 
-	// /**
-	// * Cria todos os periodos do plano de curso e aloca suas disciplinas.
-	// */
-	// private void alocacaoBaseDeDisciplinas() {
-	//
-	// for (int i = 0; i < PERIODOS_BASE; i++) {
-	// try {
-	// createPeriodo();
-	// } catch (AlocacaoInvalidaException e) {
-	// e.printStackTrace();
-	// } catch (TotalDeCreditosInvalidoException e) {
-	// e.printStackTrace();
-	// }
-	// }
-	//
-	// disciplinasNaoAlocadas.addAll(getGrade().getDisciplinas());
-	//
-	// for (Disciplina disc : getGrade().getDisciplinas()) {
-	// int numPeriodo = disc.getPeriodoSugerido();
-	// if (numPeriodo > 0) {
-	// try {
-	// getPeriodo(numPeriodo).addDisciplina(disc);
-	// } catch (TotalDeCreditosInvalidoException e) {
-	// }
-	// disciplinasNaoAlocadas.remove(disc);
-	// }
-	//
-	// }
-	// }
+	private void configuraPeriodos(){
+		
+		for (int i = 0; i < PERIODOS_BASE; i++){
+			try {
+				createPeriodo();
+			} catch (Exception e){
+			}
+		}
+		
+		//copiando a alocacao dos periodos da grade
+		for(Periodo periodo : grade.getPeriodos()){
+			for (Disciplina disc : periodo.getDisciplinas()){
+				try {
+					addDisciplinaPeriodo(disc.getId(), periodo.getNumero());
+				} catch (Exception e){}
+			}
+		}
+	}
 }
