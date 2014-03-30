@@ -35,13 +35,12 @@ public class PlanoDeCurso extends Model {
 	@Id
 	private String id;
 
-	@ManyToOne (cascade = CascadeType.ALL)
+	@ManyToOne
 	private Grade grade;
 
 	@ManyToMany
 	@JoinTable(name = "plano_disc_nao_alocadas", joinColumns = @JoinColumn(name = "plano"), inverseJoinColumns = @JoinColumn(name = "disciplina"))
 	private List<Disciplina> disciplinasNaoAlocadas;
-
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "plano_periodos", joinColumns = @JoinColumn(name = "plano"), inverseJoinColumns = @JoinColumn(name = "periodo"))
@@ -68,7 +67,7 @@ public class PlanoDeCurso extends Model {
 
 		this.disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		this.disciplinasNaoAlocadas.addAll(grade.getDisciplinasOptativas());
-		
+
 		setPeriodoAtual(PRIMEIRO_PERIODO);
 	}
 
@@ -191,12 +190,32 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
+	 * Altera a lista de disciplinas nao alocadas do plano de curso.
+	 * 
+	 * @param disciplinas
+	 *            A nova lista de disciplinas nao alocadas do plano de curso.
+	 */
+	public void setDisciplinasNaoAlocadas(List<Disciplina> disciplinas) {
+		this.disciplinasNaoAlocadas = disciplinas;
+	}
+
+	/**
 	 * Retorna uma lista com todos os períodos criados.
 	 * 
 	 * @return A lista com todos os períodos criados.
 	 */
 	public List<Periodo> getPeriodos() {
 		return Collections.unmodifiableList(periodos);
+	}
+
+	/**
+	 * Altera a lista de periodos do plano de curso.
+	 * 
+	 * @param periodos
+	 *            A nova lista de periodos do plano de curso.
+	 */
+	public void setPeriodos(List<Periodo> periodos) {
+		this.periodos = periodos;
 	}
 
 	/**
@@ -254,13 +273,13 @@ public class PlanoDeCurso extends Model {
 				new TemMinimoDeCreditos());
 	}
 
-//	/**
-//	 * Configura novamente o periodo atual como sendo o periodo atual guardado
-//	 * no BD.
-//	 */
-//	public void reSetPeriodoAtual() {
-//		setPeriodoAtual(getNumPeriodoAtual());
-//	}
+	/**
+	 * Configura novamente o periodo atual como sendo o periodo atual guardado
+	 * no BD.
+	 */
+	public void reSetPeriodoAtual() {
+		setPeriodoAtual(getNumPeriodoAtual());
+	}
 
 	/**
 	 * Retorna o minimo de creditos necessarios para concluir o curso.
@@ -324,11 +343,6 @@ public class PlanoDeCurso extends Model {
 			}
 		}
 		return disciplinas;
-	}
-	
-
-	public void setDisciplinasNaoAlocadas(List<Disciplina> disciplinasNaoAlocadas) {
-		this.disciplinasNaoAlocadas = disciplinasNaoAlocadas;
 	}
 
 	/**
@@ -713,21 +727,26 @@ public class PlanoDeCurso extends Model {
 		}
 	}
 
-	private void configuraPeriodos(){
-		
-		for (int i = 0; i < PERIODOS_BASE; i++){
+	/**
+	 * Configura os periodos do plano de curso de acordo com os periodos da
+	 * grade.
+	 */
+	private void configuraPeriodos() {
+
+		for (int i = 0; i < PERIODOS_BASE; i++) {
 			try {
 				createPeriodo();
-			} catch (Exception e){
+			} catch (Exception e) {
 			}
 		}
-		
-		//copiando a alocacao dos periodos da grade
-		for(Periodo periodo : grade.getPeriodos()){
-			for (Disciplina disc : periodo.getDisciplinas()){
+
+		// copiando a alocacao dos periodos da grade
+		for (Periodo periodo : grade.getPeriodos()) {
+			for (Disciplina disc : periodo.getDisciplinas()) {
 				try {
 					addDisciplinaPeriodo(disc.getId(), periodo.getNumero());
-				} catch (Exception e){}
+				} catch (Exception e) {
+				}
 			}
 		}
 	}

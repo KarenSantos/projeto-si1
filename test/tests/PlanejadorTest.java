@@ -39,7 +39,7 @@ public class PlanejadorTest {
 		plano = new PlanoDeCurso("p_" + usuario.getEmail(), grade);
 		plano.save();
 		
-		planejador = new Planejador(usuario, plano);
+		planejador = new Planejador(usuario);
 	}
 
 	@Test

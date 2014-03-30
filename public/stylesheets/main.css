@@ -103,9 +103,9 @@ a.disciplina:hover{
 
 #index{
 	position: relative;
-	width: 40%;
+	width: 50%;
 	height: 40%;
-	left: 30%;
+	left: 25%;
 	top: 20%;
 	padding: 2em;
 }
@@ -425,4 +425,30 @@ span{
 	position: relative;
 	left: 15%;
 	font-size: 15px;
+}
+
+/* ==================================================
+   Outros Planos
+================================================== */
+
+#usuarioSearch{
+	background: #D8D8D8;
+	font-size: 20px;
+	color: lightcoral;
+	padding: 5px;
+}
+
+.searchBox{
+	width: 65%;
+}
+
+.botaoSearch{
+	width: 16%;
+}
+
+.limparSearch{
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	color: lightcoral;
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -33,11 +32,11 @@ public abstract class Grade extends Model {
 	@Id
 	private String id;
 
-	@ManyToMany (cascade = CascadeType.ALL)
+	@ManyToMany
 	@JoinTable(name = "grade_disciplina", joinColumns = @JoinColumn(name = "grade"), inverseJoinColumns = @JoinColumn(name = "disciplina"))
 	private List<Disciplina> disciplinas;
 
-	@ManyToMany (cascade = CascadeType.ALL)
+	@ManyToMany
 	protected List<Periodo> periodos;
 
 	public static Finder<String, Grade> find = new Finder<String, Grade>(
@@ -92,6 +91,16 @@ public abstract class Grade extends Model {
 	}
 
 	/**
+	 * Altera a lista de disciplinas da grade do curso.
+	 * 
+	 * @param disciplinas
+	 *            A nova lista de disciplinas da grade.
+	 */
+	public void setDisciplinas(List<Disciplina> disciplinas) {
+		this.disciplinas = disciplinas;
+	}
+	
+	/**
 	 * Retorna uma disciplina da grade curricular.
 	 * 
 	 * @param id
@@ -100,9 +109,7 @@ public abstract class Grade extends Model {
 	 */
 	public Disciplina getDisciplina(String id) {
 		Disciplina aDisciplina = null;
-		String s =null;
 		for (Disciplina disc : disciplinas) {
-			s= disc.getId();
 			if (disc.getId().equals(id)) {
 				aDisciplina = disc;
 			}
@@ -155,7 +162,7 @@ public abstract class Grade extends Model {
 		}
 		return optativas;
 	}
-	
+
 	/**
 	 * Retorna a lista de periodos da grade.
 	 * 
@@ -212,10 +219,6 @@ public abstract class Grade extends Model {
 				preRequisitos, dificuldade);
 		this.disciplinas.add(aDisciplina);
 		aDisciplina.save();
-	}
-
-	public void setDisciplinas(List<Disciplina> disciplinas) {
-		this.disciplinas = disciplinas;
 	}
 
 	/**

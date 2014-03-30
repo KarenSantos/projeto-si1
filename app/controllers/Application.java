@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import models.AlocacaoInvalidaException;
-import models.PlanoDeCurso;
 import models.TotalDeCreditosInvalidoException;
 import models.Usuario;
 import play.data.DynamicForm;
@@ -26,9 +25,8 @@ public class Application extends Controller {
 	@Security.Authenticated(Secured.class)
 	public static Result index() {
 		Usuario user = Usuario.find.byId(request().username());
-		PlanoDeCurso plano = PlanoDeCurso.find.byId("p_" + user.getEmail());
-		planejador = new Planejador(user, plano);
-//		planejador.reSetPeriodoAtual();
+		
+		planejador = new Planejador(user);
 		planejador.ordenarPeriodos();
 		
 		return ok(views.html.index.render(user));
@@ -134,17 +132,15 @@ public class Application extends Controller {
 	}
 	
 	@Security.Authenticated(Secured.class)
-	public static Result outroPlanoBusca(String usuarioId){
+	public static Result outroPlanoBusca(String nomeProcurado){
 		DynamicForm buscaForm = Form.form().bindFromRequest();
 		List<Usuario> usuarios = planejador.buscaDeUsuarios(buscaForm.get("texto"));
 		Collections.sort(usuarios);
-		if (usuarioId.equals("id")){
-			return ok(views.html.outrosPlanos.render(usuarios, null, planejador));
-		} else if(usuarios.isEmpty()){
+		
+		if (usuarios.isEmpty()){
 			return ok(views.html.outrosPlanos.render(null, null, planejador));
 		}else {
-			Usuario usuario = Usuario.find.byId(usuarioId);
-			return ok(views.html.outrosPlanos.render(usuarios, usuario, planejador));
+			return ok(views.html.outrosPlanos.render(usuarios, null, planejador));
 		}
 	}
 }

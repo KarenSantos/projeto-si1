@@ -22,16 +22,16 @@ public class Planejador {
 	private Usuario usuario;
 
 	/**
-	 * Cria um planejador que recebe um id como usuário.
+	 * Cria um planejador que recebe um usuario e controla o plano deste
+	 * usuario.
 	 * 
 	 * @param id
 	 *            O id para identificar o usuário.
 	 */
-	public Planejador(Usuario usuario, PlanoDeCurso plano) {
+	public Planejador(Usuario usuario) {
 		this.usuario = usuario;
-		this.plano = plano;
-		//plano = PlanoDeCurso.find.byId("p_" + usuario.getEmail());
-		//plano.reSetPeriodoAtual();
+		this.plano = PlanoDeCurso.find.byId("p_" + usuario.getEmail());
+		this.plano.reSetPeriodoAtual();
 	}
 
 	/**
@@ -159,13 +159,13 @@ public class Planejador {
 		plano.update();
 	}
 
-//	/**
-//	 * Configura novamente o periodo atual como sendo o periodo atual guardado
-//	 * no BD.
-//	 */
-//	public void reSetPeriodoAtual() {
-//		plano.reSetPeriodoAtual();
-//	}
+	// /**
+	// * Configura novamente o periodo atual como sendo o periodo atual guardado
+	// * no BD.
+	// */
+	// public void reSetPeriodoAtual() {
+	// plano.reSetPeriodoAtual();
+	// }
 
 	/**
 	 * Retorna o total de creditos dos periodos anteriores ao atual.
@@ -230,8 +230,9 @@ public class Planejador {
 		plano.removeDisciplinaPeriodo(discId, periodo);
 		plano.update();
 	}
-	
-	public void setDisciplinasNaoAlocadas(List<Disciplina> disciplinasNaoAlocadas) {
+
+	public void setDisciplinasNaoAlocadas(
+			List<Disciplina> disciplinasNaoAlocadas) {
 		plano.setDisciplinasNaoAlocadas(disciplinasNaoAlocadas);
 	}
 
@@ -412,8 +413,7 @@ public class Planejador {
 			int size = usuarioProcurado.length();
 			for (Usuario usuario : usuarios) {
 				String nome = usuario.getNome().toLowerCase();
-				if (nome.length() >= size
-						&& nome.substring(0, size).equals(usuarioProcurado)) {
+				if (nome.contains(usuarioProcurado)) {
 					achados.add(usuario);
 				}
 			}
