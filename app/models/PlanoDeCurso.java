@@ -42,6 +42,7 @@ public class PlanoDeCurso extends Model {
 	@JoinTable(name = "plano_disc_nao_alocadas", joinColumns = @JoinColumn(name = "plano"), inverseJoinColumns = @JoinColumn(name = "disciplina"))
 	private List<Disciplina> disciplinasNaoAlocadas;
 
+
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "plano_periodos", joinColumns = @JoinColumn(name = "plano"), inverseJoinColumns = @JoinColumn(name = "periodo"))
 	private List<Periodo> periodos;
@@ -253,13 +254,13 @@ public class PlanoDeCurso extends Model {
 				new TemMinimoDeCreditos());
 	}
 
-	/**
-	 * Configura novamente o periodo atual como sendo o periodo atual guardado
-	 * no BD.
-	 */
-	public void reSetPeriodoAtual() {
-		setPeriodoAtual(getNumPeriodoAtual());
-	}
+//	/**
+//	 * Configura novamente o periodo atual como sendo o periodo atual guardado
+//	 * no BD.
+//	 */
+//	public void reSetPeriodoAtual() {
+//		setPeriodoAtual(getNumPeriodoAtual());
+//	}
 
 	/**
 	 * Retorna o minimo de creditos necessarios para concluir o curso.
@@ -323,6 +324,11 @@ public class PlanoDeCurso extends Model {
 			}
 		}
 		return disciplinas;
+	}
+	
+
+	public void setDisciplinasNaoAlocadas(List<Disciplina> disciplinasNaoAlocadas) {
+		this.disciplinasNaoAlocadas = disciplinasNaoAlocadas;
 	}
 
 	/**

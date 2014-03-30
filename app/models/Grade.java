@@ -100,7 +100,9 @@ public abstract class Grade extends Model {
 	 */
 	public Disciplina getDisciplina(String id) {
 		Disciplina aDisciplina = null;
+		String s =null;
 		for (Disciplina disc : disciplinas) {
+			s= disc.getId();
 			if (disc.getId().equals(id)) {
 				aDisciplina = disc;
 			}
@@ -153,7 +155,7 @@ public abstract class Grade extends Model {
 		}
 		return optativas;
 	}
-
+	
 	/**
 	 * Retorna a lista de periodos da grade.
 	 * 
