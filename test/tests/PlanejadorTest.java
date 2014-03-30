@@ -39,7 +39,7 @@ public class PlanejadorTest {
 		plano = new PlanoDeCurso("p_" + usuario.getEmail(), grade);
 		plano.save();
 		
-		planejador = new Planejador(usuario);
+		planejador = new Planejador(usuario, plano);
 	}
 
 	@Test
@@ -92,7 +92,7 @@ public class PlanejadorTest {
 		Assert.assertEquals(6, planejador.getPeriodo(1).getTotalDeDisciplinas());
 		
 		try {
-			planejador.addDisciplinaPeriodo("61", 1);
+			planejador.addDisciplinaPeriodo("100", 1);
 		} catch (AlocacaoInvalidaException e) {
 			Assert.fail("Não deveria ter lançado exceção.");
 		} catch (TotalDeCreditosInvalidoException e) {
@@ -105,13 +105,13 @@ public class PlanejadorTest {
 	public void naoDevePoderAdicionarDisciplinaSePreRequisitosNaoForamAlocadosEmPeriodosAnteriores() {
 
 		try {
-			planejador.removeDisciplinaPeriodo("03", 1); // liberando espaco para creditos
+			planejador.removeDisciplinaPeriodo("206", 1); // liberando espaco para creditos
 		} catch (TotalDeCreditosInvalidoException e){
 			Assert.fail("Nao deveria ter lancado excecao.");
 		}
 
 		try {
-			planejador.addDisciplinaPeriodo("51", 1); // calculo 3 no primeiro periodo
+			planejador.addDisciplinaPeriodo("206", 1); // calculo 3 no primeiro periodo
 			Assert.fail("Deveria ter lançado exceção.");
 		} catch (AlocacaoInvalidaException e) {
 			Assert.assertEquals("Esta disciplina tem pré-requisitos não concluídos.", e.getMessage());
@@ -128,7 +128,7 @@ public class PlanejadorTest {
 		Assert.assertEquals(26, planejador.getPeriodo(2).getTotalDeCreditos());
 		
 		try {
-			planejador.addDisciplinaPeriodo("61", 2); // segundo periodo ja tem 26 creditos
+			planejador.addDisciplinaPeriodo("100", 2); // segundo periodo ja tem 26 creditos
 			Assert.fail("Deveria ter lançado exceção.");
 		} catch (AlocacaoInvalidaException e) {
 			Assert.fail("Não deveria ter lançado esse tipo de exceção.");
@@ -143,8 +143,8 @@ public class PlanejadorTest {
 		Assert.assertEquals(24, planejador.getPeriodo(8).getTotalDeCreditos());
 		
 		try {
-			planejador.addDisciplinaPeriodo("61", 8);
-			planejador.addDisciplinaPeriodo("62", 8);
+			planejador.addDisciplinaPeriodo("100", 8);
+			planejador.addDisciplinaPeriodo("101", 8);
 		} catch (AlocacaoInvalidaException e) {
 			Assert.fail("Não deveria ter lancado excecao");
 		} catch (TotalDeCreditosInvalidoException e) {
@@ -339,11 +339,11 @@ public class PlanejadorTest {
 	@Test
 	public void deveImpedirACriacaoDeUmNovoPeriodoSeUltimoTemMaisQueMaximo(){
 		try {
-			planejador.addDisciplinaPeriodo("45", planejador.getTotalDePeriodos());
-			planejador.addDisciplinaPeriodo("46", planejador.getTotalDePeriodos());
-			planejador.addDisciplinaPeriodo("47", planejador.getTotalDePeriodos());
-			planejador.addDisciplinaPeriodo("48", planejador.getTotalDePeriodos());
-			planejador.addDisciplinaPeriodo("49", planejador.getTotalDePeriodos());
+			planejador.addDisciplinaPeriodo("200", planejador.getTotalDePeriodos());
+			planejador.addDisciplinaPeriodo("201", planejador.getTotalDePeriodos());
+			planejador.addDisciplinaPeriodo("202", planejador.getTotalDePeriodos());
+			planejador.addDisciplinaPeriodo("203", planejador.getTotalDePeriodos());
+			planejador.addDisciplinaPeriodo("204", planejador.getTotalDePeriodos());
 			planejador.createPeriodo();
 		} catch (AlocacaoInvalidaException e) {
 			Assert.assertEquals(e.getMessage(), "Numero de creditos do ultimo periodo impede criaçao de um novo.");

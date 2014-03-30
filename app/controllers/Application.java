@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import models.AlocacaoInvalidaException;
+import models.PlanoDeCurso;
 import models.TotalDeCreditosInvalidoException;
 import models.Usuario;
 import play.data.DynamicForm;
@@ -25,8 +26,9 @@ public class Application extends Controller {
 	@Security.Authenticated(Secured.class)
 	public static Result index() {
 		Usuario user = Usuario.find.byId(request().username());
-		planejador = new Planejador(user);
-		planejador.reSetPeriodoAtual();
+		PlanoDeCurso plano = PlanoDeCurso.find.byId("p_" + user.getEmail());
+		planejador = new Planejador(user, plano);
+//		planejador.reSetPeriodoAtual();
 		planejador.ordenarPeriodos();
 		
 		return ok(views.html.index.render(user));

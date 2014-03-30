@@ -27,9 +27,11 @@ public class Planejador {
 	 * @param id
 	 *            O id para identificar o usuário.
 	 */
-	public Planejador(Usuario usuario) {
+	public Planejador(Usuario usuario, PlanoDeCurso plano) {
 		this.usuario = usuario;
-		plano = PlanoDeCurso.find.byId("p_" + usuario.getEmail());
+		this.plano = plano;
+		//plano = PlanoDeCurso.find.byId("p_" + usuario.getEmail());
+		//plano.reSetPeriodoAtual();
 	}
 
 	/**
@@ -157,13 +159,13 @@ public class Planejador {
 		plano.update();
 	}
 
-	/**
-	 * Configura novamente o periodo atual como sendo o periodo atual guardado
-	 * no BD.
-	 */
-	public void reSetPeriodoAtual() {
-		plano.reSetPeriodoAtual();
-	}
+//	/**
+//	 * Configura novamente o periodo atual como sendo o periodo atual guardado
+//	 * no BD.
+//	 */
+//	public void reSetPeriodoAtual() {
+//		plano.reSetPeriodoAtual();
+//	}
 
 	/**
 	 * Retorna o total de creditos dos periodos anteriores ao atual.
@@ -227,6 +229,10 @@ public class Planejador {
 			throws TotalDeCreditosInvalidoException {
 		plano.removeDisciplinaPeriodo(discId, periodo);
 		plano.update();
+	}
+	
+	public void setDisciplinasNaoAlocadas(List<Disciplina> disciplinasNaoAlocadas) {
+		plano.setDisciplinasNaoAlocadas(disciplinasNaoAlocadas);
 	}
 
 	/**
