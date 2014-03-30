@@ -24,7 +24,13 @@
 			} else {
 				Período indicado: @planejador.getPeriodoDaDisciplinaNaGrade(disciplinaAtual)<br>
 			}
-		    Dificuldade: @disciplinaAtual.getDificuldade()<br>
+			
+		    Dificuldade: &nbsp; <i style="font-size:15px">Fácil</i>&nbsp; 	
+		    					@for(a <- 1 to 5){ 
+		    						@if(disciplinaAtual.getDificuldade() == a){<b style="color:#8D4BC2">@a</b>&nbsp; 
+		    						} else { <i style="font-size:18px">@a</i> &nbsp; }
+		    					} <i style="font-size:15px">Difícil</i><br>
+			
 			@if(disciplinaAtual.getTotalDePreRequisitos() == 0){
 				Não tem pré-requisitos.				
 			} else {
