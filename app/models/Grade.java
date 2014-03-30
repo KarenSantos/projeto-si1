@@ -212,6 +212,10 @@ public abstract class Grade extends Model {
 		aDisciplina.save();
 	}
 
+	public void setDisciplinas(List<Disciplina> disciplinas) {
+		this.disciplinas = disciplinas;
+	}
+
 	/**
 	 * Cria uma disciplina com um id, um nome, o total de creditos, o periodo
 	 * sugerido para cursar a disciplina e a dificuldade indicada da disciplina.
