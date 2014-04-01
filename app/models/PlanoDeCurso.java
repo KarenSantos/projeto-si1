@@ -27,16 +27,16 @@ public class PlanoDeCurso extends Model {
 
 	private static final long serialVersionUID = 1L;
 
-	private final int PERIODOS_BASE = 8;
 	private final int PERIODO_MAXIMO = 14;
 	private final int PRIMEIRO_PERIODO = 1;
-	private final int MINIMI_DE_CREDITOS_DO_CURSO = 208;
 
 	@Id
 	private String id;
 
 	@ManyToOne
 	private Grade grade;
+	private int periodosBase;
+	private int minimoDeCreditosDoCurso;
 
 	@ManyToMany
 	@JoinTable(name = "plano_disc_nao_alocadas", joinColumns = @JoinColumn(name = "plano"), inverseJoinColumns = @JoinColumn(name = "disciplina_nao_alocada"))
@@ -61,6 +61,9 @@ public class PlanoDeCurso extends Model {
 	public PlanoDeCurso(String id, Grade grade) {
 		this.id = id;
 		this.grade = grade;
+
+		this.periodosBase = grade.getTotalDePeriodos();
+		this.minimoDeCreditosDoCurso = grade.getMinimoDeCreditos();
 
 		this.periodos = new ArrayList<Periodo>();
 		configuraPeriodos();
@@ -112,6 +115,15 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
+	 * Recupera a grade do plano de curso.
+	 * 
+	 * @return A grade do plano de curso.
+	 */
+	public Grade getGrade() {
+		return this.grade;
+	}
+
+	/**
 	 * Altera a grade do plano de curso.
 	 * 
 	 * @param grade
@@ -119,15 +131,46 @@ public class PlanoDeCurso extends Model {
 	 */
 	public void setGrade(Grade grade) {
 		this.grade = grade;
+		this.periodosBase = grade.getTotalDePeriodos();
+		this.minimoDeCreditosDoCurso = grade.getMinimoDeCreditos();
 	}
 
 	/**
-	 * Recupera a grade do plano de curso.
+	 * Retorna o numero de periodos base do plano de curso.
 	 * 
-	 * @return A grade do plano de curso.
+	 * @return O numero de periodos base do plano.
 	 */
-	public Grade getGrade() {
-		return this.grade;
+	public int getPeriodosBase() {
+		return this.periodosBase;
+	}
+
+	/**
+	 * Altera o numero de periodos base do plano de curso.
+	 * 
+	 * @param base
+	 *            O novo numero de periodos base do plano.
+	 */
+	public void setPeriodosBase(int base) {
+		this.periodosBase = base;
+	}
+
+	/**
+	 * Retorna o minimo de creditos necessarios para concluir o curso.
+	 * 
+	 * @return O minimo de creditos necessarios para concluir o curso.
+	 */
+	public int getMinimoDeCreditosDoCurso() {
+		return this.minimoDeCreditosDoCurso;
+	}
+
+	/**
+	 * Altera o minimo de creditos necessarios para concluir o curso.
+	 * 
+	 * @param minimo
+	 *            O novo numero minimo de creditos.
+	 */
+	public void setMinimoDeCreditosDoCurso(int minimo) {
+		this.minimoDeCreditosDoCurso = minimo;
 	}
 
 	/**
@@ -282,15 +325,6 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
-	 * Retorna o minimo de creditos necessarios para concluir o curso.
-	 * 
-	 * @return O minimo de creditos necessarios para concluir o curso.
-	 */
-	public int getMinimoDeCreditosDoCurso() {
-		return MINIMI_DE_CREDITOS_DO_CURSO;
-	}
-
-	/**
 	 * Cria um novo periodo vazio.
 	 * 
 	 * @throws AlocacaoInvalidaException
@@ -308,8 +342,8 @@ public class PlanoDeCurso extends Model {
 			throw new AlocacaoInvalidaException(
 					"Você já alcançou o número máximo de períodos");
 		}
-		if (ultimoPeriodo > PERIODOS_BASE) { // se eh um periodo acima dos
-												// periodos normais
+		if (ultimoPeriodo > periodosBase) { // se eh um periodo acima dos
+											// periodos normais
 			if (getPeriodo(ultimoPeriodo).getTotalDeCreditos() > getPeriodo(
 					ultimoPeriodo).getMaximoDeCreditos()
 					|| getPeriodo(ultimoPeriodo).getTotalDeCreditos() < getPeriodo(
@@ -387,7 +421,8 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
-	 * Remove uma disciplina de um periodo se esta disciplina estiver neste periodo.
+	 * Remove uma disciplina de um periodo se esta disciplina estiver neste
+	 * periodo.
 	 * 
 	 * @param id
 	 *            O id da disciplina a ser removida.
@@ -404,18 +439,18 @@ public class PlanoDeCurso extends Model {
 		Periodo oPeriodo = getPeriodo(periodo);
 
 		// se a disciplina estiver no periodo indicado prossegue
-		if (oPeriodo.getDisciplinas().contains(aDisciplina)){
+		if (oPeriodo.getDisciplinas().contains(aDisciplina)) {
 
 			Map<Integer, List<Disciplina>> aRemover = new HashMap<Integer, List<Disciplina>>();
 			identificaDependentes(aDisciplina, periodo, aRemover);
-	
+
 			if (!oPeriodo.podeRemover(aDisciplina)) {
 				throw new TotalDeCreditosInvalidoException(
 						"O número mínimo de créditos neste período é 14.");
 			}
-	
+
 			verificaRemocaoDeDependentes(aRemover);
-	
+
 			oPeriodo.removeDisciplina(aDisciplina);
 			for (Integer key : aRemover.keySet()) {
 				for (Disciplina secundaria : aRemover.get(key)) {
@@ -470,7 +505,7 @@ public class PlanoDeCurso extends Model {
 	 */
 	public void deletaUltimoPeriodoSeVazio() {
 
-		if (getTotalDePeriodos() > PERIODOS_BASE) {
+		if (getTotalDePeriodos() > periodosBase) {
 			int ultimoPeriodo = getTotalDePeriodos();
 			if (getPeriodo(ultimoPeriodo).getTotalDeDisciplinas() == 0) {
 				Periodo oPeriodo = getPeriodo(ultimoPeriodo);
@@ -723,8 +758,8 @@ public class PlanoDeCurso extends Model {
 		// removida
 		for (Integer key : aRemover.keySet()) {
 			if (!getPeriodo(key).podeRemoverVarias(aRemover.get(key))) {
-				throw new TotalDeCreditosInvalidoException("Remoção "
-						+ " fará o " + key
+				throw new TotalDeCreditosInvalidoException("Esta remoção "
+						+ "fará o " + key
 						+ "º periodo ficar com menos que o mínimo de créditos.");
 			}
 
@@ -737,7 +772,7 @@ public class PlanoDeCurso extends Model {
 	 */
 	private void configuraPeriodos() {
 
-		for (int i = 0; i < PERIODOS_BASE; i++) {
+		for (int i = 0; i < periodosBase; i++) {
 			try {
 				createPeriodo();
 			} catch (Exception e) {

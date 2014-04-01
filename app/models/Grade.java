@@ -48,6 +48,12 @@ public abstract class Grade extends Model {
 	public Grade() {
 	}
 
+	/**
+	 * Configura os atributos da grade e recebe um id.
+	 * 
+	 * @param id
+	 *            O id da grade.
+	 */
 	public void configuraGrade(String id) {
 		this.id = id;
 		disciplinas = new ArrayList<Disciplina>();
@@ -99,7 +105,7 @@ public abstract class Grade extends Model {
 	public void setDisciplinas(List<Disciplina> disciplinas) {
 		this.disciplinas = disciplinas;
 	}
-	
+
 	/**
 	 * Retorna uma disciplina da grade curricular.
 	 * 
@@ -187,6 +193,28 @@ public abstract class Grade extends Model {
 			}
 		}
 		return oPeriodo;
+	}
+
+	/**
+	 * Retorna o numero total de periodos da grade.
+	 * 
+	 * @return O numero total de periodos da grade.
+	 */
+	public int getTotalDePeriodos() {
+		return getPeriodos().size();
+	}
+	
+	/**
+	 * Retorna o numero minimo de creditos para completar a grade.
+	 * 
+	 * @return O numero minimo de creditos para completar a grade.
+	 */
+	public int getMinimoDeCreditos() {
+		int minimo = 0;
+		for (Periodo periodo : getPeriodos()){
+			minimo += periodo.getTotalDeCreditos();
+		}
+		return minimo;
 	}
 
 	/**
@@ -304,6 +332,9 @@ public abstract class Grade extends Model {
 	 */
 	protected abstract void criaDisciplinas();
 
+	/**
+	 * Configura todos os periodos da grade de acordo com a alocacao padrao.
+	 */
 	protected abstract void configuraPeriodos();
 
 }
