@@ -105,7 +105,7 @@ public class PlanejadorTest {
 	public void naoDevePoderAdicionarDisciplinaSePreRequisitosNaoForamAlocadosEmPeriodosAnteriores() {
 
 		try {
-			planejador.removeDisciplinaPeriodo("206", 1); // liberando espaco para creditos
+			planejador.removeDisciplinaPeriodo("03", 1); // liberando espaco para creditos
 		} catch (TotalDeCreditosInvalidoException e){
 			Assert.fail("Nao deveria ter lancado excecao.");
 		}

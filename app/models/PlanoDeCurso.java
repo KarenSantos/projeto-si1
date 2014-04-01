@@ -39,7 +39,7 @@ public class PlanoDeCurso extends Model {
 	private Grade grade;
 
 	@ManyToMany
-	@JoinTable(name = "plano_disc_nao_alocadas", joinColumns = @JoinColumn(name = "plano"), inverseJoinColumns = @JoinColumn(name = "disciplina"))
+	@JoinTable(name = "plano_disc_nao_alocadas", joinColumns = @JoinColumn(name = "plano"), inverseJoinColumns = @JoinColumn(name = "disciplina_nao_alocada"))
 	private List<Disciplina> disciplinasNaoAlocadas;
 
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -387,7 +387,7 @@ public class PlanoDeCurso extends Model {
 	}
 
 	/**
-	 * Remove uma disciplina de um periodo.
+	 * Remove uma disciplina de um periodo se esta disciplina estiver neste periodo.
 	 * 
 	 * @param id
 	 *            O id da disciplina a ser removida.
@@ -403,25 +403,29 @@ public class PlanoDeCurso extends Model {
 		Disciplina aDisciplina = getDisciplina(id);
 		Periodo oPeriodo = getPeriodo(periodo);
 
-		Map<Integer, List<Disciplina>> aRemover = new HashMap<Integer, List<Disciplina>>();
-		identificaDependentes(aDisciplina, periodo, aRemover);
+		// se a disciplina estiver no periodo indicado prossegue
+		if (oPeriodo.getDisciplinas().contains(aDisciplina)){
 
-		if (!oPeriodo.podeRemover(aDisciplina)) {
-			throw new TotalDeCreditosInvalidoException(
-					"O número mínimo de créditos neste período é 14.");
-		}
-
-		verificaRemocaoDeDependentes(aRemover);
-
-		oPeriodo.removeDisciplina(aDisciplina);
-		for (Integer key : aRemover.keySet()) {
-			for (Disciplina secundaria : aRemover.get(key)) {
-				getPeriodo(key).removeDisciplina(secundaria);
-				disciplinasNaoAlocadas.add(secundaria);
+			Map<Integer, List<Disciplina>> aRemover = new HashMap<Integer, List<Disciplina>>();
+			identificaDependentes(aDisciplina, periodo, aRemover);
+	
+			if (!oPeriodo.podeRemover(aDisciplina)) {
+				throw new TotalDeCreditosInvalidoException(
+						"O número mínimo de créditos neste período é 14.");
 			}
-		}
-		if (!getDisciplinasOptativasGenericas().contains(aDisciplina)) {
-			disciplinasNaoAlocadas.add(aDisciplina);
+	
+			verificaRemocaoDeDependentes(aRemover);
+	
+			oPeriodo.removeDisciplina(aDisciplina);
+			for (Integer key : aRemover.keySet()) {
+				for (Disciplina secundaria : aRemover.get(key)) {
+					getPeriodo(key).removeDisciplina(secundaria);
+					disciplinasNaoAlocadas.add(secundaria);
+				}
+			}
+			if (!getDisciplinasOptativasGenericas().contains(aDisciplina)) {
+				disciplinasNaoAlocadas.add(aDisciplina);
+			}
 		}
 
 	}
