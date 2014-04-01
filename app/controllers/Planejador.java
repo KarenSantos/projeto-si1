@@ -410,7 +410,6 @@ public class Planejador {
 		} else {
 			List<Usuario> achados = new ArrayList<Usuario>();
 			usuarioProcurado = usuarioProcurado.toLowerCase();
-			int size = usuarioProcurado.length();
 			for (Usuario usuario : usuarios) {
 				String nome = usuario.getNome().toLowerCase();
 				if (nome.contains(usuarioProcurado)) {

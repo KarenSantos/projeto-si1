@@ -83,9 +83,10 @@ public class BDTest {
 		Assert.assertNotNull(PlanoDeCurso.find.byId("id"));
 		Assert.assertNotNull(PlanoDeCurso.find.byId("id").getPeriodos());
 		
+		//Disciplinas, grade e periodos foram criados ao criar um plano.
 		Assert.assertFalse(Disciplina.find.all().isEmpty());
-		Assert.assertFalse(grade.getDisciplinas().isEmpty());
-		
+		Assert.assertFalse(Grade.find.all().isEmpty());
+		Assert.assertFalse(Periodo.find.all().isEmpty());
 	}
 	
 	
