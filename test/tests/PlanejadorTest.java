@@ -242,6 +242,24 @@ public class PlanejadorTest {
 		
 		planejador.setPeriodoAtual(7);
 		Assert.assertEquals(7, planejador.getNumPeriodoAtual());
+		
+		planejador.setPeriodoAtual(5);
+		Assert.assertEquals(5, planejador.getNumPeriodoAtual());
+		
+		planejador.setPeriodoAtual(1);
+		Assert.assertEquals(1, planejador.getNumPeriodoAtual());
+		
+		planejador.setPeriodoAtual(4);
+		Assert.assertEquals(4, planejador.getNumPeriodoAtual());
+		
+		planejador.setPeriodoAtual(8);
+		Assert.assertEquals(8, planejador.getNumPeriodoAtual());
+		
+		planejador.setPeriodoAtual(3);
+		Assert.assertEquals(3, planejador.getNumPeriodoAtual());
+		
+		planejador.setPeriodoAtual(6);
+		Assert.assertEquals(6, planejador.getNumPeriodoAtual());
 	}
 
 	@Test
@@ -369,10 +387,12 @@ public class PlanejadorTest {
 	public void deveIndicarSeDisciplinaEhPreRequisitoDeOutraAlocada()
 			throws AlocacaoInvalidaException, TotalDeCreditosInvalidoException {
 
+		Assert.assertTrue(planejador.ehPreRequisito(planejador.getDisciplina("01"), 1)); // Calc1 eh pre requisito de outra disciplina
 		Assert.assertTrue(planejador.ehPreRequisito(
 				planejador.getDisciplina("10"), 2)); // prog 2 é pre requisito de outra(s) alocada(s) a frente
 		Assert.assertFalse(planejador.ehPreRequisito(
 				planejador.getDisciplina("09"), 2)); // Metodologia cientifica não é
+		Assert.assertFalse(planejador.ehPreRequisito(planejador.getDisciplina("28"), 5));
 
 	}
 
