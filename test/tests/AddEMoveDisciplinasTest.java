@@ -105,7 +105,7 @@ public class AddEMoveDisciplinasTest {
 	}
 
 	@Test
-	public void devePermitirMoverDisciplinas() {
+	public void devePoderMoverDisciplinas() {
 
 		Assert.assertEquals(6, planejador.getPeriodo(1).getTotalDeDisciplinas()); // 6 disc no primeiro periodo
 		Assert.assertEquals(7, planejador.getPeriodo(5).getTotalDeDisciplinas()); // 7 disc no quinto periodo
@@ -121,7 +121,7 @@ public class AddEMoveDisciplinasTest {
 	}
 
 	@Test
-	public void naoDevePermitirMoverSeMaximoDeCreditosAtingido() {
+	public void naoDevePoderMoverSeMaximoDeCreditosAtingido() {
 
 		Assert.assertEquals(6, planejador.getPeriodo(1).getTotalDeDisciplinas());
 		Assert.assertEquals(7, planejador.getPeriodo(2).getTotalDeDisciplinas());
