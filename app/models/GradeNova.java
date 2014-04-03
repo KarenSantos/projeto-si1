@@ -43,8 +43,8 @@ public class GradeNova extends Grade {
 		createDisciplina("n09", "Álgebra Linear", 4, new String[] { "n01" }, 4);
 		createDisciplina("n10", "Teoria dos Grafos", 4, 3);
 		createDisciplina("n11", "Cálculo Diferencial e Integral 2", 4, new String[] { "n06" }, 5);
-		createDisciplina("n12", "Estrutura de Dados", 4, new String[] { "n07", "n08" }, 4);
-		createDisciplina("n13", "Laboratório de Estrutura de Dados", 4,new String[] { "n07", "n08" }, 4);
+		createDisciplina("n12", "Estrutura de Dados e Algoritmos", 4, new String[] { "n07", "n08" }, 4);
+		createDisciplina("n13", "Lab. de Estrutura de Dados e Algoritmos", 4,new String[] { "n07", "n08" }, 4);
 		createDisciplina("n14", "Lógica para Computação", 4, new String[] { "n01" }, 3);
 		
 		createDisciplina("n15", "Introdução à Probabilidade", 4,new String[] { "n06", "n11" }, 4);
@@ -84,63 +84,52 @@ public class GradeNova extends Grade {
 		createDisciplina("n105", "Arquitetura de Software", 4, new String[] { "n16" }, 3);
 		createDisciplina("n106", "Av. de Desempenho de Sistemas Discretos", 4, new String[] { "n15" }, 3);
 		createDisciplina("n107", "Banco de Dados 2", 4, new String[] { "n18" }, 3);
+		createDisciplina("n108", "Computação Gráfica", 4, 3);
+		createDisciplina("n109", "Computação e Música", 4, new String[] { "n12" }, 3);
+		createDisciplina("n110", "Economia de Tecnologia da Informação", 4, 3);
+		createDisciplina("n111", "Empreendedorismo em Software", 4, 3);
+		createDisciplina("n112", "Gerência de Redes", 4, new String[] { "n24" }, 3);
+		createDisciplina("n113", "Interconexão de Redes de Computadores", 4, new String[] { "n24" }, 3);
+		createDisciplina("n114", "Interface Homem-Máquina", 4, 3);
+		createDisciplina("n115", "Otimização", 4, 3);
+		createDisciplina("n116", "Métodos e Software Numéricos", 4, 3);
+		createDisciplina("n117", "Métodos Formais", 4, 3);
+		createDisciplina("n118", "Prática de Ensino em Computação 1", 4, 3);
+		createDisciplina("n119", "Prática de Ensino em Computação 2", 4, new String[] { "n118" }, 3);
+		createDisciplina("n120", "Princípios de Desenvolvimento Web", 4, new String[] { "n07", "n08" }, 3);
+		createDisciplina("n121", "Programação em Banco de Dados", 4, new String[] { "n18" }, 3);
+		createDisciplina("n122", "Projeto de Redes de Computadores", 4, new String[] { "n24" }, 3);
+		createDisciplina("n123", "Reconhecimento de Padrões e Redes Neurais", 4, new String[] { "n21", "n30" }, 3);
+		createDisciplina("n124", "Recuperação da Informação e Busca na Web", 4, 3);
+		createDisciplina("n125", "Segurança de Redes", 4, new String[] { "n24" }, 3);
+		createDisciplina("n126", "Sistemas de Apoio à Decisão", 4, 3);
+		createDisciplina("n127", "Sistemas de Informação Geográfica", 4, 3);
+		createDisciplina("n128", "Sistemas Distribuídos", 4, 3);
+		createDisciplina("n129", "Tópicos em Ciência da Computação 1", 4, 3);
+		createDisciplina("n130", "Tópicos em Ciência da Computação 2", 4, 3);
+		createDisciplina("n131", "Tópicos em Ciência da Computação 3", 4, 3);
+		createDisciplina("n132", "Tópicos em Ciência da Computação 4", 4, 3);
+		createDisciplina("n133", "Verificação e Validação de Software", 4, new String[] { "n23" }, 3);
+		createDisciplina("n133", "Visão Computacional", 4, 3);
 		
-		//parei aqui
-		
-		
-		
-		createDisciplina("02", "Álgebra Vetorial e Geometria Analítica", 4,3);
-		createDisciplina("03", "Leitura e Produção de Texto", 4, 2);
-
-		createDisciplina("13", "Fundamentos de Física Clássica", 4,new String[] { "01", "02" }, 4);
-
-		createDisciplina("19", "Fundamentos de Física Moderna", 4,new String[] { "07", "13" }, 4);
-		createDisciplina("20", "Gerência da Informação", 4, 2);
-
-		createDisciplina("21", "Métodos Estatísticos", 4, new String[] { "14","15" }, 3);
-		createDisciplina("27", "Sistemas de Informação 1", 4,new String[] { "20" }, 3);
-
-		createDisciplina("28", "Informática e Sociedade", 2, 3);
-		createDisciplina("33", "Sistemas de Informação 2", 4,new String[] { "27" }, 3);
-		createDisciplina("34", "Laboratório de Engenharia de Software", 2,new String[] { "26" }, 3);
-
-		createDisciplina("35", "Direito e Cidadania", 4, 3);
-		createDisciplina("37", "Interconexão de Redes de Comp.", 2,new String[] { "31" }, 3);
-		createDisciplina("38", "Lab de Interconexão de Redes de Comp.", 2,new String[] { "31" }, 3);
-
-		createDisciplina("41", "Métodos e Software Numéricos", 4, new String[] {"14", "29" }, 3);
-		createDisciplina("43", "Projeto em Computação 1", 4, new String[] {"09", "34" }, 3);
-
-		createDisciplina("44", "Projeto em Computação 2", 6,new String[] { "43" }, 3);
-
-		createDisciplina("100", "Administração Financeira", 4, 3);
-		createDisciplina("101", "Realidade Virtual", 4, new String[] { "27" }, 3);
-		createDisciplina("103", "Análise de Dados 1", 4, new String[] { "15" }, 3);
-		createDisciplina("105", "Desenvolvimento Dirigido a Modelos", 4,new String[] { "26" }, 3);
-		createDisciplina("106", "Desenvolvimento de App Corporativas", 4,new String[] { "27", "32" }, 3);
-		createDisciplina("107", "Didática em Ciência da Computação", 2, 3);
-		createDisciplina("108", "Economia de TI", 4, 3);
-		createDisciplina("109", "Empreendedorismo em Software 1", 4, 3);
-		createDisciplina("110", "Estágio 2", 4, 3);
 		
 		// Optativas Outros Departamentos
-		createDisciplina("200", "Futsal", 2, 3);
-		createDisciplina("201", "Sociologia Industrial 1", 4, 3);
-		createDisciplina("202", "Basquete masc/fem", 2, 3);
-		createDisciplina("203", "Administração", 4, 3);
-		createDisciplina("204", "Economia", 4, 3);
-		createDisciplina("205", "Relações Humanas", 4, 3);
-		createDisciplina("206", "Cálculo Diferencial e Integral 3", 5, new String[] { "07" }, 3);
-		createDisciplina("207", "Equações Diferenciais", 4, 3);
-		createDisciplina("208", "Ética", 4, 3);
-		createDisciplina("209", "Expressão Gráfica", 4, 3);
-		createDisciplina("210", "Futebol de Campo", 2, 3);
-		createDisciplina("220", "Gestão da Qualidade", 4, 3);
-		createDisciplina("221", "Ginástica Masc/Fem", 2, 3);
-		createDisciplina("222", "Inglês", 4, 3);
-		createDisciplina("223", "Introdução à Filosofia", 2, 3);
-		createDisciplina("224", "Processo Decisório", 4, 3);
-
+		createDisciplina("n200", "Administração e Empreendedorismo", 4, 3);
+		createDisciplina("n201", "Álgebra Vetorial e Geometria Analítica", 4, 3);
+		createDisciplina("n202", "Cálculo Diferencial e Integral 3", 5, new String[] { "n05", "n11" }, 3);
+		createDisciplina("n203", "Direito e Cidadania", 4, 3);
+		createDisciplina("n204", "Economia", 4, 3);
+		createDisciplina("n203", "Física Geral 1", 4, 4);
+		createDisciplina("n204", "Física Geral 2", 4, new String[] { "n203", "n01", "n06" }, 4);
+		createDisciplina("n205", "Física Geral 3", 4, new String[] { "n204", "n11" }, 4);
+		createDisciplina("n206", "Física Geral 4", 4, new String[] { "n205", "n202"}, 5);
+		createDisciplina("n207", "Informática e Sociedade", 2, 3);
+		createDisciplina("n208", "Inglês", 4, 3);
+		createDisciplina("n209", "Libras: Linguagem Brasileira de Sinais", 4, 3);
+		createDisciplina("n210", "Língua Portuguesa", 4, 3);
+		createDisciplina("n211", "Tópicos em Humanidades 1", 4, 3);
+		createDisciplina("n212", "Tópicos em Humanidades 2", 4, 3);
+		
 		// Optativas Genericas
 		createDisciplina("n80", "Optativa Geral 1", 4, 3);
 		createDisciplina("n81", "Optativa Geral 2", 4, 3);
@@ -161,20 +150,20 @@ public class GradeNova extends Grade {
 	}
 
 	/**
-	 * Configura todos os periodos da grade antiga de acordo com
+	 * Configura todos os periodos da grade nova de acordo com
 	 * a alocacao padrao.
 	 */
 	@Override
 	protected void configuraPeriodos() {
-		String[] primeiroPeriodo = new String[]{"01", "02", "03", "04", "05", "06"};
-		String[] segundoPeriodo = new String[]{"07", "08", "09", "10", "11", "12", "13"};
-		String[] terceiroPeriodo = new String[]{"14", "15", "16", "17", "18", "19", "20"};
-		String[] quartoPeriodo = new String[]{"21", "22", "23", "24", "25", "26", "27"};
-		String[] quintoPeriodo = new String[]{"28", "29", "30", "31", "32", "33", "34"};
-		String[] sextoPeriodo = new String[]{"35", "36", "37", "38", "39", "40", "80", "81"};
-		String[] setimoPeriodo = new String[]{"41", "42", "43", "82", "83", "84", "85"};
-		String[] oitavoPeriodo = new String[]{"44", "86", "87", "88", "89", "90"};
-		String[] nonoPeriodo = new String[]{"44", "86", "87", "88", "89", "90"};
+		String[] primeiroPeriodo = new String[]{"n01", "n02", "n03", "n04", "n80"};
+		String[] segundoPeriodo = new String[]{"n05", "n06", "n07", "n08", "n81"};
+		String[] terceiroPeriodo = new String[]{"n09", "n10", "n11", "n12", "n13", "n14"};
+		String[] quartoPeriodo = new String[]{"n15", "n16", "n17", "n18", "n19", "n20"};
+		String[] quintoPeriodo = new String[]{"n21", "n22", "n23", "n24", "n25", "n26"};
+		String[] sextoPeriodo = new String[]{"n27", "n28", "n29", "n82", "n83"};
+		String[] setimoPeriodo = new String[]{"n30", "n31", "n84", "n85", "n86"};
+		String[] oitavoPeriodo = new String[]{"n32", "n33", "n87", "n88", "n89"};
+		String[] nonoPeriodo = new String[]{"n34", "n35", "n90", "n91", "n92", "n93"};
 		
 		try {
 			createPeriodo(1, primeiroPeriodo);

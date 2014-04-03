@@ -109,6 +109,9 @@ public class Application extends Controller {
 	
 	@Security.Authenticated(Secured.class)
 	public static Result disciplinas(String disciplinaId) {
+		if (disciplinaId.equals("id")){
+			return ok(views.html.disciplinas.render(planejador.getDisciplinas(), planejador.getDisciplinas().get(1), planejador));
+		}
 		return ok(views.html.disciplinas.render(planejador.getDisciplinas(), planejador.getDisciplina(disciplinaId), planejador));
 	}
 	

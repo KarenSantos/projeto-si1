@@ -23,7 +23,18 @@
 			<br>
 			<input type="password" class="form-control" name="repassword" placeholder="Confirme a senha" required>
 			<br>
+		</div>
+		
+		<div class="grade">
+			Gostaria de iniciar meu plano de curso com a grade: <br><br>
+			<div class="gradeOptions">
+				<input type="radio" name="grade" value="1" required>Padrão<br>
+				<input type="radio" name="grade" value="1">Mais comum<br>
+				<input type="radio" name="grade" value="1">Nova<br><br>
+			</div>
+			
 			<button type="submit" class="btn  btn-primary">Cadastrar</button>
+			<button type="button" class="btn" onclick="location.href='@routes.Autenticador.cadastro()';">Limpar</button>
 		</div>
 	</form>
 		<div class="form-actions">

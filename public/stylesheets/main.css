@@ -73,8 +73,22 @@ a.disciplina:hover{
 #main .textBox{
 	position: relative;
 	width: 20%;
-	height: 40%;
 	left: 40%;
+	color: rgb(90, 90, 90);
+}
+
+#main .grade{
+	position: relative;
+	width: 30%;
+	left: 35%;
+	color: rgb(90, 90, 90);
+}
+
+#main .gradeOptions{
+	position: relative;
+	width: 30%;
+	left: 35%;
+	text-align: left;
 }
 
 #botao{

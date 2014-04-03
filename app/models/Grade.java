@@ -28,6 +28,7 @@ public abstract class Grade extends Model {
 	private final int INICIO_OPTATIVA_TECC = 100;
 	private final int FIM_OPTATIVA_TECC = 199;
 	private final int INICIO_OPTATIVA_OUTROS = 200;
+	private final int PRIMEIRO_INT = 1;
 
 	@Id
 	private String id;
@@ -179,6 +180,16 @@ public abstract class Grade extends Model {
 	}
 
 	/**
+	 * Altera a lista de periodos da grade.
+	 * 
+	 * @param periodos
+	 *            A nova lista de periodos da grade.
+	 */
+	public void setPeriodos(List<Periodo> periodos) {
+		this.periodos = periodos;
+	}
+
+	/**
 	 * Retorna um periodo pelo seu numero.
 	 * 
 	 * @param numPeriodo
@@ -203,7 +214,7 @@ public abstract class Grade extends Model {
 	public int getTotalDePeriodos() {
 		return getPeriodos().size();
 	}
-	
+
 	/**
 	 * Retorna o numero minimo de creditos para completar a grade.
 	 * 
@@ -211,7 +222,7 @@ public abstract class Grade extends Model {
 	 */
 	public int getMinimoDeCreditos() {
 		int minimo = 0;
-		for (Periodo periodo : getPeriodos()){
+		for (Periodo periodo : getPeriodos()) {
 			minimo += periodo.getTotalDeCreditos();
 		}
 		return minimo;
@@ -303,7 +314,7 @@ public abstract class Grade extends Model {
 	 */
 	public boolean ehOptativaTECC(Disciplina disc) {
 		boolean resp = false;
-		int id = Integer.parseInt(disc.getId());
+		int id = Integer.parseInt(disc.getId().substring(PRIMEIRO_INT));
 		if (id >= INICIO_OPTATIVA_TECC && id <= FIM_OPTATIVA_TECC) {
 			resp = true;
 		}
@@ -320,7 +331,7 @@ public abstract class Grade extends Model {
 	 */
 	public boolean ehOptativaDeOutrosCursos(Disciplina disc) {
 		boolean resp = false;
-		int id = Integer.parseInt(disc.getId());
+		int id = Integer.parseInt(disc.getId().substring(PRIMEIRO_INT));
 		if (id >= INICIO_OPTATIVA_OUTROS) {
 			resp = true;
 		}

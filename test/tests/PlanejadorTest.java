@@ -14,13 +14,13 @@ import controllers.Planejador;
 public class PlanejadorTest {
 
 	private Grade gradeAntiga;
-	private Grade gradeNova;
+//	private Grade gradeNova;
 	private Usuario usuario1;
-	private Usuario usuario2;
+//	private Usuario usuario2;
 	private PlanoDeCurso plano1;
-	private PlanoDeCurso plano2;
+//	private PlanoDeCurso plano2;
 	private Planejador planejador1;
-	private Planejador planejador2;
+//	private Planejador planejador2;
 
 	@Before
 	public void setUp() throws Exception {
@@ -30,24 +30,24 @@ public class PlanejadorTest {
 		gradeAntiga.configuraGrade("grade antiga");
 		gradeAntiga.save();
 		
-		gradeNova = new GradeNova();
-		gradeNova.configuraGrade("grade nova");
-		gradeNova.save();
+//		gradeNova = new GradeNova();
+//		gradeNova.configuraGrade("grade nova");
+//		gradeNova.save();
 		
 		usuario1 = new Usuario("email@email.com", "meuNome", "senha");
 		usuario1.save();
 		
-		usuario2 = new Usuario("email2@email.com", "meuNome2", "senha2");
-		usuario2.save();
+//		usuario2 = new Usuario("email2@email.com", "meuNome2", "senha2");
+//		usuario2.save();
 		
 		plano1 = new PlanoDeCurso("p_" + usuario1.getEmail(), gradeAntiga);
 		plano1.save();
 		
-		plano2 = new PlanoDeCurso("p_" + usuario2.getEmail(), gradeNova);
-		plano2.save();
+//		plano2 = new PlanoDeCurso("p_" + usuario2.getEmail(), gradeNova);
+//		plano2.save();
 		
 		planejador1 = new Planejador(usuario1);
-		planejador2 = new Planejador(usuario2);
+//		planejador2 = new Planejador(usuario2);
 	}
 
 	@Test
@@ -58,8 +58,8 @@ public class PlanejadorTest {
 		Assert.assertEquals(208, planejador1.getMinimoDeCreditosDoCurso()); //208 minimo de creditos
 		
 		// grade nova
-		Assert.assertEquals(9, planejador2.getTotalDePeriodos()); // 9 periodos base
-		Assert.assertEquals(214, planejador2.getMinimoDeCreditosDoCurso()); //214 minimo de creditos
+//		Assert.assertEquals(9, planejador2.getTotalDePeriodos()); // 9 periodos base
+//		Assert.assertEquals(214, planejador2.getMinimoDeCreditosDoCurso()); //214 minimo de creditos
 		
 	}
 	
@@ -225,6 +225,19 @@ public class PlanejadorTest {
 		Assert.assertEquals(3, planejador1.getPeriodos().get(5).getNumero());
 		Assert.assertEquals(2, planejador1.getPeriodos().get(6).getNumero());
 		Assert.assertEquals(1, planejador1.getPeriodos().get(7).getNumero());
+	}
+	
+	@Test
+	public void deveIndicarSeEhDisciplinaOptativaTECC(){
+		
+		Assert.assertTrue(planejador1.ehOptativaTECC(planejador1.getDisciplina("a104"))); //Arquitetura de software
+		Assert.assertTrue(planejador1.ehOptativaTECC(planejador1.getDisciplina("a108"))); //Economia de TI
+		
+		Assert.assertFalse(planejador1.ehOptativaTECC(planejador1.getDisciplina("a01"))); //Calculo 1
+		Assert.assertFalse(planejador1.ehOptativaTECC(planejador1.getDisciplina("a30"))); //Compiladores
+		
+		Assert.assertFalse(planejador1.ehOptativaTECC(planejador1.getDisciplina("a200"))); //Futsal
+		
 	}
 
 	@Test

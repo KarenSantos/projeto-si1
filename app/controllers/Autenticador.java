@@ -14,6 +14,10 @@ import views.html.login;
  * 
  */
 public class Autenticador extends Controller {
+	
+	private static final int GRADE_ANTIGA = 1;
+	private static final int GRADE_COMUM = 2;
+	private static final int GRADE_NOVA = 3;
 
 	/**
 	 * Classe de cadastro do usuário com nome, email e senha.
@@ -22,21 +26,14 @@ public class Autenticador extends Controller {
 	 * 
 	 */
 	public static class Cadastro {
+		private String nome;
 		private String email;
 		private String password;
 		private String repassword;
-		private String nome;
+		private int codigoGrade;
 
-		public void setEmail(String email) {
-			this.email = email;
-		}
-
-		public void setPassword(String password) {
-			this.password = password;
-		}
-
-		public void setRepassword(String repassword) {
-			this.repassword = repassword;
+		public String getNome(){
+			return this.nome;
 		}
 
 		public void setNome(String nome) {
@@ -47,16 +44,32 @@ public class Autenticador extends Controller {
 			return this.email;
 		}
 		
+		public void setEmail(String email) {
+			this.email = email;
+		}
+		
 		public String getPassword(){
 			return this.password;
+		}
+		
+		public void setPassword(String password) {
+			this.password = password;
 		}
 		
 		public String getRepassword(){
 			return this.repassword;
 		}
 		
-		public String getNome(){
-			return this.nome;
+		public void setRepassword(String repassword) {
+			this.repassword = repassword;
+		}
+		
+		public int getCodigoGrade(){
+			return this.codigoGrade;
+		}
+		
+		public void setCodigoGrade(int codigoGrade){
+			this.codigoGrade = codigoGrade;
 		}
 		
 		/**
@@ -165,14 +178,7 @@ public class Autenticador extends Controller {
 			Usuario usuario = new Usuario(novoC.getEmail(), novoC.getNome(), novoC.getPassword()); 
 			usuario.save();
 
-			//criando o plano do novo usuario
-			//TODO este metodo vai receber tbm o tipo de plano q o usuario escolher no cadastro
-			Grade grade = Grade.find.byId("Computacao grade antiga");
-			if (grade == null){
-				grade = new GradeAntiga();
-				grade.configuraGrade("Computacao grade antiga");
-				grade.save();
-			}
+			Grade grade = criaGrade(novoC.getCodigoGrade());
 			
 			criaPlanoDoUsuario(usuario, grade);
 		}
@@ -183,6 +189,47 @@ public class Autenticador extends Controller {
 	private static void criaPlanoDoUsuario(Usuario usuario, Grade grade){
 		PlanoDeCurso plano = new PlanoDeCurso("p_" + usuario.getEmail(), grade);
 		plano.save();
+	}
+	
+	private static Grade criaGrade(int codigo){
+		Grade grade = null;
+		switch (codigo) {
+		case GRADE_ANTIGA:
+			grade = Grade.find.byId("Computacao grade antiga");
+			if (grade == null){
+				grade = new GradeAntiga();
+				grade.configuraGrade("Computacao grade antiga");
+				grade.save();
+			}
+			break;
+			
+		case GRADE_COMUM:
+			grade = Grade.find.byId("Computacao grade comum");
+			if (grade == null){
+				grade = new GradeComum();
+				grade.configuraGrade("Computacao grade comum");
+				grade.save();
+			}
+			break;
+			
+		case GRADE_NOVA:
+			grade = Grade.find.byId("Computacao grade nova");
+			if (grade == null){
+				grade = new GradeNova();
+				grade.configuraGrade("Computacao grade nova");
+				grade.save();
+			}
+			break;
+			
+		default:
+			grade = Grade.find.byId("Computacao grade antiga");
+			if (grade == null){
+				grade = new GradeAntiga();
+				grade.configuraGrade("Computacao grade antiga");
+				grade.save();
+			}
+		}
+		return grade;
 	}
 
 	private static void criaUsuariosAleatorios() {
