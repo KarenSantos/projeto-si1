@@ -15,12 +15,9 @@ import views.html.login;
  */
 public class Autenticador extends Controller {
 	
-	private static final int GRADE_ANTIGA = 1;
-	private static final int GRADE_COMUM = 2;
-	private static final int GRADE_NOVA = 3;
 
 	/**
-	 * Classe de cadastro do usuário com nome, email e senha.
+	 * Classe de cadastro do usuário com nome, email e senha e grade.
 	 * 
 	 * @author
 	 * 
@@ -30,7 +27,7 @@ public class Autenticador extends Controller {
 		private String email;
 		private String password;
 		private String repassword;
-		private int codigoGrade;
+		public String grade;
 
 		public String getNome(){
 			return this.nome;
@@ -64,12 +61,12 @@ public class Autenticador extends Controller {
 			this.repassword = repassword;
 		}
 		
-		public int getCodigoGrade(){
-			return this.codigoGrade;
+		public String getGrade(){
+			return this.grade;
 		}
 		
-		public void setCodigoGrade(int codigoGrade){
-			this.codigoGrade = codigoGrade;
+		public void setCodigoGrade(String grade){
+			this.grade = grade;
 		}
 		
 		/**
@@ -177,9 +174,7 @@ public class Autenticador extends Controller {
 			Cadastro novoC = cadastroForm.get();
 			Usuario usuario = new Usuario(novoC.getEmail(), novoC.getNome(), novoC.getPassword()); 
 			usuario.save();
-
-			Grade grade = criaGrade(novoC.getCodigoGrade());
-			
+			Grade grade = criaGrade(novoC.getGrade());
 			criaPlanoDoUsuario(usuario, grade);
 		}
 		flash("success", "Cadastro realizado com sucesso.");
@@ -191,44 +186,20 @@ public class Autenticador extends Controller {
 		plano.save();
 	}
 	
-	private static Grade criaGrade(int codigo){
+	private static Grade criaGrade(String codigo){
 		Grade grade = null;
-		switch (codigo) {
-		case GRADE_ANTIGA:
-			grade = Grade.find.byId("Computacao grade antiga");
+			grade = Grade.find.byId(codigo);
 			if (grade == null){
-				grade = new GradeAntiga();
-				grade.configuraGrade("Computacao grade antiga");
+				if(codigo.equals("Computacao grade antiga")){
+					grade = new GradeAntiga();
+				}else if(codigo.equals("Computacao grade comum")){
+					grade = new GradeComum();
+				}else if(codigo.equals("Computacao grade nova")){
+					grade = new GradeNova();
+				}
+				grade.configuraGrade(codigo);
 				grade.save();
 			}
-			break;
-			
-		case GRADE_COMUM:
-			grade = Grade.find.byId("Computacao grade comum");
-			if (grade == null){
-				grade = new GradeComum();
-				grade.configuraGrade("Computacao grade comum");
-				grade.save();
-			}
-			break;
-			
-		case GRADE_NOVA:
-			grade = Grade.find.byId("Computacao grade nova");
-			if (grade == null){
-				grade = new GradeNova();
-				grade.configuraGrade("Computacao grade nova");
-				grade.save();
-			}
-			break;
-			
-		default:
-			grade = Grade.find.byId("Computacao grade antiga");
-			if (grade == null){
-				grade = new GradeAntiga();
-				grade.configuraGrade("Computacao grade antiga");
-				grade.save();
-			}
-		}
 		return grade;
 	}
 
