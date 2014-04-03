@@ -176,6 +176,7 @@ public class Autenticador extends Controller {
 			usuario.save();
 			Grade grade = criaGrade(novoC.getGrade());
 			criaPlanoDoUsuario(usuario, grade);
+			System.out.println("Passou aqui");
 		}
 		flash("success", "Cadastro realizado com sucesso.");
 		return redirect(routes.Autenticador.login());
@@ -199,6 +200,9 @@ public class Autenticador extends Controller {
 				}
 				grade.configuraGrade(codigo);
 				grade.save();
+			}else{
+				grade.configuraGrade(codigo);
+				grade.update();
 			}
 		return grade;
 	}

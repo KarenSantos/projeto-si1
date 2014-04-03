@@ -79,6 +79,34 @@ public class BDTest {
 		Assert.assertTrue(!Usuario.find.all().isEmpty());
 		Assert.assertEquals("meuNome", Usuario.find.byId("email@email.com").getNome());
 	}
+
+	@Test
+	public void deveConseguirCriaPlanoComGradeDuasVezes() {
+		Grade grade = new GradeAntiga();
+		grade.configuraGrade("grade antiga");
+		grade.save();
+		
+		Usuario usuario = new Usuario("email2@email.com", "meuNome", "senha");
+		usuario.save();
+		
+		PlanoDeCurso plano = new PlanoDeCurso("id", grade);
+		plano.save();
+		
+		Usuario usuario2 = new Usuario("email12@email.com", "meuNome", "senha");
+		usuario.save();
+		
+		PlanoDeCurso plano2 = new PlanoDeCurso("id2", grade);
+		plano.save();
+		
+		Assert.assertTrue(!PlanoDeCurso.find.all().isEmpty());
+		Assert.assertNotNull(PlanoDeCurso.find.byId("id2"));
+		Assert.assertNotNull(PlanoDeCurso.find.byId("id2").getPeriodos());
+		
+		//Disciplinas, grade e periodos foram criados ao criar um plano.
+		Assert.assertFalse(Disciplina.find.all().isEmpty());
+		Assert.assertFalse(Grade.find.all().isEmpty());
+		Assert.assertFalse(Periodo.find.all().isEmpty());
+	}
 	
 	@Test
 	public void deveConseguirRecuperarPlanoDeCursoDoBD() {
@@ -101,6 +129,5 @@ public class BDTest {
 		Assert.assertFalse(Grade.find.all().isEmpty());
 		Assert.assertFalse(Periodo.find.all().isEmpty());
 	}
-	
 	
 }

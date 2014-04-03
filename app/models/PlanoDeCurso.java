@@ -61,17 +61,19 @@ public class PlanoDeCurso extends Model {
 	public PlanoDeCurso(String id, Grade grade) {
 		this.id = id;
 		this.grade = grade;
-
+		
 		this.periodosBase = grade.getTotalDePeriodos();
 		this.minimoDeCreditosDoCurso = grade.getMinimoDeCreditos();
 
 		this.periodos = new ArrayList<Periodo>();
+		System.out.println("passou por aqui");
 		configuraPeriodos();
 
 		this.disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		this.disciplinasNaoAlocadas.addAll(grade.getDisciplinasOptativas());
 
 		setPeriodoAtual(PRIMEIRO_PERIODO);
+		System.out.println("chegou ate o final do construtor");
 	}
 
 	/**
@@ -89,7 +91,7 @@ public class PlanoDeCurso extends Model {
 	public void reset() {
 		this.periodos.clear();
 		this.disciplinasNaoAlocadas.clear();
-
+		
 		configuraPeriodos();
 		this.disciplinasNaoAlocadas.addAll(grade.getDisciplinasOptativas());
 		setPeriodoAtual(PRIMEIRO_PERIODO);
@@ -312,8 +314,7 @@ public class PlanoDeCurso extends Model {
 			periodoFuturo
 					.setValidadorDeAlocacao(new TemMinimoEMaximoDeCreditos());
 		}
-		getPeriodo(getTotalDePeriodos()).setValidadorDeAlocacao(
-				new TemMinimoDeCreditos());
+		getPeriodo(getTotalDePeriodos()).setValidadorDeAlocacao(new TemMinimoDeCreditos());
 	}
 
 	/**
@@ -771,7 +772,7 @@ public class PlanoDeCurso extends Model {
 	 * grade.
 	 */
 	private void configuraPeriodos() {
-
+		System.out.println("chegou até aqui");
 		for (int i = 0; i < periodosBase; i++) {
 			try {
 				createPeriodo();
@@ -788,5 +789,6 @@ public class PlanoDeCurso extends Model {
 				}
 			}
 		}
+		System.out.println("chegou até aqui too");
 	}
 }

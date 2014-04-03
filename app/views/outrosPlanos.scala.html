@@ -40,9 +40,16 @@
 					    	<span>@disciplinaPeriodo.getCreditos() / _</span>
 					    	<br>
 				    	} else {
+					    	@if(planejador.temPreRequisitosEmPeriodosAnteriores(disciplinaPeriodo, periodo.getNumero)) {
 					    	   	<a class="periodo" href="/disciplinas/@disciplinaPeriodo.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
 								@disciplinaPeriodo.getNome() <span>@disciplinaPeriodo.getCreditos()  /  @disciplinaPeriodo.getDificuldade()</span>
 								<br>
+					    	} else {
+					    		<a class="periodo" href="/disciplinas/@disciplinaPeriodo.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
+								<a class="discRed" title="Os pré-requisitos: '@planejador.getPreRequisitosAlocadosEmPeriodosPosteriores(disciplinaPeriodo, periodo.getNumero)' precisam estar alocados antes desta">
+								@disciplinaPeriodo.getNome()</a> <span>@disciplinaPeriodo.getCreditos()  /  @disciplinaPeriodo.getDificuldade()</span>
+								<br>
+					    	}
 				    	}
 				    }
 				</div>
