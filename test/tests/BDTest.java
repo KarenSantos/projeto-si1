@@ -6,13 +6,7 @@ import static play.test.Helpers.start;
 
 import java.util.List;
 
-import models.Disciplina;
-import models.Grade;
-import models.GradeAntiga;
-import models.Periodo;
-import models.PlanoDeCurso;
-import models.TotalDeCreditosInvalidoException;
-import models.Usuario;
+import models.*;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -39,16 +33,35 @@ public class BDTest {
 	}
 
 	@Test
-	public void deveConseguirRecuperarGradeDoBD() throws TotalDeCreditosInvalidoException {
+	public void deveConseguirRecuperarGradesDoBD() throws TotalDeCreditosInvalidoException {
 
-		Grade grade = new GradeAntiga();
-		grade.configuraGrade("id");
-		grade.save();
+		Grade gradeAntiga = new GradeAntiga();
+		gradeAntiga.configuraGrade("antiga");
+		gradeAntiga.save();
 
-		Assert.assertFalse(Grade.find.all().isEmpty());
-		Assert.assertTrue(!grade.getDisciplinas().isEmpty());
-		Assert.assertEquals(82, grade.getTotalDeDisciplinas());
-		Assert.assertFalse(Disciplina.find.all().isEmpty());
+		Assert.assertEquals(1, Grade.find.all().size());
+		Assert.assertTrue(!gradeAntiga.getDisciplinas().isEmpty());
+		Assert.assertEquals(101, gradeAntiga.getTotalDeDisciplinas());
+		Assert.assertEquals(101, Disciplina.find.all().size());
+		
+		Grade gradeComum = new GradeComum();
+		gradeComum.configuraGrade("comum");
+		gradeComum.save();
+
+		Assert.assertEquals(2, Grade.find.all().size());
+		Assert.assertTrue(!gradeComum.getDisciplinas().isEmpty());
+		Assert.assertEquals(101, gradeComum.getTotalDeDisciplinas());
+		Assert.assertEquals(202, Disciplina.find.all().size());
+		
+		Grade gradeNova = new GradeNova();
+		gradeNova.configuraGrade("nova");
+		gradeNova.save();
+
+		Assert.assertEquals(3, Grade.find.all().size());
+		Assert.assertTrue(!gradeNova.getDisciplinas().isEmpty());
+		Assert.assertEquals(99, gradeNova.getTotalDeDisciplinas());
+		Assert.assertEquals(301, Disciplina.find.all().size());
+		
 	}
 
 	@Test

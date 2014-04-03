@@ -29,6 +29,7 @@ public abstract class Grade extends Model {
 	private final int FIM_OPTATIVA_TECC = 199;
 	private final int INICIO_OPTATIVA_OUTROS = 200;
 	private final int PRIMEIRO_INT = 1;
+	protected final int PRIMEIRO_PERIODO = 1;
 
 	@Id
 	private String id;
@@ -57,16 +58,12 @@ public abstract class Grade extends Model {
 	 */
 	public void configuraGrade(String id) {
 		this.id = id;
-		disciplinas = new ArrayList<Disciplina>();
 
-		if (Disciplina.find.all().isEmpty()) {
-			criaDisciplinas();
-		}
+		disciplinas = new ArrayList<Disciplina>();
+		criaDisciplinas();
 
 		periodos = new ArrayList<Periodo>();
-		if (Periodo.find.all().isEmpty()) {
-			configuraPeriodos();
-		}
+		configuraPeriodos();
 	}
 
 	/**
