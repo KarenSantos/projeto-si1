@@ -94,6 +94,25 @@ public class GradeAntiga extends Grade{
 		createDisciplina("a108", "Economia de TI", 4, 3);
 		createDisciplina("a109", "Empreendedorismo em Software 1", 4, 3);
 		createDisciplina("a110", "Estágio 2", 4, 3);
+		createDisciplina("a111", "Fluxo de Trabalho Informatizado", 4, 3);
+		createDisciplina("a112", "Fundamentos de Programação Concorrente", 4, new String[] { "a24", "a25" }, 3);
+		createDisciplina("a113", "Int. ao Desenv. de Software para Disp. Móveis", 4, new String[] { "a11" }, 3);
+		createDisciplina("a114", "Métodos Estatísticos e de Previsão", 4, new String[] { "a15" }, 3);
+		createDisciplina("a115", "Metodologia Científica para Pesquisa", 4, 3);
+		createDisciplina("a116", "Métodos Formais", 4, new String[] { "a17" }, 3);
+		createDisciplina("a117", "Modelagem de Ambientes Virtuais", 4, new String[] { "a26", "a27" }, 3);
+		createDisciplina("a118", "Programação em Banco de Dados", 4, new String[] { "a10", "a32" }, 3);
+		createDisciplina("a119", "Programação 3", 4, new String[] { "a10", "a11" }, 3);
+		createDisciplina("a120", "Redes Ad Hoc Sem Fio", 4, new String[] { "a31" }, 3);
+		createDisciplina("a121", "Segurança em Redes de Computadores", 4, new String[] { "a31", "a37" }, 3);
+		createDisciplina("a122", "Sistemas Cooperativos", 4, new String[] { "a26" }, 3);
+		createDisciplina("a123", "Sistema de Recuperação da Informação", 4, new String[] { "a08", "a32" }, 3);
+		createDisciplina("a124", "Visão Computacional", 4, new String[] { "a21", "a23" }, 3);
+		createDisciplina("a125", "Mineração de Dados", 4, new String[] { "a32" }, 3);
+		createDisciplina("a126", "Redes Sem Fio", 4, new String[] { "a31" }, 3);
+		createDisciplina("a127", "Análise de Dados 2", 4, new String[] { "a103" }, 3);
+		createDisciplina("a128", "Jogos Digitais", 4, new String[] { "a17" }, 3);
+		createDisciplina("a129", "Progeto em Computação Gráfica", 4, new String[] { "a07", "a14", "a18" }, 3);
 		
 		// Optativas Outros Departamentos
 		createDisciplina("a200", "Futsal", 2, 3);
