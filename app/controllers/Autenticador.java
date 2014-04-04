@@ -172,11 +172,12 @@ public class Autenticador extends Controller {
 			return badRequest(cadastro.render(cadastroForm));
 		} else if(cadastroForm.get().validate() == null) {
 			Cadastro novoC = cadastroForm.get();
+			
 			Usuario usuario = new Usuario(novoC.getEmail(), novoC.getNome(), novoC.getPassword()); 
 			usuario.save();
+			
 			Grade grade = criaGrade(novoC.getGrade());
 			criaPlanoDoUsuario(usuario, grade);
-			System.out.println("Passou aqui");
 		}
 		flash("success", "Cadastro realizado com sucesso.");
 		return redirect(routes.Autenticador.login());
@@ -188,22 +189,18 @@ public class Autenticador extends Controller {
 	}
 	
 	private static Grade criaGrade(String codigo){
-		Grade grade = null;
-			grade = Grade.find.byId(codigo);
-			if (grade == null){
-				if(codigo.equals("Computacao grade antiga")){
-					grade = new GradeAntiga();
-				}else if(codigo.equals("Computacao grade comum")){
-					grade = new GradeComum();
-				}else if(codigo.equals("Computacao grade nova")){
-					grade = new GradeNova();
-				}
-				grade.configuraGrade(codigo);
-				grade.save();
-			}else{
-				grade.configuraGrade(codigo);
-				grade.update();
+		Grade grade = Grade.find.byId(codigo);
+		if (grade == null){
+			if(codigo.equals("Computacao grade antiga")){
+				grade = new GradeAntiga();
+			}else if(codigo.equals("Computacao grade comum")){
+				grade = new GradeComum();
+			}else if(codigo.equals("Computacao grade nova")){
+				grade = new GradeNova();
 			}
+			grade.configuraGrade(codigo);
+			grade.save();
+		}
 		return grade;
 	}
 

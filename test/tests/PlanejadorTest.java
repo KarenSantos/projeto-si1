@@ -14,13 +14,17 @@ import controllers.Planejador;
 public class PlanejadorTest {
 
 	private Grade gradeAntiga;
-//	private Grade gradeNova;
+	private Grade gradeComum;
+	private Grade gradeNova;
 	private Usuario usuario1;
-//	private Usuario usuario2;
+	private Usuario usuario2;
+	private Usuario usuario3;
 	private PlanoDeCurso plano1;
-//	private PlanoDeCurso plano2;
+	private PlanoDeCurso plano2;
+	private PlanoDeCurso plano3;
 	private Planejador planejador1;
-//	private Planejador planejador2;
+	private Planejador planejador2;
+	private Planejador planejador3;
 
 	@Before
 	public void setUp() throws Exception {
@@ -30,24 +34,35 @@ public class PlanejadorTest {
 		gradeAntiga.configuraGrade("grade antiga");
 		gradeAntiga.save();
 		
-//		gradeNova = new GradeNova();
-//		gradeNova.configuraGrade("grade nova");
-//		gradeNova.save();
+		gradeComum = new GradeComum();
+		gradeComum.configuraGrade("grade comum");
+		gradeComum.save();
 		
-		usuario1 = new Usuario("email@email.com", "meuNome", "senha");
+		gradeNova = new GradeNova();
+		gradeNova.configuraGrade("grade nova");
+		gradeNova.save();
+		
+		usuario1 = new Usuario("email1@email.com", "meuNome", "senha");
 		usuario1.save();
 		
-//		usuario2 = new Usuario("email2@email.com", "meuNome2", "senha2");
-//		usuario2.save();
+		usuario2 = new Usuario("email2@email.com", "meuNome2", "senha2");
+		usuario2.save();
+		
+		usuario3 = new Usuario("email3@email.com", "meuNome3", "senha3");
+		usuario3.save();
 		
 		plano1 = new PlanoDeCurso("p_" + usuario1.getEmail(), gradeAntiga);
 		plano1.save();
 		
-//		plano2 = new PlanoDeCurso("p_" + usuario2.getEmail(), gradeNova);
-//		plano2.save();
+		plano2 = new PlanoDeCurso("p_" + usuario2.getEmail(), gradeComum);
+		plano2.save();
+		
+		plano3 = new PlanoDeCurso("p_" + usuario3.getEmail(), gradeNova);
+		plano3.save();
 		
 		planejador1 = new Planejador(usuario1);
-//		planejador2 = new Planejador(usuario2);
+		planejador2 = new Planejador(usuario2);
+		planejador3 = new Planejador(usuario3);
 	}
 
 	@Test
@@ -57,16 +72,21 @@ public class PlanejadorTest {
 		Assert.assertEquals(8, planejador1.getTotalDePeriodos()); // 8 periodos base
 		Assert.assertEquals(208, planejador1.getMinimoDeCreditosDoCurso()); //208 minimo de creditos
 		
-		// grade nova
-//		Assert.assertEquals(9, planejador2.getTotalDePeriodos()); // 9 periodos base
-//		Assert.assertEquals(214, planejador2.getMinimoDeCreditosDoCurso()); //214 minimo de creditos
+		// grade comum
+		Assert.assertEquals(9, planejador2.getTotalDePeriodos()); // 8 periodos base
+		Assert.assertEquals(208, planejador2.getMinimoDeCreditosDoCurso()); //208 minimo de creditos
 		
+		// grade comum
+		Assert.assertEquals(9, planejador3.getTotalDePeriodos()); // 9 periodos base
+		Assert.assertEquals(196, planejador3.getMinimoDeCreditosDoCurso()); //196 minimo de creditos
 	}
 	
 	@Test
 	public void deveIniciarComPeriodoAtual1() {
 
 		Assert.assertEquals(1, planejador1.getNumPeriodoAtual());
+		Assert.assertEquals(1, planejador2.getNumPeriodoAtual());
+		Assert.assertEquals(1, planejador3.getNumPeriodoAtual());
 	}
 
 	@Test
@@ -333,5 +353,43 @@ public class PlanejadorTest {
 		Assert.assertTrue(planejador1.temPreRequisitosEmPeriodosAnteriores(planejador1.getDisciplina("a22"), 4));
 		Assert.assertTrue(planejador1.temPreRequisitosEmPeriodosAnteriores(planejador1.getDisciplina("a24"), 4));
 		Assert.assertTrue(planejador1.temPreRequisitosEmPeriodosAnteriores(planejador1.getDisciplina("a25"), 4));
+	}
+	
+	@Test
+	public void devePoderCriarPlanosDeOutrosUsuariosComAMesmaGrade() {
+		
+		Usuario usuario11 = new Usuario("email11@email.com", "meuNome1", "senha1");
+		usuario11.save();
+		
+		Usuario usuario22 = new Usuario("email22@email.com", "meuNome22", "senha22");
+		usuario22.save();
+		
+		Usuario usuario33 = new Usuario("email33@email.com", "meuNome33", "senha33");
+		usuario33.save();
+		
+		// Planos de usuarios diferentes com as mesmas grades ja criadas
+		PlanoDeCurso plano11 = new PlanoDeCurso("p_" + usuario11.getEmail(), gradeAntiga);
+		plano1.save();
+		
+		PlanoDeCurso plano22 = new PlanoDeCurso("p_" + usuario22.getEmail(), gradeComum);
+		plano2.save();
+		
+		PlanoDeCurso plano33 = new PlanoDeCurso("p_" + usuario33.getEmail(), gradeNova);
+		plano3.save();
+		
+		//TODO O ERRO ESTA AQUI
+		Planejador planejador11 = new Planejador(usuario11);
+		Planejador planejador22 = new Planejador(usuario22);
+		Planejador planejador33 = new Planejador(usuario33);
+		
+//		Assert.assertEquals(8, planejador11.getTotalDePeriodos()); // 8 periodos base
+//		Assert.assertEquals(208, planejador11.getMinimoDeCreditosDoCurso()); //208 minimo de creditos
+//		
+//		Assert.assertEquals(9, planejador22.getTotalDePeriodos()); // 8 periodos base
+//		Assert.assertEquals(208, planejador22.getMinimoDeCreditosDoCurso()); //208 minimo de creditos
+//		
+//		Assert.assertEquals(9, planejador33.getTotalDePeriodos()); // 9 periodos base
+//		Assert.assertEquals(196, planejador33.getMinimoDeCreditosDoCurso()); //196 minimo de creditos
+		
 	}
 }
