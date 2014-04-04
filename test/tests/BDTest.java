@@ -86,26 +86,32 @@ public class BDTest {
 		grade.configuraGrade("grade antiga");
 		grade.save();
 		
-		Usuario usuario = new Usuario("email2@email.com", "meuNome", "senha");
-		usuario.save();
+		Usuario usuario1 = new Usuario("email@email.com", "meuNome1", "senha1");
+		usuario1.save();
 		
-		PlanoDeCurso plano = new PlanoDeCurso("id", grade);
-		plano.save();
+		PlanoDeCurso plano1 = new PlanoDeCurso("id1", grade);
+		plano1.save();
 		
-		Usuario usuario2 = new Usuario("email12@email.com", "meuNome", "senha");
-		usuario.save();
+		// Disciplinas e uma grade foram criados
+		Assert.assertFalse(Disciplina.find.all().isEmpty());
+		Assert.assertEquals(1, Grade.find.all().size());
+
+		Assert.assertEquals(1, PlanoDeCurso.find.all().size());
+		Assert.assertNotNull(PlanoDeCurso.find.byId("id1"));
+		Assert.assertNotNull(PlanoDeCurso.find.byId("id1").getPeriodos());
+
+		Usuario usuario2 = new Usuario("email2@email.com", "meuNome2", "senha2");
+		usuario2.save();
 		
 		PlanoDeCurso plano2 = new PlanoDeCurso("id2", grade);
-		plano.save();
+		plano2.save();
 		
-		Assert.assertTrue(!PlanoDeCurso.find.all().isEmpty());
+		// Ainda temos apenas uma grade 
+		Assert.assertEquals(1, Grade.find.all().size());
+
+		Assert.assertEquals(2, PlanoDeCurso.find.all().size());
 		Assert.assertNotNull(PlanoDeCurso.find.byId("id2"));
 		Assert.assertNotNull(PlanoDeCurso.find.byId("id2").getPeriodos());
-		
-		//Disciplinas, grade e periodos foram criados ao criar um plano.
-		Assert.assertFalse(Disciplina.find.all().isEmpty());
-		Assert.assertFalse(Grade.find.all().isEmpty());
-		Assert.assertFalse(Periodo.find.all().isEmpty());
 	}
 	
 	@Test
