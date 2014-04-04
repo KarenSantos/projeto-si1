@@ -82,6 +82,27 @@ public class PlanejadorTest {
 	}
 	
 	@Test
+	public void deveCalcularTotalDeCreditosCursados() {
+		
+		planejador1.setPeriodoAtual(1);
+		Assert.assertEquals(0, planejador1.getTotalDeCreditosCursados());		
+		planejador1.setPeriodoAtual(2);
+		Assert.assertEquals(24, planejador1.getTotalDeCreditosCursados());		
+		planejador1.setPeriodoAtual(3);
+		Assert.assertEquals(50, planejador1.getTotalDeCreditosCursados());		
+		planejador1.setPeriodoAtual(4);
+		Assert.assertEquals(78, planejador1.getTotalDeCreditosCursados());	
+		planejador1.setPeriodoAtual(5);
+		Assert.assertEquals(104, planejador1.getTotalDeCreditosCursados());		
+		planejador1.setPeriodoAtual(6);
+		Assert.assertEquals(128, planejador1.getTotalDeCreditosCursados());		
+		planejador1.setPeriodoAtual(7);
+		Assert.assertEquals(156, planejador1.getTotalDeCreditosCursados());
+		planejador1.setPeriodoAtual(8);
+		Assert.assertEquals(184, planejador1.getTotalDeCreditosCursados());
+	}
+	
+	@Test
 	public void deveRetornarDificuldadeDaDisciplina() {
 		Assert.assertEquals(4, planejador1.getDisciplina("a01").getDificuldade());
 		Assert.assertEquals(3, planejador1.getDisciplina("a02").getDificuldade());
