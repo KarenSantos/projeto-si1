@@ -40,7 +40,7 @@
 					    	<span>@disciplinaPeriodo.getCreditos() / _</span>
 					    	<br>
 				    	} else {
-					    	@if(planejador.temPreRequisitosEmPeriodosAnteriores(disciplinaPeriodo, periodo.getNumero)) {
+					    	@if(planejador.temPreRequisitosEmPeriodosAnterioresNoPlano(usuarioDaVez, disciplinaPeriodo, periodo.getNumero)) {
 					    	   	<a class="periodo" href="/disciplinas/@disciplinaPeriodo.getId()"><div class="glyphicon glyphicon-info-sign"></div></a> &nbsp; 
 								@disciplinaPeriodo.getNome() <span>@disciplinaPeriodo.getCreditos()  /  @disciplinaPeriodo.getDificuldade()</span>
 								<br>

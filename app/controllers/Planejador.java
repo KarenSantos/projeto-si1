@@ -403,6 +403,15 @@ public class Planejador {
 		return outrosPeriodos;
 	}
 
+	/**
+	 * Retorna uma lista com todos os usuarios que tem a string usuarioProcurado
+	 * no seu nome de usuario.
+	 * 
+	 * @param usuarioProcurado
+	 *            String procurada nos nomes dos usuarios.
+	 * @return Uma lista com todos os usuarios com a string procurada ou uma
+	 *         lista vazia se nao achar em nenhum nome.
+	 */
 	public List<Usuario> buscaDeUsuarios(String usuarioProcurado) {
 		List<Usuario> usuarios = Usuario.find.all();
 		if (usuarioProcurado.length() == 0) {
@@ -418,5 +427,26 @@ public class Planejador {
 			}
 			return achados;
 		}
+	}
+
+	/**
+	 * Verifica se uma disciplina tem todos os seus pre requisitos alocados em
+	 * periodos anteriores no plano do usuario indicado.
+	 * 
+	 * @param usuario
+	 *            O usuario do plano a ser verificado.
+	 * @param disc
+	 *            A disciplina que se quer verificar.
+	 * @param numPeriodo
+	 *            O periodo da disciplina que se quer verificar.
+	 * @return True se a disciplina tem todos os seus pre requisitos alocados
+	 *         antes dela ou False caso contrario.
+	 */
+	public boolean temPreRequisitosEmPeriodosAnterioresNoPlano(Usuario usuario,
+			Disciplina disc, int numPeriodo) {
+		PlanoDeCurso outroPlano = PlanoDeCurso.find.byId("p_"
+				+ usuario.getEmail());
+		return outroPlano
+				.temPreRequisitosEmPeriodosAnteriores(disc, numPeriodo);
 	}
 }
