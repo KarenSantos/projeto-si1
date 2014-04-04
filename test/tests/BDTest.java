@@ -36,7 +36,7 @@ public class BDTest {
 	public void deveConseguirRecuperarGradesDoBD() throws TotalDeCreditosInvalidoException {
 
 		Grade gradeAntiga = new GradeAntiga();
-		gradeAntiga.configuraGrade("antiga");
+		gradeAntiga.configuraGrade("Computacao grade antiga");
 		gradeAntiga.save();
 
 		Assert.assertEquals(1, Grade.find.all().size());
@@ -45,7 +45,7 @@ public class BDTest {
 		Assert.assertEquals(101, Disciplina.find.all().size());
 		
 		Grade gradeComum = new GradeComum();
-		gradeComum.configuraGrade("comum");
+		gradeComum.configuraGrade("Computacao grade comum");
 		gradeComum.save();
 
 		Assert.assertEquals(2, Grade.find.all().size());
@@ -54,7 +54,7 @@ public class BDTest {
 		Assert.assertEquals(202, Disciplina.find.all().size());
 		
 		Grade gradeNova = new GradeNova();
-		gradeNova.configuraGrade("nova");
+		gradeNova.configuraGrade("Computacao grade nova");
 		gradeNova.save();
 
 		Assert.assertEquals(3, Grade.find.all().size());

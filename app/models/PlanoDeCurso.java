@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import play.db.ebean.Model;
 
@@ -33,6 +33,7 @@ public class PlanoDeCurso extends Model {
 	@Id
 	private String id;
 
+	
 	@ManyToOne
 	private Grade grade;
 	private int periodosBase;
@@ -66,14 +67,12 @@ public class PlanoDeCurso extends Model {
 		this.minimoDeCreditosDoCurso = grade.getMinimoDeCreditos();
 
 		this.periodos = new ArrayList<Periodo>();
-		System.out.println("passou por aqui");
 		configuraPeriodos();
 
 		this.disciplinasNaoAlocadas = new ArrayList<Disciplina>();
 		this.disciplinasNaoAlocadas.addAll(grade.getDisciplinasOptativas());
 
 		setPeriodoAtual(PRIMEIRO_PERIODO);
-		System.out.println("chegou ate o final do construtor");
 	}
 
 	/**
@@ -772,7 +771,6 @@ public class PlanoDeCurso extends Model {
 	 * grade.
 	 */
 	private void configuraPeriodos() {
-		System.out.println("chegou até aqui");
 		for (int i = 0; i < periodosBase; i++) {
 			try {
 				createPeriodo();
@@ -789,6 +787,5 @@ public class PlanoDeCurso extends Model {
 				}
 			}
 		}
-		System.out.println("chegou até aqui too");
 	}
 }
