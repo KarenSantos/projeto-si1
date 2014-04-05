@@ -34,7 +34,7 @@ public class PlanoDeCurso extends Model {
 	private String id;
 
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Grade grade;
 	private int periodosBase;
 	private int minimoDeCreditosDoCurso;
@@ -775,6 +775,7 @@ public class PlanoDeCurso extends Model {
 			try {
 				createPeriodo();
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 
@@ -784,6 +785,7 @@ public class PlanoDeCurso extends Model {
 				try {
 					addDisciplinaPeriodo(disc.getId(), periodo.getNumero());
 				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		}

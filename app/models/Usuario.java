@@ -28,6 +28,7 @@ public class Usuario extends Model implements Comparable<Usuario> {
 	private String email;
 	private String nome;
 	private String password;
+	private String idDoPlano;
 
 	/**
 	 * Cria um usuário.
@@ -50,6 +51,7 @@ public class Usuario extends Model implements Comparable<Usuario> {
 		this.email = email;
 		this.nome = nome;
 		this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+		this.idDoPlano = "p_" + getEmail();
 
 	}
 
@@ -134,6 +136,25 @@ public class Usuario extends Model implements Comparable<Usuario> {
 	 */
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	/**
+	 * Retorna o id do plano do usuario.
+	 * 
+	 * @return O id do plano do usuario.
+	 */
+	public String getIdDoPlano() {
+		return this.idDoPlano;
+	}
+
+	/**
+	 * Altera o id do plano do usuario.
+	 * 
+	 * @param id
+	 *            O novo id do plano do usuario.
+	 */
+	public void setIdDoPlano(String id) {
+		this.idDoPlano = id;
 	}
 
 	/**

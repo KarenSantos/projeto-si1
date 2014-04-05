@@ -51,13 +51,13 @@ public class PlanejadorTest {
 		usuario3 = new Usuario("email3@email.com", "meuNome3", "senha3");
 		usuario3.save();
 		
-		plano1 = new PlanoDeCurso("p_" + usuario1.getEmail(), gradeAntiga);
+		plano1 = new PlanoDeCurso(usuario1.getIdDoPlano(), gradeAntiga);
 		plano1.save();
 		
-		plano2 = new PlanoDeCurso("p_" + usuario2.getEmail(), gradeComum);
+		plano2 = new PlanoDeCurso(usuario2.getIdDoPlano(), gradeComum);
 		plano2.save();
 		
-		plano3 = new PlanoDeCurso("p_" + usuario3.getEmail(), gradeNova);
+		plano3 = new PlanoDeCurso(usuario3.getIdDoPlano(), gradeNova);
 		plano3.save();
 		
 		planejador1 = new Planejador(usuario1);
@@ -368,28 +368,29 @@ public class PlanejadorTest {
 		usuario33.save();
 		
 		// Planos de usuarios diferentes com as mesmas grades ja criadas
-		PlanoDeCurso plano11 = new PlanoDeCurso("p_" + usuario11.getEmail(), gradeAntiga);
-		plano1.save();
+		PlanoDeCurso plano11 = new PlanoDeCurso(usuario11.getIdDoPlano(), gradeAntiga);
+		plano11.save();
+		Assert.assertNotNull(PlanoDeCurso.find.byId(usuario11.getIdDoPlano()));
 		
-		PlanoDeCurso plano22 = new PlanoDeCurso("p_" + usuario22.getEmail(), gradeComum);
-		plano2.save();
+		PlanoDeCurso plano22 = new PlanoDeCurso(usuario22.getIdDoPlano(), gradeComum);
+		plano22.save();
 		
-		PlanoDeCurso plano33 = new PlanoDeCurso("p_" + usuario33.getEmail(), gradeNova);
-		plano3.save();
+		PlanoDeCurso plano33 = new PlanoDeCurso(usuario33.getIdDoPlano(), gradeNova);
+		plano33.save();
 		
-		//TODO O ERRO ESTA AQUI
+		//TODO O ERRO ESTA  AQUI
 		Planejador planejador11 = new Planejador(usuario11);
 		Planejador planejador22 = new Planejador(usuario22);
 		Planejador planejador33 = new Planejador(usuario33);
 		
-//		Assert.assertEquals(8, planejador11.getTotalDePeriodos()); // 8 periodos base
-//		Assert.assertEquals(208, planejador11.getMinimoDeCreditosDoCurso()); //208 minimo de creditos
-//		
-//		Assert.assertEquals(9, planejador22.getTotalDePeriodos()); // 8 periodos base
-//		Assert.assertEquals(208, planejador22.getMinimoDeCreditosDoCurso()); //208 minimo de creditos
-//		
-//		Assert.assertEquals(9, planejador33.getTotalDePeriodos()); // 9 periodos base
-//		Assert.assertEquals(196, planejador33.getMinimoDeCreditosDoCurso()); //196 minimo de creditos
+		Assert.assertEquals(8, planejador11.getTotalDePeriodos()); // 8 periodos base
+		Assert.assertEquals(208, planejador11.getMinimoDeCreditosDoCurso()); //208 minimo de creditos
+		
+		Assert.assertEquals(9, planejador22.getTotalDePeriodos()); // 8 periodos base
+		Assert.assertEquals(208, planejador22.getMinimoDeCreditosDoCurso()); //208 minimo de creditos
+		
+		Assert.assertEquals(9, planejador33.getTotalDePeriodos()); // 9 periodos base
+		Assert.assertEquals(196, planejador33.getMinimoDeCreditosDoCurso()); //196 minimo de creditos
 		
 	}
 }

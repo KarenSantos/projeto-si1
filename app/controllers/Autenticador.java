@@ -184,7 +184,7 @@ public class Autenticador extends Controller {
 	}
 	
 	private static void criaPlanoDoUsuario(Usuario usuario, Grade grade){
-		PlanoDeCurso plano = new PlanoDeCurso("p_" + usuario.getEmail(), grade);
+		PlanoDeCurso plano = new PlanoDeCurso(usuario.getIdDoPlano(), grade);
 		plano.save();
 	}
 	

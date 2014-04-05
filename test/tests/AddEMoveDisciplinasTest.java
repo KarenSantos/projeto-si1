@@ -29,7 +29,7 @@ public class AddEMoveDisciplinasTest {
 		usuario = new Usuario("email@email.com", "meuNome", "senha");
 		usuario.save();
 		
-		plano = new PlanoDeCurso("p_" + usuario.getEmail(), gradeAntiga);
+		plano = new PlanoDeCurso(usuario.getIdDoPlano(), gradeAntiga);
 		plano.save();
 		
 		planejador = new Planejador(usuario);
