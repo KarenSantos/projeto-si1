@@ -35,8 +35,9 @@ public class BDTest {
 	@Test
 	public void deveConseguirRecuperarGradesDoBD() throws TotalDeCreditosInvalidoException {
 
-		Grade gradeAntiga = new GradeAntiga();
-		gradeAntiga.configuraGrade("Computacao grade antiga");
+		Grade gradeAntiga = new Grade();
+		gradeAntiga.setId("Computacao grade antiga");
+		gradeAntiga.criaCurriculo(new CurriculoAntigoFactory());
 		gradeAntiga.save();
 
 		Assert.assertEquals(1, Grade.find.all().size());
@@ -44,8 +45,9 @@ public class BDTest {
 		Assert.assertEquals(101, gradeAntiga.getTotalDeDisciplinas());
 		Assert.assertEquals(101, Disciplina.find.all().size());
 		
-		Grade gradeComum = new GradeComum();
-		gradeComum.configuraGrade("Computacao grade comum");
+		Grade gradeComum = new Grade();
+		gradeComum.setId("Computacao grade comum");
+		gradeAntiga.criaCurriculo(new CurriculoComumFactory());
 		gradeComum.save();
 
 		Assert.assertEquals(2, Grade.find.all().size());
@@ -53,8 +55,9 @@ public class BDTest {
 		Assert.assertEquals(101, gradeComum.getTotalDeDisciplinas());
 		Assert.assertEquals(202, Disciplina.find.all().size());
 		
-		Grade gradeNova = new GradeNova();
-		gradeNova.configuraGrade("Computacao grade nova");
+		Grade gradeNova = new Grade();
+		gradeNova.setId("Computacao grade nova");
+		gradeAntiga.criaCurriculo(new CurriculoNovoFactory());
 		gradeNova.save();
 
 		Assert.assertEquals(3, Grade.find.all().size());
@@ -82,8 +85,9 @@ public class BDTest {
 
 	@Test
 	public void deveConseguirCriaPlanoComGradeDuasVezes() {
-		Grade grade = new GradeAntiga();
-		grade.configuraGrade("grade antiga");
+		Grade grade = new Grade();
+		grade.setId("grade antiga");
+		grade.criaCurriculo(new CurriculoAntigoFactory());
 		grade.save();
 		
 		Usuario usuario1 = new Usuario("email@email.com", "meuNome1", "senha1");
@@ -116,8 +120,9 @@ public class BDTest {
 	
 	@Test
 	public void deveConseguirRecuperarPlanoDeCursoDoBD() {
-		Grade grade = new GradeAntiga();
-		grade.configuraGrade("grade antiga");
+		Grade grade = new Grade();
+		grade.setId("grade antiga");
+		grade.criaCurriculo(new CurriculoAntigoFactory());
 		grade.save();
 		
 		Usuario usuario = new Usuario("email2@email.com", "meuNome", "senha");

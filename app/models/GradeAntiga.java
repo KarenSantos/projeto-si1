@@ -11,7 +11,7 @@ import javax.persistence.Entity;
  */
 @Entity
 @DiscriminatorValue("gAntiga")
-public class GradeAntiga extends Grade{
+public class GradeAntiga extends GradeHeranca{
 
 	private static final long serialVersionUID = 1L;
 	

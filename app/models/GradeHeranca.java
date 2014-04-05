@@ -6,14 +6,23 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-import play.db.ebean.Model.Finder;
+import play.db.ebean.Model;
 
+/**
+ * Classe da grade curricular do curso de computação
+ * 
+ * @author
+ * 
+ */
 @Entity
-public class Grade {
+@Inheritance
+public abstract class GradeHeranca extends Model {
+
 	private static final long serialVersionUID = 1L;
 
 	private final int INICIO_OPTATIVA_TECC = 100;
@@ -32,18 +41,30 @@ public class Grade {
 	@ManyToMany
 	protected List<Periodo> periodos;
 
-	public static Finder<String, Grade> find = new Finder<String, Grade>(
-			String.class, Grade.class);
+	public static Finder<String, GradeHeranca> find = new Finder<String, GradeHeranca>(
+			String.class, GradeHeranca.class);
 
 	/**
 	 * Cria uma grade curricular com uma lista de disciplinas.
 	 */
-	public Grade() {
-		disciplinas = new ArrayList<Disciplina>();
-
-		periodos = new ArrayList<Periodo>();
+	public GradeHeranca() {
 	}
 
+	/**
+	 * Configura os atributos da grade e recebe um id.
+	 * 
+	 * @param id
+	 *            O id da grade.
+	 */
+	public void configuraGrade(String id) {
+		this.id = id;
+
+		disciplinas = new ArrayList<Disciplina>();
+		criaDisciplinas();
+
+		periodos = new ArrayList<Periodo>();
+		configuraPeriodos();
+	}
 
 	/**
 	 * Retorna o id da grade.
@@ -313,11 +334,15 @@ public class Grade {
 		}
 		return resp;
 	}
-	
-	public void criaCurriculo(CurriculoFactoryIF factory){
-		factory.criaDisciplina(this);
-		factory.configuraPeriodo(this);
-	}
+
+	/**
+	 * Cria todas as disciplinas do curso de computação.
+	 */
+	protected abstract void criaDisciplinas();
+
+	/**
+	 * Configura todos os periodos da grade de acordo com a alocacao padrao.
+	 */
+	protected abstract void configuraPeriodos();
 
 }
-

@@ -2,6 +2,7 @@ package controllers;
 
 import models.*;
 import play.data.Form;
+import play.db.ebean.Model;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.cadastro;
@@ -191,14 +192,15 @@ public class Autenticador extends Controller {
 	private static Grade criaGrade(String codigo){
 		Grade grade = Grade.find.byId(codigo);
 		if (grade == null){
+			grade = new Grade();
 			if(codigo.equals("Computacao grade antiga")){
-				grade = new GradeAntiga();
+				grade.criaCurriculo(new CurriculoAntigoFactory());
 			}else if(codigo.equals("Computacao grade comum")){
-				grade = new GradeComum();
+				grade.criaCurriculo(new CurriculoComumFactory());
 			}else if(codigo.equals("Computacao grade nova")){
-				grade = new GradeNova();
+				grade.criaCurriculo(new CurriculoNovoFactory());
 			}
-			grade.configuraGrade(codigo);
+			grade.setId(codigo);
 			grade.save();
 		}
 		return grade;
@@ -208,9 +210,11 @@ public class Autenticador extends Controller {
 		
 		Grade grade = Grade.find.byId("Computacao grade antiga");
 		if (grade == null){
-			grade = new GradeAntiga();
-			grade.configuraGrade("Computacao grade antiga");
+			grade = new Grade();
+			grade.criaCurriculo(new CurriculoAntigoFactory());
+			grade.setId("Computacao grade antiga");
 			grade.save();
+
 		}
 		
 		int num = 1;

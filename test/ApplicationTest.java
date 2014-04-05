@@ -2,6 +2,7 @@ import static org.fest.assertions.Assertions.assertThat;
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.start;
+import models.CurriculoAntigoFactory;
 import models.Grade;
 import models.GradeAntiga;
 import models.PlanoDeCurso;
@@ -28,8 +29,9 @@ public class ApplicationTest {
 	public void setUp() throws Exception {
 		start(fakeApplication(inMemoryDatabase()));
 		
-		Grade grade = new GradeAntiga();
-		grade.configuraGrade("grade antiga");
+		Grade grade = new Grade();
+		grade.criaCurriculo(new CurriculoAntigoFactory());
+		grade.setId("grade antiga");
 		grade.save();
 		
 		usuario = new Usuario("email@email.com", "meuNome", "senha");

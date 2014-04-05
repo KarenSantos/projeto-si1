@@ -13,9 +13,9 @@ import controllers.Planejador;
 
 public class PlanejadorTest {
 
-	private Grade gradeAntiga;
-	private Grade gradeComum;
-	private Grade gradeNova;
+	private GradeHeranca gradeAntiga;
+	private GradeHeranca gradeComum;
+	private GradeHeranca gradeNova;
 	private Usuario usuario1;
 	private Usuario usuario2;
 	private Usuario usuario3;

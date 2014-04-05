@@ -60,18 +60,18 @@ public class PlanoDeCurso extends Model {
 	 * Plano de curso recebe uma grade de disciplinas e um usuario, e tem uma
 	 * lista de periodos e uma lista de disciplinas não alocadas.
 	 */
-	public PlanoDeCurso(String id, Grade grade) {
+	public PlanoDeCurso(String id, Grade grade2) {
 		this.id = id;
-		this.grade = grade;
+		this.grade = grade2;
 		
-		this.periodosBase = grade.getTotalDePeriodos();
-		this.minimoDeCreditosDoCurso = grade.getMinimoDeCreditos();
+		this.periodosBase = grade2.getTotalDePeriodos();
+		this.minimoDeCreditosDoCurso = grade2.getMinimoDeCreditos();
 
 		this.periodos = new ArrayList<Periodo>();
 		configuraPeriodos();
 
 		this.disciplinasNaoAlocadas = new ArrayList<Disciplina>();
-		this.disciplinasNaoAlocadas.addAll(grade.getDisciplinasOptativas());
+		this.disciplinasNaoAlocadas.addAll(grade2.getDisciplinasOptativas());
 
 		setPeriodoAtual(PRIMEIRO_PERIODO);
 	}
