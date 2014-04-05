@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import play.mvc.*;
+import controllers.Autenticador;
 import controllers.Planejador;
 
 /**
@@ -44,6 +45,12 @@ public class ApplicationTest {
 //        Content html = views.html.index.render(usuario);
 //        assertThat(contentType(html)).isEqualTo("text/html");
 //        assertThat(contentAsString(html)).contains("Planejamento de Curso");
+    }
+    
+    @Test
+    public void autenticadorTest(){
+    	Autenticador.login();
+    	Autenticador.efetuaCadastro();
     }
 
 

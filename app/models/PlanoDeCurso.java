@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.*;
+import javax.persistence.ManyToOne;
 
 import play.db.ebean.Model;
 
@@ -34,7 +34,8 @@ public class PlanoDeCurso extends Model {
 	private String id;
 
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
+	@JoinColumn(name = "grade")
 	private Grade grade;
 	private int periodosBase;
 	private int minimoDeCreditosDoCurso;
