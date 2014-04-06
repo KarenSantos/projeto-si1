@@ -27,6 +27,7 @@ public class GradeNova extends Grade {
 	 * Cria todas as disciplinas da grade antiga do curso de 
 	 * computação.
 	 */
+	@Override
 	protected void criaDisciplinas() {
 		
 		//Se as disciplinas desta grade ainda nao existirem, cria disciplinas

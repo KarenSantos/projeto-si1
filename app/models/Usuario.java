@@ -2,6 +2,8 @@ package models;
 
 
 import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -28,6 +30,8 @@ public class Usuario extends Model implements Comparable<Usuario> {
 	private String email;
 	private String nome;
 	private String password;
+	
+	@Column(name = "id_do_plano")
 	private String idDoPlano;
 
 	/**
