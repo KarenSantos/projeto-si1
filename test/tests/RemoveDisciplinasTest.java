@@ -22,8 +22,8 @@ public class RemoveDisciplinasTest {
 	public void setUp() throws Exception {
 		start(fakeApplication(inMemoryDatabase()));
 		
-		gradeAntiga = new GradeAntiga();
-		gradeAntiga.configuraGrade("grade antiga");
+		Grade gradeAntiga = new Grade();
+		gradeAntiga.configuraGrade("Computacao grade antiga", new CurriculoAntigoFactory());
 		gradeAntiga.save();
 		
 		usuario = new Usuario("email@email.com", "meuNome", "senha");

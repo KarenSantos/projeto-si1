@@ -2,8 +2,8 @@ import static org.fest.assertions.Assertions.assertThat;
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.start;
+import models.CurriculoAntigoFactory;
 import models.Grade;
-import models.GradeAntiga;
 import models.PlanoDeCurso;
 import models.Usuario;
 
@@ -28,8 +28,8 @@ public class ApplicationTest {
 	public void setUp() throws Exception {
 		start(fakeApplication(inMemoryDatabase()));
 		
-		Grade grade = new GradeAntiga();
-		grade.configuraGrade("grade antiga");
+		Grade grade = new Grade();
+		grade.configuraGrade("Computacao grade antiga", new CurriculoAntigoFactory());
 		grade.save();
 		
 		usuario = new Usuario("email@email.com", "meuNome", "senha");
@@ -42,7 +42,7 @@ public class ApplicationTest {
 
     @Test
     public void renderTemplate() {
-//        Content html = views.html.index.render(usuario);
+        Content html = views.html.index.render(usuario);
 //        assertThat(contentType(html)).isEqualTo("text/html");
 //        assertThat(contentAsString(html)).contains("Planejamento de Curso");
     }

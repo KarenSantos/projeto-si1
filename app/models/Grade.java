@@ -20,8 +20,7 @@ import play.db.ebean.Model;
  * 
  */
 @Entity
-@Inheritance
-public abstract class Grade extends Model {
+public class Grade extends Model {
 
 	private static final long serialVersionUID = 1L;
 
@@ -56,14 +55,12 @@ public abstract class Grade extends Model {
 	 * @param id
 	 *            O id da grade.
 	 */
-	public void configuraGrade(String id) {
+	public void configuraGrade(String id, CurriculoFactoryIF factory) {
 		this.id = id;
-
 		disciplinas = new ArrayList<Disciplina>();
-		criaDisciplinas();
-
 		periodos = new ArrayList<Periodo>();
-		configuraPeriodos();
+		criaCurriculo(factory);
+
 	}
 
 	/**
@@ -336,13 +333,12 @@ public abstract class Grade extends Model {
 	}
 
 	/**
-	 * Cria todas as disciplinas do curso de computação.
+	 * Monta a grade a partir de um tipo de curriculo recebido como parametro
+	 * @param factory fábrica de cúrriculo
 	 */
-	protected abstract void criaDisciplinas();
-
-	/**
-	 * Configura todos os periodos da grade de acordo com a alocacao padrao.
-	 */
-	protected abstract void configuraPeriodos();
+	public void criaCurriculo(CurriculoFactoryIF factory){
+		factory.criaDisciplina(this);
+		factory.configuraPeriodo(this);
+	}
 
 }

@@ -30,16 +30,16 @@ public class PlanejadorTest {
 	public void setUp() throws Exception {
 		start(fakeApplication(inMemoryDatabase()));
 		
-		gradeAntiga = new GradeAntiga();
-		gradeAntiga.configuraGrade("grade antiga");
+		gradeAntiga = new Grade();
+		gradeAntiga.configuraGrade("Computacao grade antiga", new CurriculoAntigoFactory());
 		gradeAntiga.save();
 		
-		gradeComum = new GradeComum();
-		gradeComum.configuraGrade("grade comum");
+		gradeComum = new Grade();
+		gradeComum.configuraGrade("Computacao grade comum", new CurriculoComumFactory());
 		gradeComum.save();
 		
-		gradeNova = new GradeNova();
-		gradeNova.configuraGrade("grade nova");
+		gradeNova = new Grade();
+		gradeNova.configuraGrade("Computacao grade nova", new CurriculoNovoFactory());
 		gradeNova.save();
 		
 		usuario1 = new Usuario("email1@email.com", "meuNome", "senha");

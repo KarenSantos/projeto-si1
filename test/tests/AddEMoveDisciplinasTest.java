@@ -15,21 +15,21 @@ public class AddEMoveDisciplinasTest {
 
 	private Planejador planejador;
 	private Usuario usuario;
-	private Grade gradeAntiga;
+	private Grade grade;
 	private PlanoDeCurso plano;
 
 	@Before
 	public void setUp() throws Exception {
 		start(fakeApplication(inMemoryDatabase()));
 		
-		gradeAntiga = new GradeAntiga();
-		gradeAntiga.configuraGrade("grade antiga");
-		gradeAntiga.save();
+		grade = new Grade();
+		grade.configuraGrade("Computacao grade antiga", new CurriculoAntigoFactory());
+		grade.save();
 		
 		usuario = new Usuario("email@email.com", "meuNome", "senha");
 		usuario.save();
 		
-		plano = new PlanoDeCurso(usuario.getIdDoPlano(), gradeAntiga);
+		plano = new PlanoDeCurso(usuario.getIdDoPlano(), grade);
 		plano.save();
 		
 		planejador = new Planejador(usuario);

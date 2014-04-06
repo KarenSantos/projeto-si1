@@ -191,14 +191,14 @@ public class Autenticador extends Controller {
 	private static Grade criaGrade(String codigo){
 		Grade grade = Grade.find.byId(codigo);
 		if (grade == null){
+			grade = new Grade();
 			if(codigo.equals("Computacao grade antiga")){
-				grade = new GradeAntiga();
+				grade.configuraGrade(codigo, new CurriculoAntigoFactory());
 			}else if(codigo.equals("Computacao grade comum")){
-				grade = new GradeComum();
+				grade.configuraGrade(codigo, new CurriculoComumFactory());
 			}else if(codigo.equals("Computacao grade nova")){
-				grade = new GradeNova();
+				grade.configuraGrade(codigo, new CurriculoNovoFactory());
 			}
-			grade.configuraGrade(codigo);
 			grade.save();
 		}
 		return grade;
@@ -208,8 +208,8 @@ public class Autenticador extends Controller {
 		
 		Grade grade = Grade.find.byId("Computacao grade antiga");
 		if (grade == null){
-			grade = new GradeAntiga();
-			grade.configuraGrade("Computacao grade antiga");
+			grade = new Grade();
+			grade.configuraGrade("Computacao grade antiga", new CurriculoAntigoFactory());
 			grade.save();
 		}
 		
