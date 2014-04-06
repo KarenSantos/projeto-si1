@@ -1,5 +1,7 @@
 package models;
 
+import java.util.ArrayList;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -24,11 +26,27 @@ public class GradeNova extends Grade {
 	}
 	
 	/**
+	 * Configura os atributos da grade e recebe um id.
+	 * 
+	 * @param id
+	 *            O id da grade.
+	 */
+	@Override
+	public void configuraGrade(String id) {
+		setId(id);
+
+		disciplinas = new ArrayList<Disciplina>();
+		criaDisciplinas();
+
+		periodos = new ArrayList<Periodo>();
+		configuraPeriodos();
+	}
+	
+	/**
 	 * Cria todas as disciplinas da grade antiga do curso de 
 	 * computação.
 	 */
-	@Override
-	protected void criaDisciplinas() {
+	private void criaDisciplinas() {
 		
 		//Se as disciplinas desta grade ainda nao existirem, cria disciplinas
 		Disciplina discBD = Disciplina.find.byId("n01");
@@ -157,8 +175,7 @@ public class GradeNova extends Grade {
 	 * Configura todos os periodos da grade nova de acordo com
 	 * a alocacao padrao.
 	 */
-	@Override
-	protected void configuraPeriodos() {
+	private void configuraPeriodos() {
 		
 		//Se os periodos desta grade ainda nao existirem, cria periodos
 		Periodo periodoBD = Periodo.find.byId(getId() + PRIMEIRO_PERIODO);

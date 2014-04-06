@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 import play.db.ebean.Model;
 
@@ -20,8 +22,10 @@ import play.db.ebean.Model;
  * 
  */
 @Entity
-@Inheritance
-public abstract class Grade extends Model {
+@MappedSuperclass
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="grade")
+public class Grade extends Model {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +40,7 @@ public abstract class Grade extends Model {
 
 	@ManyToMany
 	@JoinTable(name = "grade_disciplina", joinColumns = @JoinColumn(name = "grade"), inverseJoinColumns = @JoinColumn(name = "disciplina"))
-	private List<Disciplina> disciplinas;
+	protected List<Disciplina> disciplinas;
 
 	@ManyToMany
 	protected List<Periodo> periodos;
@@ -60,10 +64,7 @@ public abstract class Grade extends Model {
 		this.id = id;
 
 		disciplinas = new ArrayList<Disciplina>();
-		criaDisciplinas();
-
 		periodos = new ArrayList<Periodo>();
-		configuraPeriodos();
 	}
 
 	/**
@@ -335,14 +336,14 @@ public abstract class Grade extends Model {
 		return resp;
 	}
 
-	/**
-	 * Cria todas as disciplinas do curso de computação.
-	 */
-	protected abstract void criaDisciplinas();
-
-	/**
-	 * Configura todos os periodos da grade de acordo com a alocacao padrao.
-	 */
-	protected abstract void configuraPeriodos();
+//	/**
+//	 * Cria todas as disciplinas do curso de computação.
+//	 */
+//	protected abstract void criaDisciplinas();
+//
+//	/**
+//	 * Configura todos os periodos da grade de acordo com a alocacao padrao.
+//	 */
+//	protected abstract void configuraPeriodos();
 
 }
