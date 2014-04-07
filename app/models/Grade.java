@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 import play.db.ebean.Model;
 
@@ -35,7 +37,7 @@ public class Grade extends Model {
 
 	@ManyToMany
 	@JoinTable(name = "grade_disciplina", joinColumns = @JoinColumn(name = "grade"), inverseJoinColumns = @JoinColumn(name = "disciplina"))
-	private List<Disciplina> disciplinas;
+	protected List<Disciplina> disciplinas;
 
 	@ManyToMany
 	protected List<Periodo> periodos;
@@ -60,7 +62,6 @@ public class Grade extends Model {
 		disciplinas = new ArrayList<Disciplina>();
 		periodos = new ArrayList<Periodo>();
 		criaCurriculo(factory);
-
 	}
 
 	/**
@@ -332,10 +333,6 @@ public class Grade extends Model {
 		return resp;
 	}
 
-	/**
-	 * Monta a grade a partir de um tipo de curriculo recebido como parametro
-	 * @param factory fábrica de cúrriculo
-	 */
 	public void criaCurriculo(CurriculoFactoryIF factory){
 		factory.criaDisciplina(this);
 		factory.configuraPeriodo(this);
