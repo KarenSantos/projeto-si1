@@ -333,6 +333,13 @@ public class Grade extends Model {
 		return resp;
 	}
 
+	/**
+	 * Configura o curriculo da grade a partir de uma fábrica de curriculo
+	 * 
+	 * @param factory
+	 * 		A fábrica de curriculo
+	 * 
+	 */
 	public void criaCurriculo(CurriculoFactoryIF factory){
 		factory.criaDisciplina(this);
 		factory.configuraPeriodo(this);
