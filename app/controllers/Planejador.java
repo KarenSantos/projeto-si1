@@ -30,7 +30,7 @@ public class Planejador {
 	 */
 	public Planejador(Usuario usuario) {
 		this.usuario = usuario;
-		this.plano = PlanoDeCurso.find.byId(usuario.getIdDoPlano());
+		this.plano = PlanoDeCurso.find.byId("p_" + usuario.getEmail());
 		this.plano.reSetPeriodoAtual();
 	}
 
